@@ -13,3 +13,11 @@ body, html {
   border-width: thin;
   padding-top: 2px;
 }
+
+.BUY {
+  color: green;
+}
+
+.SELL {
+  color: red;
+}
