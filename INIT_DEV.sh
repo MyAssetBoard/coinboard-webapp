@@ -43,10 +43,8 @@ function nodesetup ()
 
   Enter the install command for your favorite apt-get method :
   "
-  read aptget
-  sudo $aptget nodejs npm
-  sudo npm  install -g yarn
-  yarn install && cd coin_board && yarn install
+  read aptget && sudo $aptget nodejs npm  && sudo npm  install -g yarn && \
+  yarn install && cd coin_board && yarn install &&
   echo "
   Et ...
 
@@ -68,7 +66,13 @@ function app_startProd ()
 
 function genddoc ()
 {
-  exec $JSDOC -r -c $JSDOCCONF -d doc
+  $JSDOC -r coin_board -c $JSDOCCONF -d doc &>jsdoc.log;
+  echo -e "
+    ** Documentation generation ok !
+      (logs on jsdoc.log)
+
+    Please open your favorite web browser to$BLD doc/index.html$CL
+  "
 }
 
 ### Scrit init
@@ -88,6 +92,7 @@ do
     ;;
 
     'n-c')
+    set +e;
     nodesetup
     exit 0
     ;;
