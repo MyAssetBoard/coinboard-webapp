@@ -1,7 +1,7 @@
 # coin_board
 
-___ Coin_Board ____
+## Features :
 
-- Node-js crypto assets mngmnt Web App 
+- Node-js crypto assets mngmnt Web App
 - Rpi Webview rendering
--More to come
+- More to come
