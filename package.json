@@ -5,5 +5,9 @@
   "main": "run_me.js",
   "repository": "git@bitbucket.org:trevisgulby/coin_board.git",
   "author": "Trevis Gulby <trevisgulby@protonmail.ch>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.2",
+    "pm2": "^2.9.1"
+  }
 }
