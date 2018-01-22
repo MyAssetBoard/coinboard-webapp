@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<!-- views/pages/index.ejs -->
+<html lang="en">
+<head><% include coreelems/head %></head>
+<body>
+  <header>
+    <% include coreelems/header %>
+  </header>
+  <main>
+    <div class="container-full-bg">
+      <%include blocks/my_jumbotron %>
+    </div>
+  </main>
+  <footer><% include coreelems/footer %></footer>
+</body>
 </html>

@@ -1,0 +1,15 @@
+body, html {
+  padding: 50px;
+  font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url('../images/dark_stripes.png');
+  background-repeat: repeat;
+  position: relative;
+}
+
+.jumbotron {
+  background-color: transparent !important;
+  border-style: solid;
+  border-color: white;
+  border-width: thin;
+  padding-top: 2px;
+}
