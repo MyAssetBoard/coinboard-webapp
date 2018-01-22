@@ -9,5 +9,8 @@
   "dependencies": {
     "express": "^4.16.2",
     "pm2": "^2.9.1"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
   }
 }
