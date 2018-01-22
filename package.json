@@ -1,0 +1,9 @@
+{
+  "name": "coin_board",
+  "version": "0.0.1Beta",
+  "description": "Crypto assets management board",
+  "main": "run_me.js",
+  "repository": "git@bitbucket.org:trevisgulby/coin_board.git",
+  "author": "Trevis Gulby <trevisgulby@protonmail.ch>",
+  "license": "MIT"
+}
