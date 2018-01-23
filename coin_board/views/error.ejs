@@ -1,3 +1,27 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<!DOCTYPE html>
+<html lang="en">
+<head><% include coreelems/head %></head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1 style="color: white">
+				<a style="color: white"><b><%= error.status %> </b></a><%= message %> Dude !
+			</h1>
+		</div>
+		<img class="img-fluid" src="images/404.jpg" alt="404">
+		<div class="container-fluid invisible">
+			<pre style="color: white"><%= error.stack %></pre>
+		</div>
+	</div>
+	<script type="application/javascript">
+	console.log('U reach a bug, see page source for details' + '\n\n'
+	+ '--> Help Fightings bugs by making a report on our Bitbucket repo' + '\n');
+	t1 = window.setTimeout(function() {
+		window.location = "/";
+	}, 10000);
+	console.log('\n\tRedirecting to homepage in 10s...')
+	t1;
+	</script>
+	<footer><% include coreelems/footer %></footer>
+</body>
+</html>
