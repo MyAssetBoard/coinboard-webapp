@@ -1,9 +1,9 @@
 <!-- views/coreelems/footer.ejs -->
 <nav aria-label="Page navigation" style="padding: 20px;">
-  <ul class="pagination justify-content-center">
-    <li class="page-item text-muted">© Copyright 2018 coin_board </a>
-    </li>
-  </ul>
+	<ul class="pagination justify-content-center">
+		<li class="page-item text-muted">© Copyright 2018 coin_board </a>
+		</li>
+	</ul>
 </nav>
 <!-- Jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -19,7 +19,10 @@ crossorigin="anonymous">
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">
 </script>
+<% if (title === "Coin_Board") { %>
+<!-- Fetch data script -->
 <!-- tradestream -->
 <script src="javascripts/tradestream.js"></script>
 <!-- changer_api get exchange rates -->
 <script src="javascripts/changer_api.js"></script>
+<% } %>
