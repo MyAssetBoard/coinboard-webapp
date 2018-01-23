@@ -20,59 +20,74 @@ CL="\033[0m"
 
 function usage ()
 {
-  echo -e "
-  ## $BLD COINBO4RD $CL devtool
+	echo -e "
+	## $BLD COINBO4RD $CL devtool
 
-  $BLD Usage :$CL INIT_DEV [-c] [-d] [-r] [-t] [-h/-u]
+	$BLD Usage :$CL INIT_DEV [-b] [-c] [-d] [-r] [-t] [-h/-u]
 
-  -c:$BLD Setup$CL your nodejs dev environnement (run only once)
-  -d:$BLD Generate$CL html doc with jsdoc
-  -r:$BLD run$CL app with pm2 (production env)
-  -t:$BLD run$CL app in dev mode (watch for file change)
-  -h:$BLD show$CL this help text and exit
+	-b:$BLD Setup$CL your rethinkdb dev environnement (run only once)
+	-c:$BLD Setup$CL your nodejs dev environnement (run only once)
+	-d:$BLD Generate$CL html doc with jsdoc
+	-r:$BLD run$CL app with pm2 (production env)
+	-t:$BLD run$CL app in dev mode (watch for file change)
+	-h:$BLD show$CL this help text and exit
 
-  Notes : without any option, runs with -t, accept only$BLD one$CL
-          arg.
-  ";
+	Notes : Accept only$BLD one$CL arg.
+	";
 }
 
 function nodesetup ()
 {
-  echo "
-  * Let's deploy a Nodejs dev environnement *
+	echo "
+	* Let's deploy a Nodejs dev environnement *
 
-  Enter the install command for your favorite apt-get method :
-  "
-  read aptget && sudo $aptget nodejs npm  && sudo npm  install -g yarn && \
-  yarn install && cd coin_board && yarn install &&
-  echo "
-  Et ...
+	Enter the install command for your favorite apt-get method :
+	"
+	read aptget && sudo $aptget nodejs npm  && sudo npm  install -g yarn && \
+	yarn install && cd coin_board && yarn install &&
+	echo "
+	Et ...
 
-  Voila!
+	Voila!
 
-  Tips : Please run this app with ./INIT_DEV.sh -r
-  "
+	Tips : Please run this app with ./INIT_DEV.sh -t
+	"
+}
+
+function dbsetup ()
+{
+	echo -e "
+	- Whats your distribution ? (just type the name, debian, fedora ..)
+	"
+	read dist
+	if [ "$dist" == "fedora" ]; then
+		url="https://download.rethinkdb.com/centos/6"
+
+		sudo wget $url/$(uname -m)/rethinkdb.repo \
+		-O /etc/yum.repos.d/rethinkdb.repo &&  \
+		sudo yum install rethinkdb
+	fi
 }
 
 function app_startDev ()
 {
-  exec $PM2DEV $APPBIN
+	exec $PM2DEV $APPBIN
 }
 
 function app_startProd ()
 {
-  exec $PM2 $APPBIN --name "coin_board"
+	exec $PM2 $APPBIN --name "coin_board"
 }
 
 function genddoc ()
 {
-  $JSDOC -r coin_board -c $JSDOCCONF -d doc &>jsdoc.log;
-  echo -e "
-    ** Documentation generation ok !
-      (logs on jsdoc.log)
+	$JSDOC -r coin_board -c $JSDOCCONF -d doc &>jsdoc.log;
+	echo -e "
+	** Documentation generation ok !
+	(logs on jsdoc.log)
 
-    Please open your favorite web browser to$BLD doc/index.html$CL
-  "
+	Please open your favorite web browser to$BLD doc/index.html$CL
+	"
 }
 
 ### Scrit init
@@ -80,47 +95,52 @@ function genddoc ()
 set +e
 while [[ $# -gt 0 ]]
 do
-  case "n$1" in
-    'n-h')
-    usage
-    exit 0
-    ;;
+	case "n$1" in
+		'n-h')
+		usage
+		exit 0
+		;;
 
-    'n-u')
-    usage
-    exit 0
-    ;;
+		'n-u')
+		usage
+		exit 0
+		;;
 
-    'n-c')
-    set +e;
-    nodesetup
-    exit 0
-    ;;
+		'n-b')
+		dbsetup
+		exit 0
+		;;
 
-    'n-d')
-    genddoc
-    exit 0
-    ;;
+		'n-c')
+		set +e;
+		nodesetup
+		exit 0
+		;;
 
-    'n-r')
-    app_startProd
-    exit 0
-    ;;
+		'n-d')
+		genddoc
+		exit 0
+		;;
 
-    'n-t')
-    app_startDev
-    exit 0
-    ;;
+		'n-r')
+		app_startProd
+		exit 0
+		;;
 
-    *)
-    echo "unkown arg given: $1 (see usage)"
-    exit 1
-    ;;
-  esac
-  echo -e "\n\tDone !\n"
-  shift
+		'n-t')
+		app_startDev
+		exit 0
+		;;
+
+		*)
+		echo "unkown arg given: $1 (see usage)"
+		exit 1
+		;;
+	esac
+	echo -e "\n\tDone !\n"
+	shift
 done
 echo "
-  Missing args, see -h or -u for usage
+Missing args, see -h or -u for usage
 "
 exit 1
