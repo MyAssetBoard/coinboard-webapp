@@ -33,6 +33,8 @@ function usage ()
 	-h:$BLD show$CL this help text and exit
 
 	Notes : Accept only$BLD one$CL arg.
+		$BLD[-b]$CL options currently supported system are fedora / centos and
+		ubuntu / debian.
 	";
 }
 
@@ -57,10 +59,10 @@ function nodesetup ()
 function dbsetup ()
 {
 	echo -e "
-	- Whats your distribution ? (just type the name, debian, fedora ..)
+	Enter you distribution and press [ENTER]
 	"
 	read dist
-	if [ "$dist" == "fedora" ]; then
+	if [ "$dist" == "fedora" ] || [ "$dist" == "centos" ]; then
 		url="https://download.rethinkdb.com/centos/6"
 
 		sudo wget $url/$(uname -m)/rethinkdb.repo \
