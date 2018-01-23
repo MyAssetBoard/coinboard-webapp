@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 
 /** index route import */
 var index = require('./routes/index');
+/** Assets route import */
+var myassets = require('./routes/myassets');
 
 var app = express();
 
@@ -25,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/myassets', myassets);
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {
