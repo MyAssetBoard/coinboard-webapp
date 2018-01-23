@@ -37,3 +37,7 @@ out
 */out
 doc
 */doc
+
+# Rethinkdb local storage
+rethinkdb_data
+*/rethinkdb_data
