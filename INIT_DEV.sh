@@ -13,7 +13,7 @@ export JSDOCCONF="conf/jsdoc_conf.json"
 export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # coin_board app
-export APPBIN="coin_board/bin/www.js"
+export APPBIN="coin_board/bin/our_webfront.js"
 #Color
 BLD="\033[1m"
 CL="\033[0m"
