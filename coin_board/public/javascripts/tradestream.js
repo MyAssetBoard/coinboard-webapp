@@ -530,10 +530,17 @@ var displayData = function(dataUnpacked) {
   var maxTableSize = 30;
   var length = $('table tr').length;
   $('#trades').after(
-    "<tr class=" + dataUnpacked.Type + "><th>" + dataUnpacked.Market + "</th><th>" + dataUnpacked.Type + "</th><th>" + dataUnpacked.ID + "</th><th>" + dataUnpacked.Price + "</th><th>" + dataUnpacked.Quantity + "</th><th>" + dataUnpacked.Total + "</th></tr>"
+    "<tr class=" + dataUnpacked.Type + "><th>" + dataUnpacked.Market +
+    "</th><th>" + dataUnpacked.Type + "</th><th>" + dataUnpacked.Price +
+    "</th><th>" + dataUnpacked.Quantity + "</th><th>" + dataUnpacked.Total +
+    "</th></tr>"
   );
 
   if (length >= (maxTableSize)) {
     $('table tr:last').remove();
   }
+  $('.ticker').click(function() {
+    fsym = this.id;
+    $(this).removeClass('btn-secondary').addClass('btn-primary');
+  });
 };
