@@ -8,6 +8,8 @@ coin_board/public/images/
 # Logs
 logs
 *.log
+log/
+tmpdata/
 
 # Runtime data
 pids
