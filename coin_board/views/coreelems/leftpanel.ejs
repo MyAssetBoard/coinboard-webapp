@@ -1,17 +1,17 @@
 <div class="container">
-  <div class="btn-group-vertical btn-group-lg" role="group">
-    <button id ="ETH" type="button" class="btn ticker btn-primary">ETH</button>
-    <button id ="BTC" type="button" class="btn ticker btn-secondary">BTC</button>
-    <button id ="LTC" type="button" class="btn ticker btn-secondary">LTC</button>
-    <button id ="NEO" type="button" class="btn ticker btn-secondary">NEO</button>
-    <div class="btn-group" role="group">
-      <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Dropdown
-      </button>
-      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <a class="dropdown-item" href="#">Dropdown link</a>
-        <a class="dropdown-item" href="#">Dropdown link</a>
-      </div>
-    </div>
-  </div>
+	<div class="btn-group-vertical btn-group-lg"  data-toggle="buttons">
+		<!-- @TODO : Add variable to template engine and make a for loop -->
+		<label class="btn btn-primary ticker active" id="ETH">
+			<input type="radio" name="stream-ticker" id="ETH" autocomplete="off" checked="true">ETH
+		</label>
+		<label class="btn btn-primary ticker" id="BTC">
+			<input type="radio" name="stream-ticker" autocomplete="off" checked="false"> BTC
+		</label>
+		<label class="btn btn-primary ticker" id="LTC">
+			<input type="radio" name="stream-ticker" autocomplete="off" checked="false"> LTC
+		</label>
+		<label class="btn btn-primary ticker" id="NEO">
+			<input type="radio" name="stream-ticker" autocomplete="off" checked="false"> NEO
+		</label>
+	</div>
 </div>
