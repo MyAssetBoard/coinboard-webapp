@@ -1,9 +1,12 @@
 body, html {
   padding: 50px;
   font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /* background-image: url('../images/background.png'); */
   background: #1b2d3c !important;
   position: relative;
+}
+
+.navbar-default {
+	border-color: white !important;
 }
 
 .jumbotron {
