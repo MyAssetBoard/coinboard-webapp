@@ -13,7 +13,7 @@ export JSDOCCONF="conf/jsdoc_conf.json"
 export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # coin_board app
-export APPBIN="coin_board/bin/our_webfront.js"
+export APPCONF="./conf/webfront.pm2conf.json"
 #Color
 BLD="\033[1m"
 CL="\033[0m"
@@ -28,7 +28,8 @@ function usage ()
 	-b:$BLD Setup$CL your rethinkdb dev environnement (run only once)
 	-c:$BLD Setup$CL your nodejs dev environnement (run only once)
 	-d:$BLD Generate$CL html doc with jsdoc
-	-r:$BLD run$CL app with pm2 (production env)
+	-r:$BLD reset$CL database tmpdata and restart app in test mode
+	-s:$BLD run$CL app with pm2 (production env)
 	-t:$BLD run$CL app in dev mode (watch for file change)
 	-h:$BLD show$CL this help text and exit
 
@@ -73,12 +74,19 @@ function dbsetup ()
 
 function app_startDev ()
 {
-	exec $PM2DEV $APPBIN
+	exec $PM2DEV start $APPCONF
 }
 
 function app_startProd ()
 {
-	exec $PM2 $APPBIN --name "coin_board"
+	exec $PM2 $APPBIN
+}
+
+function reset_db ()
+{
+	rm -rf tmpdata && mkdir tmpdata
+	wget https://raw.githubusercontent.com/crypti/cryptocurrencies/master/cryptocurrencies.json \
+	-O tmpdata/cryptocurrencies.json && app_startDev
 }
 
 function genddoc ()
@@ -125,6 +133,11 @@ do
 		;;
 
 		'n-r')
+		reset_db
+		exit 0
+		;;
+
+		'n-s')
 		app_startProd
 		exit 0
 		;;
