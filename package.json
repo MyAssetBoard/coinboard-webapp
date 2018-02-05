@@ -1,16 +1,18 @@
 {
-  "name": "coin_board",
-  "version": "0.0.1Beta",
-  "description": "Crypto assets management board",
-  "main": "run_me.js",
-  "repository": "git@bitbucket.org:trevisgulby/coin_board.git",
-  "author": "Trevis Gulby <trevisgulby@protonmail.ch>",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.16.2",
-    "pm2": "^2.9.1"
-  },
-  "devDependencies": {
-    "jsdoc": "^3.5.5"
-  }
+	"name": "coin_board",
+	"version": "0.0.1Beta",
+	"description": "Crypto assets management board",
+	"main": "./INIT_DEV -t",
+	"repository": "git@bitbucket.org:trevisgulby/coin_board.git",
+	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.16.2",
+		"mongod": "^2.0.0",
+		"mongodb": "^3.0.2",
+		"pm2": "^2.9.1"
+	},
+	"devDependencies": {
+		"jsdoc": "^3.5.5"
+	}
 }
