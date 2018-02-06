@@ -1,0 +1,34 @@
+<!-- views/coreelems/script.ejs -->
+<!-- Jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous">
+</script>
+<!-- bootstrap js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"
+integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D"
+crossorigin="anonymous">
+</script>
+<!-- Socket io cdn -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">
+</script>
+<!-- Fetch data script -->
+<% if (page === "index")
+{
+	%>
+	<!-- tradestream -->
+	<script src="<%- trade  %>"></script>
+	<!-- changer_api get exchange rates -->
+	<script src="<%- change  %>"></script>
+	<%
+}
+%>
+
+<% if (page === "assets")
+{
+	%>
+	<script src="<%- manage %>"></script>
+	<%
+}
+%>
