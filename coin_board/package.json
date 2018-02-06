@@ -14,7 +14,6 @@
     "express": "~4.15.5",
     "morgan": "~1.9.0",
     "rethinkdb": "^2.3.3",
-    "serve-favicon": "~2.4.5",
-    "socket.io": "^2.0.4"
+    "serve-favicon": "~2.4.5"
   }
 }
