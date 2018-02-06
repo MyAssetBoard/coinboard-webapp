@@ -22,16 +22,13 @@ io.on('error', socketError);
 
 /** Ws connection event */
 io.sockets.on('connection', function (socket) {
+	console.log('one client connection');
 	socket.on('datainput', function (msg) {
 		msg = msg.trim();
-		console.log('datainput method ok');
+		console.log('data input recived :[' + msg + ']');
 	});
 	socket.on('disconnect', function () {
 		if (!socket.nickname) return;
-
-		delete nicknames[socket.nickname];
-		socket.broadcast.emit('announcement', socket.nickname + ' disconnected');
-		socket.broadcast.emit('nicknames', nicknames);
 		throw error;
 	});
 });
