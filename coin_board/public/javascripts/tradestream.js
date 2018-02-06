@@ -484,9 +484,7 @@ $(document).ready(function() {
 	+ fsym + "&tsyms=" + tsym;
 	var socket = io(streamUrl);
 
-	$('.btn.ticker').change(function() {
-		getstream(dataUrl);
-	})
+	$('.btn.ticker').change(function() { getstream(dataUrl);});
 	function getstream(dataUrl) {
 		$.getJSON(dataUrl, function(data) {
 			currentSubs = data['EUR']['TRADES'];
