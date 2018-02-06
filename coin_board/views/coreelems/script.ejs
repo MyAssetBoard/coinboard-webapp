@@ -13,22 +13,15 @@ crossorigin="anonymous">
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">
 </script>
-<!-- Fetch data script -->
-<% if (page === "index")
+<!-- Page scripts inclusion -->
+<% if (scripts && Object.keys(scripts).length)
 {
 	%>
-	<!-- tradestream -->
-	<script src="<%- trade  %>"></script>
-	<!-- changer_api get exchange rates -->
-	<script src="<%- change  %>"></script>
-	<%
-}
-%>
-
-<% if (page === "assets")
-{
-	%>
-	<script src="<%- manage %>"></script>
+	<% for (var elems in scripts) {
+		%>
+		<script src="<%- scripts[elems] %>"></script>
+		<%
+	} %>
 	<%
 }
 %>
