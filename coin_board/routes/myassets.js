@@ -1,10 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var params = {
-	title   : "Coin_Board/My assets",
+	title	: "My assets",
+	author	: "© Copyright 2018 coin_board",
 	page	: "assets",
 	scripts	: {
-		manage : "assets_management.js"
+		manage	: "assets_management.js"
+	},
+	blocks : {
+		jumbo	: "blocks/my_jumbotron",
+		assets	: "blocks/my_assets",
+		crud	: "blocks/my_crudblock"
 	}
 };
 
