@@ -1,8 +1,8 @@
 body, html {
-  padding: 50px;
-  font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #1b2d3c !important;
-  position: relative;
+	padding: 50px;
+	font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: #1b2d3c !important;
+	position: relative;
 }
 
 .navbar-default {
@@ -10,17 +10,21 @@ body, html {
 }
 
 .jumbotron {
-  background-color: transparent !important;
-  border-style: solid;
-  border-color: white;
-  border-width: thin;
-  padding-top: 2px;
+	background-color: transparent !important;
+	border-style: solid;
+	border-color: white;
+	border-width: thin;
+	padding: 10px;
+}
+
+.container-full-bg {
+	padding: 2px;
 }
 
 .BUY {
-  color: green;
+	color: green;
 }
 
 .SELL {
-  color: red;
+	color: red;
 }
