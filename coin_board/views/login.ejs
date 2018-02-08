@@ -9,18 +9,14 @@
 		<!-- main -->
 		<div class="main">
 			<div class="container-full-bg">
-				<form action="/" method="post">
+				<form action="/login" method="post">
 					<input class="form-control text-center" type="text" placeholder="Login" readonly>
 					<div class="form-group">
 						<label class="text-center" for="InputEmail1">Email address</label>
-						<input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						<input type="email" name="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
 						<small id="emailHelp" class="form-text text-mute text-centerd">We'll never share your email with anyone else.</small>
+						<input type="submit" class="btn btn-primary btn-lg btn-block" value="LOGIN NOW"></input>
 					</div>
-					<div class="form-group">
-						<label for="InputPassword1">Password</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-					</div>
-					<button type="submit" class="btn btn-primary btn-lg btn-block">LOGIN NOW</button>
 				</form>
 			</div>
 			<div class="container">
@@ -28,7 +24,7 @@
 					<h3>Login</h3>
 
 					<div class="login-form">
-						<form action="/" method="post">
+						<form action="/login" method="post">
 							<input type="text" name="logemail" placeholder="E-mail" required="">
 							<input type="password" name="logpassword" placeholder="Password" required="">
 							<div class="tp">
@@ -43,7 +39,7 @@
 					<h3>Register</h3>
 
 					<div class="login-form">
-						<form action="/" method="post">
+						<form action="/login" method="post">
 							<input type="text" name="email" placeholder="E-mail" required="">
 							<input type="text" name="username" placeholder="Username" required="">
 							<input type="password" name="password" placeholder="Password" required="">
