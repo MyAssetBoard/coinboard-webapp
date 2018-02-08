@@ -18,6 +18,8 @@ var io = require('socket.io').listen(app);
 var nicknames = {};
 var cur_nick = null;
 
+console.log('WEBSOCKET - coin_board micro service started\n');
+
 io.on('error', socketError);
 
 /** Ws connection event */
