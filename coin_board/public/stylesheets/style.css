@@ -17,6 +17,14 @@ body, html {
 	padding: 10px;
 }
 
+.form-group {
+	border-style: solid;
+	border-color: white;
+	border-width: thin;
+	padding: 10px;
+	background-color: white;
+}
+
 .container-full-bg {
 	padding: 2px;
 }
