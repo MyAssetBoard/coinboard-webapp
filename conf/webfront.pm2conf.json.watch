@@ -1,0 +1,40 @@
+{
+	"apps" :
+	[
+		{
+			"name": "webview.service",
+			"script": "./coin_board/bin/our_webfront.js",
+			"watch": ["coin_board", "conf", "package.json"],
+			"ignore_watch": ["node_modules", "tmpdata"],
+			"watch_options": {
+				"followSymlinks": false
+			},
+			"env": {
+				"args": ["--ignore-watch=\tmpdata|node_modules"]
+			}
+		},
+		{
+			"name": "mongodb.service",
+			"script": "./coin_board/bin/our_mongodb.js",
+			"watch": ["coin_board", "conf", "package.json"],
+			"ignore_watch": ["node_modules", "tmpdata"],
+			"watch_options": {
+				"followSymlinks": false
+			},
+			"env": {
+				"args": ["--ignore-watch=\tmpdata|node_modules"]
+			}
+		},
+		{
+			"name": "websocket.service",
+			"script": "./coin_board/bin/our_websocket.js",
+			"watch": ["coin_board", "conf", "package.json"],
+			"ignore_watch": ["node_modules", "tmpdata"],
+			"watch_options": {
+				"followSymlinks": false
+			},
+			"env": {
+				"args": ["--ignore-watch=\tmpdata|node_modules"]
+			}
+			}]
+		}
