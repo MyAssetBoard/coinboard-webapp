@@ -4,20 +4,19 @@
 <head><% include coreelems/head %></head>
 <body>
 	<header><% include coreelems/header %></header>
-	<main>
-		%>
-		<% for (var elems in blocks)
-		{ %><%- include(blocks[elems]) %><% } %>
-		<%
-		%>
+	<main><% if (locals.blocks && Object.keys(blocks).length)
+		{ %>	<!-- Page Blocks inclusion -->
+			<% for (var elems in blocks)
+			{ %><%- include(blocks[elems]) %><% } %>
+			<%
+		} %>
 	</main>
 	<footer>
 		<% include coreelems/footer %>
-		<!-- Page scripts inclusion -->
-		<% if (scripts && Object.keys(scripts).length)
-		{ %>
+		<% if (locals.scripts && Object.keys(scripts).length)
+		{ %>	<!-- Page scripts inclusion -->
 			<% for (var elems in scripts)
-			{ %> <script src="<%- scripts[elems] %>"></script><% } %>
+			{ %> <script src="<%- scripts[elems] %>"></script><%} %>
 			<%
 		} %>
 	</footer>
