@@ -84,12 +84,12 @@ function dbsetup ()
 
 function app_startDev ()
 {
-	#exec $PM2DEV start $APPCONF
+	#*DEPRECATED exec $PM2DEV start $APPCONF
 	# order matters !
-	mongod -f conf/mongodb.conf &
+	#mongod -f conf/mongodb.conf &
 	#$PM2 start $APPCONF --only "$DBSERV";
-	$PM2 start $APPCONF --only "$WSSERV";
-	$PM2 start $APPCONF --only "$WVSERV";
+	$PM2 start $APPCONF --only "$WSSERV" --env development --update-env;
+	$PM2 start $APPCONF --only "$WVSERV" --env development --update-env;
 }
 
 function app_startProd ()
