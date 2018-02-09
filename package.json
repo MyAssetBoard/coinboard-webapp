@@ -7,12 +7,16 @@
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
 	"license": "MIT",
 	"dependencies": {
-		"express": "^4.16.2",
-		"mongod": "^2.0.0",
 		"mongodb": "^3.0.2",
 		"pm2": "^2.9.1"
 	},
 	"devDependencies": {
-		"jsdoc": "^3.5.5"
+		"chai": "^4.1.2",
+		"ejs-lint": "^0.3.0",
+		"jsdoc": "^3.5.5",
+		"mocha": "^5.0.0",
+		"sinon": "^4.2.2",
+		"sinon-chai": "^2.14.0",
+		"supertest": "^3.0.0"
 	}
 }
