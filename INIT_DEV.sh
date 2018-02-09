@@ -12,6 +12,9 @@ export JSDOCCONF="conf/jsdoc_conf.json"
 # Pm2
 export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
+# Mocha test suite
+export MOSHA="./node_modules/mocha/bin/mocha"
+export TESTFILES="tests/*-test.js"
 # coin_board app
 export APPCONF="./conf/webfront.pm2conf.json"
 export WVSERV="webview.service"
@@ -39,6 +42,8 @@ function usage ()
 	-r:$BLD.reset$CL database tmpdata and restart app in test mode
 	-s:$BLD.run$CL app with pm2 (production env)
 	-t:$BLD.run$CL app in dev mode (watch for file change)
+	-rl:$BLD.reload$CL app following changes (watch in pm2 is broken)
+	-lt:$BLD.test$CL app with mocha (test files in test/ dir)
 	-h:$BLD.show$CL this help text and exit
 
 	Notes : Accept only$BLD one$CL arg.
@@ -116,6 +121,12 @@ function app_reload ()
 	app_startDev
 }
 
+function app_tests ()
+{
+	# $MOCHA tests/index_route-test.js
+	./node_modules/mocha/bin/mocha tests/*-test.js
+}
+
 function genddoc ()
 {
 	$JSDOC -r coin_board -c $JSDOCCONF -d doc &>jsdoc.log;
@@ -184,8 +195,13 @@ do
 		exit 0
 		;;
 
+		'n-lt')
+		app_tests
+		exit 0
+		;;
+
 		*)
-		echo "unkown arg given: $1 (see usage)"
+		echo "$0 : unkown [$1] arg given (see usage)"
 		exit 1
 		;;
 	esac
