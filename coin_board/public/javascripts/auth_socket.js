@@ -10,7 +10,7 @@ $(document).ready(function() {
 	auth.on('error-message', function (data) {console.log(data.msg);});
 	$('#click').click(function() {
 		var InputName = $('#InputName').val().trim();
-		if (tosend.length > 2) {
+		if (InputName.length > 2) {
 			console.log('click [' + InputName + '] ');
 			auth.emit('user login', {logname: InputName});
 		}
