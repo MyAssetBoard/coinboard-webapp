@@ -24,6 +24,7 @@ var options = {
 	'X-XSS-Protection'		: '1; mode=block',
 	'etag'				: 'false'
 }
+
 var favOptions = {
 	dotfiles: 'ignore',
 	etag: false,
@@ -40,7 +41,6 @@ app.set('view engine', 'ejs');
 
 /** Global app setup */
 app.disable('x-powered-by');
-
 app.use('/favicon.ico', express.static('images/favicon.ico', favOptions));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -48,7 +48,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {etag: false}));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
-
 
 /** Routes import */
 app.use('/', index);
