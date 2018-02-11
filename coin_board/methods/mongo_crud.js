@@ -2,23 +2,13 @@ var MongoClient = require('mongodb').MongoClient;
 var uri = "mongodb://localhost:27017/";
 /** send data with socket */
 var socket = require('socket.io-client')('http://localhost:3001');
-
-/** To be set before calling module */
-var dbName = "";
+/** To be set in constructor before calling module */
 var myD = [];
 
-function wait_cmd(err, db) {
-	if (err) { throw err; }
-	this.myD = db;
-	return db;
-}
 
-function check_ifexist(err, db) {
-	if (err) { throw err; }
-}
-
-function Crud(dbname) {
-	dbName = dbName ? dbName : "test2";
+function Crud(dbName, collectName) {
+	this.dbName = dbName ? dbName : "test2";
+	this.collectName = collectName ? collectName : "users";
 	var url = uri + dbName;
 }
 /** Create a database if not exist */
@@ -45,11 +35,8 @@ Crud.prototype.createCollection = function (dbName, collectName, callback) {
 		var dbo = db.db(dbName);
 		dbo.createCollection(collectName)
 		.then(function(result) {
-			log = "MONGO - Succesfully connected to " + dbName;
-			console.log(log);
-			var logs = "Collection [" + collectName;
-			logs += "] created!";
-			console.log(logs);
+			console.log("MONGO - Succesfully connected to " + dbName);
+			console.log("Collection [" + collectName + "] created!");
 			var env = process.env.NODE_ENV || 'dev';
 			if (env == 'dev') console.log(res);
 			db.close();
@@ -62,16 +49,17 @@ Crud.prototype.createCollection = function (dbName, collectName, callback) {
 }
 
 Crud.prototype.InsertInCollection = function (dbName, collectName, data, callback) {
-	MongoClient.connect(uri, function(err, db) {
-		if (err) throw err;
-		var dbo = db.db(dbName);
+	MongoClient.connect(uri)
+	.then(function(err) {
+		var dbo = db.db(Crud.dbName);
 		var myobj = { companyname: "Company Inc", address: "Highway 37" };
 		myobj['name'] = data;
 		var tofind = { name: data };
-		var exist = dbo.collection(collectName).findOne(tofind, function(err, result) {
-			if (err) throw err;
-			return result.name ? true : false;
-		});
+		var exist = dbo.collection(collectName).findOne(tofind)
+		.then(function(err, result) {
+			return exist = result.name ? true : false;
+		})
+		.catch(function (err) {if (err) throw err;});
 		if (!exist) {
 			dbo.collection(collectName).insertOne(myobj)
 			.then(function(res) {
@@ -86,17 +74,16 @@ Crud.prototype.InsertInCollection = function (dbName, collectName, data, callbac
 			callback && callback(null);
 			return null;
 		}
-	});
+	})
+	.catch(function (err) {if (err) throw err;});
 }
 
-Crud.prototype.FindInCollection = function (dbName, collectName, key, value, callback) {
-	var tofind = {};
-	tofind[key] = value;
+Crud.prototype.FindInCollection = function (collectName, tofind, callback) {
+	var _this = this;
 	MongoClient.connect(uri)
 	.then(function (db) {
-		log = "MONGO - Succesfully connected to " + dbName;
-		console.log(log);
-		var dbo = db.db(dbName);
+		console.log("MONGO - Connected to " + _this.dbName);
+		var dbo = db.db(_this.dbName);
 		dbo.collection(collectName).findOne(tofind)
 		.then(function(result) {
 			db.close();
