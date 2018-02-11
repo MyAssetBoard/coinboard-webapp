@@ -13,46 +13,35 @@ console.log('WEBSOCKET - Runnnig');
 const crudMod = require('../methods/mongo_crud');
 
 
-function checkUsr() {
+function checkUsr(data) {
 	return new Promise((resolve, reject) => {
-		dfDb = "test2";
-		dfCo = "users";
-		dfkey = "name";
-		dreq = askeduser.logname;
-		console.log(dreq);
+		data.logname = data.logname.replace(/\W/g, '');
+		var toFind = {'name' : data.logname};
 		var crud = new crudMod("test2");
-		crud.FindInCollection(dfDb, dfCo, dfkey, dreq, function(result) {
-			if (result) {
-				if (result['name']) {
-					resolve(result);
-				} else {
-					var reason = new Error('Bad user');
-					reject(reason);
-				}
-			} else {
-				var reason = new Error('Bad user');
-				reject(reason);
-			}
+		crud.FindInCollection("r_users", toFind, function(result) {
+			if (result && result['name']) { resolve(result); }
+			reject(new Error('Bad user'));
 		});
 	});
 }
 
 function checkData(data, socket) {
-	if (data && data['logname']) {
-		askeduser = data;
-		checkUsr()
-		.then(function(res, err) {
-			if (!res || err) { throw(err); }
-			io.of('/auth').to(socket.id).emit('my-message', res);
-			return true;
-		})
-		.catch(function (rej, err) {
-			console.error(rej.message);
-			var errmsg = { errcode: 22, msg: rej.message };
-			io.of('/auth').to(socket.id).emit('error-message', errmsg);
-			if (err) throw(err);
-			return false;
-		})
+	if (data){
+		if (data['logname']) {
+			checkUsr(data)
+			.then(function(res, err) {
+				if (!res || err) { throw(err); }
+				io.of('/auth').to(socket.id).emit('my-message', res);
+				return true;
+			})
+			.catch(function (rej, err) {
+				console.error(rej.message);
+				var errmsg = { errcode: 22, msg: rej.message };
+				io.of('/auth').to(socket.id).emit('error-message', errmsg);
+				if (err) throw(err);
+				return false;
+			})
+		}
 	}
 	return false;
 }
@@ -62,12 +51,9 @@ io
 .on('connection', function (socket) {
 	connected += 1;
 	console.log('user connected id: %s\nTotal : %i', socket.id, connected);
-	var usrtmp = "welcome usr " + socket.id.replace(/\/auth#/g, '-');;
-	io.of('/auth').emit('my-message', { msg: usrtmp, tot: connected });
-	socket.on('user login', function (data) {
-		if (checkData(data, socket)) {
-			io.of('/auth').emit('my-message', data);
-		}
-	});
+	var usrtmp = "welcome usr " + socket.id.replace(/\/auth#/g, '-');
+	var co_msg = { 'msg' : usrtmp, 'tot' : connected };
+	io.of('/auth').emit('my-message', co_msg);
+	socket.on('user login', function (data) { checkData(data, socket) });
 	socket.on('disconnect', function() { connected -= 1; });
 });
