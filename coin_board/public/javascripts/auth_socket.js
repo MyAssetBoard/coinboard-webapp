@@ -7,11 +7,11 @@ $(document).ready(function() {
 
 	function update_usr(data) {
 		/** create new div */
+		$('#dialogtext').text(' ');
 		$.each(data, function (key, obj) {
 			console.log(key, obj)
 			if (data.errcode) {
 				var newline = $('<li class="text-danger">');
-				$('#dialogtext').text(' ');
 			} else {
 				var newline = $('<li class="text-primary">');
 			}
@@ -33,13 +33,8 @@ $(document).ready(function() {
 		console.log('succesfully connected to auth socket');
 	});
 	auth.on('my-message', function (data) {
-		if (!data.msg) {
-			console.log(data);
-			update_usr(data);
-		} else {
-			console.log(data.msg);
-			update_usr(data);
-		}
+		console.log(data);
+		update_usr(data);
 	});
 	auth.on('error-message', function (data) {
 		console.log(data.msg);
