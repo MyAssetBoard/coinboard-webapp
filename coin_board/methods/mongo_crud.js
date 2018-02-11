@@ -28,11 +28,12 @@ Crud.prototype.createDb = function (dbName, callback) {
 };
 
 /** Create a Collection if not exist */
-Crud.prototype.createCollection = function (dbName, collectName, callback) {
+Crud.prototype.createCollection = function (collectName, callback) {
+	var _this = this;
 	MongoClient.connect(uri)
 	.then(function(db)
 	{
-		var dbo = db.db(dbName);
+		var dbo = db.db(_this.dbName);
 		dbo.createCollection(collectName)
 		.then(function(result) {
 			console.log("MONGO - Succesfully connected to " + dbName);
@@ -48,32 +49,20 @@ Crud.prototype.createCollection = function (dbName, collectName, callback) {
 
 }
 
-Crud.prototype.InsertInCollection = function (dbName, collectName, data, callback) {
+Crud.prototype.InsertInCollection = function (collectName, data, callback) {
+	var _this = this;
 	MongoClient.connect(uri)
-	.then(function(err) {
-		var dbo = db.db(Crud.dbName);
-		var myobj = { companyname: "Company Inc", address: "Highway 37" };
-		myobj['name'] = data;
-		var tofind = { name: data };
-		var exist = dbo.collection(collectName).findOne(tofind)
-		.then(function(err, result) {
-			return exist = result.name ? true : false;
+	.then(function(db) {
+		var dbo = db.db(_this.dbName);
+		dbo.collection(collectName).insertOne(data)
+		.then(function(res) {
+			console.log("1 document inserted : \n\t");
+			console.log(JSON.stringify(data));
+			db.close();
+			callback && callback(res);
+			return res;
 		})
-		.catch(function (err) {if (err) throw err;});
-		if (!exist) {
-			dbo.collection(collectName).insertOne(myobj)
-			.then(function(res) {
-				console.log("1 document inserted : \n\t");
-				console.log(JSON.stringify(myobj));
-				db.close();
-				callback && callback(res);
-				return res;
-			})
-			.catch(function (err) { if (err) throw err; });
-		} else {
-			callback && callback(null);
-			return null;
-		}
+		.catch(function (err) { if (err) throw err; });
 	})
 	.catch(function (err) {if (err) throw err;});
 }
