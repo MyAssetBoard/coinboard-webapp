@@ -10,7 +10,7 @@ const param = {
 	},
 	blocks : {
 		jumbo		: "blocks/my_jumbotron",
-		topblock	: "blocks/login_block"
+		topblock	: "blocks/signin_block"
 	}
 };
 
