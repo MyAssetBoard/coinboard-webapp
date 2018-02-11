@@ -7,6 +7,7 @@ var async = require('async');
 /** PORT to connect to */
 var port = process.env.WSPORT || '3001';
 var io = require('socket.io')(port);
+var connected = 0;
 console.log('WEBSOCKET - Runnnig');
 /** dep import */
 const crudMod = require('../methods/mongo_crud');
@@ -36,23 +37,19 @@ function checkUsr() {
 	});
 }
 
-function checkData(data) {
+function checkData(data, socket) {
 	if (data && data['logname']) {
 		askeduser = data;
 		checkUsr()
 		.then(function(res, err) {
-			if (!res || err) {
-				console.log('no res..');
-				throw(err);
-			}
-			console.log(res);
-			io.of('/auth').emit('my-message', res);
+			if (!res || err) { throw(err); }
+			io.of('/auth').to(socket.id).emit('my-message', res);
 			return true;
 		})
 		.catch(function (rej, err) {
 			console.error(rej.message);
 			var errmsg = { errcode: 22, msg: rej.message };
-			io.of('/auth').emit('error-message', errmsg);
+			io.of('/auth').to(socket.id).emit('error-message', errmsg);
 			if (err) throw(err);
 			return false;
 		})
@@ -63,12 +60,14 @@ function checkData(data) {
 io
 .of('/auth')
 .on('connection', function (socket) {
-	console.log('a user connected with id %s', socket.id);
+	connected += 1;
+	console.log('user connected id: %s\nTotal : %i', socket.id, connected);
 	var usrtmp = "welcome usr " + socket.id.replace(/\/auth#/g, '-');;
-	io.of('/auth').emit('my-message', { msg: usrtmp });
+	io.of('/auth').emit('my-message', { msg: usrtmp, tot: connected });
 	socket.on('user login', function (data) {
 		if (checkData(data, socket)) {
 			io.of('/auth').emit('my-message', data);
 		}
 	});
+	socket.on('disconnect', function() { connected -= 1; });
 });
