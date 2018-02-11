@@ -3,7 +3,7 @@
 * @author based on mongodb doc app and edited by Trevis Gulby
 */
 
-/** @brief data en vrac for testing CRUD methods 
+/** @brief data en vrac for testing CRUD methods
 */
 var assetsdata = [
 	{symbol_id : "EUR", sum : 6.50},
@@ -39,7 +39,8 @@ const findDocuments = function(db, collection, callback) {
 	});
 }
 
-MongoClient.connect(url, function(err, client) {
+MongoClient.connect(url)
+.then(function(err, client) {
 	assert.equal(null, err);
 	console.log("Connected successfully to server");
 
