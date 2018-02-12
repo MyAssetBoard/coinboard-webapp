@@ -17,6 +17,18 @@ body, html {
 	padding: 10px;
 }
 
+.popUp {
+	padding: 5px 10px;
+	background-color: transparent !important;
+	text-decoration-color: white;
+	position: fixed;
+	top: 0; right: 0;
+}
+
+.hidden {
+	display: none;
+}
+
 .form-group {
 	border-style: solid;
 	border-color: white;
