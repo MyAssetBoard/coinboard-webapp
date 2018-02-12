@@ -12,8 +12,10 @@ const index = require('./routes/index');
 const myassets = require('./routes/myassets');
 /** Login route import */
 const login = require('./routes/login');
+/** Signin route import */
+const signin = require('./routes/signin');
 /** Error view params */
-const error_param = require('./models/error_param');
+const error_param = require('./params/error_param');
 
 
 var app = express();
@@ -53,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public/javascripts')));
 app.use('/', index);
 app.use('/myassets', myassets);
 app.use('/login', login);
+app.use('/signin', signin);
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {
