@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var param = require('../params/index_param');
+var param = require('../params/signin_param');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', param);
+	res.render('signin', param);
 });
 
 module.exports = router;

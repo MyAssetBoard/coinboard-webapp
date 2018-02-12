@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var param = require('../models/login_param');
+var param = require('../params/login_param');
 const crudMod = require('../methods/mongo_crud');
 
 var crud = new crudMod();
