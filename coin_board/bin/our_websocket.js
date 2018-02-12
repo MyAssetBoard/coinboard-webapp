@@ -15,11 +15,13 @@ const crudMod = require('../methods/mongo_crud');
 
 function checkUsr(data) {
 	return new Promise((resolve, reject) => {
-		data.logname = data.logname.replace(/\W/g, '');
-		var toFind = {'name' : data.logname};
+		var value = data.findName.replace(/\W/g, '');
+		var key = 'username';
+		var toFind = {}
+		toFind[key] = value;
 		var crud = new crudMod("test2");
 		crud.FindInCollection("r_users", toFind, function(result) {
-			if (result && result['name']) { resolve(result); }
+			if (result && result[key]) { resolve(result); }
 			reject(new Error('Bad user'));
 		});
 	});
@@ -66,21 +68,19 @@ function checkRegData(data, socket) {
 }
 
 function checkcoData(data, socket) {
-	if (data){
-		if (data['logname']) {
-			checkUsr(data)
-			.then(function(res) {
-				io.of('/auth').to(socket.id).emit('my-message', res);
-				return true;
-			})
-			.catch(function (rej, err) {
-				console.error(rej.message);
-				var errmsg = { errcode: 22, msg: rej.message };
-				io.of('/auth').to(socket.id).emit('error-message', errmsg);
-				if (err) throw(err);
-				return false;
-			})
-		}
+	if (data['findName']) {
+		checkUsr(data)
+		.then(function(res) {
+			io.of('/auth').to(socket.id).emit('my-message', res);
+			return true;
+		})
+		.catch(function (rej, err) {
+			console.error(rej.message);
+			var errmsg = { errcode: 22, msg: rej.message };
+			io.of('/auth').to(socket.id).emit('error-message', errmsg);
+			if (err) throw(err);
+			return false;
+		})
 	}
 	return false;
 }
@@ -94,8 +94,9 @@ io
 	log += connected;
 	console.log(log);
 	var usrtmp = "welcome " + socket.id.replace(/\/auth#/g, 'user ');
-	var co_msg = { 'msg' : usrtmp, 'tot' : connected };
-	io.of('/auth').emit('my-message', co_msg);
+	var scktid = socket.id.replace(/\/auth#/g, '');
+	var co_msg = { 'msg' : usrtmp, 'scktid' : scktid, 'tot' : connected };
+	io.of('/auth').to(socket.id).emit('my-message', co_msg);
 	socket.on('user login', function (data) { checkcoData(data, socket) });
 	socket.on('disconnect', function() { connected -= 1; });
 });
