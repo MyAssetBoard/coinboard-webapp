@@ -124,7 +124,7 @@ function app_reload ()
 function app_tests ()
 {
 	# $MOCHA tests/index_route-test.js
-	./node_modules/mocha/bin/mocha tests/*-test.js
+	./node_modules/mocha/bin/mocha tests/*-test.js --exit
 }
 
 function genddoc ()
