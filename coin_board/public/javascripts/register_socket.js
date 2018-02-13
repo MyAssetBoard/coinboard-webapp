@@ -5,14 +5,24 @@ $(document).ready(function() {
 		/** empty div before fill */
 		var elem = $('#popup');
 		$('#ppContent').text('');
-		$.each(data, function(key, value) {
+		$('#ppContent').removeClass('alert-danger');
+		$('#ppContent').addClass('alert-info');
+		if (!data.errcode) {
+			$.each(data, function(key, value) {
+				var newline = $('<p>');
+				newline.html('<strong>' + key + ' :</strong>');
+				newline.append(value);
+				$('#ppContent').append(newline);
+			})
+		} else {
+			$('#ppContent').toggleClass('alert-info alert-danger');
 			var newline = $('<p>');
-			newline.html('<strong>' + key + ' :</strong>');
-			newline.append(value);
+			newline.html('<strong> Error ' + data.errcode + ' : </strong>');
+			newline.append(data.msg);
 			$('#ppContent').append(newline);
-		})
+		}
+		elem.fadeIn('fast');
 		setTimeout(function() {elem.fadeToggle('fast');}, 7000);
-		elem.toggleClass('hidden');
 
 	}
 

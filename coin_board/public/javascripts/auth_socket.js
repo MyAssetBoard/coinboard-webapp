@@ -23,7 +23,6 @@ $(document).ready(function() {
 		}
 		elem.fadeIn('fast');
 		setTimeout(function() {elem.fadeToggle('fast');}, 7000);
-
 	}
 
 	function sendname() {
