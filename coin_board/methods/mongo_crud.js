@@ -56,7 +56,7 @@ Crud.prototype.InsertInCollection = function (collectName, data, callback) {
 		var dbo = db.db(_this.dbName);
 		dbo.collection(collectName).insertOne(data)
 		.then(function(res) {
-			console.log("1 document inserted : \n\t");
+			console.log("1 document inserted : ");
 			console.log(JSON.stringify(data));
 			db.close();
 			callback && callback(res);
