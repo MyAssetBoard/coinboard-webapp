@@ -11,5 +11,6 @@ pipelines:
         caches:
           - node
         script:
+          - npm install -g yarn
           - yarn install && cd coin_board && yarn install && cd ..
           - ./INIT_DEV.sh -lt
