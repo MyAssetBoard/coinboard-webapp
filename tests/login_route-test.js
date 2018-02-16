@@ -27,12 +27,12 @@ describe('Simple GET /login on app', function() {
 });
 
 describe('Simple POST /login on app', function() {
-	it('respond with json', function(done) {
+	it('respond 403 for now', function(done) {
 		request(app)
 		.post(test_url)
 		.set('Content-type', 'application/json')
 		.send('{"email":"foobar@bizz.com"}')
-		.expect(200)
+		.expect(403)
 		.end(function(err, res) {
 			if (err) return done(err);
 			done();
