@@ -52,10 +52,8 @@ function addAssets(data) {
 		data.qtt = data.qtt.replace(/\W/g, '');
 		data.qtt = parseFloat(data.qtt);
 		var toRegister = {
-			'symbol' : data.InputName,
-			'amount' : data.InputEmail,
-			'companyname' : data.InputCompany,
-			'usercurrency' : data.InputBcurr
+			'symbol' : data.InputTicker,
+			'amount' : data.InputAmount,
 		};
 		var crud = new crudMod("test2");
 		crud.InsertInCollection("r_users", toRegister, function(result) {
@@ -144,6 +142,10 @@ io
 	var log = socket.id.replace(/\/register#/g, 'User : ');
 	log += " connected to [/register] route";
 	console.log(log);
+	var usrtmp = "welcome " + socket.id.replace(/\/register#/g, 'user ');
+	var scktid = socket.id.replace(/\/register#/g, '');
+	var co_msg = { 'msg' : usrtmp, 'scktid' : scktid};
+	io.of('/register').to(socket.id).emit('my-message', co_msg);
 	socket.on('user signin', function (data) { checkRegData(data, socket)});
 	socket.on('disconnect', function() { });
 })
