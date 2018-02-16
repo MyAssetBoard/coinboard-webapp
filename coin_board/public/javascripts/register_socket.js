@@ -40,6 +40,9 @@ $(document).ready(function() {
 	register.on('connection', function (socket) { });
 	register.on('my-message', function (data) {
 		console.log(data);
+		if (data.scktid) {
+			$('#InputSocketid').val(data.scktid);
+		}
 		fillPopup(data);
 	});
 	register.on('error-message', function (data) {
