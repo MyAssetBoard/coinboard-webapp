@@ -79,7 +79,7 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	/** Check if method is GET or POST only */
 	if (!allowedMethods.includes(req.method)) {
-		res.status(500).send('Not allowed ;)');
+		res.status(500).send('=> Not allowed ;)\n');
 	} else {
 		res.render('error', error_param);
 	}
