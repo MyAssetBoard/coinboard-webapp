@@ -29,15 +29,37 @@ function checkUsr(data) {
 	});
 }
 
+
+function findCoin(address) {
+	var ticker;
+	var match = false;
+	var regex = { 'ETH': /^0x.{40}$/, };
+	for(ticker in regex) {
+		match = regex[ticker].test(address);
+		if (match) break;
+	}
+
+	if(match == true) {
+		console.log('The address ' + address + ' is a ' + ticker + ' address');
+		return match;
+	} else {
+		console.log('The address ' + address + ' does not match any coin');
+		return match;
+	}
+}
+
 function registerUsr(data) {
 	return new Promise((resolve, reject) => {
 		data.InputName = data.InputName.replace(/\W/g, '');
 		data.InputEmail = data.InputEmail.trim();
-		data.InputCompany = data.InputCompany.replace(/\W/g, '');
+		if (!findCoin(data.InputEthaddr)) {
+			data.InputEthaddr = 'NONE';
+		}
 		var toRegister = {
 			'username' : data.InputName,
 			'useremail' : data.InputEmail,
-			'companyname' : data.InputCompany,
+			'socketid'  : data.InputSocketid,
+			'ethaddr' : data.InputEthaddr,
 			'usercurrency' : data.InputBcurr
 		};
 		var crud = new crudMod('test2');
@@ -70,7 +92,7 @@ function addAssets(data) {
 function checkRegData(data, socket) {
 	if (data) {
 		if (data['InputName'] && data['InputEmail']
-		&& data['InputCompany'] && data['InputBcurr']) {
+		&& data['InputEthaddr'] && data['InputBcurr']) {
 			registerUsr(data)
 				.then(function(res) {
 					io.of('/register')
@@ -147,7 +169,11 @@ io
 		console.log(log);
 		var usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
 		var scktid = socket.id.replace(/\/auth#/g, '');
-		var co_msg = { 'msg' : usrtmp, 'scktid' : scktid, 'tot' : connected };
+		var co_msg = {
+			'msg' : usrtmp,
+			'scktid' : scktid,
+			'tot' : connected
+		};
 		io.of('/auth').to(socket.id).emit('my-message', co_msg);
 		socket.on('user login', function (data) { checkcoData(data, socket); });
 		socket.on('disconnect', function() { connected -= 1; });
@@ -159,7 +185,14 @@ io
 		var log = socket.id.replace(/\/register#/g, 'User : ');
 		log += ' connected to [/register] route';
 		console.log(log);
-		socket.on('user signin', function (data) { checkRegData(data, socket);});
+		var scktid = socket.id.replace(/\/register#/g, '');
+		var co_msg = { 'scktid' : scktid };
+		io.of('/register').to(socket.id).emit('my-message', co_msg);
+		socket.on('user signin', function (data) {
+			console.log('received :');
+			console.log(data);
+			checkRegData(data, socket);
+		});
 		socket.on('disconnect', function() { });
 	});
 
