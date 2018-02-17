@@ -1,3 +1,5 @@
+/* global io:false*/
+
 $(document).ready(function() {
 	var register = io.connect('http://localhost:3001/register');
 
@@ -13,7 +15,7 @@ $(document).ready(function() {
 				newline.html('<strong>' + key + ' :</strong>');
 				newline.append(value);
 				$('#ppContent').append(newline);
-			})
+			});
 		} else {
 			$('#ppContent').toggleClass('alert-info alert-danger');
 			var newline = $('<p>');
@@ -29,21 +31,22 @@ $(document).ready(function() {
 	function register_send() {
 		var tosend = {};
 		console.log('ok');
-		$("[id^='Input']").each(function(){
+		$('[id^=\'Input\']').each(function(){
 			tosend[this.id] = this.value.trim();
 		});
-		console.log("sending to server : ");
+		console.log('sending to server : ');
 		console.log(tosend);
 		register.emit('user signin', tosend);
 	}
 
-	register.on('connection', function (socket) { });
+	register.on('connection', function ( ) { });
 	register.on('my-message', function (data) {
 		if (data.scktid) {
 			$('#InputSocketid').val(data.scktid);
+		} else {
+			fillPopup(data);
 		}
 		console.log(data);
-		fillPopup(data);
 	});
 	register.on('error-message', function (data) {
 		console.log(data);
