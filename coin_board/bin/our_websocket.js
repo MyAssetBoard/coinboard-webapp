@@ -17,13 +17,17 @@ const crudMod = require('../methods/mongo_crud');
 
 function checkUsr(data) {
 	return new Promise((resolve, reject) => {
-		var value = data.findName.replace(/\W/g, '');
-		var key = 'username';
+		var value = data.inputName.replace(/\W/g, '');
+		var value1 = data.inputSocketid;
 		var toFind = {};
-		toFind[key] = value;
+		toFind['username'] = value;
+		toFind['socketid'] = value1;
 		var crud = new crudMod('test2');
 		crud.FindInCollection('r_users', toFind, function(result) {
-			if (result && result[key]) { resolve(result); }
+			if (result) {
+				console.log(result);
+				resolve(result);
+			}
 			reject(new Error('Bad user'));
 		});
 	});
@@ -140,7 +144,7 @@ function checkAssetData(data, socket) {
 }
 
 function checkcoData(data, socket) {
-	if (data['findName']) {
+	if (data['inputName'] && data['inputSocketid']) {
 		checkUsr(data)
 			.then(function(res) {
 				io.of('/auth').to(socket.id).emit('my-message', res);
