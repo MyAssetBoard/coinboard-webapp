@@ -3,6 +3,8 @@
 		"node": true,
 		"browser": true,
 		"jquery": true,
+		"mocha": true,
+		"mongo": true,
 		"es6":	true
 	},
 	"extends": "eslint:recommended",
