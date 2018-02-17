@@ -1,14 +1,25 @@
-var express = require('express');
-var router = express.Router();
-var param = require('../params/login_param');
+/**
+* @file @Login page route methods definitions
+* @author based on express boilerplate and edited by Trevis Gulby
+*/
 
-function render403(req, res, next) {
-	response = '\n\tAhah lolilol\n\tTry this : ":(){ :|:& }:"\n'
+var express;
+var router;
+var param;
+
+express  = require('express');
+router = express.Router();
+param = require('../params/login_param');
+
+function render403(req, res) {
+	'use strict';
+	var response = '\n\tTry this : ":(){ :|:& }:"\n';
 	response += '\t& go rtfm :)\n';
 	res.status(403).send(response);
 }
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
+	'use strict';
 	res.render('login', param);
 });
 
