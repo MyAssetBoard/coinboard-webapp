@@ -1,3 +1,8 @@
+/**
+* @file Error view params
+* @author Trevis Gulby
+*/
+
 const param = {
 	title	: 'Coin_B. => ItsA(NastyBUG)',
 	author	: '© Copyright 2018 coin_board x)',
