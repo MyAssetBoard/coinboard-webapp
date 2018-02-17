@@ -2,14 +2,19 @@
 * @file Main runable executable for app
 * @author base on Express app and edited by Trevis Gulby
 */
+'use strict';
 
 /** Module dependencies.*/
-var app = require('../app');
-var debug = require('debug')('coin-board:server');
-var http = require('http');
+var app;
+var debug;
+var http;
+app = require('../app');
+debug = require('debug')('coin-board:server');
+http = require('http');
 
 /** Get port from environment and store in Express. */
-var port = normalizePort(process.env.PORT || '3000');
+var port;
+port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /** Create HTTP server.*/
@@ -21,6 +26,7 @@ console.log('WEB_VIEW - coin_board micro service started\n');
 server.listen(port, function () {
 	console.log('WEB_VIEW - server is listening');
 });
+
 server.on('error', onError);
 server.on('listening', onListening);
 
@@ -50,20 +56,20 @@ function onError(error) {
 	}
 
 	var bind = typeof port === 'string'
-	? 'Pipe ' + port
-	: 'Port ' + port;
+		? 'Pipe ' + port
+		: 'Port ' + port;
 
 	// handle specific listen errors with friendly messages
 	switch (error.code) {
-		case 'EACCES':
+	case 'EACCES':
 		console.error(bind + ' requires elevated privileges');
 		process.exit(1);
 		break;
-		case 'EADDRINUSE':
+	case 'EADDRINUSE':
 		console.error(bind + ' is already in use');
 		process.exit(1);
 		break;
-		default:
+	default:
 		throw error;
 	}
 }
@@ -72,9 +78,9 @@ function onError(error) {
 function onListening() {
 	var addr = server.address();
 	var bind = typeof addr === 'string'
-	? 'pipe ' + addr
-	: 'port ' + addr.port;
+		? 'pipe ' + addr
+		: 'port ' + addr.port;
 	debug('Listening on ' + bind);
 }
 
-module.exports = app
+module.exports = app;
