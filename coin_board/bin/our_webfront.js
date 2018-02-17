@@ -2,19 +2,18 @@
 * @file Main runable executable for app
 * @author base on Express app and edited by Trevis Gulby
 */
-'use strict';
 
 /** Module dependencies.*/
 var app;
 var debug;
 var http;
+
 app = require('../app');
 debug = require('debug')('coin-board:server');
 http = require('http');
 
 /** Get port from environment and store in Express. */
-var port;
-port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /** Create HTTP server.*/
@@ -26,7 +25,6 @@ console.log('WEB_VIEW - coin_board micro service started\n');
 server.listen(port, function () {
 	console.log('WEB_VIEW - server is listening');
 });
-
 server.on('error', onError);
 server.on('listening', onListening);
 
