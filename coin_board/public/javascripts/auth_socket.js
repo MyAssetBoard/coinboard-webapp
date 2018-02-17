@@ -30,14 +30,31 @@ $(document).ready(function() {
 
 	function sendname() {
 		var name = $('#inputName').val();
+		var scktid = $('#inputSocketid').val();
 		name = name.trim();
+		scktid = scktid.trim();
+		var toSend = {};
+		toSend['inputName'] = name;
+		toSend['inputSocketid'] = scktid;
+		console.log('Sending :');
+		console.log(toSend);
 		if (name.length > 2) {
-			auth.emit('user login', {'findName': name});
+			auth.emit('user login', toSend);
 		}
 	}
 
 	auth.on('connection', function (socket) {console.log(socket.id);});
 	auth.on('my-message', function (data) {
+		if (data._id) {
+			fillPopup(data);
+			window.setTimeout(function(){
+				var uri = './myassets?id=' + data._id;
+				var res = encodeURI(uri);
+				window.location.href = res;
+			}, 2000);
+		} else {
+			fillPopup(data);
+		}
 		console.log(data);
 		fillPopup(data);
 	});
