@@ -1,5 +1,8 @@
+/* global io:false*/
+
 $(document).ready(function() {
-	var auth = io.connect('http://localhost:3001/auth');
+	var auth;
+	auth = io.connect('http://localhost:3001/auth');
 
 	function fillPopup(data) {
 		/** empty div before fill */
@@ -13,7 +16,7 @@ $(document).ready(function() {
 				newline.html('<strong>' + key + ' :</strong>');
 				newline.append(value);
 				$('#ppContent').append(newline);
-			})
+			});
 		} else {
 			$('#ppContent').toggleClass('alert-info alert-danger');
 			var newline = $('<p>');
@@ -33,7 +36,7 @@ $(document).ready(function() {
 		}
 	}
 
-	auth.on('connection', function (socket) {});
+	auth.on('connection', function (socket) {console.log(socket.id);});
 	auth.on('my-message', function (data) {
 		console.log(data);
 		fillPopup(data);
@@ -43,5 +46,7 @@ $(document).ready(function() {
 		fillPopup(data);
 	});
 	/** dom manip - login event */
-	$('#login').click(sendname);
+	$('#login').click(function() {
+		sendname();
+	});
 });
