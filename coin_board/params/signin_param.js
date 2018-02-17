@@ -4,6 +4,8 @@
 */
 
 var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
+var cdn1 = 'https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.min.js';
+
 
 const param = {
 	title	: 'Signin',
@@ -11,7 +13,9 @@ const param = {
 	page	: 'signin',
 	scripts	: {
 		socketio	: cdn,
-		mysocket	: 'register_socket.js'
+		web3cdn		: cdn1,
+		myweb3		: 'web3_hellowrld.js',
+		mysocket	: 'signin_socket.js'
 	},
 	blocks : {
 		jumbo		: 'blocks/my_jumbotron',
