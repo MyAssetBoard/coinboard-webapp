@@ -39,6 +39,9 @@ $(document).ready(function() {
 
 	register.on('connection', function (socket) { });
 	register.on('my-message', function (data) {
+		if (data.scktid) {
+			$('#InputSocketid').val(data.scktid);
+		}
 		console.log(data);
 		fillPopup(data);
 	});
