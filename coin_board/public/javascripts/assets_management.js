@@ -1,5 +1,6 @@
+/* global io:false */
 $(document).ready(function() {
-	var socket = io.connect('http://localhost:3001');
+	var socket  = io.connect('http://localhost:3001');
 
 	socket.on('connect', function () {
 		console.log('ok co');
