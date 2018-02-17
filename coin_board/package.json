@@ -15,6 +15,7 @@
     "morgan": "~1.9.0",
     "rethinkdb": "^2.3.3",
     "serve-favicon": "~2.4.5",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "web3": "^1.0.0-beta.30"
   }
 }
