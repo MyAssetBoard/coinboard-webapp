@@ -14,7 +14,7 @@ const param = {
 	scripts	: {
 		socketio	: cdn,
 		web3cdn		: cdn1,
-		myweb3		: 'web3_hellowrld.js',
+		myweb3		: 'web3_checkaddress.js',
 		mysocket	: 'signin_socket.js'
 	},
 	blocks : {
