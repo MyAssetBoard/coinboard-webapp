@@ -13,6 +13,7 @@ param = require('../params/signin_param');
 
 /* GET home page. */
 router.get('/', function(req, res) {
+	console.log(req.session.cookie);
 	res.render('signin', param);
 });
 
