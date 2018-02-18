@@ -1,35 +1,42 @@
-<div class="card">
+<button class="btn btn-secondary btn-lg btn-block dropdown-toggle"
+data-toggle="dropdown" role="button" id="showMine">
+	<span class="lnr lnr-briefcase"></span>
+	My assets
+</button>
+<div class="card hidden" id="showCard">
 	<div class="card-block">
-		<button class="btn btn-secondary btn-lg btn-block">
-			<span class="lnr lnr-briefcase"></span>
-			My assets
-		</button>
 		<div class="card-header">
 			<ul class="nav nav-pills nav-fill">
-				<li class="active nav-item">
-					<a class="nav-link" data-toggle="tab"
-					href="#home">Fiat Accounts</a>
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab"
+					href="#home" role="tab"
+					aria-controls="home" aria-expanded="true">
+					Fiat Accounts</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab"
-					href="#menu1">Ethereum</a>
+					href="#menu1" role="tab"
+					aria-controls="#menu1">Ethereum</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab"
-					href="#menu2">ERC20 Tokens</a>
+					href="#menu2" role="tab"
+					aria-controls="#menu2">ERC20 Tokens</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab"
-					href="#menu3">NEO</a>
+					href="#menu3" role="tab"
+					aria-controls="#menu3">NEO</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="tab"
-					href="#menu4">NEP5 Tokens</a>
+					href="#menu4" role="tab"
+					aria-controls="#menu4">NEP5 Tokens</a>
 				</li>
 			</ul>
 		</div>
 		<div class="tab-content card-body">
-			<div id="home" class="tab-pane fade active visible">
+			<div id="home" class="tab-pane fade show active visible">
 				<h3>EUR</h3>
 				<p>Advcash :</p>
 				<p id="advsumeur"></p>
@@ -56,6 +63,69 @@
 				<h3>Wallets</h3>
 				<p> Account : AYxxxxxx</p>
 				<p> Balance : 0.00 XXX</p>
+			</div>
+		</div>
+	</div>
+</div>
+<br><br>
+<button class="btn btn-secondary btn-lg btn-block dropdown-toggle" id="showAdd">
+	<span class="lnr lnr-pencil"></span>
+	[+] Add
+</button>
+<div class="card hidden" id="addCard">
+	<div class="card-block">
+		<div class="card-header">
+			<ul class="nav nav-pills nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab"
+					href="#Fiat">Fiat Accounts</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab"
+					href="#Eth">Ethereum</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab"
+					href="#EthToken">ERC20 Tokens</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab"
+					href="#Neo">NEO</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab"
+					href="#NeoToken">NEP5 Tokens</a>
+				</li>
+			</ul>
+		</div>
+		<div class="tab-content card-body">
+			<div id="Fiat" class="tab-pane fade show active visible">
+				<h3 id="ticker">EUR</h3>
+				<p>Advcash :</p>
+				<p id="advsumeur"></p>
+				<h3>USD</h3>
+				<p>Advcash :</p>
+				<p id="advsumusd"></p>
+			</div>
+			<div id="Eth" class="tab-pane fade">
+				<h3 id="ticker">ETH</h3>
+				<input id="qtt" type="text"
+				placeholder="enter amount">
+			</div>
+			<div id="EthToken" class="tab-pane fade">
+				<h3 id="ticker">ERC20</h3>
+				<input id="qtt" type="text"
+				placeholder="enter amount">
+			</div>
+			<div id="Neo" class="tab-pane fade">
+				<h3 id="ticker">NEO</h3>
+				<input id="qtt" type="text"
+				placeholder="enter amount">
+			</div>
+			<div id="NeoToken" class="tab-pane fade">
+				<h3 id="ticker">ETH</h3>
+				<input id="qtt" type="text"
+				placeholder="enter amount">
 			</div>
 		</div>
 	</div>
