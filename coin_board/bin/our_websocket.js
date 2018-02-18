@@ -12,156 +12,8 @@ io = require('socket.io')(port);
 
 console.log('WEBSOCKET - Runnnig');
 /** dep import */
-const crudMod = require('../methods/mongo_crud');
-
-
-function checkUsr(data) {
-	return new Promise((resolve, reject) => {
-		var value = data.inputName.replace(/\W/g, '');
-		var value1 = data.inputSocketid;
-		var toFind = {};
-		toFind['username'] = value;
-		toFind['socketid'] = value1;
-		var crud = new crudMod('test2');
-		crud.FindInCollection('r_users', toFind, function(result) {
-			if (result) {
-				console.log(result);
-				resolve(result);
-			}
-			reject(new Error('Bad user'));
-		});
-	});
-}
-
-
-function findCoin(address) {
-	var ticker;
-	var match = false;
-	var regex = { 'ETH': /^0x.{40}$/, };
-	for(ticker in regex) {
-		match = regex[ticker].test(address);
-		if (match) break;
-	}
-
-	if(match == true) {
-		console.log('The address ' + address + ' is a ' + ticker + ' address');
-		return match;
-	} else {
-		console.log('The address ' + address + ' does not match any coin');
-		return match;
-	}
-}
-
-function registerUsr(data) {
-	return new Promise((resolve, reject) => {
-		data.InputName = data.InputName.replace(/\W/g, '');
-		data.InputEmail = data.InputEmail.trim();
-		if (!findCoin(data.InputEthaddr)) {
-			data.InputEthaddr = 'NONE';
-		}
-		var toRegister = {
-			'username' : data.InputName,
-			'useremail' : data.InputEmail,
-			'socketid'  : data.InputSocketid,
-			'ethaddr' : data.InputEthaddr,
-			'usercurrency' : data.InputBcurr
-		};
-		var crud = new crudMod('test2');
-		crud.InsertInCollection('r_users', toRegister, function(result) {
-			if (result) {resolve(result);}
-			reject(new Error('Db Error'));
-		});
-	});
-}
-
-function addAssets(data) {
-	return new Promise((resolve, reject) => {
-		data.ticker = data.ticker.replace(/\W/g, '');
-		data.qtt = data.qtt.replace(/\W/g, '');
-		data.qtt = parseFloat(data.qtt);
-		var toRegister = {
-			'symbol' : data.InputName,
-			'amount' : data.InputEmail,
-			'ethaddr' : data.InputCompany,
-			'usercurrency' : data.InputBcurr
-		};
-		var crud = new crudMod('test2');
-		crud.InsertInCollection('r_users', toRegister, function(result) {
-			if (result) {resolve(result);}
-			reject(new Error('Db Error'));
-		});
-	});
-}
-
-function checkRegData(data, socket) {
-	if (data) {
-		if (data['InputName'] && data['InputEmail']
-		&& data['InputEthaddr'] && data['InputBcurr']) {
-			registerUsr(data)
-				.then(function(res) {
-					io.of('/register')
-						.to(socket.id)
-						.emit('my-message', res);
-					return true;
-				})
-				.catch(function (rej, err) {
-					console.error(rej.message);
-					var errmsg = {
-						errcode: 22,
-						msg: rej.message
-					};
-					io.of('/register')
-						.to(socket.id)
-						.emit('error-message', errmsg);
-					if (err) throw(err);
-					return false;
-				});
-
-		}
-	}
-}
-
-function checkAssetData(data, socket) {
-	if (data['ticker'] && data['qtt']) {
-		addAssets(data)
-			.then(function (res) {
-				io.of('/assets')
-					.to(socket.id)
-					.emit('my-message', res);
-				return true;
-			})
-			.catch(function (rej, err) {
-				console.error(rej.message);
-				var msg = { errcode: 23, msg: rej.message };
-				io.of('/assets')
-					.to(socket.id)
-					.emit('error-message', msg);
-				if (err) throw(err);
-				return false;
-			});
-	}
-	return false;
-}
-
-function checkcoData(data, socket) {
-	if (data['inputName'] && data['inputSocketid']) {
-		checkUsr(data)
-			.then(function(res) {
-				io.of('/auth').to(socket.id).emit('my-message', res);
-				return true;
-			})
-			.catch(function (rej, err) {
-				console.error(rej.message);
-				var errmsg = { errcode: 22, msg: rej.message };
-				io.of('/auth')
-					.to(socket.id)
-					.emit('error-message', errmsg);
-				if (err) throw(err);
-				return false;
-			});
-	}
-	return false;
-}
+const assetMod = require('../methods/assets_methods');
+const authMod = require('../methods/auth_methods');
 
 io
 	.of('/auth')
@@ -178,8 +30,13 @@ io
 			'scktid' : scktid,
 			'tot' : connected
 		};
-		io.of('/auth').to(socket.id).emit('my-message', co_msg);
-		socket.on('user login', function (data) { checkcoData(data, socket); });
+		io.of('/auth')
+			.to(socket.id)
+			.emit('my-message', co_msg);
+		socket.on('user login', function (data) {
+			var auth = new authMod();
+			auth.checkcoData(data, socket, io);
+		});
 		socket.on('disconnect', function() { connected -= 1; });
 	});
 
@@ -191,11 +48,14 @@ io
 		console.log(log);
 		var scktid = socket.id.replace(/\/register#/g, '');
 		var co_msg = { 'scktid' : scktid };
-		io.of('/register').to(socket.id).emit('my-message', co_msg);
+		io.of('/register')
+			.to(socket.id)
+			.emit('my-message', co_msg);
 		socket.on('user signin', function (data) {
+			var auth = new authMod();
 			console.log('received :');
 			console.log(data);
-			checkRegData(data, socket);
+			auth.checkRegData(data, socket, io);
 		});
 		socket.on('disconnect', function() { });
 	});
@@ -206,9 +66,10 @@ io
 		var log = socket.id.replace(/\/register#/g, 'User : ');
 		log += ' connected to [/assets] route';
 		console.log(log);
+		var asset = new assetMod();
 		socket.on('add asset', function (data) {
 			console.log(data);
-			checkAssetData(data, socket);
+			asset.checkAssetData(data, socket, io);
 		});
 		socket.on('disconnect', function() { });
 	});
