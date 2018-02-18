@@ -18,10 +18,10 @@ const authMod = require('../methods/auth_methods');
 io
 	.of('/auth')
 	.on('connection', function (socket) {
+		var log;
 		connected += 1;
-		var log = socket.id.replace(/\/auth#/g, 'User : ');
-		log += ' connected to [/auth] route \nconnected : ';
-		log += connected;
+		log = socket.id.replace(/\/auth#/g, 'User : ');
+		log += ' connected to [/auth] route | Connected : ' + connected;
 		console.log(log);
 		var usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
 		var scktid = socket.id.replace(/\/auth#/g, '');
