@@ -7,10 +7,12 @@ $(document).ready(function() {
 	});
 
 	socket.on('error', function (e) {
-		message('System', e ? e : 'A unknown error occurred');
+		console.log('System', e ? e : 'A unknown error occurred');
 	});
-
-	function message (msg) {
-		console.log(msg);
-	}
+	$('#showMine').click(function() {
+		$('#showCard').toggleClass('hidden');
+	});
+	$('#showAdd').click(function() {
+		$('#addCard').toggleClass('hidden');
+	});
 });
