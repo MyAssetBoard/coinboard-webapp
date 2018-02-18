@@ -1,74 +1,116 @@
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-// Connection URL
-const url = 'mongodb://localhost:27017';
+/**
+* @file @Login methods definitions
+* @author based on express boilerplate and edited by Trevis Gulby
+*/
 
-// Database Name
-const dbName = 'users';
-
-function createTextIndex(db, indexname, callback)
-{
-	// Get the documents collection
-	const collection = db.collection(dbName);
-	var com = {};
-	this.indexname = indexname;
-	//console.log(indexname);
-	com[indexname] = "text";
-	console.log(JSON.stringify(com));
-	// Create the index
-	collection.createIndex(com, function(err, result) {
-		console.log(result);
-		if (err) {
-			console.error('Auth_method - Create index throw error : ');
-			console.error(err.message);
-			throw (err);
-		}
-		callback(result);
-	});
-};
-
-function createAscendingIndex(db, indexname, callback)
-{
-	// Get the users collection
-	const collection = db.collection(dbName);
-	var birthdate = { indexname : 1 };
-	// Create the index
-	collection.createIndex(birthdate, function(err, result) {
-		console.log(result);
-		callback(result);
-	});
-};
+/** dep import */
+const crudMod = require('../methods/mongo_crud');
 
 function Auth() {
-	this.userEmail = "deflt@deflt.es";
+
 }
 
-Auth.prototype.connect = function (email) {
-	// Use connect method to connect to the server
-	MongoClient.connect(url, function(err, client) {
-		assert.equal(null, err);
-		console.log("Auth_method - Connected successfully to Mongod");
-		console.log(email);
-		const db = client.db(dbName);
-		if (email) {
-			createTextIndex(db, email, function(result) {
-				assert.equal(email + '_text', result);
-				console.log('create' + email + 'text index');
-			})
-		}
-		createAscendingIndex(db, "yolo", function(result) {
-			assert.equal('yolo_1', result);
-			console.log('create yolo index');
-		})
-		// db.person.findOne()
-		// {
-		// 	email: email
-		// }
-		client.close();
+function checkUsr(data) {
+	return new Promise((resolve, reject) => {
+		var value = data.inputName.replace(/\W/g, '');
+		var value1 = data.inputSocketid;
+		var toFind = {};
+		toFind['username'] = value;
+		toFind['socketid'] = value1;
+		var crud = new crudMod('test2');
+		crud.FindInCollection('r_users', toFind, function(result) {
+			if (result) {
+				console.log(result);
+				resolve(result);
+			}
+			reject(new Error('Bad user'));
+		});
 	});
-	return a = "yolo";
+}
+
+
+function iscoinAddr(address) {
+	var ticker;
+	var match = false;
+	var regex = { 'ETH': /^0x.{40}$/, };
+	for(ticker in regex) {
+		match = regex[ticker].test(address);
+		if (match) break;
+	}
+	return match;
+}
+
+/**
+* @TODO : Make toRegister stick with r_usermodel
+*/
+function registerUsr(data) {
+	return new Promise((resolve, reject) => {
+		data.InputName = data.InputName.replace(/\W/g, '');
+		data.InputEmail = data.InputEmail.trim();
+		if (!iscoinAddr(data.InputEthaddr)) {
+			data.InputEthaddr = 'NONE';
+		}
+		var toRegister = {
+			'username' : data.InputName,
+			'useremail' : data.InputEmail,
+			'socketid'  : data.InputSocketid,
+			'ethaddr' : data.InputEthaddr,
+			'usercurrency' : data.InputBcurr
+		};
+		var crud = new crudMod('test2');
+		crud.InsertInCollection('r_users', toRegister, function(result) {
+			if (result) {resolve(result);}
+			reject(new Error('Db Error'));
+		});
+	});
+}
+
+Auth.prototype.checkRegData = function(data, socket, io) {
+	if (data) {
+		if (data['InputName'] && data['InputEmail']
+		&& data['InputEthaddr'] && data['InputBcurr']) {
+			registerUsr(data)
+				.then(function(res) {
+					io.of('/register')
+						.to(socket.id)
+						.emit('my-message', res);
+					return true;
+				})
+				.catch(function (rej, err) {
+					console.error(rej.message);
+					var errmsg = {
+						errcode: 22,
+						msg: rej.message
+					};
+					io.of('/register')
+						.to(socket.id)
+						.emit('error-message', errmsg);
+					if (err) throw(err);
+					return false;
+				});
+
+		}
+	}
 };
 
-
+Auth.prototype.checkcoData = function(data, socket, io) {
+	if (data['inputName'] && data['inputSocketid']) {
+		checkUsr(data)
+			.then(function(res) {
+				io.of('/auth').to(socket.id).emit('my-message', res);
+				return true;
+			})
+			.catch(function (rej, err) {
+				console.error(rej.message);
+				var errmsg = { errcode: 22, msg: rej.message };
+				io.of('/auth')
+					.to(socket.id)
+					.emit('error-message', errmsg);
+				if (err) throw(err);
+				return false;
+			});
+	}
+	return false;
+};
 
 module.exports = Auth;
