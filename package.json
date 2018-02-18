@@ -7,6 +7,7 @@
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
 	"license": "MIT",
 	"dependencies": {
+		"eslint": "^4.18.0",
 		"mongodb": "^3.0.2",
 		"pm2": "^2.9.1"
 	},
