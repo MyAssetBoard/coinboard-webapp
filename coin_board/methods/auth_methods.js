@@ -5,6 +5,8 @@
 
 /** dep import */
 const crudMod = require('../methods/mongo_crud');
+const CryptoJS = require('crypto-js');
+
 
 function Auth() {
 
@@ -20,10 +22,10 @@ function checkUsr(data) {
 		var crud = new crudMod('test2');
 		crud.FindInCollection('r_users', toFind, function(result) {
 			if (result) {
-				console.log(result);
 				resolve(result);
+			} else {
+				reject(new Error('Bad user'));
 			}
-			reject(new Error('Bad user'));
 		});
 	});
 }
@@ -97,7 +99,14 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 	if (data['inputName'] && data['inputSocketid']) {
 		checkUsr(data)
 			.then(function(res) {
-				io.of('/auth').to(socket.id).emit('my-message', res);
+				var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(res._id), 'yolo 123');
+				var enc = ciphertext.toString();
+				console.log(enc);
+				var resp = {};
+				resp['_id'] = enc;
+				io.of('/auth')
+					.to(socket.id)
+					.emit('my-message', resp);
 				return true;
 			})
 			.catch(function (rej, err) {
