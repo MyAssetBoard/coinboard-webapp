@@ -1,10 +1,11 @@
 /** Depencies import */
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 
 /** index route import */
 const index = require('./routes/index');
@@ -16,17 +17,16 @@ const login = require('./routes/login');
 const signin = require('./routes/signin');
 /** Error view params */
 const error_param = require('./params/error_param');
+const allowedMethods = ['GET'];
 
 
 var app = express();
-const allowedMethods = ['GET'];
 var options = {
 	'X-Content-Type-Options'	: 'nosniff',
 	'X-Frame-Options'		: 'DENY',
 	'X-XSS-Protection'		: '1; mode=block',
 	'etag'				: 'false'
-}
-
+};
 var favOptions = {
 	dotfiles: 'ignore',
 	etag: false,
@@ -34,7 +34,7 @@ var favOptions = {
 	index: false,
 	maxAge: '1d',
 	redirect: false
-}
+};
 
 /** view engine setup */
 app.set('views', path.join(__dirname, 'views'));
@@ -50,6 +50,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {etag: false}));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
+
+
+app.use(session({
+	secret: 'keyboard cat',
+	resave: false,
+	saveUninitialized: true, // don't create session until something stored
+	cookie: { maxAge: 60000 }
+}));
 
 /** Routes import */
 app.use('/', index);
@@ -83,6 +91,7 @@ app.use(function(err, req, res, next) {
 	} else {
 		res.render('error', error_param);
 	}
+	next(err);
 });
 
 
