@@ -19,12 +19,15 @@ router.get('/', function(req, res) {
 	console.log(req.session);
 	if (req.session.uid) {
 		var auth = new authMod();
-		if (auth.userisAuth(req.session.uid)) {
-			defparams.yolo = 'ahaha';
-			res.render('assets', defparams);
-		} else {
-			res.render('assets', defparams);
-		}
+		auth.userisAuth(req.session.uid)
+			.then(function(result) {
+				defparams._local = result;
+				console.log(defparams);
+				res.render('assets', defparams);
+			})
+			.catch(function (err) {
+				if (err) throw err;
+			});
 	} else {
 		res.render('assets', defparams);
 	}

@@ -53,7 +53,12 @@ function checkUid(data) {
 		var crud = new crudMod('test2');
 		var val = new ObjectID(data);
 		crud.FindInCollection('r_users', val, function (res) {
-			if (res) { resolve(res); }
+			if (res) {
+				/** STRIP PRIVATE FIELDS */
+				delete res._id;
+				delete res.socketid;
+				resolve(res);
+			}
 			reject(new Error('Bad Id'));
 		});
 	});
@@ -161,19 +166,18 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 };
 
 Auth.prototype.userisAuth = function(eUid) {
-	var duid = dcryptParams(eUid);
-	if (duid.length > 5 && duid.length < 45) {
+	return new Promise((resolve, reject) => {
+		var duid = dcryptParams(eUid);
 		checkUid(duid)
 			.then(function (res) {
-				console.log(res);
-				return true;
+				resolve(res);
 			})
 			.catch(function (rej, err) {
 				console.error(rej.message);
 				if (err) throw err;
-				return false;
+				reject(new Error('user not found'));
 			});
-	}
-	return false;
+	});
 };
+
 module.exports = Auth;
