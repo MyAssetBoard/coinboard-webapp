@@ -15,8 +15,7 @@ const param = {
 	},
 	blocks : {
 		jumbo	: 'blocks/my_jumbotron',
-		assets	: 'blocks/my_assets',
-		crud	: 'blocks/my_crudblock'
+		assets	: 'blocks/my_assets'
 	}
 };
 
