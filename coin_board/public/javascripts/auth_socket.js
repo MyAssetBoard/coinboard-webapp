@@ -48,9 +48,8 @@ $(document).ready(function() {
 		if (data._id) {
 			fillPopup(data);
 			window.setTimeout(function(){
-				var uri = './myassets?id=' + data._id;
-				var res = encodeURI(uri);
-				window.location.href = res;
+				var uri = '/id/' + data._id;
+				window.location.href += uri;
 			}, 2000);
 		} else {
 			fillPopup(data);
