@@ -5,13 +5,63 @@
 
 /** dep import */
 const crudMod = require('../methods/mongo_crud');
+const ObjectID = require('mongodb').ObjectID;
 const CryptoJS = require('crypto-js');
 
 
-function Auth() {
+/**
+* Helpers functs to be mooved later !!
+*/
 
+function dcryptParams(p) {
+	var enckey = 'yolo 123';
+	var bytes  = CryptoJS.AES.decrypt(p, enckey);
+	var plaintext = bytes.toString(CryptoJS.enc.Utf8);
+	console.log('(!!update enckey)plaintext ? ' + plaintext);
+	return plaintext;
 }
 
+function encryptParams(p) {
+	var enckey = 'yolo 123';
+	var toenc = p._id.toString();
+	/* lolilol to be randomized */
+	var citxt = CryptoJS.AES.encrypt(toenc, enckey);
+	var enc = citxt.toString();
+	return enc;
+}
+
+function iscoinAddr(address) {
+	var ticker;
+	var match = false;
+	var regex = { 'ETH': /^0x.{40}$/, };
+	for(ticker in regex) {
+		match = regex[ticker].test(address);
+		if (match) break;
+	}
+	return match;
+}
+
+function Auth() {
+}
+
+/**
+* \brief basically checking is a decrypted _id
+*	exist in user collection
+*/
+function checkUid(data) {
+	return new Promise((resolve, reject) => {
+		var crud = new crudMod('test2');
+		var val = new ObjectID(data);
+		crud.FindInCollection('r_users', val, function (res) {
+			if (res) { resolve(res); }
+			reject(new Error('Bad Id'));
+		});
+	});
+}
+
+/**
+* \brief username /password checking method
+*/
 function checkUsr(data) {
 	return new Promise((resolve, reject) => {
 		var value = data.inputName.replace(/\W/g, '');
@@ -30,19 +80,8 @@ function checkUsr(data) {
 	});
 }
 
-
-function iscoinAddr(address) {
-	var ticker;
-	var match = false;
-	var regex = { 'ETH': /^0x.{40}$/, };
-	for(ticker in regex) {
-		match = regex[ticker].test(address);
-		if (match) break;
-	}
-	return match;
-}
-
 /**
+* \brief register a new user base on a toregister format
 * @TODO : Make toRegister stick with r_usermodel
 */
 function registerUsr(data) {
@@ -66,6 +105,7 @@ function registerUsr(data) {
 		});
 	});
 }
+
 
 Auth.prototype.checkRegData = function(data, socket, io) {
 	if (data) {
@@ -99,11 +139,9 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 	if (data['inputName'] && data['inputSocketid']) {
 		checkUsr(data)
 			.then(function(res) {
-				var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(res._id), 'yolo 123');
-				var enc = ciphertext.toString();
+				var enc = encryptParams(res);
 				console.log(enc);
-				var resp = {};
-				resp['_id'] = enc;
+				var resp = {_id: enc };
 				io.of('/auth')
 					.to(socket.id)
 					.emit('my-message', resp);
@@ -111,7 +149,7 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 			})
 			.catch(function (rej, err) {
 				console.error(rej.message);
-				var errmsg = { errcode: 22, msg: rej.message };
+				var errmsg = { msg: rej.message };
 				io.of('/auth')
 					.to(socket.id)
 					.emit('error-message', errmsg);
@@ -122,4 +160,20 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 	return false;
 };
 
+Auth.prototype.userisAuth = function(eUid) {
+	var duid = dcryptParams(eUid);
+	if (duid.length > 5 && duid.length < 45) {
+		checkUid(duid)
+			.then(function (res) {
+				console.log(res);
+				return true;
+			})
+			.catch(function (rej, err) {
+				console.error(rej.message);
+				if (err) throw err;
+				return false;
+			});
+	}
+	return false;
+};
 module.exports = Auth;

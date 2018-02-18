@@ -11,43 +11,6 @@ function Crud(dbName, collectName) {
 	this.dbName = dbName ? dbName : 'test2';
 	this.collectName = collectName ? collectName : 'users';
 }
-/** Create a database if not exist */
-Crud.prototype.createDb = function (dbName, callback) {
-	var url = uri + dbName;
-	var log = 'ok';
-	MongoClient.connect(url)
-		.then(function(db) {
-			log = 'Database ' + dbName + ' created!';
-			console.log(log);
-			callback && callback(db);
-			db.close();
-			return log;
-		})
-		.catch(function (err) { if (err) throw err; });
-	return log;
-};
-
-/** Create a Collection if not exist */
-Crud.prototype.createCollection = function (collectName, callback) {
-	var _this = this;
-	MongoClient.connect(uri)
-		.then(function(db)
-		{
-			var dbo = db.db(_this.dbName);
-			dbo.createCollection(collectName)
-				.then(function(res) {
-					console.log('MONGO - Succesfully connected to ' + _this.dbName);
-					console.log('Collection [' + collectName + '] created!');
-					var env = process.env.NODE_ENV || 'dev';
-					if (env == 'dev') console.log(res);
-					db.close();
-					callback && callback(res);
-				})
-				.catch(function (err) { if (err) throw err; });
-		})
-		.catch(function (err) { if (err) throw err; });
-
-};
 
 Crud.prototype.InsertInCollection = function (collectName, data, callback) {
 	var _this = this;

@@ -48,7 +48,7 @@ $(document).ready(function() {
 		if (data._id) {
 			fillPopup(data);
 			window.setTimeout(function(){
-				var uri = '/id/' + data._id;
+				var uri = '/id/' + encodeURIComponent(data._id);
 				window.location.href += uri;
 			}, 2000);
 		} else {
