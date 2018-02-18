@@ -13,6 +13,7 @@ param = require('../params/index_param');
 
 /* GET home page. */
 router.get('/', function(req, res) {
+	console.log(req.sessionID);
 	res.render('index', param);
 });
 
