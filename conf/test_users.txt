@@ -1,0 +1,2 @@
+username : Foobar
+socketid : hB_Z-P-G2Sul8MiYAAAD
