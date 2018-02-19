@@ -10,7 +10,9 @@ var connected = 0;
 port = process.env.WSPORT || '3001';
 io = require('socket.io')(port);
 
-console.log('WEBSOCKET - Runnnig');
+var log = 'WEBSOCKET - Runnnig';
+process.env.NODE_ENV == 'development' ? console.log(log) : log;
+
 /** dep import */
 const assetMod = require('../methods/assets_methods');
 const authMod = require('../methods/auth_methods');
@@ -22,7 +24,7 @@ io
 		connected += 1;
 		log = socket.id.replace(/\/auth#/g, 'User : ');
 		log += ' connected to [/auth] route | Connected : ' + connected;
-		console.log(log);
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
 		var scktid = socket.id.replace(/\/auth#/g, '');
 		var co_msg = {
@@ -45,7 +47,7 @@ io
 	.on('connection', function (socket) {
 		var log = socket.id.replace(/\/register#/g, 'User : ');
 		log += ' connected to [/register] route';
-		console.log(log);
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var scktid = socket.id.replace(/\/register#/g, '');
 		var co_msg = { 'scktid' : scktid };
 		io.of('/register')
@@ -53,8 +55,8 @@ io
 			.emit('my-message', co_msg);
 		socket.on('user signin', function (data) {
 			var auth = new authMod();
-			console.log('received :');
-			console.log(data);
+			var log = 'received : \n' + JSON.stringify(data);
+			process.env.NODE_ENV == 'development' ? console.log(log) : log;
 			auth.checkRegData(data, socket, io);
 		});
 		socket.on('disconnect', function() { });
@@ -65,10 +67,11 @@ io
 	.on('connection', function (socket) {
 		var log = socket.id.replace(/\/register#/g, 'User : ');
 		log += ' connected to [/assets] route';
-		console.log(log);
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var asset = new assetMod();
 		socket.on('add asset', function (data) {
-			console.log(data);
+			var log = 'add asset data returned :\n' + JSON.stringify(data);
+			process.env.NODE_ENV == 'development' ? console.log(log) : log;
 			asset.checkAssetData(data, socket, io);
 		});
 		socket.on('disconnect', function() { });

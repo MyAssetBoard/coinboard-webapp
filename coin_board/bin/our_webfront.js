@@ -19,11 +19,14 @@ app.set('port', port);
 /** Create HTTP server.*/
 
 var server = http.createServer(app);
-console.log('WEB_VIEW - coin_board micro service started\n');
+var log = 'WEB_VIEW - coin_board micro service started';
+process.env.NODE_ENV == 'development' ? console.log(log) : log;
+
 
 /** Listen on provided port, on all network interfaces. */
 server.listen(port, function () {
-	console.log('WEB_VIEW - server is listening');
+	var log = 'WEB_VIEW - server is listening';
+	process.env.NODE_ENV == 'development' ? console.log(log) : log;
 });
 server.on('error', onError);
 server.on('listening', onListening);
@@ -49,7 +52,8 @@ function normalizePort(val) {
 /** Event listener for HTTP server "error" event.*/
 function onError(error) {
 	if (error.syscall !== 'listen') {
-		console.log('On error catch !');
+		var log = 'On error catch !';
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		throw error;
 	}
 
