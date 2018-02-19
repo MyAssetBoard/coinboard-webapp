@@ -14,19 +14,27 @@ const CryptoJS = require('crypto-js');
 */
 
 function dcryptParams(p) {
+	/** @TODO lolilol to be randomized */
 	var enckey = 'yolo 123';
 	var bytes  = CryptoJS.AES.decrypt(p, enckey);
 	var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-	console.log('(!!update enckey)plaintext ? ' + plaintext);
+	var log = 'auth_methods.js|dcryptParams()\n';
+	log += '==== (TODO :update enckey)\n => plaintext if succeed [ ';
+	log += plaintext + ' ]';
+	process.env.NODE_ENV == 'infosec' ? console.log(log) : log;
 	return plaintext;
 }
 
 function encryptParams(p) {
+	/** @TODO lolilol to be randomized */
 	var enckey = 'yolo 123';
 	var toenc = p._id.toString();
-	/* lolilol to be randomized */
 	var citxt = CryptoJS.AES.encrypt(toenc, enckey);
 	var enc = citxt.toString();
+	var log = 'auth_methods.js|encryptParams(p)\n';
+	log += '==== (TODO :update enckey)\n => enc str if succeed [ ';
+	log += enc + ' ]';
+	process.env.NODE_ENV == 'infosec' ? console.log(log) : log;
 	return enc;
 }
 
@@ -46,7 +54,8 @@ function Auth() {
 
 /**
 * \brief basically checking is a decrypted _id
-*	exist in user collection
+*	exist in user collection and
+*	strip private fields from result
 */
 function checkUid(data) {
 	return new Promise((resolve, reject) => {
@@ -54,7 +63,6 @@ function checkUid(data) {
 		var val = new ObjectID(data);
 		crud.FindInCollection('r_users', val, function (res) {
 			if (res) {
-				/** STRIP PRIVATE FIELDS */
 				delete res._id;
 				delete res.socketid;
 				resolve(res);
@@ -85,38 +93,48 @@ function checkUsr(data) {
 	});
 }
 
+Auth.checkRegFields = function (data) {
+	data.InputName = data.InputName.replace(/\W/g, '');
+	data.InputEmail = data.InputEmail.trim();
+	if (data.InputName.length < 3 || data.InputEmail.length < 5
+	|| data.InputSocketid.length < 5 || !data.InputEthaddr.length
+	|| data.InputBcurr.length != 3) {
+		return null;
+	}
+	if (!iscoinAddr(data.InputEthaddr)) {data.InputEthaddr = 'NONE'; }
+	return data;
+};
 /**
 * \brief register a new user base on a toregister format
 * @TODO : Make toRegister stick with r_usermodel
 */
-function registerUsr(data) {
+Auth.registerUsr = function (data) {
 	return new Promise((resolve, reject) => {
-		data.InputName = data.InputName.replace(/\W/g, '');
-		data.InputEmail = data.InputEmail.trim();
-		if (!iscoinAddr(data.InputEthaddr)) {
-			data.InputEthaddr = 'NONE';
-		}
-		var toRegister = {
-			'username' : data.InputName,
-			'useremail' : data.InputEmail,
-			'socketid'  : data.InputSocketid,
-			'ethaddr' : data.InputEthaddr,
-			'usercurrency' : data.InputBcurr
-		};
 		var crud = new crudMod('test2');
-		crud.InsertInCollection('r_users', toRegister, function(result) {
-			if (result) {resolve(result);}
-			reject(new Error('Db Error'));
-		});
+		if ((data = Auth.checkRegFields(data)) != null) {
+			var toRegister = {
+				'username' : data.InputName,
+				'useremail' : data.InputEmail,
+				'socketid'  : data.InputSocketid,
+				'ethaddr' : data.InputEthaddr,
+				'usercurrency' : data.InputBcurr
+			};
+			crud.InsertInCollection('r_users', toRegister, function(result) {
+				if (result) {resolve(result);}
+				reject(new Error('Db Error'));
+			});
+		} else {
+			reject(new Error('Invalid data submitted'));
+		}
 	});
-}
+};
 
 
 Auth.prototype.checkRegData = function(data, socket, io) {
 	if (data) {
 		if (data['InputName'] && data['InputEmail']
 		&& data['InputEthaddr'] && data['InputBcurr']) {
-			registerUsr(data)
+			Auth.registerUsr(data)
 				.then(function(res) {
 					io.of('/register')
 						.to(socket.id)
@@ -145,8 +163,9 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 		checkUsr(data)
 			.then(function(res) {
 				var enc = encryptParams(res);
-				console.log(enc);
 				var resp = {_id: enc };
+				process.env.NODE_ENV == 'development' ?
+					console.log(resp) : resp;
 				io.of('/auth')
 					.to(socket.id)
 					.emit('my-message', resp);
@@ -173,11 +192,15 @@ Auth.prototype.userisAuth = function(eUid) {
 				resolve(res);
 			})
 			.catch(function (rej, err) {
-				console.error(rej.message);
 				if (err) throw err;
 				reject(new Error('user not found'));
 			});
 	});
+};
+
+Auth.prototype.isvaliduid = function(eUid) {
+	var test = dcryptParams(eUid);
+	return test ? true : false;
 };
 
 module.exports = Auth;
