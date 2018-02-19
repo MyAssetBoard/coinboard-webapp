@@ -6,30 +6,39 @@
 var express;
 var router;
 var authMod;
-var defparams;
 
 express = require('express');
 router = express.Router();
-defparams = require('../params/myassets_param');
 authMod = require('../methods/auth_methods');
+const param = require('../params/myassets_param');
 
 
 /* GET assets page. */
-router.get('/', function(req, res) {
-	console.log(req.session);
-	if (req.session.uid) {
+router.get('/', function(req, res, next) {
+	var chck = req.session;
+	if (chck && (chck.uid || chck.cookie.uid)) {
+		console.log('assets-route| Auth user, session below');
+		console.log(chck);
 		var auth = new authMod();
-		auth.userisAuth(req.session.uid)
+		auth.userisAuth(chck.uid ? chck.uid : chck.cookie.uid)
 			.then(function(result) {
-				defparams._local = result;
-				console.log(defparams);
-				res.render('assets', defparams);
+				var dup = param;
+				//dup.uservar = result;
+				console.log('myassets| inject user info in params');
+				console.log(dup);
+				res.locals.stuff = {
+					data : result
+				};
+				res.render('assets', dup);
 			})
 			.catch(function (err) {
 				if (err) throw err;
+				next(err);
 			});
 	} else {
-		res.render('assets', defparams);
+		console.log('assets-route : no req session uid | session below');
+		console.log(chck);
+		res.render('assets', param);
 	}
 });
 
