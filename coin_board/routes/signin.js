@@ -16,17 +16,20 @@ const param = require('../params/signin_param');
 router.get('/', function(req, res, next) {
 	var chck = req.session;
 	if (chck && (chck.uid || chck.cookie.uid)) {
-		console.log('login-route : Auth user | session below');
-		console.log(chck);
+		var log = 'signin-route : Auth user | session below\n[';
+		log += JSON.stringify(chck) + ']';
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
 		auth.userisAuth(chck.uid ? chck.uid : chck.cookie.uid)
 			.then(function(result) {
 				var dup = param;
-				console.log('signin| inject user info in params');
-				console.log(dup);
+				var log = 'signin| push user info in params \n[';
 				res.locals.stuff = {
 					data : result
 				};
+				log += JSON.stringify(res.locals.stuff) + ']';
+				process.env.NODE_ENV == 'development' ?
+					console.log(log) : log;
 				res.render('signin', dup);
 			})
 			.catch(function (err) {
@@ -34,8 +37,9 @@ router.get('/', function(req, res, next) {
 				next(err);
 			});
 	} else {
-		console.log('signin-route : no req session uid | session below');
-		console.log(chck);
+		log = 'signin-route| NonAUth user, session below\n[';
+		log += JSON.stringify(chck) + ']';
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('signin', param);
 	}
 });

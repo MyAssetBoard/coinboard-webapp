@@ -16,18 +16,20 @@ const param = require('../params/index_param');
 router.get('/', function(req, res, next) {
 	var chck = req.session;
 	if (chck && (chck.uid || chck.cookie.uid)) {
-		console.log('index-route| Auth user, session below');
-		console.log(chck);
+		var log = '/INDEX-route| Auth user, session below\n[';
+		log += JSON.stringify(chck) + ']';
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
 		auth.userisAuth(chck.uid ? chck.uid : chck.cookie.uid)
 			.then(function(result) {
 				var dup = param;
-				//dup.uservar = result;
-				console.log('index| inject user info in params');
-				console.log(dup);
+				var log = 'index| push user info in params \n[';
 				res.locals.stuff = {
 					data : result
 				};
+				log += JSON.stringify(res.locals.stuff) + ']';
+				process.env.NODE_ENV == 'development' ?
+					console.log(log) : log;
 				res.render('index', dup);
 			})
 			.catch(function (err) {
@@ -35,8 +37,9 @@ router.get('/', function(req, res, next) {
 				next(err);
 			});
 	} else {
-		console.log('index-route : no req session uid | session below');
-		console.log(chck);
+		log = 'index-route| NonAUth user, session below\n[';
+		log += JSON.stringify(chck) + ']';
+		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('index', param);
 	}
 });
