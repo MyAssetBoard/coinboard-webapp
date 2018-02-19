@@ -4,7 +4,7 @@ module.exports = (web3) => {
 	var tufa = require('../methods/Contract')(web3);
 	const users = [];
 	const register = (req, res) => {
-		console.log(req.body);
+		process.env.NODE_ENV == 'development' ? console.log(req.body) : req;
 		const user = req.body;
 		user.token = 0;
 		users.push(user);
@@ -39,7 +39,7 @@ module.exports = (web3) => {
 
 
 	const login = (req, res) => {
-		console.log(req.body);
+		process.env.NODE_ENV == 'development' ? console.log(req.body) : req;
 		const loginData = req.body;
 		const user = users.find(u => u.email == loginData.email);
 		if (req.session.user) {
@@ -71,7 +71,7 @@ module.exports = (web3) => {
 	};
 
 	const verify = (req, res) => {
-		console.log(req.body);
+		process.env.NODE_ENV == 'development' ? console.log(req.body) : req;
 		if (!req.session.user) {
 			res.status(401).send({ error: 'Login with password first' });
 		} else {
