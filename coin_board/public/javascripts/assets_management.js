@@ -1,18 +1,19 @@
 /* global io:false */
 $(document).ready(function() {
-	var socket  = io.connect('http://localhost:3001');
+	var assetws  = io.connect('http://localhost:3001/assets');
 
-	socket.on('connect', function () {
+	assetws.on('connect', function () {
 		console.log('ok co');
 	});
 
-	socket.on('error', function (e) {
+	assetws.on('error', function (e) {
 		console.log('System', e ? e : 'A unknown error occurred');
 	});
-	$('#showMine').click(function() {
-		$('#showCard').toggleClass('hidden');
-	});
-	$('#showAdd').click(function() {
-		$('#addCard').toggleClass('hidden');
+	$('[id^=\'show\']').click(function(){
+		if ($(this).attr('id') === 'showAdd') {
+			$('#yoloshowAdd').toggleClass('hidden');
+		} else {
+			$('#yoloshowMine').toggleClass('hidden');
+		}
 	});
 });
