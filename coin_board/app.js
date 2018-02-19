@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 /** index route import */
 const index = require('./routes/index');
 /** Assets route import */
-const myassets = require('./routes/myassets');
+const assets = require('./routes/assets');
 /** Login route import */
 const login = require('./routes/login');
 /** Signin route import */
@@ -45,7 +45,6 @@ app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 app.disable('view cache');
 app.use('/favicon.ico', express.static('images/favicon.ico', favOptions));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('yolo 123'));
@@ -54,9 +53,14 @@ app.use(express.static(path.join(__dirname, 'public/javascripts')));
 
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
 
+// Remove console log in production mode
+var output_avert = '\n===>No more console output (except If forgotten one)';
+if (process.env.NODE_ENV == 'production') {
+	console.log(output_avert);
+}
 /** Routes import */
 app.use('/', index);
-app.use('/myassets', myassets);
+app.use('/assets', assets);
 app.use('/login', login);
 app.use('/signin', signin);
 
@@ -87,9 +91,10 @@ app.use(function(err, req, res, next) {
 		res.render('error', error_param);
 	}
 	if (next) {
-		console.log(next);
+		next = {};
 	}
 });
 
 
+app.use(logger('dev'));
 module.exports = app;
