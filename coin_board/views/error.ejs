@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><% include coreelems/head %></head>
-<body>
-	<div class="container">
-		<div class="jumbotron">
-			<h1 style="color: white">
+
+	<head>
+		<% include coreelems/head %>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="jumbotron">
+				<h1 style="color: white">
 				<a style="color: white"><b><%= error.status %> </b>
 				</a><%= message %> Dude !
-			</h1>
-		</div>
-		<img class="img-fluid" src="images/404.jpg" alt="404">
-		<div class="container-fluid invisible">
-			<pre style="color: white"><%= error.stack %></pre>
-		</div>
-	</div>
-	<footer>
-		<% include coreelems/footer %>
-		<% if (locals.scripts && Object.keys(scripts).length)
-		{ %>	<!-- Page additionnal scripts inclusion -->
-			<% for (var elems in scripts)
-			{ %> <script src="<%- scripts[elems] %>"></script><% } %>
-			<%
+			</h1> </div> <img class="img-fluid"
+			    src="images/404.jpg"
+			    alt="404"> </div>
+		<footer>
+			<% include coreelems/footer %>
+				<% if (locals.scripts && Object.keys(scripts).length)
+		{ %>
+					<!-- Page additionnal scripts inclusion -->
+					<% for (var elems in scripts) { %>
+						<script src="<%- scripts[elems] %>"></script>
+						<% } %>
+							<%
 		} %>
-	</footer>
-</body>
+		</footer>
+	</body>
+
 </html>
