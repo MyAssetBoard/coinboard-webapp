@@ -1,46 +1,57 @@
 <!-- Header start -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-	<a class="navbar-brand" href="/">
+<nav class="navbar navbar-expand-lg navbar-dark"> <a class="navbar-brand"
+	    href="/">
 		<span class="lnr lnr-coffee-cup"></span>
 		Coin_Board
-	</a>
-	<button class="navbar-toggler primary" type="button" data-toggle="collapse"
-	data-target="#navbarText" aria-controls="navbarText" aria-expanded="false"
-	aria-label="Toggle navigation">
+	</a> <button class="navbar-toggler primary"
+	    type="button"
+	    data-toggle="collapse"
+	    data-target="#navbarText"
+	    aria-controls="navbarText"
+	    aria-expanded="false"
+	    aria-label="Toggle navigation">
 	<span class="navbar-toggler-icon"></span>
 </button>
-<div class="collapse navbar-collapse" id="navbarText">
-	<ul class="navbar-nav mr-auto">
-		<li class="nav-item active">
-			<a class="nav-link" href="/">
+	<div class="collapse navbar-collapse"
+	    id="navbarText">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"> <a class="nav-link"
+				    href="/">
 				<span class="lnr lnr-eye"></span>
 				Home <span class="sr-only">(current)</span>
-			</a>
-		</li>
-		<li class="nav-item active">
-			<a class="nav-link" href="/login">
+			</a> </li>
+			<li class="nav-item"> <a class="nav-link"
+				    href="/login">
+				<span class="lnr lnr-enter"></span>
+				 <% if (locals.stuff && locals.stuff.data) {
+ 					%><%= locals.stuff.data.username %><%
+ 				 } else {
+ 					 %>LOGIN<%
+ 				 }%>
+			</a> </li>
+			<li class="nav-item"> <a class="nav-link"
+				    href="/signin">
 				<span class="lnr lnr-user"></span>
-				Register / Login
-			</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="/myassets">
+				[+]Register
+			</a> </li>
+			<li class="nav-item"> <a class="nav-link"
+				    href="/myassets">
 				<span class="lnr lnr-rocket"></span>
 				Assets
-			</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="https://bitbucket.org/trevisgulby/coin_board">
+			</a> </li>
+			<li class="nav-item"> <a class="nav-link"
+				    href="https://bitbucket.org/trevisgulby/coin_board">
 				<span class="lnr lnr-briefcase"></span>
 				Bitbucket
-			</a>
-		</li>
-	</ul>
-</div>
-<form class="form-inline my-2 my-lg-0">
-	<input class="form-control mr-sm-2" type="search" placeholder="Search">
-</form>
-<div class="float-right popUp hidden" id="popup">
-	<div class="alert" id="ppContent"></div>
-</div>
+			</a> </li>
+		</ul>
+	</div>
+	<form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2"
+		    type="search"
+		    placeholder="Search"> </form>
+	<div class="float-right popUp hidden"
+	    id="popup">
+		<div class="alert"
+		    id="ppContent"></div>
+	</div>
 </nav>
