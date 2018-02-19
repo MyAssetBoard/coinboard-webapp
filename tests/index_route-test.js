@@ -7,8 +7,8 @@ var request = require('supertest');
 var test_url = '/';
 var app = require('../coin_board/app');
 
-describe('Simple GET / on app', function() {
-	it('respond with json', function(done) {
+describe('Simple GET /(index) on app', function() {
+	it('respond with json yolo ??', function(done) {
 		request(app)
 			.get(test_url)
 			.set('Accept', 'application/json')
@@ -20,7 +20,7 @@ describe('Simple GET / on app', function() {
 	});
 	it('respond with 404', function(done) {
 		request(app)
-			.get('/noexist')
+			.get(test_url + 'noextsgsg')
 			.set('Accept', 'application/json')
 			.expect(404)
 			.end(function(err) {

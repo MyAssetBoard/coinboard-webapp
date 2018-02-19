@@ -4,7 +4,7 @@
 */
 
 var request = require('supertest');
-var test_url = '/myassets';
+var test_url = '/assets';
 var app = require('../coin_board/app');
 
 describe('Simple GET / on app', function() {
