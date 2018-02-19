@@ -43,21 +43,16 @@ app.set('view engine', 'ejs');
 
 /** Global app setup */
 app.disable('x-powered-by');
+app.disable('view cache');
 app.use('/favicon.ico', express.static('images/favicon.ico', favOptions));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser('yolo 123'));
 app.use(express.static(path.join(__dirname, 'public'), {etag: false}));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
 
-
-app.use(session({
-	secret: 'keyboard cat',
-	resave: false,
-	saveUninitialized: true, // don't create session until something stored
-	cookie: { maxAge: 60000 }
-}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
 
 /** Routes import */
 app.use('/', index);
