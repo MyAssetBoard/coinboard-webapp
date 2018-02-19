@@ -17,6 +17,9 @@ Crud.prototype.InsertInCollection = function (collectName, data, callback) {
 	MongoClient.connect(uri)
 		.then(function(db) {
 			var dbo = db.db(_this.dbName);
+			var log = 'MONGO - Connected to ' + _this.dbName;
+			process.env.NODE_ENV == 'development' ?
+				console.log(log) : log;
 			dbo.collection(collectName).insertOne(data)
 				.then(function(res) {
 					console.log('1 document inserted : ');
@@ -34,7 +37,9 @@ Crud.prototype.FindInCollection = function (collectName, tofind, callback) {
 	var _this = this;
 	MongoClient.connect(uri)
 		.then(function (db) {
-			console.log('MONGO - Connected to ' + _this.dbName);
+			var log = 'MONGO - Connected to ' + _this.dbName;
+			process.env.NODE_ENV == 'development' ?
+				console.log(log) : log;
 			var dbo = db.db(_this.dbName);
 			dbo.collection(collectName).findOne(tofind)
 				.then(function(result) {
@@ -51,7 +56,9 @@ Crud.prototype.InsertInField = function(collectName, fieldId, toInsert, callback
 	var _this = this;
 	MongoClient.connect(uri)
 		.then(function (db) {
-			console.log('MONGO - Connected to ' + _this.dbName);
+			var log = 'MONGO - Connected to ' + _this.dbName;
+			process.env.NODE_ENV == 'development' ?
+				console.log(log) : log;
 			var dbo = db.db(_this.dbName);
 			var uid = new ObjectId(fieldId);
 			var fuid = {_id: uid };
