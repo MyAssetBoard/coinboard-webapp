@@ -86,7 +86,9 @@ app.use(function(err, req, res, next) {
 	} else {
 		res.render('error', error_param);
 	}
-	next(err);
+	if (next) {
+		console.log(next);
+	}
 });
 
 
