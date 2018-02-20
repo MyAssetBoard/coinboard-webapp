@@ -25,6 +25,14 @@ body, html {
 	top: 0; right: 0;
 }
 
+.infiList {
+	border-style: solid;
+	border-color: transparent;
+	border-width: large;
+	overflow: scroll;
+	height: 250px;
+}
+
 .hidden {
 	display: none;
 }
