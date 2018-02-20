@@ -4,6 +4,7 @@
 */
 
 var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
+var tickers = require('../../tmpdata/tickers');
 
 const param = {
 	title	: 'My assets',
@@ -16,7 +17,8 @@ const param = {
 	blocks : {
 		jumbo	: 'blocks/my_jumbotron',
 		assets	: 'blocks/my_assets'
-	}
+	},
+	symb	: tickers
 };
 
 module.exports = param;
