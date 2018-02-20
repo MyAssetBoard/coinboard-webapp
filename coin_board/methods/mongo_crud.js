@@ -4,6 +4,7 @@
 */
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
 var uri = 'mongodb://localhost:27017/';
 
 
@@ -52,17 +53,19 @@ Crud.prototype.FindInCollection = function (collectName, tofind, callback) {
 		.catch(function (err) { if (err) throw err; });
 };
 
-Crud.prototype.InsertInField = function(collectName, fieldId, toInsert, callback) {
+Crud.prototype.InsertInField = function(who, what, data, callback) {
 	var _this = this;
 	MongoClient.connect(uri)
 		.then(function (db) {
+			var dbo = db.db(_this.dbName);
+			var uid = new ObjectId(who);
+			var fuid = { '_id' : uid };
+			var fset = { $push : { what : data } };
+
 			var log = 'MONGO - Connected to ' + _this.dbName;
 			process.env.NODE_ENV == 'development' ?
 				console.log(log) : log;
-			var dbo = db.db(_this.dbName);
-			var uid = new ObjectId(fieldId);
-			var fuid = {_id: uid };
-			dbo.r_users.update(fuid, {$set : { assets: toInsert }})
+			dbo.collection(_this.collectName).update(fuid, fset)
 				.then(function(result) {
 					db.close();
 					callback && callback(result);

@@ -96,7 +96,7 @@ function checkUsr(data) {
 Auth.checkRegFields = function (data) {
 	data.InputName = data.InputName.replace(/\W/g, '');
 	data.InputEmail = data.InputEmail.trim();
-	
+
 	if (data.InputName.length < 3 || data.InputEmail.length < 5
 	|| data.InputSocketid.length < 5 || !data.InputEthaddr.length
 	|| data.InputBcurr.length != 3) {
@@ -205,6 +205,11 @@ Auth.prototype.userisAuth = function(eUid) {
 Auth.prototype.isvaliduid = function(eUid) {
 	var test = dcryptParams(eUid);
 	return test ? true : false;
+};
+
+Auth.prototype.decryptUid = function(eUId) {
+	var ctext = dcryptParams(eUId);
+	return ctext;
 };
 
 module.exports = Auth;
