@@ -24,21 +24,17 @@ function render403(req, res) {
 router.post('/', render403);
 
 function setCookie(req, res) {
-	// check if client sent cookie
-	var cookie = req.cookies.ur_sessionid;
-	if (cookie === undefined)
-	{
-		// no: set a new cookie
+	/** check if client sent cookie */
+	var cookie = req.cookies.uid;
+	if (cookie === undefined) {
+		/** no: set a new cookie */
 		var setting = { maxAge: 900000, httpOnly: true };
 		res.cookie('uid',req.params.uid, setting);
 		console.log('cookie created successfully');
-	}
-	else
-	{
-		// yes, cookie was already present
+	} else {
+		/** yes, cookie was already present */
 		console.log('cookie exists', cookie);
 	}
-	//next(); // <-- important!
 }
 
 
@@ -53,7 +49,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
-		auth.userisAuth(chck.uid ? chck.uid : chck.cookie.uid)
+		auth.userisAuth(chck.uid)
 			.then(function(result) {
 				var dup = param;
 				var log = 'login| push user info in params\n[';
@@ -71,7 +67,7 @@ router.get('/', function(req, res, next) {
 	} else {
 		log = 'login-route| NonAUth user, session below\n[';
 		log += JSON.stringify(chck) + '] cookie ? [';
-		log += JSON.stringify(req.headers.cookie) + ']';
+		log += JSON.stringify(req.cookies) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('login', param);
 	}
@@ -85,10 +81,14 @@ router.get('/id/:uid', function(req, res, next) {
 	if (auth.isvaliduid(req.params.uid)) {
 		var log = 'received id request with value :\n';
 		log += JSON.stringify(req.params);
-		log += '\nSession dump bellow \n';
-		log += JSON.stringify(req.session);
-		process.env.NODE_ENV == 'development' ? console.log(log) : log;
+		log += '\nSession dump bellow\n[';
+		log += JSON.stringify(req.session) + ']';
+		process.env.NODE_ENV == 'development' ?
+			console.log(log) : log;
 		setCookie(req, res, next);
+		log = '\ncookies - sets' + JSON.stringify(req.cookies);
+		process.env.NODE_ENV == 'development' ?
+			console.log(log) : log;
 		res.redirect(redirco);
 	} else {
 		log = ('invalid uid');

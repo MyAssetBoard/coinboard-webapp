@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
-		auth.userisAuth(chck.uid ? chck.uid : chck.cookie.uid)
+		auth.userisAuth(chck.uid)
 			.then(function(result) {
 				var dup = param;
 				var log = 'myassets| push user info in params\n[';
@@ -39,7 +39,7 @@ router.get('/', function(req, res, next) {
 	} else {
 		log = 'myassets-route| NonAUth user, session below\n[';
 		log += JSON.stringify(chck) + '] cookie ? [';
-		log += JSON.stringify(req.headers.cookie) + ']';
+		log += JSON.stringify(req.cookies) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('assets', param);
 	}
