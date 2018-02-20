@@ -24,6 +24,7 @@ $(document).ready(function() {
 		req_url += thisTicker + '&tsyms=EUR';
 		$.get(req_url, function (res) {
 			if (res) {
+				res['val'] = parseFloat(thisQtt) * parseFloat(res.EUR);
 				console.log(res);
 			}
 		});

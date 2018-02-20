@@ -24,7 +24,7 @@ process.env.NODE_ENV == 'development' ? console.log(log) : log;
 
 
 /** Listen on provided port, on all network interfaces. */
-server.listen(port, function () {
+server.listen(port, "192.168.0.11", function () {
 	var log = 'WEB_VIEW - server is listening';
 	process.env.NODE_ENV == 'development' ? console.log(log) : log;
 });

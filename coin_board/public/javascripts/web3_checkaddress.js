@@ -7,11 +7,11 @@ function getWeb3(callback) {
 	} else {
 		// window.web3 == web3 most of the time. Don't override the provided,
 		// web3, just wrap it in your Web3.
-		var myWeb3 = new Web3(window.web3.currentProvider);
+		var myWeb3 = new Web3(web3.currentProvider);
 
 		// the default account doesn't seem to be persisted, copy it to our
 		// new instance
-		myWeb3.eth.defaultAccount = window.web3.eth.defaultAccount;
+		myWeb3.eth.defaultAccount = web3.eth.defaultAccount;
 
 		callback(myWeb3);
 	}
@@ -19,8 +19,8 @@ function getWeb3(callback) {
 
 function startApp(web3) {
 	var yolo = web3.currentProvider;
-	var account = web3.eth.defaultAccount;
-	//if (yolo == )
+	var account = yolo.publicConfigStore._state.selectedAddress;
+	console.log(yolo.publicConfigStore._state);
 	console.log('== Connected to Metamask ==');
 	web3.version.getNetwork((err, netId) => {
 		switch (netId) {
@@ -44,7 +44,8 @@ function startApp(web3) {
 		}
 	});
 	console.log(yolo);
-	console.log(account);
+	account = web3.eth.defaultAccount;
+	console.log(web3.eth.accounts[0]);
 	$('#InputEthaddr').val(account);
 
 }

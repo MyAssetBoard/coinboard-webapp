@@ -10,7 +10,7 @@ function Assets() {
 function addAssets(a) {
 	return new Promise((resolve, reject) => {
 		a.ticker = a.ticker.replace(/\W/g, '');
-		a.qtt = a.qtt.replace(/\W/g, '');
+		a.qtt = a.qtt.replace('(\\d)+\\.(\\d+)', '');
 		a.qtt = parseFloat(a.qtt);
 		a.id = decodeURIComponent(a.id);
 		a.id = auth.decryptUid(a.id);

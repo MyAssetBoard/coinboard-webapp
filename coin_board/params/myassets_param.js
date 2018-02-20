@@ -3,7 +3,8 @@
 * @author Trevis Gulby
 */
 
-var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
+var iocdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
+var chartcdn = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js';
 var tickers = require('../../tmpdata/tickers');
 
 const param = {
@@ -11,7 +12,8 @@ const param = {
 	author	: '© Copyright 2018 coin_board',
 	page	: 'assets',
 	scripts	: {
-		socketio: cdn,
+		socketio: iocdn,
+		chartio: chartcdn,
 		manage	: 'assets_management.js'
 	},
 	blocks : {
