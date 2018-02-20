@@ -37,7 +37,8 @@ router.get('/', function(req, res, next) {
 			});
 	} else {
 		log = 'signin-route| NonAUth user, session below\n[';
-		log += JSON.stringify(chck) + ']';
+		log += JSON.stringify(chck) + '] cookie ? [';
+		log += JSON.stringify(req.headers.cookie) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('signin', param);
 	}

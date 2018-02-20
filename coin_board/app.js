@@ -26,6 +26,11 @@ var options = {
 	'X-XSS-Protection'		: '1; mode=block',
 	'etag'				: 'false'
 };
+var log = 'app.js| http options\n';
+log += '==== opts = [ ';
+log += JSON.stringify(options) + ' ]';
+process.env.NODE_ENV == 'infosec' ? console.log(log) : log;
+
 var favOptions = {
 	dotfiles: 'ignore',
 	etag: false,
@@ -52,9 +57,15 @@ app.use(express.static(path.join(__dirname, 'public/javascripts')));
 
 
 // Remove console log in production mode
-var output_avert = '\n===>No more console output (except If forgotten one)';
+var output_avert = 'NODE_ENV=production| (No more console.log output)';
+output_avert += ' (unless true)';
 if (process.env.NODE_ENV == 'production') {
 	console.log(output_avert);
+}
+if (process.env.NODE_ENV == 'development') {
+	var output = 'NODE_ENV=development| (Use Morgan for logging requests)';
+	console.log(output);
+	app.use(logger('dev'));
 }
 /** Routes import */
 app.use('/', index);
@@ -71,9 +82,6 @@ app.use(function(req, res, next) {
 
 
 
-if (process.env.NODE_ENV == 'development') {
-	app.use(logger('dev'));
-}
 /** error handler */
 app.use(function(err, req, res, next) {
 	/** append header param to response */
