@@ -96,13 +96,15 @@ function checkUsr(data) {
 Auth.checkRegFields = function (data) {
 	data.InputName = data.InputName.replace(/\W/g, '');
 	data.InputEmail = data.InputEmail.trim();
+	
 	if (data.InputName.length < 3 || data.InputEmail.length < 5
 	|| data.InputSocketid.length < 5 || !data.InputEthaddr.length
 	|| data.InputBcurr.length != 3) {
 		return null;
+	} else {
+		if (!iscoinAddr(data.InputEthaddr)) {data.InputEthaddr = 'NONE';}
+		return data;
 	}
-	if (!iscoinAddr(data.InputEthaddr)) {data.InputEthaddr = 'NONE'; }
-	return data;
 };
 /**
 * \brief register a new user base on a toregister format
@@ -120,7 +122,9 @@ Auth.registerUsr = function (data) {
 				'usercurrency' : data.InputBcurr
 			};
 			crud.InsertInCollection('r_users', toRegister, function(result) {
-				if (result) {resolve(result);}
+				if (result) {
+					resolve(result);
+				}
 				reject(new Error('Db Error'));
 			});
 		} else {
