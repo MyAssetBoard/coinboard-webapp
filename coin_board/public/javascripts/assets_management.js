@@ -9,12 +9,24 @@ $(document).ready(function() {
 	assetws.on('error', function (e) {
 		console.log('System', e ? e : 'A unknown error occurred');
 	});
-	$('[id^=\'show\']').click(function(){
-		if ($(this).attr('id') === 'showAdd') {
-			$('#yoloshowAdd').toggleClass('hidden');
-		} else {
-			$('#yoloshowMine').toggleClass('hidden');
-		}
+
+	$('#vadd').click(function () {
+		$('#collapseOne').collapse('toggle');
+
+	});
+	$('button[id^="Tick-"]').click(function () {
+		var thisInput = $(this).text().trim();
+		var thisQtt = thisInput.split('|')[1].trim();
+		var thisTicker = thisInput.split('|')[0].trim();
+		console.log('Ticker :' + thisTicker);
+		console.log(' Qtt :' + thisQtt);
+		var req_url = 'https://min-api.cryptocompare.com/data/price?fsym=';
+		req_url += thisTicker + '&tsyms=EUR';
+		$.get(req_url, function (res) {
+			if (res) {
+				console.log(res);
+			}
+		});
 	});
 
 	$('#add').click(function () {
