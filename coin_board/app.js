@@ -1,6 +1,5 @@
 /** Depencies import */
 var express = require('express');
-var session = require('express-session');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -47,11 +46,10 @@ app.disable('view cache');
 app.use('/favicon.ico', express.static('images/favicon.ico', favOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser('yolo 123'));
+app.use(cookieParser('random_string_goes_here'));
 app.use(express.static(path.join(__dirname, 'public'), {etag: false}));
 app.use(express.static(path.join(__dirname, 'public/javascripts')));
 
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
 
 // Remove console log in production mode
 var output_avert = '\n===>No more console output (except If forgotten one)';
@@ -71,6 +69,11 @@ app.use(function(req, res, next) {
 	next(err);
 });
 
+
+
+if (process.env.NODE_ENV == 'development') {
+	app.use(logger('dev'));
+}
 /** error handler */
 app.use(function(err, req, res, next) {
 	/** append header param to response */
@@ -95,6 +98,4 @@ app.use(function(err, req, res, next) {
 	}
 });
 
-
-app.use(logger('dev'));
 module.exports = app;
