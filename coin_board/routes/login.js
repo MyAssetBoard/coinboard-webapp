@@ -28,7 +28,10 @@ function setCookie(req, res) {
 	var cookie = req.cookies.uid;
 	if (cookie === undefined) {
 		/** no: set a new cookie */
-		var setting = { maxAge: 900000, httpOnly: true };
+		var setting = {
+			maxAge: 900000,
+			httpOnly: false 
+		};
 		res.cookie('uid',req.params.uid, setting);
 		console.log('cookie created successfully');
 	} else {
