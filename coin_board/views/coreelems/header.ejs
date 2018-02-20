@@ -23,8 +23,8 @@
 			<li class="nav-item"> <a class="nav-link"
 				    href="/login">
 				<span class="lnr lnr-enter"></span>
-				 <% if (locals.stuff && locals.stuff.data) {
- 					%><%= locals.stuff.data.username %><%
+				 <% if (locals.data && locals.data.username) {
+ 					%><%= locals.data.username %><%
  				 } else {
  					 %>LOGIN<%
  				 }%>
