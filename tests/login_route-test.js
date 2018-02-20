@@ -8,7 +8,7 @@ var test_url = '/login';
 var app = require('../coin_board/app');
 
 describe('Simple GET /login on app', function() {
-	it('respond with json', function(done) {
+	it('it respond with json', function(done) {
 		request(app)
 			.get(test_url)
 			.set('Accept', 'application/json')
@@ -18,7 +18,7 @@ describe('Simple GET /login on app', function() {
 				done();
 			});
 	});
-	it('respond with 404', function(done) {
+	it('it respond with 404', function(done) {
 		request(app)
 			.get(test_url + '/foobar')
 			.set('Accept', 'application/json')
