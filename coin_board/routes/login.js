@@ -20,14 +20,35 @@ function render403(req, res) {
 	response += '\t& go rtfm :)\n';
 	res.status(403).send(response);
 }
+
 router.post('/', render403);
+
+function setCookie(req, res) {
+	// check if client sent cookie
+	var cookie = req.cookies.ur_sessionid;
+	if (cookie === undefined)
+	{
+		// no: set a new cookie
+		var setting = { maxAge: 900000, httpOnly: true };
+		res.cookie('uid',req.params.uid, setting);
+		console.log('cookie created successfully');
+	}
+	else
+	{
+		// yes, cookie was already present
+		console.log('cookie exists', cookie);
+	}
+	//next(); // <-- important!
+}
+
 
 /**
 *	\brief GET login page.
 */
 router.get('/', function(req, res, next) {
-	var chck = req.session;
-	if (chck && (chck.uid || chck.cookie.uid)) {
+	var chck = req.cookies;
+
+	if (chck && chck.uid) {
 		var log = '/LOGIN-route : Auth user, session below\n[';
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
@@ -36,8 +57,9 @@ router.get('/', function(req, res, next) {
 			.then(function(result) {
 				var dup = param;
 				var log = 'login| push user info in params\n[';
-				res.locals.stuff = { data : result };
-				log += JSON.stringify(res.locals.stuff) + ']';
+				/** Expose data to ejs template */
+				res.locals.data = result;
+				log += JSON.stringify(res.locals.data) + ']';
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
 				res.render('login', dup);
@@ -60,16 +82,12 @@ router.get('/', function(req, res, next) {
 router.get('/id/:uid', function(req, res, next) {
 	var auth = new authMod();
 	if (auth.isvaliduid(req.params.uid)) {
-		var hour = 3600000;
 		var log = 'received id request with value :\n';
 		log += JSON.stringify(req.params);
 		log += '\nSession dump bellow \n';
 		log += JSON.stringify(req.session);
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
-		req.session.cookie.expires = new Date(Date.now() + hour);
-		req.session.cookie.maxAge = hour;
-		req.session.uid = req.params.uid;
-		req.session.cookie.uid = req.params.uid;
+		setCookie(req, res, next);
 		res.redirect(redirco);
 	} else {
 		log = ('invalid uid');

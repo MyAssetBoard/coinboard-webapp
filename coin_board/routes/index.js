@@ -14,8 +14,9 @@ const param = require('../params/index_param');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	var chck = req.session;
-	if (chck && (chck.uid || chck.cookie.uid)) {
+	var chck = req.cookies;
+
+	if (chck && chck.uid) {
 		var log = '/INDEX-route| Auth user, session below\n[';
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
@@ -24,10 +25,8 @@ router.get('/', function(req, res, next) {
 			.then(function(result) {
 				var dup = param;
 				var log = 'index| push user info in params \n[';
-				res.locals.stuff = {
-					data : result
-				};
-				log += JSON.stringify(res.locals.stuff) + ']';
+				res.locals.data = result;
+				log += JSON.stringify(res.locals.data) + ']';
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
 				res.render('index', dup);
@@ -38,7 +37,8 @@ router.get('/', function(req, res, next) {
 			});
 	} else {
 		log = 'index-route| NonAUth user, session below\n[';
-		log += JSON.stringify(chck) + ']';
+		log += JSON.stringify(chck) + '] cookie ? [';
+		log += JSON.stringify(req.headers.cookie) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('index', param);
 	}

@@ -15,8 +15,9 @@ const param = require('../params/myassets_param');
 
 /* GET assets page. */
 router.get('/', function(req, res, next) {
-	var chck = req.session;
-	if (chck && (chck.uid || chck.cookie.uid)) {
+	var chck = req.cookies;
+
+	if (chck && chck.uid) {
 		var log = '/MYASSETS-route : Auth user, session below\n[';
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
@@ -25,10 +26,8 @@ router.get('/', function(req, res, next) {
 			.then(function(result) {
 				var dup = param;
 				var log = 'myassets| push user info in params\n[';
-				res.locals.stuff = {
-					data : result
-				};
-				log += JSON.stringify(res.locals.stuff) + ']';
+				res.locals.data = result;
+				log += JSON.stringify(res.locals.data) + ']';
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
 				res.render('assets', dup);
