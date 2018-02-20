@@ -16,4 +16,24 @@ $(document).ready(function() {
 			$('#yoloshowMine').toggleClass('hidden');
 		}
 	});
+
+	$('#add').click(function () {
+		var inputTicker = $( '#ticker option:selected' ).text();
+		var usrid = document.cookie.replace('uid=', '');
+		console.log(usrid);
+		var inputQtt = $( '#qtt' ).val();
+		inputTicker = inputTicker.trim();
+		inputQtt = inputQtt.trim();
+		if (!inputTicker.length || inputQtt.length > 10) {
+			return ;
+		} else {
+			var req = {
+				ticker : inputTicker,
+				qtt: inputQtt,
+				id: usrid
+			};
+			console.log('to send\n[' + JSON.stringify(req) + ']');
+			assetws.emit('add asset', req);
+		}
+	});
 });
