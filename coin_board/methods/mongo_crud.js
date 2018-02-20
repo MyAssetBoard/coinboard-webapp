@@ -68,6 +68,10 @@ Crud.prototype.InsertInField = function(who, what, data, callback) {
 			dbo.collection(_this.collectName).update(fuid, fset)
 				.then(function(result) {
 					db.close();
+					log = 'MONGO | INserted data :\n[';
+					log += JSON.stringify(data) + ']';
+					process.env.NODE_ENV == 'development' ?
+						console.log(log) : log;
 					callback && callback(result);
 					return result;
 				})
