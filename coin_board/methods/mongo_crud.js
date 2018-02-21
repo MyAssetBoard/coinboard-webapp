@@ -60,8 +60,9 @@ Crud.prototype.InsertInField = function(who, what, data, callback) {
 			var dbo = db.db(_this.dbName);
 			var uid = new ObjectId(who);
 			var fuid = { '_id' : uid };
-			var fset = { $push : { what : data } };
-
+			var fset = {};
+			fset['$push'] = {};
+			fset['$push'][what] = data;
 			var log = 'MONGO - Connected to ' + _this.dbName;
 			process.env.NODE_ENV == 'development' ?
 				console.log(log) : log;
