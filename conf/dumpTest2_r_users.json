@@ -21,4 +21,12 @@
 	"socketid" : "nZtRpDj9EaCYatPCAAAE",
 	"ethaddr" : "0x5ecfc2b686fc9d9f7867382e05306ff7b8739c15",
 	"usercurrency" : "USD"
+},
+{
+	"_id" : "ObjectId(\"xxxxx\")",
+	"username" : "maintest",
+	"useremail" : "maindev@coinboard.io",
+	"socketid" : "qwCLi3PyCdRVd8QIAAAC",
+	"ethaddr" : "0x5ecfc2b686fc9d9f7867382e05306ff7b8739c15",
+	"usercurrency" : "EUR"
 }
