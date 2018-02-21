@@ -23,7 +23,10 @@ $(document).ready(function() {
 		var req_url = 'https://min-api.cryptocompare.com/data/price?fsym=';
 		req_url += thisTicker + '&tsyms=EUR';
 		$.get(req_url, function (res) {
-			if (res) {
+			if (res && res[thisTicker]) {
+				var assetval = parseFloat(thisQtt);
+				assetval *= parseFloat(res.EUR);
+				res['val'] = assetval;
 				console.log(res);
 			}
 		});
