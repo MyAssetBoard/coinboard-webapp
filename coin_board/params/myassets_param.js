@@ -5,7 +5,7 @@
 
 var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
 var cdn1 = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js';
-var tickers = require('../../tmpdata/tickers');
+var tickers = require('./tickers');
 
 const param = {
 	title	: 'My assets',
