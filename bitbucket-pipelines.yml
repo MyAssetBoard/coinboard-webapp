@@ -3,7 +3,7 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: spittet/node-mongodb
+image: node:6.9.4
 
 pipelines:
   default:
@@ -16,3 +16,10 @@ pipelines:
           - yarn install && cd coin_board && yarn install && cd ..
           - ./INIT_DEV.sh -lt
           - mocha test --reporter mocha-junit-reporter --reporter-options mochaFile=./test-reports/junit.xml
+        services:
+          - mongo
+
+definitions:
+  services:
+    mongo:
+      image: mongo
