@@ -10,7 +10,7 @@ $(document).ready(function() {
 		$('#ppContent').text('');
 		$('#ppContent').removeClass('alert-danger');
 		$('#ppContent').addClass('alert-info');
-		if (!data.errcode) {
+		if (!data.errmsg) {
 			$.each(data, function(key, value) {
 				var newline = $('<p>');
 				newline.html('<strong>' + key + ' :</strong>');
@@ -20,8 +20,8 @@ $(document).ready(function() {
 		} else {
 			$('#ppContent').toggleClass('alert-info alert-danger');
 			var newline = $('<p>');
-			newline.html('<strong> Error ' + data.errcode + ' : </strong>');
-			newline.append(data.msg);
+			newline.html('<strong> <span class="lnr lnr-warning"></span> Error : </strong>');
+			newline.append(data.errmsg);
 			$('#ppContent').append(newline);
 		}
 		elem.fadeIn('fast');
@@ -43,6 +43,12 @@ $(document).ready(function() {
 		}
 	}
 
+	function printError(data) {
+		console.log(data);
+		$('#inputName').toggleClass('is-invalid');
+		$('#inputSocketid').toggleClass('is-invalid');
+	}
+
 	auth.on('connection', function (socket) {console.log(socket.id);});
 	auth.on('my-message', function (data) {
 		if (data._id) {
@@ -51,14 +57,12 @@ $(document).ready(function() {
 				var uri = '/id/' + encodeURIComponent(data._id);
 				window.location.href += uri;
 			}, 2000);
-		} else {
+		}  else {
 			fillPopup(data);
 		}
-		console.log(data);
-		fillPopup(data);
 	});
 	auth.on('error-message', function (data) {
-		console.log(data);
+		printError(data);
 		fillPopup(data);
 	});
 	/** dom manip - login event */

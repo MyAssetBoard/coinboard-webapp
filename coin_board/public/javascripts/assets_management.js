@@ -14,22 +14,74 @@ $(document).ready(function() {
 		$('#collapseOne').collapse('toggle');
 
 	});
-	$('button[id^="Tick-"]').click(function () {
-		var thisInput = $(this).text().trim();
-		var thisQtt = thisInput.split('|')[1].trim();
-		var thisTicker = thisInput.split('|')[0].trim();
-		console.log('Ticker :' + thisTicker);
-		console.log(' Qtt :' + thisQtt);
-		var req_url = 'https://min-api.cryptocompare.com/data/price?fsym=';
-		req_url += thisTicker + '&tsyms=EUR';
-		$.get(req_url, function (res) {
-			if (res && res[thisTicker]) {
-				var assetval = parseFloat(thisQtt);
-				assetval *= parseFloat(res.EUR);
-				res['val'] = assetval;
-				console.log(res);
+
+	var config = {
+		type:'line',
+		data:{
+			labels:['January','February',
+				'March','April','May','June',
+				'July'],
+			datasets:[{
+				label:'ETH',
+				backgroundColor : 'rgba(255, 99, 132, 0.2)',
+				borderColor : 'rgba(54, 162, 235, 0.2)',
+				fill : false,
+			},{
+				label : 'EUR',
+				fill : false,
+				backgroundColor : 'rgba(255, 99, 132, 0.2)',
+				borderColor : 'rgba(54, 162, 235, 0.2)',
+				data:[18,33,22,19,11,39,30],
+			}]
+		},
+		options:{
+			title:{
+				display:true,
+				text:'Min and Max values'
+			},
+			scales:{
+				yAxes:[{
+					ticks:{
+						suggestedMin : 10,
+						suggestedMax : 50
+					}
+				}]
 			}
-		});
+		}
+	};
+
+	var myChart = [];
+	var my2chatr = [];
+	var i = 0;
+	var j = 0;
+	$('canvas[id^="myChart-"]').each(function () {
+		i += 1;
+		console.log('yolo');
+		myChart[i] = new Chart($(this), config);
+	});
+	$('canvas[id^="myChart2-"]').each(function () {
+		j += 1;
+		console.log('yolo');
+		my2chatr[j] = new Chart($(this), config);
+	});
+
+	$('button[id^="Tick-"]').click(function(){
+		var req_url = 'https://min-api.cryptocompare.com/data/price';
+		var thisInput = { 'i' : $(this).text().trim() };
+		thisInput.iqtt = thisInput.i.split('|')[1].trim();
+		thisInput.isymb = thisInput.i.split('|')[0].trim();
+
+		if (thisInput.iqtt.length && thisInput.isymb.length >= 2) {
+			req_url += '?fsym=' + thisInput.isymb + '&tsyms=' + 'EUR';
+			$.get(req_url, function (res) {
+				if (res) {
+					var assetval = parseFloat(thisInput.iqtt);
+					assetval *= parseFloat(res.EUR);
+					res['val'] = assetval;
+					console.log(res);
+				}
+			});
+		}
 	});
 
 	$('#add').click(function () {
