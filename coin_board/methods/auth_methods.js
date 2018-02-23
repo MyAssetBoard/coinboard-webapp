@@ -97,10 +97,13 @@ function checkUsr(data) {
 }
 
 Auth.checkRegFields = function (data) {
-	data.InputName = data.InputName.replace(/\W/g, '');
-	data.InputEmail = data.InputEmail.trim();
+	if (data.InputName && data.InputEmail) {
+		data.InputName = data.InputName.replace(/\W/g, '');
+		data.InputEmail = data.InputEmail.trim();
+	}
 
-	if (data.InputName.length < 3 || data.InputEmail.length < 5
+	if (!data.InputName || !data.InputEmail || !data.InputSocketid
+	|| data.InputName.length < 3 || data.InputEmail.length < 5
 	|| data.InputSocketid.length < 5 || !data.InputEthaddr.length
 	|| data.InputBcurr.length != 3) {
 		return null;
@@ -113,7 +116,7 @@ Auth.checkRegFields = function (data) {
 * \brief register a new user base on a toregister format
 * @TODO : Make toRegister stick with r_usermodel
 */
-Auth.registerUsr = function (data) {
+Auth.prototype.registerUsr = function (data) {
 	return new Promise((resolve, reject) => {
 		var crud = new crudMod('test2');
 		if ((data = Auth.checkRegFields(data)) != null) {
@@ -138,9 +141,8 @@ Auth.registerUsr = function (data) {
 
 
 Auth.prototype.checkRegData = function(data, socket, io) {
-	if (data) {
-		if (data['InputName'] && data['InputEmail']
-		&& data['InputEthaddr'] && data['InputBcurr']) {
+	if (data && data.InputName && data.InputEmail && data.InputSocketid) {
+		if (data['InputEthaddr'] && data['InputBcurr']) {
 			Auth.registerUsr(data)
 				.then(function(res) {
 					io.of('/register')
