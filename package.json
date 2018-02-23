@@ -7,8 +7,11 @@
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
 	"license": "MIT",
 	"dependencies": {
+		"chai-as-promised": "^7.1.1",
 		"eslint": "^4.18.0",
+		"mocha-junit-reporter": "^1.17.0",
 		"mongodb": "^3.0.2",
+		"nyc": "^11.4.1",
 		"pm2": "^2.9.1"
 	},
 	"devDependencies": {

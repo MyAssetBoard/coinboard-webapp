@@ -14,7 +14,9 @@ export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # Mocha test suite
 export MOCHA="./node_modules/mocha/bin/mocha"
-export TESTFILES="tests/*-test.js"
+export TESTDIR="test/"
+# Istanbul reporter
+export NYC="./node_modules/nyc/bin/nyc.js"
 # coin_board app
 export APPCONF="./conf/webfront.pm2conf.json"
 export WVSERV="webview.service"
@@ -48,7 +50,6 @@ function usage ()
 	Notes : Accept only$BLD one$CL arg.
 		$BLD[-b]$CL options currently supported system are fedora / centos and
 		ubuntu / debian.
-	$RD*DEPRECATED$CL : The stack is now rolling with mongo
 	** : run only once
 	";
 }
@@ -102,14 +103,16 @@ function app_kill ()
 
 function app_reload ()
 {
-	app_kill
-	app_startDev
+	app_kill && app_startDev
 }
 
 function app_tests ()
 {
-	$MOCHA tests/ --exit
-	#./node_modules/mocha/bin/mocha tests/*-test.js --exit
+	NODE_ENV='development'
+	$NYC --reporter=lcov $MOCHA $TESTDIR --exit
+	$NYC report
+	$MOCHA $TESTDIR --reporter mocha-junit-reporter \
+	--reporter-options mochaFile=./test-reports/junit.xml
 }
 
 function genddoc ()
