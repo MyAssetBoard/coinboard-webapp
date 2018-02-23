@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.113" tests="19" failures="0">
+  <testsuite name="Root Suite" timestamp="2018-02-23T10:59:18" tests="2" failures="0" time="0.032">
+    <testcase name="Add assets [{&quot;ticker&quot;:&quot;ETH&quot;,&quot;qtt&quot;:0.01,&quot;id&quot;:&quot;U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz&quot;}] for user maintest" time="0.03" classname="Add assets [{&quot;ticker&quot;:&quot;ETH&quot;,&quot;qtt&quot;:0.01,&quot;id&quot;:&quot;U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz&quot;}] for user maintest">
+    </testcase>
+    <testcase name="Reject  [{&quot;ticker&quot;:&quot;ETH&quot;,&quot;qtt&quot;:&quot;yolostringnonum&quot;,&quot;id&quot;:&quot;ltioitoitoi+&quot;}] for user maintest" time="0.002" classname="Reject  [{&quot;ticker&quot;:&quot;ETH&quot;,&quot;qtt&quot;:&quot;yolostringnonum&quot;,&quot;id&quot;:&quot;ltioitoitoi+&quot;}] for user maintest">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple TEST| auth.registerUsr() with valid mock" timestamp="2018-02-23T10:59:18" tests="1" file="/home/bender/Repo/PERSO/coin_board/test/authmod-test.js" failures="0" time="0">
+    <testcase name="Simple TEST| auth.registerUsr() with valid mock it should return [ {&quot;nb&quot;:1,&quot;ok&quot;:1} ]" time="0" classname="it should return [ {&quot;nb&quot;:1,&quot;ok&quot;:1} ]">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple TEST| auth.registerUsr() with corrupted mock" timestamp="2018-02-23T10:59:18" tests="1" file="/home/bender/Repo/PERSO/coin_board/test/authmod-test.js" failures="0" time="0">
+    <testcase name="Simple TEST| auth.registerUsr() with corrupted mock it should return an error" time="0" classname="it should return an error">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET / on app" timestamp="2018-02-23T10:59:18" tests="2" file="/home/bender/Repo/PERSO/coin_board/test/index_route-test.js" failures="0" time="0.026">
+    <testcase name="Simple GET / on app it respond with 200" time="0.022" classname="it respond with 200">
+    </testcase>
+    <testcase name="Simple GET / on app it respond with 404" time="0.004" classname="it respond with 404">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET /login on app" timestamp="2018-02-23T10:59:18" tests="2" file="/home/bender/Repo/PERSO/coin_board/test/login_route-test.js" failures="0" time="0.005">
+    <testcase name="Simple GET /login on app it respond with json" time="0.003" classname="it respond with json">
+    </testcase>
+    <testcase name="Simple GET /login on app it respond with 404" time="0.002" classname="it respond with 404">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple POST /login on app" timestamp="2018-02-23T10:59:18" tests="2" file="/home/bender/Repo/PERSO/coin_board/test/login_route-test.js" failures="0" time="0.01">
+    <testcase name="Simple POST /login on app respond 403 for now" time="0.008" classname="respond 403 for now">
+    </testcase>
+    <testcase name="Simple POST /login on app respond with 404" time="0.002" classname="respond with 404">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET /assets on app" timestamp="2018-02-23T10:59:18" tests="2" file="/home/bender/Repo/PERSO/coin_board/test/myassets_route-test.js" failures="0" time="0.011">
+    <testcase name="Simple GET /assets on app it respond with json" time="0.009" classname="it respond with json">
+    </testcase>
+    <testcase name="Simple GET /assets on app it respond with 404" time="0.002" classname="it respond with 404">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET /signin on app" timestamp="2018-02-23T10:59:18" tests="2" file="/home/bender/Repo/PERSO/coin_board/test/register_route-test.js" failures="0" time="0.004">
+    <testcase name="Simple GET /signin on app it respond with json" time="0.003" classname="it respond with json">
+    </testcase>
+    <testcase name="Simple GET /signin on app it respond with 404" time="0.001" classname="it respond with 404">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple POST /signin on app" timestamp="2018-02-23T10:59:18" tests="1" file="/home/bender/Repo/PERSO/coin_board/test/register_route-test.js" failures="0" time="0.001">
+    <testcase name="Simple POST /signin on app respond 405 method forbidden" time="0.001" classname="respond 405 method forbidden">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET /login/id/U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz" timestamp="2018-02-23T10:59:18" tests="3" file="/home/bender/Repo/PERSO/coin_board/test/userauth-test.js" failures="0" time="0.018000000000000002">
+    <testcase name="Simple GET /login/id/U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz it respond with 302" time="0.006" classname="it respond with 302">
+    </testcase>
+    <testcase name="Simple GET /login/id/U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz it respond with 302 and add sessionuid" time="0.002" classname="it respond with 302 and add sessionuid">
+    </testcase>
+    <testcase name="Simple GET /login/id/U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz it respond with 200 and have cookies" time="0.01" classname="it respond with 200 and have cookies">
+    </testcase>
+  </testsuite>
+  <testsuite name="Simple GET /login/id/R26536536565NDOMM" timestamp="2018-02-23T10:59:18" tests="1" file="/home/bender/Repo/PERSO/coin_board/test/userauth-test.js" failures="0" time="0.006">
+    <testcase name="Simple GET /login/id/R26536536565NDOMM respond with 403" time="0.006" classname="respond with 403">
+    </testcase>
+  </testsuite>
+</testsuites>
