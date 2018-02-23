@@ -4,6 +4,7 @@
 */
 
 var cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
+var cdn1 = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js';
 var tickers = require('../../tmpdata/tickers');
 
 const param = {
@@ -12,7 +13,9 @@ const param = {
 	page	: 'assets',
 	scripts	: {
 		socketio: cdn,
-		manage	: 'assets_management.js'
+		chartcdn: cdn1,
+		manage	: 'assets_management.js',
+		test	: 'draw_chart.js'
 	},
 	blocks : {
 		jumbo	: 'blocks/my_jumbotron',
