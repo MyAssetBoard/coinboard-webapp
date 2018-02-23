@@ -23,8 +23,10 @@ Crud.prototype.InsertInCollection = function (collectName, data, callback) {
 				console.log(log) : log;
 			dbo.collection(collectName).insertOne(data)
 				.then(function(res) {
-					console.log('1 document inserted : ');
-					console.log(JSON.stringify(data));
+					log = 'MONGO| 1 document inserted :\n[';
+					log += JSON.stringify(data) + ']';
+					process.env.NODE_ENV == 'development' ?
+						console.log(log) : log;
 					db.close();
 					callback && callback(res);
 					return res;
@@ -59,17 +61,20 @@ Crud.prototype.InsertInField = function(who, what, data, callback) {
 		.then(function (db) {
 			var dbo = db.db(_this.dbName);
 			var uid = new ObjectId(who);
-			var fuid = { '_id' : uid };
+			var opt = '$push';
+			var fuid = {};
 			var fset = {};
-			fset['$push'] = {};
-			fset['$push'][what] = data;
+			fset[opt] = {};
+
+			fuid['_id'] = uid;
+			fset[opt][what] = data;
 			var log = 'MONGO - Connected to ' + _this.dbName;
 			process.env.NODE_ENV == 'development' ?
 				console.log(log) : log;
 			dbo.collection(_this.collectName).update(fuid, fset)
 				.then(function(result) {
 					db.close();
-					log = 'MONGO | INserted data :\n[';
+					log = 'MONGO | Inserted data :\n[';
 					log += JSON.stringify(data) + ']';
 					process.env.NODE_ENV == 'development' ?
 						console.log(log) : log;

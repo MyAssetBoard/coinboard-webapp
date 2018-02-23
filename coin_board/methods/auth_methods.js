@@ -14,14 +14,17 @@ const CryptoJS = require('crypto-js');
 */
 
 function dcryptParams(p) {
-	/** @TODO lolilol to be randomized */
-	var enckey = 'yolo 123';
-	var bytes  = CryptoJS.AES.decrypt(p, enckey);
-	var plaintext = bytes.toString(CryptoJS.enc.Utf8);
-	var log = 'auth_methods.js|dcryptParams()\n';
-	log += '==== (TODO :update enckey)\n => plaintext if succeed [ ';
-	log += plaintext + ' ]';
-	process.env.NODE_ENV == 'infosec' ? console.log(log) : log;
+	var plaintext = null;
+	if (p) {
+		/** @TODO lolilol to be randomized */
+		var enckey = 'yolo 123';
+		var bytes  = CryptoJS.AES.decrypt(p, enckey);
+		plaintext = bytes.toString(CryptoJS.enc.Utf8);
+		var log = 'auth_methods.js|dcryptParams()\n';
+		log += '==== (TODO :update enckey)\n => plaintext if succeed [ ';
+		log += plaintext + ' ]';
+		process.env.NODE_ENV == 'infosec' ? console.log(log) : log;
+	}
 	return plaintext;
 }
 
@@ -177,7 +180,7 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 			})
 			.catch(function (rej, err) {
 				console.error(rej.message);
-				var errmsg = { msg: rej.message };
+				var errmsg = { errmsg: rej.message };
 				io.of('/auth')
 					.to(socket.id)
 					.emit('error-message', errmsg);
