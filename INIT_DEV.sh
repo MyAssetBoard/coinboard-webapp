@@ -108,7 +108,7 @@ function app_reload ()
 
 function app_tests ()
 {
-	NODE_ENV='development'
+	NODE_ENV='production'
 	$NYC --reporter=lcov $MOCHA $TESTDIR --exit
 	$NYC report
 	$MOCHA $TESTDIR --reporter mocha-junit-reporter \
