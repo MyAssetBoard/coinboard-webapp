@@ -7,9 +7,9 @@ var chai = require('chai');
 var assert = chai.assert;
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
-const AuthMod = require('../coin_board/methods/assets_methods');
+const AssetsMod = require('../coin_board/methods/assets_methods');
 var ekey = 'U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz';
-var auth = new AuthMod();
+var assets = new AssetsMod();
 var mockVdata = {
 	ticker: 'ETH',
 	qtt: 0.01,
@@ -22,10 +22,24 @@ var mockCdata = {
 	id: 'ltioitoitoi+'
 };
 
-it('Add assets [' + JSON.stringify(mockVdata) + '] for user maintest', function() {
-	return assert.isFulfilled(auth.addAssets(mockVdata), 'optional message');
+var desc = 'Add assets [' + JSON.stringify(mockVdata) + '] for user maintest';
+describe(desc, function () {
+	it('It return resolved promise', function() {
+		return assert.isFulfilled(assets.addAssets(mockVdata), 'optional message');
+	});
 });
 
-it('Reject  [' + JSON.stringify(mockCdata) + '] for user maintest', function() {
-	return assert.isRejected(auth.addAssets(mockCdata), 'Invalid quantity');
+desc = 'Add assets [' + JSON.stringify(mockCdata) + '] for user maintest';
+describe(desc, function () {
+	it('It reject promise with error : Invaild quantity', function() {
+		return assert.isRejected(assets.addAssets(mockCdata), 'Invalid quantity');
+	});
+});
+
+describe('Test checkcoData', function () {
+	it('It return false', function () {
+		var rt = assets.checkAssetData({ticker: 'toto', datas: 'tata'});
+		return assert.equal(rt, false);
+	});
+
 });

@@ -1,0 +1,6247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+<title>
+	My assets
+</title>
+<!-- Responsive meta tag -->
+<meta name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS (load bootstrap from a CDN) -->
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+<!-- Own CSS -->
+<link rel="stylesheet"
+    href="../stylesheets/style.css">
+<!-- LinearIcon cdn -->
+<link rel="stylesheet"
+    href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+<!-- FontAwesome cdn -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous">
+	</head>
+
+	<body>
+		<header>
+			<!-- Header start -->
+<nav class="navbar navbar-expand-lg navbar-dark"> <a class="navbar-brand"
+	    href="/">
+		<span class="lnr lnr-coffee-cup"></span>
+		Coin_Board
+	</a> <button class="navbar-toggler primary"
+	    type="button"
+	    data-toggle="collapse"
+	    data-target="#navbarText"
+	    aria-controls="navbarText"
+	    aria-expanded="false"
+	    aria-label="Toggle navigation">
+	<span class="navbar-toggler-icon"></span>
+</button>
+	<div class="collapse navbar-collapse"
+	    id="navbarText">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"> <a class="nav-link"
+				    href="/">
+				<span class="lnr lnr-eye"></span>
+				Home <span class="sr-only">(current)</span>
+			</a> </li>
+			<li class="nav-item"> <a class="nav-link"
+				    href="/login">
+				<span class="lnr lnr-enter"></span>
+				 Michel
+			</a> </li>
+
+					<li class="nav-item"> <a class="nav-link"
+						    href="/assets">
+				<span class="lnr lnr-rocket"></span>
+				Assets
+			</a> </li>
+					<li class="nav-item"> <a class="nav-link"
+						    href="https://bitbucket.org/trevisgulby/coin_board">
+				<span class="lnr lnr-briefcase"></span>
+				Bitbucket
+			</a> </li>
+		</ul>
+	</div>
+	<form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2"
+		    type="search"
+		    placeholder="Search"> </form>
+	<div class="float-right popUp hidden"
+	    id="popup">
+		<div class="alert"
+		    id="ppContent"></div>
+	</div>
+</nav>
+		</header>
+		<main>
+			<!-- main -->
+			<div class="main">
+
+					<!-- Page Blocks inclusion -->
+
+						<div class="container-full-bg">
+<div class="jumbotron">
+	<h1 style="color: white;"><span class="lnr lnr-laptop"></span>
+		This is great time to work on <b>My assets</b>
+	</h1>
+	<div id="carouselExample" class="carousel slide" data-ride="carousel">
+		<div class="carousel-inner" role="listbox">
+			<div class="carousel-item active">
+				<img class="d-block img-fluid" src="" alt="be ready">
+			</div>
+			<div class="carousel-item">
+				<img class="d-block img-fluid" src="" alt="hot coffee">
+			</div>
+			<div class="carousel-item">
+				<img class="d-block img-fluid" src="" alt="Hayyyy !">
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+						<div id="view"
+    class="card">
+	<div class="card-header"
+	    id="headingOne">
+		<h5 class="mb-0">
+	<button class="btn btn-secondary btn-lg btn-block dropdown-toggle"
+	data-toggle="collapse" data-target="#collapseOne">
+	| View |
+</button> </h5> </div>
+	<div id="collapseOne"
+	    class="card-body collapse">
+
+			<div class='infiList'>
+				 <button id="Tick-0"
+					    class="btn btn-success btn-block">
+	undefined | undefined</button>
+					<div class="card text-center">
+						<div class="card-header">
+
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<div class="row">
+									<div class="col"><canvas id="myChart-0"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+									<div class="col"><canvas id="myChart2-0"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+								</div>
+							</p>
+							<div class="btn-toolbar justify-content-between"
+							    role="toolbar"
+							    aria-label="Toolbar with button groups">
+								<div class="btn-group"
+								    role="group"
+								    aria-label="First group"> <button type="button"
+									    class="btn btn-secondary">1 Week</button> <button type="button"
+									    class="btn btn-secondary">1 Month</button> <button type="button"
+									    class="btn btn-secondary">3 Months</button> <button type="button"
+									    class="btn btn-secondary">1 Year</button> <button type="button"
+									    class="btn btn-secondary">3 Years</button> </div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text"
+										    id="btnGroupAddon2"></div>
+									</div> <input type="text"
+									    class="form-control"
+									    placeholder="Input group example"
+									    aria-label="Input group example"
+									    aria-describedby="btnGroupAddon2"> </div>
+							</div </div>
+							<div class="card-footer text-muted"> 2 days ago </div>
+						</div>
+					</div>
+			</div>
+	</div>
+	 <button id="Tick-1"
+					    class="btn btn-success btn-block">
+	Aegis | 43</button>
+					<div class="card text-center">
+						<div class="card-header">
+							Aegis
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<div class="row">
+									<div class="col"><canvas id="myChart-1"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+									<div class="col"><canvas id="myChart2-1"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+								</div>
+							</p>
+							<div class="btn-toolbar justify-content-between"
+							    role="toolbar"
+							    aria-label="Toolbar with button groups">
+								<div class="btn-group"
+								    role="group"
+								    aria-label="First group"> <button type="button"
+									    class="btn btn-secondary">1 Week</button> <button type="button"
+									    class="btn btn-secondary">1 Month</button> <button type="button"
+									    class="btn btn-secondary">3 Months</button> <button type="button"
+									    class="btn btn-secondary">1 Year</button> <button type="button"
+									    class="btn btn-secondary">3 Years</button> </div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text"
+										    id="btnGroupAddon2"></div>
+									</div> <input type="text"
+									    class="form-control"
+									    placeholder="Input group example"
+									    aria-label="Input group example"
+									    aria-describedby="btnGroupAddon2"> </div>
+							</div </div>
+							<div class="card-footer text-muted"> 2 days ago </div>
+						</div>
+					</div>
+			</div>
+	</div>
+	 <button id="Tick-2"
+					    class="btn btn-success btn-block">
+	42 | 33</button>
+					<div class="card text-center">
+						<div class="card-header">
+							42
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<div class="row">
+									<div class="col"><canvas id="myChart-2"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+									<div class="col"><canvas id="myChart2-2"
+										    width="100"
+										    height="50"
+										    style="border:1px solid #000000;"></canvas></div>
+								</div>
+							</p>
+							<div class="btn-toolbar justify-content-between"
+							    role="toolbar"
+							    aria-label="Toolbar with button groups">
+								<div class="btn-group"
+								    role="group"
+								    aria-label="First group"> <button type="button"
+									    class="btn btn-secondary">1 Week</button> <button type="button"
+									    class="btn btn-secondary">1 Month</button> <button type="button"
+									    class="btn btn-secondary">3 Months</button> <button type="button"
+									    class="btn btn-secondary">1 Year</button> <button type="button"
+									    class="btn btn-secondary">3 Years</button> </div>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<div class="input-group-text"
+										    id="btnGroupAddon2"></div>
+									</div> <input type="text"
+									    class="form-control"
+									    placeholder="Input group example"
+									    aria-label="Input group example"
+									    aria-describedby="btnGroupAddon2"> </div>
+							</div </div>
+							<div class="card-footer text-muted"> 2 days ago </div>
+						</div>
+					</div>
+			</div>
+	</div>
+
+
+</div>
+<div id="add"
+    class="card">
+	<div class="card-header"
+	    id="headingTwo">
+		<h5 class="mb-0">
+        <button class="btn btn-secondary btn-lg btn-block dropdown-toggle"
+	data-toggle="collapse" data-target="#collapseTwo">
+          [+] Add
+  </button> </h5> </div>
+	<div id="collapseTwo"
+	    class="card-body collapse"> <select type="select"
+		    id="ticker"
+		    class="form-control">
+
+
+					<option label="42 Coin">
+					 42</option>
+
+					<option label="365Coin">
+					 365</option>
+
+					<option label="404Coin">
+					 404</option>
+
+					<option label="SixEleven">
+					 611</option>
+
+					<option label="808">
+					 808</option>
+
+					<option label="Octocoin">
+					 888</option>
+
+					<option label="1337">
+					 1337</option>
+
+					<option label="2015 coin">
+					 2015</option>
+
+					<option label=" Arcade City">
+					 ARC*</option>
+
+					<option label=" ClubCoin">
+					 CLUB</option>
+
+					<option label="007 coin">
+					 007</option>
+
+					<option label="0x">
+					 ZRX</option>
+
+					<option label="16BitCoin">
+					 BIT16</option>
+
+					<option label="1Credit">
+					 1CR</option>
+
+					<option label="23 Skidoo">
+					 CHAO</option>
+
+					<option label="2BACCO Coin">
+					 2BACCO</option>
+
+					<option label="2GiveCoin">
+					 2GIVE</option>
+
+					<option label="32Bitcoin">
+					 32BIT</option>
+
+					<option label="3DES">
+					 3DES</option>
+
+					<option label="8 Circuit Studios">
+					 8BT</option>
+
+					<option label="8BIT Coin">
+					 8BIT</option>
+
+					<option label="A-Token">
+					 ATKN</option>
+
+					<option label="AB-Chain">
+					 ABC</option>
+
+					<option label="AC3">
+					 AC3</option>
+
+					<option label="ACT">
+					 ACT</option>
+
+					<option label="ACoin">
+					 ACOIN</option>
+
+					<option label="AICoin">
+					 XAI*</option>
+
+					<option label="AIX">
+					 AXT</option>
+
+					<option label="ALISmedia">
+					 ALIS</option>
+
+					<option label="AMIS">
+					 AMIS</option>
+
+					<option label="ARK">
+					 ARK</option>
+
+					<option label="ARNA Panacea">
+					 ARNA</option>
+
+					<option label="ATB coin">
+					 ATB</option>
+
+					<option label="ATC Coin">
+					 ATCC</option>
+
+					<option label="ATFS Project">
+					 ATFS</option>
+
+					<option label="ATLANT">
+					 ATL</option>
+
+					<option label="AXRON">
+					 AXR</option>
+
+					<option label="Accolade">
+					 ACCO</option>
+
+					<option label="AcesCoin">
+					 AEC</option>
+
+					<option label="AcesCoin">
+					 ACES</option>
+
+					<option label="Achain">
+					 ACT*</option>
+
+					<option label="AcidCoin">
+					 ACID</option>
+
+					<option label="Acumen">
+					 AMT</option>
+
+					<option label="AdCoin">
+					 ACC</option>
+
+					<option label="AdEx">
+					 ADX</option>
+
+					<option label="AdToken">
+					 ADT</option>
+
+					<option label="Adbank">
+					 ADB</option>
+
+					<option label="Adelphoi">
+					 ADL</option>
+
+					<option label="Adshares">
+					 ADST</option>
+
+					<option label="Advanced Browsing Token">
+					 ABT</option>
+
+					<option label="AdvancedInternetBlock">
+					 AIB</option>
+
+					<option label="Adzcoin">
+					 ADZ</option>
+
+					<option label="Aegis">
+					 AGS</option>
+
+					<option label="AeonCoin">
+					 AEON</option>
+
+					<option label="Aerium">
+					 AERM</option>
+
+					<option label="Aero Coin">
+					 AERO</option>
+
+					<option label="AeroMe">
+					 AM</option>
+
+					<option label="Aeron">
+					 ARN</option>
+
+					<option label="Aeternity">
+					 AE</option>
+
+					<option label="Agoras Token">
+					 AGRS</option>
+
+					<option label="Agrello Delta">
+					 DLT</option>
+
+					<option label="Ahoolee">
+					 AHT</option>
+
+					<option label="AidCoin">
+					 AID</option>
+
+					<option label="Aiden">
+					 ADN</option>
+
+					<option label="Aion">
+					 AION</option>
+
+					<option label="AirSwap">
+					 AST</option>
+
+					<option label="AirToken">
+					 AIR</option>
+
+					<option label="Aircoin">
+					 AIR*</option>
+
+					<option label="Alexandrite">
+					 ALEX</option>
+
+					<option label="Algo.Land">
+					 PLM</option>
+
+					<option label="AlienCoin">
+					 ALN</option>
+
+					<option label="Allsafe">
+					 ASAFE2</option>
+
+					<option label="AlpaCoin">
+					 APC</option>
+
+					<option label="AlphaCoin">
+					 ALF</option>
+
+					<option label="Alqo">
+					 ALQO</option>
+
+					<option label="AltCommunity Coin">
+					 ALTCOM</option>
+
+					<option label="AltoCar">
+					 ALTOCAR</option>
+
+					<option label="AmberCoin">
+					 AMBER</option>
+
+					<option label="Ambrosus">
+					 AMB</option>
+
+					<option label="AmericanCoin">
+					 AMC</option>
+
+					<option label="Ammo Rewards">
+					 AMMO</option>
+
+					<option label="Amsterdam Coin">
+					 AMS</option>
+
+					<option label="Amygws">
+					 AMY</option>
+
+					<option label="Anacrypt">
+					 ANCP</option>
+
+					<option label="AnalCoin">
+					 ANAL</option>
+
+					<option label="Anarchists Prime">
+					 ACP</option>
+
+					<option label="AndromedaCoin">
+					 AND</option>
+
+					<option label="Anoncoin">
+					 ANC</option>
+
+					<option label="Anryze">
+					 RYZ</option>
+
+					<option label="Anti Bitcoin">
+					 ANTI</option>
+
+					<option label="AntiLitecoin">
+					 ANTC</option>
+
+					<option label="ApexCoin">
+					 APEX</option>
+
+					<option label="AppCoins">
+					 APPC</option>
+
+					<option label="Aptcoin">
+					 APT</option>
+
+					<option label="Apx">
+					 APX</option>
+
+					<option label="AquariusCoin">
+					 ARCO</option>
+
+					<option label="Ar.cash">
+					 AR*</option>
+
+					<option label="Arab League Coin">
+					 ALC</option>
+
+					<option label="Aragon">
+					 ANT</option>
+
+					<option label="Arbi">
+					 ARBI</option>
+
+					<option label="Arbit Coin">
+					 ARB</option>
+
+					<option label="ArchCoin">
+					 ARCH</option>
+
+					<option label="ArcticCoin">
+					 ARC</option>
+
+					<option label="Ardor">
+					 ARDR</option>
+
+					<option label="Arena">
+					 ARENA</option>
+
+					<option label="Argentum">
+					 ARG</option>
+
+					<option label="ArgusCoin">
+					 ARGUS</option>
+
+					<option label="AriCoin">
+					 ARI</option>
+
+					<option label="ArkDAO">
+					 BOTS</option>
+
+					<option label="Armory Coin">
+					 ARM</option>
+
+					<option label="ArpaCoin">
+					 ARPA</option>
+
+					<option label="ArtByte">
+					 ABY</option>
+
+					<option label="ArtexCoin">
+					 ATX</option>
+
+					<option label="Ascension Coin">
+					 ASN</option>
+
+					<option label="Asch">
+					 XAS</option>
+
+					<option label="Asia Coin">
+					 AC</option>
+
+					<option label="Asiadigicoin">
+					 ADCN</option>
+
+					<option label="Astral">
+					 AST*</option>
+
+					<option label="Astronaut">
+					 ASTRO</option>
+
+					<option label="Atmos">
+					 ATMS</option>
+
+					<option label="Atomic Coin">
+					 ATOM</option>
+
+					<option label="AudioCoin">
+					 ADC</option>
+
+					<option label="Augur">
+					 REP</option>
+
+					<option label="Aureus">
+					 AURS</option>
+
+					<option label="Aurora Coin">
+					 AUR</option>
+
+					<option label="Authoreon">
+					 AUTH</option>
+
+					<option label="Authorship">
+					 ATS</option>
+
+					<option label="Autonio">
+					 NIO</option>
+
+					<option label="Autoria">
+					 AUT</option>
+
+					<option label="Autumncoin">
+					 ATM</option>
+
+					<option label="Avalon">
+					 AVA</option>
+
+					<option label="Avatar Coin">
+					 AV</option>
+
+					<option label="AventCoin">
+					 AVT</option>
+
+					<option label="Avesta">
+					 AVE</option>
+
+					<option label="AvonCoin">
+					 ACN</option>
+
+					<option label="Axiom Coin">
+					 AXIOM</option>
+
+					<option label="B2B">
+					 B2BX</option>
+
+					<option label="B3 Coin">
+					 B3</option>
+
+					<option label="BAM">
+					 BAM</option>
+
+					<option label="BANKEX">
+					 BKX</option>
+
+					<option label="BERNcash">
+					 BERN</option>
+
+					<option label="BLOCKv">
+					 VEE</option>
+
+					<option label="BMChain">
+					 BMT</option>
+
+					<option label="BOOM Coin">
+					 BOOM</option>
+
+					<option label="BOScoin">
+					 BOS</option>
+
+					<option label="BQCoin">
+					 BQC</option>
+
+					<option label="BTC Lite">
+					 BTCL</option>
+
+					<option label="BTCMoon">
+					 BTCM</option>
+
+					<option label="Babes and Nerds">
+					 BAN</option>
+
+					<option label="BananaBits">
+					 NANAS</option>
+
+					<option label="Bancor Network Token">
+					 BNT</option>
+
+					<option label="BankCoin">
+					 B@</option>
+
+					<option label="Bankera">
+					 BNK</option>
+
+					<option label="BannerCoin">
+					 BCOIN</option>
+
+					<option label="BaseballCardCoin">
+					 BBCC</option>
+
+					<option label="Basic Attention Token">
+					 BAT</option>
+
+					<option label="Bata">
+					 BTA</option>
+
+					<option label="BattleCoin">
+					 BCX</option>
+
+					<option label="BattleStake">
+					 BSTK</option>
+
+					<option label="BeachCoin">
+					 SAND</option>
+
+					<option label="BeardDollars">
+					 BRDD</option>
+
+					<option label="Beats">
+					 XBTS</option>
+
+					<option label="BeaverCoin">
+					 BVC</option>
+
+					<option label="BeckSang">
+					 ARI*</option>
+
+					<option label="BelaCoin">
+					 BELA</option>
+
+					<option label="Benjacoin">
+					 BNC</option>
+
+					<option label="Benjamins">
+					 BEN</option>
+
+					<option label="BenjiRolls">
+					 BENJI</option>
+
+					<option label="BestChain">
+					 BEST</option>
+
+					<option label="BetaCoin">
+					 BET</option>
+
+					<option label="BigCoin">
+					 HUGE</option>
+
+					<option label="BigLifeCoin">
+					 LFC</option>
+
+					<option label="BigUp">
+					 BIGUP</option>
+
+					<option label="BighanCoin">
+					 BHC</option>
+
+					<option label="Bikercoins">
+					 BIC</option>
+
+					<option label="BillaryCoin">
+					 BLRY</option>
+
+					<option label="Billionaire Token">
+					 XBL</option>
+
+					<option label="Binance Coin">
+					 BNB</option>
+
+					<option label="BioBar">
+					 BIOB</option>
+
+					<option label="Biocoin">
+					 BIO</option>
+
+					<option label="BiosCrypto">
+					 BIOS</option>
+
+					<option label="BipCoin">
+					 BIP</option>
+
+					<option label="Bismuth">
+					 BIS</option>
+
+					<option label="BitAsean">
+					 BAS</option>
+
+					<option label="BitBar">
+					 BTB</option>
+
+					<option label="BitBay">
+					 BAY</option>
+
+					<option label="BitBean">
+					 BITB</option>
+
+					<option label="BitBoost">
+					 BBT</option>
+
+					<option label="BitBoss">
+					 BOSS</option>
+
+					<option label="BitBronze">
+					 BRONZ</option>
+
+					<option label="BitCAD">
+					 BCD*</option>
+
+					<option label="BitClave">
+					 CAT</option>
+
+					<option label="BitCoal">
+					 COAL</option>
+
+					<option label="BitConnect Coin">
+					 BCCOIN</option>
+
+					<option label="BitCredit">
+					 BCR</option>
+
+					<option label="BitCrystal">
+					 BTCRY</option>
+
+					<option label="BitCrystals">
+					 BCY</option>
+
+					<option label="BitCurrency">
+					 BTCR</option>
+
+					<option label="BitDegree">
+					 BDG</option>
+
+					<option label="BitDice">
+					 CSNO</option>
+
+					<option label="BitFinex Tokens">
+					 BFX</option>
+
+					<option label="BitGem">
+					 BTG*</option>
+
+					<option label="BitHIRE">
+					 HIRE*</option>
+
+					<option label="BitJob">
+					 STU</option>
+
+					<option label="BitLuckCoin">
+					 BTLC</option>
+
+					<option label="BitLux">
+					 LUX*</option>
+
+					<option label="BitMark">
+					 BTM</option>
+
+					<option label="BitMiles">
+					 BTMI</option>
+
+					<option label="BitMoon">
+					 BM</option>
+
+					<option label="BitOKX">
+					 BITOK</option>
+
+					<option label="BitQuark">
+					 BTQ</option>
+
+					<option label="BitSeeds">
+					 XSEED</option>
+
+					<option label="BitSend">
+					 BSD</option>
+
+					<option label="BitSerial">
+					 BTE*</option>
+
+					<option label="BitStone">
+					 BST</option>
+
+					<option label="BitSwift">
+					 SWIFT</option>
+
+					<option label="BitTokens">
+					 BXT</option>
+
+					<option label="BitVegan">
+					 VEG</option>
+
+					<option label="BitVolt">
+					 VOLT</option>
+
+					<option label="BitZeny">
+					 ZNY</option>
+
+					<option label="Bitair">
+					 BTCA</option>
+
+					<option label="BitalphaCoin">
+					 BAC</option>
+
+					<option label="Bitcedi">
+					 BXC</option>
+
+					<option label="Bitcloud">
+					 BTD</option>
+
+					<option label="Bitcloud 2.0">
+					 BTDX</option>
+
+					<option label="Bitcoin">
+					 BTC</option>
+
+					<option label="Bitcoin Cash / BCC">
+					 BCH</option>
+
+					<option label="Bitcoin Diamond">
+					 BCD</option>
+
+					<option label="Bitcoin Gold">
+					 BTG</option>
+
+					<option label="Bitcoin Planet">
+					 BTPL</option>
+
+					<option label="Bitcoin Red">
+					 BTCRED</option>
+
+					<option label="Bitcoin Revolution">
+					 RBTC</option>
+
+					<option label="Bitcoin Scrypt">
+					 BTCS</option>
+
+					<option label="Bitcoin SegWit2X">
+					 BT2</option>
+
+					<option label="BitcoinDark">
+					 BTCD</option>
+
+					<option label="BitcoinFast">
+					 BCF</option>
+
+					<option label="BitcoinPlus">
+					 XBC</option>
+
+					<option label="BitcoinTX">
+					 BTX*</option>
+
+					<option label="BitcoinX">
+					 BCX*</option>
+
+					<option label="BitcoinZ">
+					 BTCZ</option>
+
+					<option label="Bitcomo">
+					 BM*</option>
+
+					<option label="Bitcore">
+					 BTX</option>
+
+					<option label="Bitdeal">
+					 BDL</option>
+
+					<option label="Bitfinex Bitcoin Future">
+					 BT1</option>
+
+					<option label="BitluckCoin">
+					 BTCL*</option>
+
+					<option label="Bitmxittz">
+					 BMXT</option>
+
+					<option label="Bitqy">
+					 BQ</option>
+
+					<option label="Bitradio">
+					 BRO</option>
+
+					<option label="Bits Digit">
+					 BITSD</option>
+
+					<option label="Bitshares">
+					 BTS</option>
+
+					<option label="Bitstake">
+					 XBS</option>
+
+					<option label="BitstarCoin">
+					 BITS</option>
+
+					<option label="Bitz Coin">
+					 BITZ</option>
+
+					<option label="BitzCoin">
+					 BTZ</option>
+
+					<option label="BlackCoin">
+					 BLK</option>
+
+					<option label="BlackShadowCoin">
+					 BS</option>
+
+					<option label="BlackholeCoin">
+					 BHC*</option>
+
+					<option label="Blackmoon Crypto">
+					 BMC</option>
+
+					<option label="Blackstar">
+					 BSTAR</option>
+
+					<option label="BlakeCoin">
+					 BLC</option>
+
+					<option label="BlakeStar">
+					 BLAS</option>
+
+					<option label="BlazerCoin">
+					 BLAZR</option>
+
+					<option label="BlitzCoin">
+					 BLITZ</option>
+
+					<option label="BlockCAT">
+					 CAT*</option>
+
+					<option label="BlockMason Credit Protocol">
+					 BCPT</option>
+
+					<option label="BlockNet">
+					 BLOCK</option>
+
+					<option label="BlockPay">
+					 BLOCKPAY</option>
+
+					<option label="BlockPool">
+					 BPL</option>
+
+					<option label="Blockchain Capital">
+					 BCAP</option>
+
+					<option label="Blockchain Index">
+					 BLX</option>
+
+					<option label="Blocktix">
+					 TIX</option>
+
+					<option label="Bloom Token">
+					 BLT</option>
+
+					<option label="BlueCoin">
+					 BLU</option>
+
+					<option label="BlueDragon">
+					 BDR</option>
+
+					<option label="BnrtxCoin">
+					 BNX</option>
+
+					<option label="Boats and Bitches">
+					 BNB*</option>
+
+					<option label="Bob Coin">
+					 BOB</option>
+
+					<option label="Bogcoin">
+					 BOG</option>
+
+					<option label="BolivarCoin">
+					 BOLI</option>
+
+					<option label="BombCoin">
+					 BOMB</option>
+
+					<option label="BonesCoin">
+					 BON*</option>
+
+					<option label="Bonpay">
+					 BON</option>
+
+					<option label="Boolberry">
+					 BBR</option>
+
+					<option label="BoostCoin">
+					 BOST</option>
+
+					<option label="BosonCoin">
+					 BOSON</option>
+
+					<option label="BottleCaps">
+					 CAP</option>
+
+					<option label="Boulle">
+					 BOU</option>
+
+					<option label="Bounty0x">
+					 BNTY</option>
+
+					<option label="Bowhead Health">
+					 AHT*</option>
+
+					<option label="BowsCoin">
+					 BSC</option>
+
+					<option label="BoxyCoin">
+					 BOXY</option>
+
+					<option label="BrainCoin">
+					 BRAIN</option>
+
+					<option label="Brat">
+					 BRAT</option>
+
+					<option label="Bread token">
+					 BRD</option>
+
+					<option label="Breakout Stake">
+					 BRX</option>
+
+					<option label="BreakoutCoin">
+					 BRK</option>
+
+					<option label="BrickBlock">
+					 BBT*</option>
+
+					<option label="BridgeCoin">
+					 BCO</option>
+
+					<option label="BritCoin">
+					 BRIT</option>
+
+					<option label="BuildTeam">
+					 BT</option>
+
+					<option label="BullshitCoin">
+					 BULLS</option>
+
+					<option label="Bulwark">
+					 BWK</option>
+
+					<option label="BurstCoin">
+					 BURST</option>
+
+					<option label="BuzzCoin">
+					 BUZZ</option>
+
+					<option label="ByteCent">
+					 BYC</option>
+
+					<option label="ByteCoin">
+					 BCN</option>
+
+					<option label="ByteCoin">
+					 BTE</option>
+
+					<option label="Byteball">
+					 GBYTE</option>
+
+					<option label="Bytether ">
+					 BTH</option>
+
+					<option label="Bytom">
+					 BTM*</option>
+
+					<option label="C-Bits">
+					 XCT</option>
+
+					<option label="CAIx">
+					 CAIx</option>
+
+					<option label="CBD Crystals">
+					 CBD</option>
+
+					<option label="CCCoin">
+					 CCC</option>
+
+					<option label="CETUS Coin">
+					 CETI</option>
+
+					<option label="CHIPS">
+					 CHIPS</option>
+
+					<option label="CINNICOIN">
+					 CINNI</option>
+
+					<option label="CLAMS">
+					 CLAM</option>
+
+					<option label="COMSA">
+					 CMS</option>
+
+					<option label="COSS">
+					 COSS</option>
+
+					<option label="CPROP">
+					 MLS</option>
+
+					<option label="CabbageUnit">
+					 CAB</option>
+
+					<option label="Cachecoin">
+					 CACH</option>
+
+					<option label="Californium">
+					 CF</option>
+
+					<option label="CaliphCoin">
+					 CALC</option>
+
+					<option label="Camcoin">
+					 CAM</option>
+
+					<option label="CampusCoin">
+					 CMPCO</option>
+
+					<option label="CanYaCoin">
+					 CAN</option>
+
+					<option label="Canada eCoin">
+					 CND*</option>
+
+					<option label="Canada eCoin">
+					 CDN</option>
+
+					<option label="CannaCoin">
+					 CCN</option>
+
+					<option label="Cannabis Industry Coin">
+					 XCI</option>
+
+					<option label="CannabisCoin">
+					 CANN</option>
+
+					<option label="Cappasity">
+					 CAPP</option>
+
+					<option label="CapriCoin">
+					 CPC</option>
+
+					<option label="CarTaxi">
+					 CTX</option>
+
+					<option label="Carboncoin">
+					 CARBON</option>
+
+					<option label="Cardano">
+					 ADA</option>
+
+					<option label="CarpeDiemCoin">
+					 DIEM</option>
+
+					<option label="CarterCoin">
+					 CTC</option>
+
+					<option label="Cash &amp; Back Coin">
+					 CNBC</option>
+
+					<option label="Cash Poker Pro">
+					 CASH*</option>
+
+					<option label="CashCoin">
+					 CASH</option>
+
+					<option label="CashOut">
+					 CSH</option>
+
+					<option label="Cashaa">
+					 CAS</option>
+
+					<option label="CasinoCoin">
+					 CSC</option>
+
+					<option label="Castle">
+					 CSTL</option>
+
+					<option label="Catcoin">
+					 CAT1</option>
+
+					<option label="Caviar">
+					 CAV</option>
+
+					<option label="Centra">
+					 CTR</option>
+
+					<option label="Centurion">
+					 CNT</option>
+
+					<option label="Cerium">
+					 XCE</option>
+
+					<option label="ChainCoin">
+					 CHC</option>
+
+					<option label="ChainLink">
+					 LINK</option>
+
+					<option label="ChanCoin">
+					 4CHN</option>
+
+					<option label="Change">
+					 CAG</option>
+
+					<option label="Charity Coin">
+					 CHA</option>
+
+					<option label="ChatCoin">
+					 CHAT</option>
+
+					<option label="CheckCoin">
+					 CXC</option>
+
+					<option label="ChessCoin">
+					 CHESS</option>
+
+					<option label="ChildCoin">
+					 CHILD</option>
+
+					<option label="ChinaCoin">
+					 CNC</option>
+
+					<option label="Chip">
+					 CHIP</option>
+
+					<option label="ChoofCoin">
+					 CHOOF</option>
+
+					<option label="Chronologic">
+					 DAY</option>
+
+					<option label="ChronosCoin">
+					 CRX</option>
+
+					<option label="CinderCoin">
+					 CIN</option>
+
+					<option label="Cindicator">
+					 CND</option>
+
+					<option label="CircuitCoin">
+					 CIR</option>
+
+					<option label="Circuits of Value">
+					 COVAL</option>
+
+					<option label="Civic">
+					 CVC</option>
+
+					<option label="ClearPoll">
+					 POLL</option>
+
+					<option label="CleverCoin">
+					 CLV</option>
+
+					<option label="CleverHash">
+					 CHASH</option>
+
+					<option label="Clickcoin">
+					 CLICK</option>
+
+					<option label="Clinton">
+					 CLINT</option>
+
+					<option label="CloakCoin">
+					 CLOAK</option>
+
+					<option label="Clockcoin">
+					 CKC</option>
+
+					<option label="Cloud">
+					 CLD</option>
+
+					<option label="Clout">
+					 CLOUT</option>
+
+					<option label="CludCoin">
+					 CLUD</option>
+
+					<option label="CoEval">
+					 COE</option>
+
+					<option label="Cobinhood">
+					 COB</option>
+
+					<option label="CobraCoin">
+					 COX</option>
+
+					<option label="CodeTract">
+					 CTT</option>
+
+					<option label="CoffeeCoin">
+					 CFC</option>
+
+					<option label="Cofound.it">
+					 CFI</option>
+
+					<option label="Coin">
+					 COIN*</option>
+
+					<option label="Coin Magi">
+					 XMG</option>
+
+					<option label="Coin to the Future">
+					 BTTF</option>
+
+					<option label="Coin.2">
+					 C2</option>
+
+					<option label="CoinDash">
+					 CDT</option>
+
+					<option label="CoinFi">
+					 COFI</option>
+
+					<option label="CoinJob">
+					 XCJ</option>
+
+					<option label="CoinWorksCoin">
+					 LAB*</option>
+
+					<option label="Coinmatic">
+					 CTIC</option>
+
+					<option label="Coino">
+					 CNO</option>
+
+					<option label="Coinomat">
+					 CNMT</option>
+
+					<option label="Coinonat">
+					 CXT</option>
+
+					<option label="CoinonatX">
+					 XCXT</option>
+
+					<option label="ColossusCoinXT">
+					 COLX</option>
+
+					<option label="CometCoin">
+					 CMT</option>
+
+					<option label="Commodity Ad Network">
+					 CDX*</option>
+
+					<option label="Community Coin">
+					 COMM</option>
+
+					<option label="Community Coin">
+					 COC</option>
+
+					<option label="Compcoin">
+					 CMP</option>
+
+					<option label="CompuCoin">
+					 CPN</option>
+
+					<option label="ConSpiracy Coin ">
+					 CYC</option>
+
+					<option label="ConcealCoin">
+					 CNL</option>
+
+					<option label="Condensate">
+					 RAIN</option>
+
+					<option label="Confido">
+					 CFD</option>
+
+					<option label="ConnectJob Token">
+					 CJT</option>
+
+					<option label="ConquestCoin">
+					 CQST</option>
+
+					<option label="CoolCoin">
+					 COOL</option>
+
+					<option label="CoolDarkCoin">
+					 CCX</option>
+
+					<option label="Copico">
+					 XCPO</option>
+
+					<option label="CopperLark">
+					 CLR</option>
+
+					<option label="CoralPay">
+					 CORAL</option>
+
+					<option label="Core Group Asset">
+					 CORE</option>
+
+					<option label="Corion">
+					 COR</option>
+
+					<option label="Cosmic">
+					 CSMIC</option>
+
+					<option label="Cosmos">
+					 ATOM*</option>
+
+					<option label="CosmosCoin">
+					 CMC</option>
+
+					<option label="CounterParty">
+					 XCP</option>
+
+					<option label="CovenCoin">
+					 COV*</option>
+
+					<option label="Covesting">
+					 COV</option>
+
+					<option label="CrabCoin">
+					 CRAB</option>
+
+					<option label="CrackCoin">
+					 CRACK</option>
+
+					<option label="CraftCoin">
+					 CRC</option>
+
+					<option label="Craftcoin">
+					 CRAFT</option>
+
+					<option label="CraigsCoin">
+					 CRAIG</option>
+
+					<option label="CrankCoin">
+					 CRNK</option>
+
+					<option label="CraveCoin">
+					 CRAVE</option>
+
+					<option label="Crazy Coin">
+					 CZC</option>
+
+					<option label="Cream">
+					 CRM</option>
+
+					<option label="Creatio">
+					 XCRE</option>
+
+					<option label="CreativeChain">
+					 CREA</option>
+
+					<option label="Creditbit ">
+					 CRB</option>
+
+					<option label="Credits">
+					 CRE</option>
+
+					<option label="Credits">
+					 CRDS</option>
+
+					<option label="Credo">
+					 CFT*</option>
+
+					<option label="Credo">
+					 CREDO</option>
+
+					<option label="Creva Coin">
+					 CREVA</option>
+
+					<option label="CrowdCoin">
+					 CRC*</option>
+
+					<option label="CrowdCoinage">
+					 CCOS</option>
+
+					<option label="Crowdwiz">
+					 WIZ</option>
+
+					<option label="Crown Coin">
+					 CRW</option>
+
+					<option label="CryptCoin">
+					 CRYPT</option>
+
+					<option label="Crypti">
+					 XCR</option>
+
+					<option label="Crypto">
+					 CTO</option>
+
+					<option label="Crypto Escudo">
+					 CESC</option>
+
+					<option label="Crypto Tickets">
+					 TKT</option>
+
+					<option label="Crypto-X">
+					 CWX</option>
+
+					<option label="Crypto20">
+					 C20</option>
+
+					<option label="CryptoABS">
+					 CABS</option>
+
+					<option label="CryptoBuk">
+					 BUK</option>
+
+					<option label="CryptoBullion">
+					 CBX</option>
+
+					<option label="CryptoCarbon">
+					 CCRB</option>
+
+					<option label="CryptoCircuits">
+					 CIRC</option>
+
+					<option label="CryptoFocus">
+					 FCS</option>
+
+					<option label="CryptoForecast">
+					 CFT</option>
+
+					<option label="CryptoInsight">
+					 TKR</option>
+
+					<option label="CryptoJacks">
+					 CJ</option>
+
+					<option label="CryptoJournal">
+					 CJC</option>
+
+					<option label="CryptoPay">
+					 CPAY</option>
+
+					<option label="CryptoPennies">
+					 CRPS</option>
+
+					<option label="CryptoPing">
+					 PING</option>
+
+					<option label="CryptoSpots">
+					 CS</option>
+
+					<option label="CryptoWave">
+					 CWV</option>
+
+					<option label="CryptoWorldXToken">
+					 CWXT</option>
+
+					<option label="Cryptodex">
+					 CDX</option>
+
+					<option label="Cryptographic Anomaly">
+					 CGA</option>
+
+					<option label="Cryptokenz">
+					 CYT</option>
+
+					<option label="Cryptonetix">
+					 CIX</option>
+
+					<option label="Cryptonex">
+					 CNX</option>
+
+					<option label="Cryptonite">
+					 XCN</option>
+
+					<option label="Cryptsy Mining Contract">
+					 MN</option>
+
+					<option label="Cryptsy Points">
+					 POINTS</option>
+
+					<option label="Cryptum">
+					 CRTM</option>
+
+					<option label="Crypviser">
+					 CVCOIN</option>
+
+					<option label="Crystal Clear Token ">
+					 CCT</option>
+
+					<option label="Cubits">
+					 QBT</option>
+
+					<option label="Curecoin">
+					 CURE</option>
+
+					<option label="CybCSec Coin">
+					 XCS</option>
+
+					<option label="CyberCoin">
+					 CC</option>
+
+					<option label="CyberMiles">
+					 CMT*</option>
+
+					<option label="CyberTrust">
+					 CABS*</option>
+
+					<option label="Cygnus">
+					 CYG</option>
+
+					<option label="CypherPunkCoin">
+					 CYP</option>
+
+					<option label="DAO.casino">
+					 BET*</option>
+
+					<option label="DAS">
+					 DAS</option>
+
+					<option label="DCORP">
+					 DRP</option>
+
+					<option label="DFSCoin">
+					 DFS</option>
+
+					<option label="DIMCOIN">
+					 DIM</option>
+
+					<option label="DMarket">
+					 DMT</option>
+
+					<option label="DOVU">
+					 DOVU</option>
+
+					<option label="DT Token">
+					 DRACO</option>
+
+					<option label="Darcrus">
+					 DAR</option>
+
+					<option label="Darico">
+					 DARICO</option>
+
+					<option label="Dark">
+					 DARK</option>
+
+					<option label="Dark Lisk">
+					 DISK</option>
+
+					<option label="Dark Moon">
+					 MOOND</option>
+
+					<option label="DarkBit">
+					 DB</option>
+
+					<option label="DarkCash">
+					 DRKC</option>
+
+					<option label="DarkCrave">
+					 DCC</option>
+
+					<option label="DarkEther">
+					 DETH</option>
+
+					<option label="DarkGold">
+					 DGDC</option>
+
+					<option label="DarkKnightCoin">
+					 DKC</option>
+
+					<option label="DarkKush">
+					 DANK</option>
+
+					<option label="DarkShibe">
+					 DSB</option>
+
+					<option label="DarkToken">
+					 DT</option>
+
+					<option label="DarkTron">
+					 DRKT</option>
+
+					<option label="Darknet">
+					 DNET</option>
+
+					<option label="Dashcoin">
+					 DSH</option>
+
+					<option label="Data Trading">
+					 DTT*</option>
+
+					<option label="Databits">
+					 DTB</option>
+
+					<option label="Datacoin">
+					 DTC*</option>
+
+					<option label="Datum">
+					 DAT</option>
+
+					<option label="DavorCoin">
+					 DAV</option>
+
+					<option label="DaxxCoin">
+					 DAXX</option>
+
+					<option label="DayTrader Coin">
+					 DTC</option>
+
+					<option label="DeOxyRibose">
+					 XNA</option>
+
+					<option label="DebitCoin">
+					 DBTC</option>
+
+					<option label="Debitum Token">
+					 DEB</option>
+
+					<option label="Decent">
+					 DCT</option>
+
+					<option label="Decent.bet">
+					 DBET</option>
+
+					<option label="Decentraland">
+					 MANA</option>
+
+					<option label="Decision Token">
+					 HST</option>
+
+					<option label="Decred">
+					 DCR</option>
+
+					<option label="Deep Gold">
+					 DEEP</option>
+
+					<option label="DeepBrain Chain">
+					 DBC</option>
+
+					<option label="DeepOnion">
+					 ONION</option>
+
+					<option label="Degas Coin">
+					 DEA</option>
+
+					<option label="DelightPay">
+					 DPAY</option>
+
+					<option label="DeltaCredits">
+					 DCRE</option>
+
+					<option label="Denarius">
+					 DNR</option>
+
+					<option label="Dent">
+					 DENT</option>
+
+					<option label="Dentacoin">
+					 DCN</option>
+
+					<option label="DentalFix">
+					 DFBT</option>
+
+					<option label="Desire">
+					 DSR</option>
+
+					<option label="Destiny">
+					 DES</option>
+
+					<option label="DetectorToken">
+					 DTCT</option>
+
+					<option label="DevCoin">
+					 DVC</option>
+
+					<option label="Diamond">
+					 DMD</option>
+
+					<option label="DickCoin">
+					 DCK</option>
+
+					<option label="Diggits">
+					 DIGS</option>
+
+					<option label="DigiByte">
+					 DGB</option>
+
+					<option label="DigiCoin">
+					 DGC</option>
+
+					<option label="DigiCube">
+					 CUBE</option>
+
+					<option label="DigiEuro">
+					 DEUR</option>
+
+					<option label="DigiPulse">
+					 DGPT</option>
+
+					<option label="Digigems">
+					 DGMS</option>
+
+					<option label="Digital Assets Power Play">
+					 DPP</option>
+
+					<option label="Digital Bullion Gold">
+					 DBG</option>
+
+					<option label="Digital Developers Fund">
+					 DDF</option>
+
+					<option label="Digital Rupees">
+					 DRS</option>
+
+					<option label="DigitalCash">
+					 DASH</option>
+
+					<option label="DigitalNote ">
+					 XDN</option>
+
+					<option label="DigitalPrice">
+					 DP</option>
+
+					<option label="Digix DAO">
+					 DGD</option>
+
+					<option label="DimeCoin">
+					 DIME</option>
+
+					<option label="Dinastycoin">
+					 DCY</option>
+
+					<option label="Dirac Coin">
+					 XDQ</option>
+
+					<option label="Divi">
+					 DIVX</option>
+
+					<option label="Dlisk">
+					 DLISK</option>
+
+					<option label="Dnotes">
+					 NOTE</option>
+
+					<option label="Doc.ai Neuron">
+					 NRN</option>
+
+					<option label="DogeCoinDark">
+					 DOGED</option>
+
+					<option label="DogeGoreCoin">
+					 DGORE</option>
+
+					<option label="DogeParty">
+					 XDP</option>
+
+					<option label="Dogecoin">
+					 DOGE</option>
+
+					<option label="DollarCoin">
+					 DLC</option>
+
+					<option label="DollarOnline">
+					 DLR</option>
+
+					<option label="DomRaider">
+					 DRT</option>
+
+					<option label="DonationCoin">
+					 DON</option>
+
+					<option label="DopeCoin">
+					 DOPE</option>
+
+					<option label="Dotcoin">
+					 DOT</option>
+
+					<option label="Doubloon">
+					 BOAT</option>
+
+					<option label="DraculaCoin">
+					 DRA</option>
+
+					<option label="Draftcoin">
+					 DFT</option>
+
+					<option label="DragonSphere">
+					 XDB</option>
+
+					<option label="Dragonchain">
+					 DRGN</option>
+
+					<option label="Dream8Coin">
+					 DRM8</option>
+
+					<option label="DreamTeam Token">
+					 DTT</option>
+
+					<option label="Droidz">
+					 DRZ</option>
+
+					<option label="Dropcoin">
+					 DRC</option>
+
+					<option label="Droxne">
+					 DRXNE</option>
+
+					<option label="DubCoin">
+					 DUB</option>
+
+					<option label="DubaiCoin">
+					 DBIC</option>
+
+					<option label="DubaiCoin">
+					 DBIX</option>
+
+					<option label="DuckDuckCoin">
+					 DUCK</option>
+
+					<option label="Dutch Coin">
+					 DUTCH</option>
+
+					<option label="DuxCoin">
+					 DUX</option>
+
+					<option label="Dynamic">
+					 DYN</option>
+
+					<option label="Dynamic Trading Rights">
+					 DTR</option>
+
+					<option label="Düber">
+					 DBR</option>
+
+					<option label="E-CurrencyCoin">
+					 ECC</option>
+
+					<option label="E-Dinar Coin">
+					 EDR</option>
+
+					<option label="E-Gulden">
+					 EFL</option>
+
+					<option label="EB3coin">
+					 EB3</option>
+
+					<option label="ECOcoin">
+					 ECO</option>
+
+					<option label="EDRCoin">
+					 EDRC</option>
+
+					<option label="EGOcoin">
+					 EGO</option>
+
+					<option label="ELTCOIN">
+					 ELTCOIN</option>
+
+					<option label="EOS">
+					 EOS</option>
+
+					<option label="EQUI">
+					 EQ</option>
+
+					<option label="ERBCoin">
+					 ERB</option>
+
+					<option label="ETHGAS">
+					 EGAS</option>
+
+					<option label="EZCoin">
+					 EZC</option>
+
+					<option label="EZMarket">
+					 EZM</option>
+
+					<option label="EagleCoin">
+					 EA</option>
+
+					<option label="EagsCoin">
+					 EAGS</option>
+
+					<option label="Earth Token">
+					 EARTH</option>
+
+					<option label="EarthCoin">
+					 EAC</option>
+
+					<option label="EasyMine">
+					 EMT</option>
+
+					<option label="Ebitz">
+					 EBZ</option>
+
+					<option label="EbolaShare">
+					 EBS</option>
+
+					<option label="Eclipse">
+					 EC</option>
+
+					<option label="EcoBit">
+					 ECOB</option>
+
+					<option label="Eddie coin">
+					 EDDIE</option>
+
+					<option label="EdgeCoin">
+					 EDGE</option>
+
+					<option label="Edgeless">
+					 EDG</option>
+
+					<option label="EducoinV">
+					 EDC</option>
+
+					<option label="EggCoin">
+					 EGG</option>
+
+					<option label="Eidoo">
+					 EDO</option>
+
+					<option label="Einsteinium">
+					 EMC2</option>
+
+					<option label="EkoCoin">
+					 EKO</option>
+
+					<option label="Elacoin">
+					 ELC</option>
+
+					<option label="Elastic">
+					 XEL</option>
+
+					<option label="Electra">
+					 ECA</option>
+
+					<option label="Electroneum">
+					 ETN</option>
+
+					<option label="Elektron">
+					 EKN</option>
+
+					<option label="Elementrem">
+					 ELE</option>
+
+					<option label="Elements">
+					 ELM</option>
+
+					<option label="Elite 888">
+					 8S</option>
+
+					<option label="Elixir">
+					 ELIX</option>
+
+					<option label="Ellaism">
+					 ELLA</option>
+
+					<option label="Eloplay">
+					 ELT</option>
+
+					<option label="Elysium">
+					 ELS</option>
+
+					<option label="EmberCoin">
+					 EMB</option>
+
+					<option label="Embers">
+					 MBRS</option>
+
+					<option label="Emerald">
+					 EMD</option>
+
+					<option label="Emercoin">
+					 EMC</option>
+
+					<option label="EmiratesGoldCoin">
+					 EMIGR</option>
+
+					<option label="Emphy">
+					 EPY*</option>
+
+					<option label="EmporiumCoin">
+					 EMPC</option>
+
+					<option label="Empyrean">
+					 EPY</option>
+
+					<option label="Encrypgen">
+					 DNA</option>
+
+					<option label="EncryptoTel">
+					 ETT</option>
+
+					<option label="EneCoin">
+					 ENE</option>
+
+					<option label="Energi Token">
+					 ETK</option>
+
+					<option label="EnergyCoin">
+					 ENRG</option>
+
+					<option label="Enigma">
+					 XNG</option>
+
+					<option label="Enigma">
+					 ENG</option>
+
+					<option label="Enjin Coin">
+					 ENJ</option>
+
+					<option label="EnterCoin (ENTER)">
+					 ENTER</option>
+
+					<option label="Envion">
+					 EVN</option>
+
+					<option label="EqualCoin">
+					 EQUAL</option>
+
+					<option label="EquiTrader">
+					 EQT</option>
+
+					<option label="Equibit">
+					 EQB</option>
+
+					<option label="Equilibrium Coin">
+					 EQM</option>
+
+					<option label="Ergo">
+					 EFYT</option>
+
+					<option label="Eroscoin">
+					 ERO</option>
+
+					<option label="ErrorCoin">
+					 ERR</option>
+
+					<option label="Eryllium">
+					 ERY</option>
+
+					<option label="Espers">
+					 ESP</option>
+
+					<option label="Esports.com">
+					 ERT</option>
+
+					<option label="Eternity">
+					 ENT</option>
+
+					<option label="EthBet">
+					 EBET</option>
+
+					<option label="EthBits">
+					 ETBS</option>
+
+					<option label="EthLend">
+					 LEND</option>
+
+					<option label="EtherBTC">
+					 ETHB</option>
+
+					<option label="EtherDoge">
+					 DOGETH</option>
+
+					<option label="Ethereum">
+					 ETH</option>
+
+					<option label="Ethereum Black">
+					 ETBT</option>
+
+					<option label="Ethereum Blue">
+					 BLUE</option>
+
+					<option label="Ethereum Cash">
+					 ECASH</option>
+
+					<option label="Ethereum Classic">
+					 ETC</option>
+
+					<option label="Ethereum Dark">
+					 ETHD</option>
+
+					<option label="Ethereum Gold">
+					 ETG</option>
+
+					<option label="Ethereum.Link">
+					 LNK</option>
+
+					<option label="EthereumBitcoin">
+					 BTCE</option>
+
+					<option label="EthereumFog">
+					 ETF</option>
+
+					<option label="EthereumLite">
+					 ELITE</option>
+
+					<option label="EthereumScrypt">
+					 ETHS</option>
+
+					<option label="Etheriya">
+					 RIYA</option>
+
+					<option label="Etheroll">
+					 DICE</option>
+
+					<option label="Etherparty">
+					 FUEL</option>
+
+					<option label="Ethersportcoin">
+					 ESC</option>
+
+					<option label="Ethos">
+					 ETHOS</option>
+
+					<option label="Eurocoin">
+					 EUC</option>
+
+					<option label="EuropeCoin">
+					 ERC</option>
+
+					<option label="Event Token">
+					 EVENT</option>
+
+					<option label="Eventchain">
+					 EVC</option>
+
+					<option label="EverGreenCoin">
+					 EGC</option>
+
+					<option label="Everex">
+					 EVX</option>
+
+					<option label="Everus">
+					 EVR</option>
+
+					<option label="EveryonesCoin">
+					 EOC</option>
+
+					<option label="EvilCoin">
+					 EVIL</option>
+
+					<option label="ExaByte (EXB)">
+					 EXB</option>
+
+					<option label="Exchange Union">
+					 XUC</option>
+
+					<option label="ExchangeN">
+					 EXN</option>
+
+					<option label="Exclusive Coin">
+					 EXCL</option>
+
+					<option label="ExeCoin">
+					 EXE</option>
+
+					<option label="ExitCoin">
+					 EXIT</option>
+
+					<option label="Expanse">
+					 EXP</option>
+
+					<option label="Experty">
+					 EXY</option>
+
+					<option label="Exscudo">
+					 EON</option>
+
+					<option label="ExtraCredit">
+					 XTRA</option>
+
+					<option label="Extreme Sportsbook">
+					 XSB</option>
+
+					<option label="ExtremeCoin">
+					 XT</option>
+
+					<option label="F16Coin">
+					 F16</option>
+
+					<option label="FCoin">
+					 FX</option>
+
+					<option label="FIBRE">
+					 FIBRE</option>
+
+					<option label="FLASH coin">
+					 FLASH</option>
+
+					<option label="FLiK">
+					 FLIK</option>
+
+					<option label="Facecoin">
+					 FC</option>
+
+					<option label="Factoids">
+					 FCT</option>
+
+					<option label="FairCoin">
+					 FAIR</option>
+
+					<option label="FameCoin">
+					 FAME</option>
+
+					<option label="FantomCoin ">
+					 FCN</option>
+
+					<option label="Farad">
+					 FRD</option>
+
+					<option label="FastCoin">
+					 FST</option>
+
+					<option label="FaucetCoin">
+					 DROP</option>
+
+					<option label="FazzCoin">
+					 FAZZ</option>
+
+					<option label="FeatherCoin">
+					 FTC</option>
+
+					<option label="FileCoin">
+					 FIL</option>
+
+					<option label="FinTab">
+					 FNT</option>
+
+					<option label="FindCoin">
+					 FIND</option>
+
+					<option label="FireCoin">
+					 FIRE</option>
+
+					<option label="FireLotto">
+					 FLOT</option>
+
+					<option label="FireRoosterCoin">
+					 FRC</option>
+
+					<option label="FireflyCoin">
+					 FFC</option>
+
+					<option label="FirstBlood">
+					 1ST</option>
+
+					<option label="FirstCoin">
+					 FIRST</option>
+
+					<option label="FirstCoin">
+					 FRST</option>
+
+					<option label="FistBump">
+					 FIST</option>
+
+					<option label="Fitcoin">
+					 FIT</option>
+
+					<option label="Flappy Coin">
+					 FLAP</option>
+
+					<option label="Flash">
+					 FLX</option>
+
+					<option label="FlavorCoin">
+					 FLVR</option>
+
+					<option label="Flixxo">
+					 FLIXX</option>
+
+					<option label="FlorinCoin">
+					 FLO</option>
+
+					<option label="FlutterCoin">
+					 FLT</option>
+
+					<option label="FlyCoin">
+					 FLY</option>
+
+					<option label="FlypMe">
+					 FYP</option>
+
+					<option label="Folding Coin">
+					 FLDC</option>
+
+					<option label="Follow Coin">
+					 FLLW</option>
+
+					<option label="FonzieCoin">
+					 FONZ</option>
+
+					<option label="FoodCoin">
+					 FDC</option>
+
+					<option label="FoodCoin">
+					 FOOD</option>
+
+					<option label="Footy Cash">
+					 XFT</option>
+
+					<option label="Forever Coin">
+					 XFC</option>
+
+					<option label="ForexCoin">
+					 FOREX</option>
+
+					<option label="FractalCoin">
+					 FRAC</option>
+
+					<option label="Francs">
+					 FRN</option>
+
+					<option label="Franko">
+					 FRK</option>
+
+					<option label="Frankywillcoin">
+					 FRWC</option>
+
+					<option label="FrazCoin">
+					 FRAZ</option>
+
+					<option label="Free Game Zone">
+					 FGZ</option>
+
+					<option label="FreeCoin">
+					 FRE</option>
+
+					<option label="FriendshipCoin">
+					 FSC2</option>
+
+					<option label="Fuck Token">
+					 FUCK</option>
+
+					<option label="Fuel2Coin">
+					 FC2</option>
+
+					<option label="FujiCoin">
+					 FJC</option>
+
+					<option label="Fujinto">
+					 NTO</option>
+
+					<option label="Fuloos Coin">
+					 FLS</option>
+
+					<option label="FunCoin">
+					 FUNC</option>
+
+					<option label="FunFair">
+					 FUN</option>
+
+					<option label="FundRequest">
+					 FND</option>
+
+					<option label="FundYourselfNow">
+					 FYN</option>
+
+					<option label="Fusion">
+					 FSN</option>
+
+					<option label="FutCoin">
+					 FUTC</option>
+
+					<option label="FuturePoints">
+					 FTP</option>
+
+					<option label="Fuzzballs">
+					 FUZZ</option>
+
+					<option label="GAIA Platform">
+					 GAIA</option>
+
+					<option label="GAKHcoin">
+					 GAKH</option>
+
+					<option label="GATCOIN">
+					 GAT</option>
+
+					<option label="GBR Coin">
+					 GBRC</option>
+
+					<option label="GCoin">
+					 GCN</option>
+
+					<option label="GIFTO">
+					 GTO</option>
+
+					<option label="GIZMOcoin">
+					 GIZ</option>
+
+					<option label="GPU Coin">
+					 GPU</option>
+
+					<option label="GSM Coin">
+					 GSM</option>
+
+					<option label="Galactrum">
+					 ORE</option>
+
+					<option label="Galaxy eSolutions">
+					 GES</option>
+
+					<option label="GalaxyCoin">
+					 GLX</option>
+
+					<option label="Gambit coin">
+					 GAM</option>
+
+					<option label="GameBetCoin">
+					 GBT</option>
+
+					<option label="GameLeagueCoin">
+					 GML</option>
+
+					<option label="GameUnits">
+					 UNITS</option>
+
+					<option label="Gamecredits">
+					 GAME</option>
+
+					<option label="Gameflip">
+					 FLP</option>
+
+					<option label="GanjaCoin V2">
+					 GNJ</option>
+
+					<option label="Gapcoin">
+					 GAP</option>
+
+					<option label="Gas">
+					 GAS</option>
+
+					<option label="GayCoin">
+					 GAY</option>
+
+					<option label="Gemz Social">
+					 GEMZ</option>
+
+					<option label="GenXCoin">
+					 GXC*</option>
+
+					<option label="Genaro Network">
+					 GNX</option>
+
+					<option label="Genesis Vision">
+					 GVT</option>
+
+					<option label="GenesysCoin">
+					 GSY</option>
+
+					<option label="Genstake">
+					 GEN</option>
+
+					<option label="GeoCoin">
+					 GEO</option>
+
+					<option label="GeoFunders">
+					 GUNS</option>
+
+					<option label="GermanCoin">
+					 GER</option>
+
+					<option label="Ghost Coin">
+					 SPKTR</option>
+
+					<option label="GhostCoin">
+					 GHC</option>
+
+					<option label="Ghoul Coin">
+					 GHOUL</option>
+
+					<option label="GiftNet">
+					 GIFT</option>
+
+					<option label="Giftcoin">
+					 GFT</option>
+
+					<option label="GigCoin">
+					 GIG</option>
+
+					<option label="Giga Hash">
+					 GHS</option>
+
+					<option label="Giga Watt">
+					 WTT</option>
+
+					<option label="Gilgam">
+					 GGS</option>
+
+					<option label="Gimli">
+					 GIM</option>
+
+					<option label="Giotto Coin">
+					 GOT</option>
+
+					<option label="GiveCoin">
+					 GIVE</option>
+
+					<option label="Gladius">
+					 GLA</option>
+
+					<option label="Global">
+					 GLOBE</option>
+
+					<option label="Global Currency Reserve">
+					 GCR</option>
+
+					<option label="Global Jobcoin">
+					 GJC</option>
+
+					<option label="GlobalBoost">
+					 BSTY</option>
+
+					<option label="GlobalCoin">
+					 GLC</option>
+
+					<option label="GlobalToken">
+					 GLT</option>
+
+					<option label="GlowShares">
+					 GSX</option>
+
+					<option label="GlyphCoin">
+					 GLYPH</option>
+
+					<option label="Gnosis">
+					 GNO</option>
+
+					<option label="Go!">
+					 xGOx</option>
+
+					<option label="GoByte">
+					 GBX</option>
+
+					<option label="GoaCoin">
+					 GOA</option>
+
+					<option label="Goat">
+					 GOAT</option>
+
+					<option label="Gold Pressed Latinum">
+					 GPL</option>
+
+					<option label="Gold Reward Token">
+					 GRX</option>
+
+					<option label="GoldBlocks">
+					 GB</option>
+
+					<option label="GoldCoin">
+					 GLD</option>
+
+					<option label="GoldMint">
+					 MNT</option>
+
+					<option label="GoldPieces">
+					 GP</option>
+
+					<option label="GoldReserve">
+					 XGR</option>
+
+					<option label="Goldea">
+					 GEA</option>
+
+					<option label="GoldenBird">
+					 XGB</option>
+
+					<option label="Goldmaxcoin">
+					 GMX</option>
+
+					<option label="Golem Network Token">
+					 GNT</option>
+
+					<option label="Golos">
+					 GOLOS</option>
+
+					<option label="GoodCoin">
+					 GOOD</option>
+
+					<option label="Goonies">
+					 GOON</option>
+
+					<option label="GorillaBucks">
+					 BUCKS*</option>
+
+					<option label="GothicCoin">
+					 GOTX</option>
+
+					<option label="Graft Network">
+					 GRF</option>
+
+					<option label="Gram Coin">
+					 GRAM</option>
+
+					<option label="GrandCoin">
+					 GDC</option>
+
+					<option label="Grantcoin">
+					 GRT</option>
+
+					<option label="Graviton">
+					 GRAV</option>
+
+					<option label="GravityBit">
+					 GBIT</option>
+
+					<option label="GreenCoin">
+					 GRE</option>
+
+					<option label="GrexitCoin">
+					 GREXIT</option>
+
+					<option label="Grid+">
+					 GRID</option>
+
+					<option label="GridCoin">
+					 GRC</option>
+
+					<option label="GridMaster">
+					 GRM</option>
+
+					<option label="GridPay">
+					 GRID*</option>
+
+					<option label="Gridmaster">
+					 GMC</option>
+
+					<option label="Groestlcoin ">
+					 GRS</option>
+
+					<option label="Growers International">
+					 GRWI</option>
+
+					<option label="GrownCoin">
+					 GROW</option>
+
+					<option label="GrowthCoin">
+					 GRW</option>
+
+					<option label="Guaranteed Entrance Token">
+					 GET</option>
+
+					<option label="GuccioneCoin">
+					 GCC</option>
+
+					<option label="GuerillaCoin">
+					 GUE</option>
+
+					<option label="Gulden">
+					 NLG</option>
+
+					<option label="GunCoin">
+					 GUN</option>
+
+					<option label="Guppy">
+					 GUP</option>
+
+					<option label="Gx Coin">
+					 GXC</option>
+
+					<option label="HEROcoin">
+					 PLAY</option>
+
+					<option label="HOQU">
+					 HQX</option>
+
+					<option label="HOdlcoin">
+					 HODL</option>
+
+					<option label="HTML Coin">
+					 HTML5</option>
+
+					<option label="Hacken">
+					 HKN</option>
+
+					<option label="Hacker Gold">
+					 HKG</option>
+
+					<option label="Hackspace Capital">
+					 HAC</option>
+
+					<option label="Halcyon">
+					 HAL</option>
+
+					<option label="Halloween Coin">
+					 HALLO</option>
+
+					<option label="HamsterCoin">
+					 HAMS</option>
+
+					<option label="Handelion">
+					 HION</option>
+
+					<option label="HappyCoin">
+					 HPC</option>
+
+					<option label="HappyCreatorCoin ">
+					 HCC</option>
+
+					<option label="Harbour DAO">
+					 HRB</option>
+
+					<option label="HazMatCoin">
+					 HZT</option>
+
+					<option label="HazeCoin">
+					 HAZE</option>
+
+					<option label="HealthyWorm">
+					 WORM</option>
+
+					<option label="Heat Ledger">
+					 HEAT</option>
+
+					<option label="HeavyCoin">
+					 HVC</option>
+
+					<option label="Hedge Token">
+					 HDG</option>
+
+					<option label="Hedgecoin">
+					 HEDG</option>
+
+					<option label="HeelCoin">
+					 HEEL</option>
+
+					<option label="Hellenic Coin">
+					 HNC</option>
+
+					<option label="Hello Gold">
+					 HGT</option>
+
+					<option label="HempCoin">
+					 HMP</option>
+
+					<option label="HextraCoin">
+					 HXT</option>
+
+					<option label="HexxCoin">
+					 HXX</option>
+
+					<option label="HiCoin">
+					 XHI</option>
+
+					<option label="High Voltage Coin">
+					 HVCO</option>
+
+					<option label="HireMatch">
+					 HIRE</option>
+
+					<option label="Hitcoin">
+					 HTC</option>
+
+					<option label="Hive">
+					 HVN</option>
+
+					<option label="HoboNickels">
+					 HBN</option>
+
+					<option label="HomeBlockCoin">
+					 HBC</option>
+
+					<option label="Honey">
+					 HONEY</option>
+
+					<option label="Horizon">
+					 HZ</option>
+
+					<option label="Horse Power">
+					 HSP</option>
+
+					<option label="Hshare">
+					 HSR</option>
+
+					<option label="Hubiit">
+					 HBT</option>
+
+					<option label="Humaniq">
+					 HMQ</option>
+
+					<option label="Huncoin">
+					 HNC*</option>
+
+					<option label="HunterCoin">
+					 HUC</option>
+
+					<option label="Hush">
+					 HUSH</option>
+
+					<option label="Hydrominer">
+					 H2O</option>
+
+					<option label="HyperCoin">
+					 HYPER</option>
+
+					<option label="Hyperstake">
+					 HYP</option>
+
+					<option label="I0coin">
+					 I0C</option>
+
+					<option label="ICASH">
+					 ICASH</option>
+
+					<option label="ICO OpenLedger">
+					 ICOO</option>
+
+					<option label="ICOBox">
+					 ICOS</option>
+
+					<option label="ICON Project">
+					 ICX</option>
+
+					<option label="ILCoin">
+					 ILC</option>
+
+					<option label="ILCoin Token">
+					 ILCT</option>
+
+					<option label="IMMLA">
+					 IML</option>
+
+					<option label="INS Ecosystem">
+					 INS</option>
+
+					<option label="IOCoin">
+					 IOC</option>
+
+					<option label="IOTA">
+					 IOT</option>
+
+					<option label="IOU1">
+					 IOU</option>
+
+					<option label="IXcoin">
+					 IXC</option>
+
+					<option label="Ice Rock Mining">
+					 ROCK</option>
+
+					<option label="IceBergCoin">
+					 ICB</option>
+
+					<option label="Icobid">
+					 ICOB</option>
+
+					<option label="Iconic">
+					 ICON</option>
+
+					<option label="Iconomi">
+					 ICN</option>
+
+					<option label="Ignis">
+					 IGNIS</option>
+
+					<option label="Impact">
+					 IMX</option>
+
+					<option label="Impeach">
+					 IMPCH</option>
+
+					<option label="ImperialCoin">
+					 IPC</option>
+
+					<option label="Impulse Coin">
+					 IMPS</option>
+
+					<option label="InCoin">
+					 IN</option>
+
+					<option label="InPay">
+					 INPAY</option>
+
+					<option label="IncaKoin">
+					 NKA</option>
+
+					<option label="Incent">
+					 INCNT</option>
+
+					<option label="InceptionCoin">
+					 INCP</option>
+
+					<option label="Incrementum">
+					 INC</option>
+
+					<option label="Independent Money System">
+					 IMS</option>
+
+					<option label="Index ERC20">
+					 ERC20</option>
+
+					<option label="IndiCoin">
+					 INDI</option>
+
+					<option label="Indorse">
+					 IND</option>
+
+					<option label="Infinite Coin">
+					 IFC</option>
+
+					<option label="Infinity Economics">
+					 XIN</option>
+
+					<option label="Infinium-8">
+					 INF8</option>
+
+					<option label="InflationCoin">
+					 IFLT</option>
+
+					<option label="Influxcoin">
+					 INFX</option>
+
+					<option label="Innova">
+					 INN</option>
+
+					<option label="Insane Coin">
+					 INSN</option>
+
+					<option label="InsaneCoin">
+					 INSANE</option>
+
+					<option label="Insanity Coin">
+					 WOLF</option>
+
+					<option label="Insta Cash Coin">
+					 ICC</option>
+
+					<option label="Instamine Nuggets">
+					 MINE</option>
+
+					<option label="Intelligent Trading Technologies">
+					 ITT</option>
+
+					<option label="IntenseCoin">
+					 ITNS</option>
+
+					<option label="International Diamond Coin">
+					 XID*</option>
+
+					<option label="Internet of People">
+					 IOP</option>
+
+					<option label="Internxt">
+					 INXT</option>
+
+					<option label="Interstellar Holdings">
+					 HOLD</option>
+
+					<option label="InvestFeed">
+					 IFT</option>
+
+					<option label="Invictus">
+					 INV</option>
+
+					<option label="InvisibleCoin">
+					 IVZ</option>
+
+					<option label="IoT Chain">
+					 ITC</option>
+
+					<option label="Ionomy">
+					 ION</option>
+
+					<option label="IslaCoin">
+					 ISL</option>
+
+					<option label="IvugeoEvolutionCoin">
+					 IEC</option>
+
+					<option label="IwToken">
+					 IWT</option>
+
+					<option label="J Coin">
+					 JPC*</option>
+
+					<option label="JIO Token">
+					 JIO</option>
+
+					<option label="JackPotCoin">
+					 JPC</option>
+
+					<option label="JaneCoin">
+					 JANE</option>
+
+					<option label="Janus">
+					 JNS</option>
+
+					<option label="Javvy">
+					 JVY</option>
+
+					<option label="Jewels">
+					 JWL</option>
+
+					<option label="Jibrel Network Token">
+					 JNT</option>
+
+					<option label="JiffyCoin">
+					 JIF</option>
+
+					<option label="Jincor">
+					 JCR</option>
+
+					<option label="JobsCoin">
+					 JOBS</option>
+
+					<option label="JoinCoin">
+					 J</option>
+
+					<option label="JokerCoin">
+					 JOK</option>
+
+					<option label="JouleCoin">
+					 XJO</option>
+
+					<option label="JudgeCoin">
+					 JUDGE</option>
+
+					<option label="JumBucks Coin">
+					 JBS</option>
+
+					<option label="JunkCoin">
+					 JKC</option>
+
+					<option label="JustDatingSite">
+					 JDC</option>
+
+					<option label="KATZcoin">
+					 KAT</option>
+
+					<option label="KRCoin">
+					 KRC</option>
+
+					<option label="Kalkulus">
+					 KLK</option>
+
+					<option label="Kapu">
+					 KAPU</option>
+
+					<option label="Karbowanec">
+					 KRB</option>
+
+					<option label="Karmacoin">
+					 KARM</option>
+
+					<option label="Kayı">
+					 KAYI</option>
+
+					<option label="KekCoin">
+					 KEK</option>
+
+					<option label="Kencoin">
+					 KCN</option>
+
+					<option label="Kernalcoin">
+					 KC</option>
+
+					<option label="KexCoin">
+					 KEX</option>
+
+					<option label="KeyCoin">
+					 KEY*</option>
+
+					<option label="Khancoin">
+					 KNC*</option>
+
+					<option label="KickCoin">
+					 KICK</option>
+
+					<option label="KiloCoin">
+					 KLC</option>
+
+					<option label="Kin">
+					 KIN</option>
+
+					<option label="King93">
+					 KING</option>
+
+					<option label="KingN Coin">
+					 KNC**</option>
+
+					<option label="Kittehcoin">
+					 MEOW</option>
+
+					<option label="Klingon Empire Darsek">
+					 KED</option>
+
+					<option label="Klondike Coin">
+					 KDC</option>
+
+					<option label="KoboCoin">
+					 KOBO</option>
+
+					<option label="Kolion">
+					 KOLION</option>
+
+					<option label="Komodo">
+					 KMD</option>
+
+					<option label="Kore">
+					 KORE</option>
+
+					<option label="Kraken">
+					 KRAK</option>
+
+					<option label="Kronecoin">
+					 KRONE</option>
+
+					<option label="KrugerCoin">
+					 KGC</option>
+
+					<option label="KryptCoin">
+					 KTK</option>
+
+					<option label="Krypton">
+					 KR</option>
+
+					<option label="KubosCoin">
+					 KUBO</option>
+
+					<option label="Kucoin">
+					 KCS</option>
+
+					<option label="Kurrent">
+					 KURT</option>
+
+					<option label="KushCoin">
+					 KUSH</option>
+
+					<option label="Kyber Network">
+					 KNC</option>
+
+					<option label="LAToken">
+					 LA</option>
+
+					<option label="LBRY Credits">
+					 LBC</option>
+
+					<option label="LEOcoin">
+					 LEO</option>
+
+					<option label="LGBTQoin">
+					 LGBTQ</option>
+
+					<option label="LIFE">
+					 LIFE</option>
+
+					<option label="LTBCoin">
+					 LTBC</option>
+
+					<option label="LUXCoin">
+					 LUX</option>
+
+					<option label="Labrys">
+					 LAB</option>
+
+					<option label="LakeBanker">
+					 BAC*</option>
+
+					<option label="Lamden Tau">
+					 TAU</option>
+
+					<option label="Lampix">
+					 PIX</option>
+
+					<option label="LanaCoin">
+					 LANA</option>
+
+					<option label="Lathaan">
+					 LTH</option>
+
+					<option label="Latium">
+					 LAT</option>
+
+					<option label="Lazarus">
+					 LAZ</option>
+
+					<option label="LePenCoin">
+					 LEPEN</option>
+
+					<option label="LeaCoin">
+					 LEA</option>
+
+					<option label="Legendary Coin">
+					 LGD*</option>
+
+					<option label="Legends Cryptocurrency">
+					 LGD</option>
+
+					<option label="LemonCoin">
+					 LEMON</option>
+
+					<option label="Lendoit">
+					 LOAN</option>
+
+					<option label="LeninCoin">
+					 LENIN</option>
+
+					<option label="Let it Ride">
+					 LIR</option>
+
+					<option label="Leverage Coin">
+					 LVG</option>
+
+					<option label="Leverj">
+					 LEV</option>
+
+					<option label="LeviarCoin">
+					 XLC</option>
+
+					<option label="LibertyCoin">
+					 XLB</option>
+
+					<option label="LibrexCoin">
+					 LXC</option>
+
+					<option label="LightSpeedCoin">
+					 LSD</option>
+
+					<option label="LimeCoinX">
+					 LIMX</option>
+
+					<option label="Limited Coin">
+					 LTD</option>
+
+					<option label="Linda">
+					 LINDA</option>
+
+					<option label="Linx">
+					 LINX</option>
+
+					<option label="Liquid">
+					 LQD</option>
+
+					<option label="Lisk">
+					 LSK</option>
+
+					<option label="LiteBitcoin">
+					 LBTC</option>
+
+					<option label="LiteCoin Gold">
+					 LTG</option>
+
+					<option label="LiteCoin Ultra">
+					 LTCU</option>
+
+					<option label="LiteCreed">
+					 LTCR</option>
+
+					<option label="LiteDoge">
+					 LDOGE</option>
+
+					<option label="Litebar ">
+					 LTB</option>
+
+					<option label="Litecoin">
+					 LTC</option>
+
+					<option label="LitecoinCash">
+					 LCASH</option>
+
+					<option label="LitecoinDark">
+					 LTCD</option>
+
+					<option label="LitecoinX">
+					 LTCX</option>
+
+					<option label="Litestar Coin">
+					 LTS</option>
+
+					<option label="Litra">
+					 LTA</option>
+
+					<option label="LiviaCoin">
+					 LIV</option>
+
+					<option label="LociCoin">
+					 LOCI</option>
+
+					<option label="LockChain">
+					 LOC*</option>
+
+					<option label="Loco">
+					 LOC</option>
+
+					<option label="LomoCoin">
+					 LMC</option>
+
+					<option label="LookCoin">
+					 LOOK</option>
+
+					<option label="Loopring">
+					 LRC</option>
+
+					<option label="LuckChain">
+					 BASH</option>
+
+					<option label="Lucky7Coin">
+					 LK7</option>
+
+					<option label="LuckyBlocks (LUCKY)">
+					 LUCKY</option>
+
+					<option label="LuckyCoin">
+					 LKY</option>
+
+					<option label="Ludum token">
+					 LDM</option>
+
+					<option label="Lunyr">
+					 LUN</option>
+
+					<option label="Lutetium Coin">
+					 LC</option>
+
+					<option label="Luxmi Coin">
+					 LUX**</option>
+
+					<option label="LycanCoin">
+					 LYC</option>
+
+					<option label="Lykke">
+					 LKK</option>
+
+					<option label="LyraBar">
+					 LYB</option>
+
+					<option label="MCAP">
+					 MCAP</option>
+
+					<option label="MIScoin">
+					 MIS</option>
+
+					<option label="MMNXT ">
+					 MMNXT</option>
+
+					<option label="MMXVI">
+					 MMXVI</option>
+
+					<option label="MachineCoin">
+					 MAC</option>
+
+					<option label="MacronCoin">
+					 MCRN</option>
+
+					<option label="Macroverse">
+					 MRV</option>
+
+					<option label="MadCoin">
+					 MDC*</option>
+
+					<option label="Maecenas">
+					 ART</option>
+
+					<option label="Magnet">
+					 MAG</option>
+
+					<option label="Magos">
+					 MAG*</option>
+
+					<option label="MaidSafe Coin">
+					 MAID</option>
+
+					<option label="MaieutiCoin">
+					 MMXIV</option>
+
+					<option label="MakeItViral">
+					 MIV</option>
+
+					<option label="Maker">
+					 MKR</option>
+
+					<option label="Manet Coin">
+					 MAT*</option>
+
+					<option label="MapCoin">
+					 MAPC</option>
+
+					<option label="MarijuanaCoin">
+					 MAR</option>
+
+					<option label="MarsCoin">
+					 MRS</option>
+
+					<option label="MarsCoin ">
+					 MARS</option>
+
+					<option label="MartexCoin">
+					 MXT</option>
+
+					<option label="Marvelous">
+					 MARV</option>
+
+					<option label="MarxCoin">
+					 MARX</option>
+
+					<option label="MaryJane Coin">
+					 MARYJ</option>
+
+					<option label="Masari">
+					 MSR</option>
+
+					<option label="Mass Coin">
+					 MC</option>
+
+					<option label="Mass.Cloud">
+					 MASS</option>
+
+					<option label="MasterCar">
+					 MCAR</option>
+
+					<option label="MasterCoin">
+					 MSC</option>
+
+					<option label="MasterMint">
+					 MM</option>
+
+					<option label="MasterTraderCoin">
+					 MTR</option>
+
+					<option label="Matryx">
+					 MTX</option>
+
+					<option label="MaxCoin">
+					 MAX</option>
+
+					<option label="MayaCoin">
+					 MYC</option>
+
+					<option label="MazaCoin">
+					 MZC</option>
+
+					<option label="Mbitbooks">
+					 MBIT</option>
+
+					<option label="MeLite">
+					 MLITE</option>
+
+					<option label="MediBloc">
+					 MED*</option>
+
+					<option label="MediBond">
+					 MEDI</option>
+
+					<option label="Media Network Coin">
+					 MNT*</option>
+
+					<option label="MedicCoin">
+					 MDC</option>
+
+					<option label="MediterraneanCoin">
+					 MED</option>
+
+					<option label="MediumProject">
+					 MPRO</option>
+
+					<option label="MegaCoin">
+					 MEC</option>
+
+					<option label="MegaFlash">
+					 MEGA</option>
+
+					<option label="Megastake">
+					 XMS</option>
+
+					<option label="Melon">
+					 MLN</option>
+
+					<option label="Memessenger">
+					 MET</option>
+
+					<option label="MemoryCoin">
+					 MMC</option>
+
+					<option label="Mercury">
+					 MER</option>
+
+					<option label="Mercury Protocol">
+					 GMT</option>
+
+					<option label="Metal">
+					 MTL</option>
+
+					<option label="Metal Music v3">
+					 MTLM3</option>
+
+					<option label="MetalCoin">
+					 METAL</option>
+
+					<option label="Metaverse">
+					 ETP</option>
+
+					<option label="MicroMoney">
+					 AMM</option>
+
+					<option label="Midnight ">
+					 MDT</option>
+
+					<option label="MilkCoin">
+					 MUU</option>
+
+					<option label="Milllionaire Coin">
+					 MIL</option>
+
+					<option label="MiloCoin">
+					 MILO</option>
+
+					<option label="MinCoin">
+					 MNC</option>
+
+					<option label="Mind Gene">
+					 MG</option>
+
+					<option label="MindCoin">
+					 MND</option>
+
+					<option label="Minerals Coin">
+					 MIN</option>
+
+					<option label="Minereum">
+					 MNE</option>
+
+					<option label="MinersReward">
+					 MRT</option>
+
+					<option label="Mineum">
+					 MNM</option>
+
+					<option label="Minex">
+					 MINEX</option>
+
+					<option label="MinexCoin">
+					 MNX</option>
+
+					<option label="MiniApps">
+					 MAT</option>
+
+					<option label="MintCoin">
+					 MINT</option>
+
+					<option label="MobileGo">
+					 MGO</option>
+
+					<option label="MobileGo">
+					 EMGO</option>
+
+					<option label="Mobius">
+					 MOBI</option>
+
+					<option label="ModulTrade">
+					 MTRC</option>
+
+					<option label="Modulum">
+					 MDL</option>
+
+					<option label="Modum">
+					 MOD</option>
+
+					<option label="Moeda">
+					 MDA</option>
+
+					<option label="MoinCoin">
+					 MOIN</option>
+
+					<option label="Mojocoin">
+					 MOJO</option>
+
+					<option label="MollyCoin">
+					 TAB</option>
+
+					<option label="MonaCoin">
+					 MONA</option>
+
+					<option label="Monaco">
+					 MCO</option>
+
+					<option label="MonacoCoin">
+					 XMCC</option>
+
+					<option label="Monaize">
+					 MNZ</option>
+
+					<option label="Monero">
+					 XMR</option>
+
+					<option label="Monero Gold">
+					 XMRG</option>
+
+					<option label="Moneta">
+					 MONETA</option>
+
+					<option label="MonetaVerde">
+					 MCN</option>
+
+					<option label="MonetaryUnit">
+					 MUE</option>
+
+					<option label="Monetha">
+					 MTH</option>
+
+					<option label="MoneyCoin">
+					 MONEY</option>
+
+					<option label="Monkey">
+					 MNY</option>
+
+					<option label="Monster Byte Inc">
+					 MBI</option>
+
+					<option label="MoonCoin">
+					 MOON</option>
+
+					<option label="MorpheusCoin">
+					 MRP</option>
+
+					<option label="Mothership">
+					 MSP</option>
+
+					<option label="Motocoin">
+					 MOTO</option>
+
+					<option label="Moya Token">
+					 MTK</option>
+
+					<option label="MrsaCoin">
+					 MRSA</option>
+
+					<option label="MudraCoin">
+					 MUDRA</option>
+
+					<option label="MultiWallet Coin">
+					 MWC</option>
+
+					<option label="Multibot">
+					 MBT</option>
+
+					<option label="MurrayCoin">
+					 MRY</option>
+
+					<option label="Musicoin">
+					 MUSIC</option>
+
+					<option label="Musiconomi">
+					 MCI</option>
+
+					<option label="MustangCoin">
+					 MST</option>
+
+					<option label="Mutual Coin">
+					 MUT</option>
+
+					<option label="MyBit">
+					 MYB</option>
+
+					<option label="MyWish">
+					 WISH</option>
+
+					<option label="Mycelium Token">
+					 MT</option>
+
+					<option label="MyriadCoin">
+					 XMY</option>
+
+					<option label="Mysterium">
+					 MYST</option>
+
+					<option label="MysteryCoin">
+					 MYST*</option>
+
+					<option label="NEM">
+					 XEM</option>
+
+					<option label="NEO">
+					 NEO</option>
+
+					<option label="NEO Gold">
+					 NEOG</option>
+
+					<option label="NPCcoin">
+					 NPC</option>
+
+					<option label="NVO">
+					 NVST</option>
+
+					<option label="NXEcoin">
+					 NXE</option>
+
+					<option label="NXTI">
+					 NXTI</option>
+
+					<option label="NXTTY">
+					 NXTTY</option>
+
+					<option label="NagaCoin">
+					 NGC</option>
+
+					<option label="NakomotoDark">
+					 NKT</option>
+
+					<option label="NameCoin">
+					 NMC</option>
+
+					<option label="NamoCoin">
+					 NAMO</option>
+
+					<option label="NanoToken">
+					 NAN</option>
+
+					<option label="Napoleon X">
+					 NPX</option>
+
+					<option label="Nas2Coin">
+					 NAS2</option>
+
+					<option label="Nautilus Coin">
+					 NAUT</option>
+
+					<option label="NavCoin">
+					 NAV</option>
+
+					<option label="Neblio">
+					 NEBL</option>
+
+					<option label="Nebuchadnezzar">
+					 NEBU</option>
+
+					<option label="Nebulas">
+					 NAS</option>
+
+					<option label="NefariousCoin">
+					 NEF</option>
+
+					<option label="NeoCoin">
+					 NEC</option>
+
+					<option label="NeosCoin">
+					 NEOS</option>
+
+					<option label="NeptuneClassic">
+					 NTCC</option>
+
+					<option label="NetBit">
+					 NBIT</option>
+
+					<option label="NetCoin">
+					 NET</option>
+
+					<option label="NetM">
+					 NTM</option>
+
+					<option label="Netko">
+					 NETKO</option>
+
+					<option label="Network Token">
+					 NTWK</option>
+
+					<option label="NetworkCoin">
+					 NETC</option>
+
+					<option label="NeuCoin">
+					 NEU*</option>
+
+					<option label="Neumark">
+					 NEU</option>
+
+					<option label="Neuro">
+					 NRO</option>
+
+					<option label="Neurocoin">
+					 NRC</option>
+
+					<option label="Neurotoken">
+					 NTK</option>
+
+					<option label="Neutron">
+					 NTRN</option>
+
+					<option label="NevaCoin">
+					 NEVA</option>
+
+					<option label="NeverDie">
+					 NDC</option>
+
+					<option label="NewInvestCoin">
+					 NIC</option>
+
+					<option label="NewYorkCoin">
+					 NYC</option>
+
+					<option label="NewZealandCoin">
+					 NZC</option>
+
+					<option label="Newbium">
+					 NEWB</option>
+
+					<option label="Nexium">
+					 NXC</option>
+
+					<option label="Nexus">
+					 NXS</option>
+
+					<option label="NiceCoin">
+					 NICE</option>
+
+					<option label="Nimbus Coin">
+					 NMB</option>
+
+					<option label="Nimfamoney">
+					 NIMFA</option>
+
+					<option label="Nimiq Exchange Token">
+					 NET*</option>
+
+					<option label="NineElevenTruthCoin">
+					 NTC</option>
+
+					<option label="NinjaDoge">
+					 NDOGE</option>
+
+					<option label="NoLimitCoin">
+					 NLC</option>
+
+					<option label="NoLimitCoin">
+					 NLC2</option>
+
+					<option label="NobleCoin">
+					 NOBL</option>
+
+					<option label="Node">
+					 NODE</option>
+
+					<option label="NoirBits">
+					 NRB</option>
+
+					<option label="NoirShares">
+					 NRS</option>
+
+					<option label="Noocoin">
+					 NOO</option>
+
+					<option label="NovaCoin">
+					 NVC</option>
+
+					<option label="NuBits">
+					 NBT</option>
+
+					<option label="NuShares">
+					 NSR</option>
+
+					<option label="NubisCoin">
+					 NUBIS</option>
+
+					<option label="NukeCoin">
+					 NUKE</option>
+
+					<option label="Nukecoinz">
+					 NKC</option>
+
+					<option label="Nuls">
+					 NULS</option>
+
+					<option label="Number7">
+					 N7</option>
+
+					<option label="NumbersCoin">
+					 NUM</option>
+
+					<option label="Numerai">
+					 NMR</option>
+
+					<option label="Numismatic Collections">
+					 XNC*</option>
+
+					<option label="Numus">
+					 NMS</option>
+
+					<option label="Nxt">
+					 NXT</option>
+
+					<option label="NyanCoin">
+					 NYAN</option>
+
+					<option label="Nybble">
+					 NBL</option>
+
+					<option label="ODMCoin">
+					 ODMC</option>
+
+					<option label="OKCash">
+					 OK</option>
+
+					<option label="Obits Coin">
+					 OBITS</option>
+
+					<option label="Obscurebay">
+					 OBS</option>
+
+					<option label="Obsidian">
+					 ODN</option>
+
+					<option label="Oceanlab">
+					 OCL</option>
+
+					<option label="Octanox">
+					 OTX</option>
+
+					<option label="OctoCoin">
+					 OCTO</option>
+
+					<option label="Old Dogs New Tricks">
+					 ODNT</option>
+
+					<option label="OldSafeCoin">
+					 OLDSF</option>
+
+					<option label="OldV">
+					 OLV</option>
+
+					<option label="OlympCoin">
+					 OLYMP</option>
+
+					<option label="OmegaCoin">
+					 OMA</option>
+
+					<option label="OmiseGO Classic">
+					 OMGC</option>
+
+					<option label="OmiseGo">
+					 OMG</option>
+
+					<option label="Omni">
+					 OMNI</option>
+
+					<option label="OmniCron">
+					 OMC</option>
+
+					<option label="Onix">
+					 ONX</option>
+
+					<option label="Opair">
+					 XPO</option>
+
+					<option label="OpalCoin">
+					 OPAL</option>
+
+					<option label="Open Trading Network">
+					 OTN</option>
+
+					<option label="OpenANX">
+					 OAX</option>
+
+					<option label="OpenSourceCoin">
+					 OSC</option>
+
+					<option label="OpenZen">
+					 ZNT</option>
+
+					<option label="Opes">
+					 OPES</option>
+
+					<option label="Opporty">
+					 OPP</option>
+
+					<option label="OptionCoin">
+					 OPTION</option>
+
+					<option label="Opus">
+					 OPT</option>
+
+					<option label="OrangeCoin">
+					 OC</option>
+
+					<option label="Orbitcoin">
+					 ORB</option>
+
+					<option label="OrlyCoin">
+					 ORLY</option>
+
+					<option label="Ormeus Coin">
+					 ORME</option>
+
+					<option label="OroCoin">
+					 ORO</option>
+
+					<option label="Orocrypt">
+					 OROC</option>
+
+					<option label="OsmiumCoin">
+					 OS76</option>
+
+					<option label="Oxycoin">
+					 OXY</option>
+
+					<option label="Oyster Pearl">
+					 PRL</option>
+
+					<option label="PARKGENE">
+					 GENE</option>
+
+					<option label="PAquarium">
+					 PQT</option>
+
+					<option label="PLNCoin">
+					 PLNC</option>
+
+					<option label="PSIcoin">
+					 PSI</option>
+
+					<option label="PXcoin">
+					 PX</option>
+
+					<option label="Pabyosi Coin">
+					 PCS</option>
+
+					<option label="PabyosiCoin">
+					 PBC</option>
+
+					<option label="PacCoin">
+					 PAC</option>
+
+					<option label="Pakcoin">
+					 PAK</option>
+
+					<option label="PandaCoin">
+					 PND</option>
+
+					<option label="PantherCoin">
+					 PINKX</option>
+
+					<option label="Papyrus">
+					 PRP</option>
+
+					<option label="Paragon">
+					 PRG</option>
+
+					<option label="ParallelCoin">
+					 DUO</option>
+
+					<option label="ParanoiaCoin">
+					 PARA</option>
+
+					<option label="ParkByte">
+					 PKB</option>
+
+					<option label="Particl">
+					 PART</option>
+
+					<option label="Pascal Coin">
+					 PASC</option>
+
+					<option label="Pascal Lite">
+					 PASL</option>
+
+					<option label="Patientory">
+					 PTOY</option>
+
+					<option label="PayCoin">
+					 XPY</option>
+
+					<option label="PayCoin">
+					 PYC</option>
+
+					<option label="PayFair">
+					 PFR</option>
+
+					<option label="PayPeer">
+					 PAYP</option>
+
+					<option label="PayPie">
+					 PPP</option>
+
+					<option label="PayPro">
+					 PYP</option>
+
+					<option label="Paycentos">
+					 PYN</option>
+
+					<option label="Paycon">
+					 CON_</option>
+
+					<option label="PeaceCoin">
+					 PEC</option>
+
+					<option label="Pebble Coin">
+					 XPB</option>
+
+					<option label="PeepCoin">
+					 PCN</option>
+
+					<option label="PeerCoin">
+					 PPC</option>
+
+					<option label="Peerguess">
+					 GUESS</option>
+
+					<option label="Peerplays">
+					 PPY</option>
+
+					<option label="PenCoin">
+					 PEN</option>
+
+					<option label="PentaCoin">
+					 PTA</option>
+
+					<option label="People">
+					 MAN</option>
+
+					<option label="Pepe">
+					 MEME</option>
+
+					<option label="Pepe Cash">
+					 PEPECASH</option>
+
+					<option label="Persistent Information Exchange">
+					 PIE</option>
+
+					<option label="PesetaCoin">
+					 PTC</option>
+
+					<option label="PesoBit">
+					 PSB</option>
+
+					<option label="PetroDollar">
+					 XPD</option>
+
+					<option label="Phalanx">
+					 PXL</option>
+
+					<option label="PhantomX">
+					 PNX</option>
+
+					<option label="PharmaCoin">
+					 XPH</option>
+
+					<option label="PhilosophersStone">
+					 PHS</option>
+
+					<option label="PhilsCurrency">
+					 PHILS</option>
+
+					<option label="PhoenixCoin">
+					 PXC</option>
+
+					<option label="Phore">
+					 PHR*</option>
+
+					<option label="Photon">
+					 PHO</option>
+
+					<option label="Phreak">
+					 PHR</option>
+
+					<option label="Piggy Coin">
+					 PIGGY</option>
+
+					<option label="Pillar">
+					 PLR</option>
+
+					<option label="PinkCoin">
+					 PINK</option>
+
+					<option label="Pioneershares">
+					 PIO</option>
+
+					<option label="Pirl">
+					 PIRL</option>
+
+					<option label="PizzaCoin">
+					 PIZZA</option>
+
+					<option label="PlanetCoin">
+					 PLANET</option>
+
+					<option label="PlatiniumCoin">
+					 PNC</option>
+
+					<option label="PlatinumBAR">
+					 XPTX</option>
+
+					<option label="Playkey">
+					 PKT</option>
+
+					<option label="PlexCoin">
+					 PLX</option>
+
+					<option label="Pluton">
+					 PLU</option>
+
+					<option label="Po.et">
+					 POE</option>
+
+					<option label="PoSToken">
+					 POS</option>
+
+					<option label="PoSWallet">
+					 POSW</option>
+
+					<option label="PoisonIvyCoin">
+					 XPS</option>
+
+					<option label="PokeChain">
+					 XPOKE</option>
+
+					<option label="PolisPay">
+					 POLIS</option>
+
+					<option label="PolyBit">
+					 POLY</option>
+
+					<option label="Polybius">
+					 PLBT</option>
+
+					<option label="PoolStamp">
+					 XSP</option>
+
+					<option label="PopularCoin">
+					 POP</option>
+
+					<option label="Populous">
+					 PPT</option>
+
+					<option label="PosEx">
+					 PEX</option>
+
+					<option label="Positron">
+					 TRON</option>
+
+					<option label="PostCoin">
+					 POST</option>
+
+					<option label="PotCoin">
+					 POT</option>
+
+					<option label="Power Ledger">
+					 POWR</option>
+
+					<option label="PowerCoin">
+					 PWR</option>
+
+					<option label="Premium">
+					 PRE</option>
+
+					<option label="Presearch">
+					 PRE*</option>
+
+					<option label="President Clinton">
+					 HILL</option>
+
+					<option label="President Trump">
+					 PRES</option>
+
+					<option label="Primalbase">
+					 PBT</option>
+
+					<option label="Primas">
+					 PST</option>
+
+					<option label="Prime-X1">
+					 PXI</option>
+
+					<option label="PrimeChain">
+					 PRIME</option>
+
+					<option label="PrimeCoin">
+					 XPM</option>
+
+					<option label="Printerium">
+					 PRX</option>
+
+					<option label="PrismChain">
+					 PRM</option>
+
+					<option label="Private Instant Verified Transaction">
+					 PIVX</option>
+
+					<option label="Privatix">
+					 PRIX</option>
+
+					<option label="Prizm">
+					 PZM</option>
+
+					<option label="ProCoin">
+					 XPRO</option>
+
+					<option label="ProCurrency">
+					 PROC</option>
+
+					<option label="Procom">
+					 PCM</option>
+
+					<option label="Project Decorum">
+					 PDC</option>
+
+					<option label="Project Zephyr">
+					 ZEPH</option>
+
+					<option label="Propthereum">
+					 PTC*</option>
+
+					<option label="Propy">
+					 PRO</option>
+
+					<option label="Prosense.tv">
+					 VRP</option>
+
+					<option label="Prospectors">
+					 PGL</option>
+
+					<option label="ProsperCoin">
+					 PRC</option>
+
+					<option label="Protoshares">
+					 PTS*</option>
+
+					<option label="PseudoCash">
+					 PSEUD</option>
+
+					<option label="Psilocybin">
+					 PSY</option>
+
+					<option label="Publica">
+					 PBL</option>
+
+					<option label="Pulse">
+					 PULSE</option>
+
+					<option label="PupaCoin">
+					 PUPA</option>
+
+					<option label="Pura">
+					 PURA</option>
+
+					<option label="Pure">
+					 PURE</option>
+
+					<option label="PureVidz">
+					 VIDZ</option>
+
+					<option label="PutinCoin">
+					 PUT</option>
+
+					<option label="QLINK">
+					 QLC</option>
+
+					<option label="QTUM">
+					 QTUM</option>
+
+					<option label="QoraCoin">
+					 QORA</option>
+
+					<option label="QuBuck Coin">
+					 QBK</option>
+
+					<option label="Quantstamp">
+					 QSP</option>
+
+					<option label="Quantum">
+					 QAU</option>
+
+					<option label="Quantum Resistant Ledger">
+					 QRL</option>
+
+					<option label="QuarkCoin">
+					 QRK</option>
+
+					<option label="Quartz">
+					 QTZ</option>
+
+					<option label="Quatloo">
+					 QTL</option>
+
+					<option label="Quazar Coin">
+					 QCN</option>
+
+					<option label="QubitCoin">
+					 Q2C</option>
+
+					<option label="Quebecoin">
+					 QBC</option>
+
+					<option label="Quicksilver coin">
+					 QSLV</option>
+
+					<option label="Quoine Liquid">
+					 QASH</option>
+
+					<option label="Quotient">
+					 XQN</option>
+
+					<option label="Qvolta">
+					 QVT</option>
+
+					<option label="Qwark">
+					 QWARK</option>
+
+					<option label="RAFL">
+					 RFL</option>
+
+					<option label="RChain">
+					 RHOC</option>
+
+					<option label="RCoin">
+					 RCN*</option>
+
+					<option label="REAL">
+					 REAL</option>
+
+					<option label="REMME">
+					 REM</option>
+
+					<option label="REX">
+					 REX</option>
+
+					<option label="RG Coin">
+					 RGC</option>
+
+					<option label="ROS Coin">
+					 ROS</option>
+
+					<option label="RadicalCoin">
+					 RADI</option>
+
+					<option label="Radium">
+					 RADS</option>
+
+					<option label="RadonPay">
+					 RDN</option>
+
+					<option label="RaiBlocks">
+					 XRB</option>
+
+					<option label="Raiden Network">
+					 RDN*</option>
+
+					<option label="Ratecoin">
+					 XRA</option>
+
+					<option label="Ratio">
+					 RATIO</option>
+
+					<option label="RazorCoin">
+					 RZR</option>
+
+					<option label="Realisto">
+					 REA</option>
+
+					<option label="Reality Clash">
+					 RCC</option>
+
+					<option label="Rebellious">
+					 REBL</option>
+
+					<option label="Recovery Right Tokens">
+					 RRT</option>
+
+					<option label="Red Pulse">
+					 RPX</option>
+
+					<option label="RedCrowCoin">
+					 RCX</option>
+
+					<option label="Redcoin">
+					 RED</option>
+
+					<option label="ReddCoin">
+					 RDD</option>
+
+					<option label="ReeCoin">
+					 REE</option>
+
+					<option label="Regalcoin">
+					 REC</option>
+
+					<option label="Relex">
+					 RLX</option>
+
+					<option label="Render Token">
+					 RNDR</option>
+
+					<option label="RenosCoin">
+					 RNS</option>
+
+					<option label="Request Network">
+					 REQ</option>
+
+					<option label="Resumeo Shares">
+					 RMS</option>
+
+					<option label="ReturnBit">
+					 RBIT</option>
+
+					<option label="ReturnCoin">
+					 RNC</option>
+
+					<option label="Revain">
+					 R</option>
+
+					<option label="Revenu">
+					 REV</option>
+
+					<option label="RevolverCoin">
+					 XRE</option>
+
+					<option label="Rhea">
+					 RHEA</option>
+
+					<option label="Rialto.AI">
+					 XRL</option>
+
+					<option label="Ribbit Rewards">
+					 RBR</option>
+
+					<option label="RiceCoin">
+					 RICE</option>
+
+					<option label="Ride My Car">
+					 RIDE</option>
+
+					<option label="Riecoin">
+					 RIC</option>
+
+					<option label="Rimbit">
+					 RBT</option>
+
+					<option label="RingCoin">
+					 RING</option>
+
+					<option label="RipOffCoin">
+					 RIPO</option>
+
+					<option label="Ripio">
+					 RCN</option>
+
+					<option label="Ripple">
+					 XRP</option>
+
+					<option label="RiptideCoin">
+					 RIPT</option>
+
+					<option label="RiptoBuX">
+					 RBX</option>
+
+					<option label="Rise">
+					 RISE</option>
+
+					<option label="Rivetz">
+					 RVT</option>
+
+					<option label="Rockchain">
+					 ROK</option>
+
+					<option label="RocketCoin ">
+					 ROCK*</option>
+
+					<option label="RonPaulCoin">
+					 RPC</option>
+
+					<option label="RootCoin">
+					 ROOT</option>
+
+					<option label="RootProject">
+					 ROOTS</option>
+
+					<option label="RotoCoin">
+					 RT2</option>
+
+					<option label="RoundCoin">
+					 ROUND</option>
+
+					<option label="Royal Kingdom Coin">
+					 RKC</option>
+
+					<option label="RoyalCoin">
+					 RYC</option>
+
+					<option label="RoyalCoin">
+					 ROYAL</option>
+
+					<option label="RoyalCoin 2.0">
+					 RYCN</option>
+
+					<option label="Rubies">
+					 RBIES</option>
+
+					<option label="Rublebit">
+					 RUBIT</option>
+
+					<option label="RubyCoin">
+					 RBY</option>
+
+					<option label="Rupaya">
+					 RUPX</option>
+
+					<option label="Rupee">
+					 RUP</option>
+
+					<option label="Russiacoin">
+					 RC</option>
+
+					<option label="RustCoin">
+					 RUST</option>
+
+					<option label="Rustbits">
+					 RUSTBITS</option>
+
+					<option label="S88 Coin">
+					 S8C</option>
+
+					<option label="SARCoin">
+					 SAR</option>
+
+					<option label="SHIELD">
+					 XSH</option>
+
+					<option label="SMNX">
+					 SMNX</option>
+
+					<option label="SONM">
+					 SNM</option>
+
+					<option label="SSVCoin">
+					 SSV</option>
+
+					<option label="STEX">
+					 STEX</option>
+
+					<option label="STRESScoin">
+					 STS</option>
+
+					<option label="SafeExchangeCoin">
+					 SAFEX</option>
+
+					<option label="Safecoin">
+					 SFE</option>
+
+					<option label="SaffronCoin">
+					 SFR</option>
+
+					<option label="Sakuracoin">
+					 SKR</option>
+
+					<option label="Salt Lending">
+					 SALT</option>
+
+					<option label="SaluS">
+					 SLS</option>
+
+					<option label="Samsara Coin">
+					 SMSR</option>
+
+					<option label="Sandcoin">
+					 SND</option>
+
+					<option label="Santiment">
+					 SAN</option>
+
+					<option label="SapienceCoin">
+					 XAI</option>
+
+					<option label="Sativa Coin">
+					 STV</option>
+
+					<option label="SatoshiMadness">
+					 MAD</option>
+
+					<option label="Saturn2Coin">
+					 SAT2</option>
+
+					<option label="Save The Ocean">
+					 STO</option>
+
+					<option label="Save and Gain">
+					 SANDG</option>
+
+					<option label="Scorecoin">
+					 SCORE</option>
+
+					<option label="Scorista">
+					 SCOR</option>
+
+					<option label="Scorum">
+					 SCR</option>
+
+					<option label="Scotcoin">
+					 SCOT</option>
+
+					<option label="ScryptCoin">
+					 SCRPT</option>
+
+					<option label="ScryptToken">
+					 SCT</option>
+
+					<option label="Scrypto">
+					 SRT</option>
+
+					<option label="SecretCoin">
+					 SCRT</option>
+
+					<option label="SecureCoin">
+					 SRC</option>
+
+					<option label="SeedShares">
+					 SEEDS</option>
+
+					<option label="SelenCoin">
+					 SEL</option>
+
+					<option label="SelfKey">
+					 KEY</option>
+
+					<option label="Sense">
+					 SNS</option>
+
+					<option label="Sense Token">
+					 SENSE</option>
+
+					<option label="Sentaro">
+					 SEN</option>
+
+					<option label="Sequence">
+					 SEQ</option>
+
+					<option label="Sether">
+					 SETH</option>
+
+					<option label="Sex Pistols">
+					 SP</option>
+
+					<option label="SexCoin">
+					 SXC</option>
+
+					<option label="ShadeCoin">
+					 SHADE</option>
+
+					<option label="ShadowCash">
+					 SDC</option>
+
+					<option label="SharkCoin">
+					 SAK</option>
+
+					<option label="Sharpe Capital">
+					 SHP</option>
+
+					<option label="ShieldCoin">
+					 SHLD</option>
+
+					<option label="Shift">
+					 SHIFT</option>
+
+					<option label="Shilling">
+					 SH</option>
+
+					<option label="ShortyCoin">
+					 SHORTY</option>
+
+					<option label="ShrekCoin">
+					 SHREK</option>
+
+					<option label="Siacoin">
+					 SC</option>
+
+					<option label="SibCoin">
+					 SIB</option>
+
+					<option label="Signatum">
+					 SIGT</option>
+
+					<option label="SilkCoin">
+					 SILK</option>
+
+					<option label="SimpleToken">
+					 OST</option>
+
+					<option label="Singular">
+					 SIGU</option>
+
+					<option label="SingularDTV">
+					 SNGLS</option>
+
+					<option label="SirinLabs">
+					 SRN</option>
+
+					<option label="Skincoin">
+					 SKIN</option>
+
+					<option label="Skrilla Token">
+					 SKR*</option>
+
+					<option label="SkullBuzz">
+					 SKB</option>
+
+					<option label="Skycoin">
+					 SKY</option>
+
+					<option label="SlimCoin">
+					 SLM</option>
+
+					<option label="Sling Coin">
+					 SLING</option>
+
+					<option label="Smart Investment Fund Token">
+					 SIFT</option>
+
+					<option label="SmartBillions">
+					 SMART*</option>
+
+					<option label="SmartCash">
+					 SMART</option>
+
+					<option label="SmartCoin">
+					 SMC</option>
+
+					<option label="SmartHoldem">
+					 STH</option>
+
+					<option label="SmartMesh">
+					 SMT*</option>
+
+					<option label="SmileyCoin">
+					 SMLY</option>
+
+					<option label="SmurfCoin">
+					 SMF</option>
+
+					<option label="Snovio">
+					 SNOV</option>
+
+					<option label="Soarcoin">
+					 SOAR</option>
+
+					<option label="Social Media Coin">
+					 SMAC</option>
+
+					<option label="Social Media Market">
+					 SMT</option>
+
+					<option label="Social Nexus">
+					 SCL</option>
+
+					<option label="Social Send">
+					 SEND</option>
+
+					<option label="SocialCoin">
+					 SOCC</option>
+
+					<option label="SocialXbotCoin">
+					 XBOT</option>
+
+					<option label="SoilCoin">
+					 SOIL</option>
+
+					<option label="Sojourn Coin">
+					 SOJ</option>
+
+					<option label="Solar DAO">
+					 SDAO</option>
+
+					<option label="SolarCoin">
+					 SLR</option>
+
+					<option label="SolarFarm">
+					 CELL</option>
+
+					<option label="Solarflarecoin">
+					 SFC</option>
+
+					<option label="Solaris">
+					 XLR</option>
+
+					<option label="SoleCoin">
+					 SOLE</option>
+
+					<option label="Soma">
+					 SCT*</option>
+
+					<option label="Song Coin">
+					 SONG</option>
+
+					<option label="Sonic Screw Driver Coin">
+					 SSD</option>
+
+					<option label="SoonCoin">
+					 SOON</option>
+
+					<option label="SophiaTX">
+					 SPHTX</option>
+
+					<option label="Sosnovkino">
+					 SNK</option>
+
+					<option label="SoulCoin">
+					 SOUL</option>
+
+					<option label="SpaceCash">
+					 SCASH</option>
+
+					<option label="SpaceCoin">
+					 SPACE</option>
+
+					<option label="SpainCoin">
+					 SPA</option>
+
+					<option label="SpankChain">
+					 SPANK</option>
+
+					<option label="Sparks">
+					 SPK</option>
+
+					<option label="SpecCoin">
+					 SPEC</option>
+
+					<option label="Specie">
+					 SPX</option>
+
+					<option label="Spectre">
+					 XSPEC</option>
+
+					<option label="Sphere Coin">
+					 SPHR</option>
+
+					<option label="Sphre AIR">
+					 XID</option>
+
+					<option label="SpinCoin">
+					 SPC</option>
+
+					<option label="Spoon">
+					 SPN</option>
+
+					<option label="SportsCoin">
+					 SPORT</option>
+
+					<option label="SportyFi">
+					 SPF</option>
+
+					<option label="Spots">
+					 SPT</option>
+
+					<option label="Spots">
+					 SPOTS</option>
+
+					<option label="Spreadcoin">
+					 SPR</option>
+
+					<option label="Sprouts">
+					 SPRTS</option>
+
+					<option label="SqPay">
+					 SQP</option>
+
+					<option label="Squall Coin">
+					 SQL</option>
+
+					<option label="Stability Shares">
+					 XSI</option>
+
+					<option label="StableCoin">
+					 SBC</option>
+
+					<option label="Stakecoin">
+					 STCN</option>
+
+					<option label="Stakers">
+					 STA*</option>
+
+					<option label="Stakerush">
+					 STHR</option>
+
+					<option label="StalinCoin">
+					 STALIN</option>
+
+					<option label="StarCoin">
+					 STR*</option>
+
+					<option label="StarCoin">
+					 STAR*</option>
+
+					<option label="StarCredits">
+					 SRC*</option>
+
+					<option label="Starbase">
+					 STAR</option>
+
+					<option label="StartCoin">
+					 START</option>
+
+					<option label="Starta">
+					 STA</option>
+
+					<option label="StarterCoin">
+					 STAC</option>
+
+					<option label="StashPay">
+					 STP</option>
+
+					<option label="Status Network Token">
+					 SNT</option>
+
+					<option label="StealthCoin">
+					 XST</option>
+
+					<option label="SteamPunk">
+					 PNK</option>
+
+					<option label="Steem">
+					 STEEM</option>
+
+					<option label="Steem Backed Dollars">
+					 SBD</option>
+
+					<option label="Stellar">
+					 XLM</option>
+
+					<option label="Steps">
+					 STEPS</option>
+
+					<option label="SterlingCoin">
+					 SLG</option>
+
+					<option label="StockBet">
+					 STOCKBET</option>
+
+					<option label="Storj">
+					 STORJ</option>
+
+					<option label="StorjCoin">
+					 SJCX</option>
+
+					<option label="Storm">
+					 STORM</option>
+
+					<option label="Stox">
+					 STX</option>
+
+					<option label="Straks">
+					 STAK</option>
+
+					<option label="Stratis">
+					 STRAT</option>
+
+					<option label="Streamr DATAcoin">
+					 DATA</option>
+
+					<option label="Subscriptio">
+					 SUB*</option>
+
+					<option label="Substratum Network">
+					 SUB</option>
+
+					<option label="Sucre">
+					 SUCR</option>
+
+					<option label="Sumokoin">
+					 SUMO</option>
+
+					<option label="SunContract">
+					 SNC</option>
+
+					<option label="SunShotCoin">
+					 SSTC</option>
+
+					<option label="Supcoin">
+					 SUP</option>
+
+					<option label="Super Bitcoin">
+					 SBTC</option>
+
+					<option label="SuperCoin">
+					 SUPER</option>
+
+					<option label="SuperNET">
+					 UNITY</option>
+
+					<option label="SupplyShock">
+					 M1</option>
+
+					<option label="Supreme">
+					 SPM</option>
+
+					<option label="Suretly">
+					 SUR</option>
+
+					<option label="SwagBucks">
+					 BUCKS</option>
+
+					<option label="Swarm City Token">
+					 SWT</option>
+
+					<option label="SwarmCoin">
+					 SWARM</option>
+
+					<option label="SweetStake">
+					 SWEET</option>
+
+					<option label="SwingCoin">
+					 SWING</option>
+
+					<option label="Swiscoin">
+					 SCN</option>
+
+					<option label="SydPakCoin">
+					 SDP</option>
+
+					<option label="Symmetry Fund">
+					 SYMM</option>
+
+					<option label="SyncCoin">
+					 SYNC</option>
+
+					<option label="SynchroCoin">
+					 SYC</option>
+
+					<option label="Syndicate">
+					 SYNX</option>
+
+					<option label="Synereo">
+					 AMP</option>
+
+					<option label="Synergy">
+					 SNRG</option>
+
+					<option label="SysCoin">
+					 SYS</option>
+
+					<option label="TBIS token">
+					 BAR</option>
+
+					<option label="TDFB">
+					 TDFB</option>
+
+					<option label="TOA Coin">
+					 TOA</option>
+
+					<option label="TagCoin">
+					 TAG</option>
+
+					<option label="TajCoin">
+					 TAJ</option>
+
+					<option label="TakCoin">
+					 TAK</option>
+
+					<option label="TamaGucci">
+					 TAM</option>
+
+					<option label="Tap Project">
+					 TTT</option>
+
+					<option label="TappingCoin">
+					 TAP</option>
+
+					<option label="TargetCoin">
+					 TGT</option>
+
+					<option label="Tatiana Coin">
+					 TAT</option>
+
+					<option label="TattooCoin">
+					 TSE</option>
+
+					<option label="TeCoin">
+					 TEC</option>
+
+					<option label="TeamUP">
+					 TEAM</option>
+
+					<option label="TechCoin">
+					 TECH</option>
+
+					<option label="TechShares">
+					 THS</option>
+
+					<option label="TekCoin">
+					 TEK</option>
+
+					<option label="Tellurion">
+					 TELL</option>
+
+					<option label="TenX">
+					 PAY</option>
+
+					<option label="Tennet">
+					 TENNET</option>
+
+					<option label="TerraCoin">
+					 TRC</option>
+
+					<option label="TerraNovaCoin">
+					 TER</option>
+
+					<option label="TeslaCoilCoin">
+					 TESLA</option>
+
+					<option label="TeslaCoin">
+					 TES</option>
+
+					<option label="Tether">
+					 USDT</option>
+
+					<option label="Tetra">
+					 TRA</option>
+
+					<option label="Tezos">
+					 XTZ</option>
+
+					<option label="ThankYou">
+					 THNX</option>
+
+					<option label="The Abyss">
+					 ABYSS</option>
+
+					<option label="The Hempcoin">
+					 THC</option>
+
+					<option label="The Vegan Initiative">
+					 XVE</option>
+
+					<option label="TheChiefCoin">
+					 CHIEF</option>
+
+					<option label="Thecreed">
+					 TCR</option>
+
+					<option label="Theresa May Coin">
+					 MAY</option>
+
+					<option label="Think And Get Rich Coin">
+					 TAGR</option>
+
+					<option label="Tianhe">
+					 TIA</option>
+
+					<option label="Tierion">
+					 TNT</option>
+
+					<option label="Ties Network">
+					 TIE</option>
+
+					<option label="TigerCoin">
+					 TGC</option>
+
+					<option label="TileCoin">
+					 XTC</option>
+
+					<option label="Time">
+					 TIME</option>
+
+					<option label="Time New Bank">
+					 TNB</option>
+
+					<option label="Timereum">
+					 TME</option>
+
+					<option label="TimesCoin">
+					 TMC</option>
+
+					<option label="Tio Tour Guides">
+					 TIO*</option>
+
+					<option label="TitCoin">
+					 TIT</option>
+
+					<option label="TittieCoin">
+					 TTC</option>
+
+					<option label="ToTheMoon">
+					 TMT</option>
+
+					<option label="TodayCoin">
+					 TODAY</option>
+
+					<option label="Token as a Service">
+					 TAAS</option>
+
+					<option label="TokenCard  ">
+					 TKN</option>
+
+					<option label="TokenStars">
+					 ACE</option>
+
+					<option label="Tokes">
+					 TKS</option>
+
+					<option label="TokugawaCoin">
+					 TOK</option>
+
+					<option label="Tomahawkcoin">
+					 TOM</option>
+
+					<option label="TorCoin">
+					 TOR</option>
+
+					<option label="TotCoin">
+					 TOT</option>
+
+					<option label="TrackNetToken">
+					 MTN</option>
+
+					<option label="Tracto">
+					 TRCT</option>
+
+					<option label="Trade.io">
+					 TIO</option>
+
+					<option label="Transfer">
+					 TX</option>
+
+					<option label="TrashBurn">
+					 TBCX</option>
+
+					<option label="Travel Coin">
+					 TRV</option>
+
+					<option label="TrezarCoin">
+					 TZC</option>
+
+					<option label="Triaconta">
+					 TRIA</option>
+
+					<option label="Triangles Coin">
+					 TRI</option>
+
+					<option label="TribeToken">
+					 TRIBE</option>
+
+					<option label="TrickyCoin">
+					 TRICK</option>
+
+					<option label="Trigger">
+					 TRIG</option>
+
+					<option label="Trippki">
+					 TRIP</option>
+
+					<option label="Troll Payment">
+					 TPG</option>
+
+					<option label="TrollPlay">
+					 TPAY</option>
+
+					<option label="TrollTokens">
+					 TKN*</option>
+
+					<option label="Tronix">
+					 TRX</option>
+
+					<option label="TruckCoin">
+					 TRK</option>
+
+					<option label="True Flip Lottery">
+					 TFL</option>
+
+					<option label="TrueInvestmentCoin">
+					 TIC</option>
+
+					<option label="TrumpCoin">
+					 TRUMP</option>
+
+					<option label="TrustCoin">
+					 TRST</option>
+
+					<option label="TrustPlus">
+					 TRUST</option>
+
+					<option label="Turron">
+					 TUR</option>
+
+					<option label="Twelve Coin">
+					 TWLV</option>
+
+					<option label="TwisterCoin">
+					 TWIST</option>
+
+					<option label="U.CASH">
+					 UCASH</option>
+
+					<option label="UFO Coin">
+					 UFO</option>
+
+					<option label="UPcoin">
+					 XUP</option>
+
+					<option label="UR">
+					 UR</option>
+
+					<option label="Ubiq">
+					 UBQ</option>
+
+					<option label="Ubiqoin">
+					 UBIQ</option>
+
+					<option label="Ucoin">
+					 U</option>
+
+					<option label="Ultimate Secure Cash">
+					 USC</option>
+
+					<option label="UltraCoin">
+					 UTC</option>
+
+					<option label="UltraNote">
+					 XUN</option>
+
+					<option label="Umbrella">
+					 ULTC</option>
+
+					<option label="Umbrella Coin">
+					 UMC</option>
+
+					<option label="UnCoin">
+					 UNC</option>
+
+					<option label="Unattanium">
+					 UNAT</option>
+
+					<option label="UnbreakableCoin">
+					 UNB</option>
+
+					<option label="Unfed Coin">
+					 UNF</option>
+
+					<option label="Unify">
+					 UNIFY</option>
+
+					<option label="UnikoinGold">
+					 UKG</option>
+
+					<option label="Uniqredit">
+					 UNIQ</option>
+
+					<option label="UnitaryStatus Dollar">
+					 USDE</option>
+
+					<option label="United Arab Emirates Coin">
+					 UAEC</option>
+
+					<option label="United Traders Token">
+					 UTT</option>
+
+					<option label="Unitus">
+					 UIS</option>
+
+					<option label="Universa">
+					 UTN</option>
+
+					<option label="Universal Currency">
+					 UNIT</option>
+
+					<option label="Universe">
+					 UNI</option>
+
+					<option label="Unobtanium">
+					 UNO</option>
+
+					<option label="UpToken">
+					 UP</option>
+
+					<option label="Upfiring">
+					 UFR</option>
+
+					<option label="Uquid Coin">
+					 UQC</option>
+
+					<option label="UroCoin">
+					 URO</option>
+
+					<option label="Useless Ethereum Token">
+					 UET</option>
+
+					<option label="Uther">
+					 UTH</option>
+
+					<option label="Utility Coin">
+					 UTIL</option>
+
+					<option label="Utrust">
+					 UTK</option>
+
+					<option label="VIBEHub">
+					 VIBE</option>
+
+					<option label="VIP Tokens">
+					 VIP</option>
+
+					<option label="VIVO Coin">
+					 VIVO</option>
+
+					<option label="Valorem">
+					 VLR</option>
+
+					<option label="VapersCoin">
+					 VPRC</option>
+
+					<option label="Vaporcoin">
+					 VAPOR</option>
+
+					<option label="VaultCoin">
+					 VLTC</option>
+
+					<option label="Vcash">
+					 XVC</option>
+
+					<option label="Vechain">
+					 VEN</option>
+
+					<option label="VectorCoin 2.0 ">
+					 VEC2</option>
+
+					<option label="Veltor">
+					 VLT</option>
+
+					<option label="Veredictum">
+					 VNT</option>
+
+					<option label="Verge">
+					 XVG</option>
+
+					<option label="VeriCoin">
+					 VRC</option>
+
+					<option label="Verify">
+					 CRED</option>
+
+					<option label="Veritaseum">
+					 VERI</option>
+
+					<option label="Verium">
+					 VRM</option>
+
+					<option label="Veros">
+					 VRS</option>
+
+					<option label="Versa Token">
+					 VERSA</option>
+
+					<option label="VertCoin">
+					 VTC</option>
+
+					<option label="Vertex">
+					 VTX</option>
+
+					<option label="Vezt">
+					 VZT</option>
+
+					<option label="ViaCoin">
+					 VIA</option>
+
+					<option label="Viberate">
+					 VIB</option>
+
+					<option label="Victoriouscoin">
+					 VTY</option>
+
+					<option label="VidioCoin">
+					 VDO</option>
+
+					<option label="ViorCoin">
+					 VIOR</option>
+
+					<option label="Viral Coin">
+					 VIRAL</option>
+
+					<option label="Virta Unique Coin">
+					 VUC</option>
+
+					<option label="VirtaCoin">
+					 VTA</option>
+
+					<option label="VirtacoinPlus">
+					 XVP</option>
+
+					<option label="VirtualMining Coin">
+					 VMC</option>
+
+					<option label="Visio">
+					 VISIO</option>
+
+					<option label="Viuly">
+					 VIU</option>
+
+					<option label="Voise">
+					 VOISE</option>
+
+					<option label="VootCoin">
+					 VOOT</option>
+
+					<option label="Votecoin">
+					 VOT</option>
+
+					<option label="Voxels">
+					 VOX</option>
+
+					<option label="Voyacoin">
+					 VOYA</option>
+
+					<option label="Vsync">
+					 VSX</option>
+
+					<option label="Vtorrent">
+					 VTR</option>
+
+					<option label="WMCoin">
+					 WMC</option>
+
+					<option label="WRTcoin">
+					 WRT</option>
+
+					<option label="WaBi">
+					 WABI</option>
+
+					<option label="Wagerr">
+					 WGR</option>
+
+					<option label="Waltonchain">
+					 WTC</option>
+
+					<option label="Wanchain">
+					 WAN</option>
+
+					<option label="WandX">
+					 WAND</option>
+
+					<option label="WarCoin">
+					 WRC*</option>
+
+					<option label="WarpCoin">
+					 WARP</option>
+
+					<option label="WashingtonCoin">
+					 WASH</option>
+
+					<option label="Waves">
+					 WAVES</option>
+
+					<option label="Waves Community Token">
+					 WCT</option>
+
+					<option label="WavesGO">
+					 WGO</option>
+
+					<option label="Wavesnode.net">
+					 WNET</option>
+
+					<option label="WayCoin">
+					 WAY</option>
+
+					<option label="WeAreSatoshi">
+					 WSX</option>
+
+					<option label="WePower">
+					 WPR</option>
+
+					<option label="WealthCoin">
+					 WEALTH</option>
+
+					<option label="Webcoin">
+					 WEB</option>
+
+					<option label="Well">
+					 WELL</option>
+
+					<option label="Wexcoin">
+					 WEX</option>
+
+					<option label="WhaleCoin">
+					 WHL</option>
+
+					<option label="WhiteCoin">
+					 WC</option>
+
+					<option label="WhiteCoin">
+					 XWC</option>
+
+					<option label="Wi Coin">
+					 WIC</option>
+
+					<option label="Wild Beast Coin">
+					 WBB</option>
+
+					<option label="Wild Crypto">
+					 WILD</option>
+
+					<option label="WineCoin">
+					 WINE</option>
+
+					<option label="Wings DAO">
+					 WINGS</option>
+
+					<option label="Wink">
+					 WINK</option>
+
+					<option label="WisdomCoin">
+					 WISC</option>
+
+					<option label="WiserCoin">
+					 WSC</option>
+
+					<option label="Wish Finance">
+					 WSH</option>
+
+					<option label="WishFinance">
+					 WISH* (1)</option>
+
+					<option label="Wolk">
+					 WLK</option>
+
+					<option label="WomenCoin">
+					 WOMEN</option>
+
+					<option label="Wood Coin">
+					 LOG</option>
+
+					<option label="World Gold Coin">
+					 WGC</option>
+
+					<option label="World Trade Funds">
+					 XWT</option>
+
+					<option label="WorldCoin">
+					 WDC</option>
+
+					<option label="WorldPay">
+					 WOP</option>
+
+					<option label="Worldcore">
+					 WRC</option>
+
+					<option label="Worldwide Asset eXchange">
+					 WAX</option>
+
+					<option label="Wyrify">
+					 WYR</option>
+
+					<option label="X Real Estate Development">
+					 XRED</option>
+
+					<option label="X11 Coin">
+					 XC</option>
+
+					<option label="X2Coin">
+					 X2</option>
+
+					<option label="X8Currency">
+					 X8X</option>
+
+					<option label="XCoin">
+					 XCO</option>
+
+					<option label="XDE II">
+					 XDE2</option>
+
+					<option label="XG Sports">
+					 XG</option>
+
+					<option label="XP">
+					 XP</option>
+
+					<option label="XXXCoin">
+					 XXX</option>
+
+					<option label="XanaxCoin">
+					 XNX</option>
+
+					<option label="XauCoin">
+					 XAU</option>
+
+					<option label="Xaurum">
+					 XAUR</option>
+
+					<option label="Xcash">
+					 XCASH</option>
+
+					<option label="XenCoin">
+					 XNC</option>
+
+					<option label="XenixCoin">
+					 XEN</option>
+
+					<option label="Xenon">
+					 XNN</option>
+
+					<option label="XiaoMiCoin">
+					 MI</option>
+
+					<option label="XinFin Coin">
+					 XDC</option>
+
+					<option label="Xios">
+					 XIOS</option>
+
+					<option label="XtraBYtes">
+					 XBY</option>
+
+					<option label="YAYcoin">
+					 YAY</option>
+
+					<option label="YAcCoin">
+					 YAC</option>
+
+					<option label="YamahaCoin">
+					 YMC</option>
+
+					<option label="YbCoin">
+					 YBC</option>
+
+					<option label="YesCoin">
+					 YES</option>
+
+					<option label="YoCoin">
+					 YOC</option>
+
+					<option label="YobitVirtualCoin">
+					 YOVI</option>
+
+					<option label="Yoyow">
+					 YOYOW</option>
+
+					<option label="Z2 Coin">
+					 Z2</option>
+
+					<option label="ZABERcoin">
+					 ZAB</option>
+
+					<option label="ZCC Coin">
+					 ZCC</option>
+
+					<option label="ZCash">
+					 ZEC</option>
+
+					<option label="ZCashDarkCoin">
+					 ZECD</option>
+
+					<option label="ZCashGOLD">
+					 ZCG</option>
+
+					<option label="ZClassic">
+					 ZCL</option>
+
+					<option label="ZCoin">
+					 XZC</option>
+
+					<option label="ZLiteQubit">
+					 ZLQ</option>
+
+					<option label="ZSEcoin">
+					 ZSE</option>
+
+					<option label="ZayedCoin">
+					 ZYD</option>
+
+					<option label="Zcrypt">
+					 ZXT</option>
+
+					<option label="ZedCoins">
+					 ZED</option>
+
+					<option label="ZeitCoin">
+					 ZEIT</option>
+
+					<option label="ZenCash">
+					 ZEN</option>
+
+					<option label="Zennies">
+					 ZENI</option>
+
+					<option label="Zenome">
+					 ZNA</option>
+
+					<option label="Zero">
+					 ZER</option>
+
+					<option label="Zeta2Coin">
+					 ZET2</option>
+
+					<option label="ZetaCoin">
+					 ZET</option>
+
+					<option label="Zeusshield">
+					 ZSC</option>
+
+					<option label="ZiftrCoin">
+					 ZRC*</option>
+
+					<option label="Zilbercoin">
+					 ZBC</option>
+
+					<option label="Zoin">
+					 ZOI</option>
+
+					<option label="ZoneCoin">
+					 ZNE</option>
+
+					<option label="ZoomCoin">
+					 ZOOM</option>
+
+					<option label="ZrCoin">
+					 ZRC</option>
+
+					<option label="Zurcoin">
+					 ZUR</option>
+
+					<option label="aelf">
+					 ELF</option>
+
+					<option label="bitCNY">
+					 BITCNY</option>
+
+					<option label="bitUSD">
+					 BITUSD</option>
+
+					<option label="deCLOUDs">
+					 DCS</option>
+
+					<option label="district0x">
+					 DNT</option>
+
+					<option label="e-Chat">
+					 ECHT</option>
+
+					<option label="eBitcoin">
+					 EBTC</option>
+
+					<option label="eBitcoinCash">
+					 EBCH</option>
+
+					<option label="eBoost">
+					 EBST</option>
+
+					<option label="eLTC">
+					 ELTC2</option>
+
+					<option label="eMark">
+					 DEM</option>
+
+					<option label="eREAL">
+					 EREAL</option>
+
+					<option label="iBankCoin">
+					 IBANK</option>
+
+					<option label="iDice">
+					 ICE</option>
+
+					<option label="iEx.ec">
+					 RLC</option>
+
+					<option label="iWallet">
+					 IW</option>
+
+					<option label="iXledger">
+					 IXT</option>
+
+					<option label="onG.social">
+					 ONG</option>
+
+					<option label="ugChain">
+					 UGT</option>
+
+					<option label="vSlice">
+					 VSL</option>
+
+					<option label="wBTC">
+					 WBTC</option>
+
+
+			</select> <input id="qtt"
+		    type="number"
+		    step="0.000000001"
+		    min="0"
+		    class="form-control"
+		    placeholder="enter amount">
+		<div class="card-body"> <button id="add"
+			    class="btn btn-lg btn-block btn-info"> OK
+			        </button> </div>
+	</div>
+</div>
+
+
+			</div>
+		</main>
+		<footer>
+			<!-- views/coreelems/footer.ejs -->
+<nav aria-label="Page navigation" style="padding: 20px;">
+	<ul class="pagination justify-content-center">
+		<li class="page-item text-muted">© Copyright 2018 coin_board</li>
+	</ul>
+</nav>
+<!-- Jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+crossorigin="anonymous">
+</script>
+<!-- bootstrap js -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"
+integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D"
+crossorigin="anonymous">
+</script>
+
+		</footer>
+
+			<!-- Page scripts inclusion -->
+
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+				<script src="assets_management.js"></script>
+
+				<script src="draw_chart.js"></script>
+
+
+	</body>
+
+</html>
