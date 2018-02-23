@@ -10,8 +10,7 @@ const param = {
 	page	: 'index',
 	scripts	: {
 		socket	: cdn,
-		trade 	: 'tradestream.js',
-		change 	: 'changer_api.js'
+		trade 	: 'tradestream.js'
 	},
 	blocks : {
 		jumbo		: 'blocks/my_jumbotron',
