@@ -13,7 +13,7 @@ export JSDOCCONF="conf/jsdoc_conf.json"
 export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # Mocha test suite
-export MOSHA="./node_modules/mocha/bin/mocha"
+export MOCHA="./node_modules/mocha/bin/mocha"
 export TESTFILES="tests/*-test.js"
 # coin_board app
 export APPCONF="./conf/webfront.pm2conf.json"
@@ -34,9 +34,8 @@ function usage ()
 	echo -e "
 	## $BLD COINBO4RD $CL devtool
 
-	$BLD Usage :$CL INIT_DEV [-b] [-c] [-d] [-r] [-t] [-h/-u]
+	$BLD Usage :$CL INIT_DEV [-c] [-d] [-r] [-t] [-h/-u]
 
-	-b:$BLD.Setup$CL your rethinkdb dev environnement$RD*$CL $BLD**$CL
 	-c:$BLD.Setup$CL your nodejs dev environnement$BLD**$CL
 	-d:$BLD.Generate$CL html doc with jsdoc
 	-r:$BLD.reset$CL database tmpdata and restart app in test mode
@@ -72,33 +71,19 @@ function nodesetup ()
 	"
 }
 
-function dbsetup ()
-{
-	echo -e "
-	Enter you distribution and press [ENTER]
-	"
-	read dist
-	if [ "$dist" == "fedora" ] || [ "$dist" == "centos" ]; then
-		url="https://download.rethinkdb.com/centos/6"
-
-		sudo wget $url/$(uname -m)/rethinkdb.repo \
-		-O /etc/yum.repos.d/rethinkdb.repo &&  \
-		sudo yum install rethinkdb
-	fi
-}
-
 function app_startDev ()
 {
 	#*DEPRECATED exec $PM2DEV start $APPCONF
+	export NODE_ENV="development"
 	# order matters !
 	mongod -f conf/mongodb.conf &
-	#$PM2 start $APPCONF --only "$DBSERV";
 	$PM2 start $APPCONF --only "$WSSERV" --env development --update-env;
 	$PM2 start $APPCONF --only "$WVSERV" --env development --update-env;
 }
 
 function app_startProd ()
 {
+	export NODE_ENV="production"
 	exec $PM2 $APPBIN
 }
 
@@ -123,8 +108,8 @@ function app_reload ()
 
 function app_tests ()
 {
-	# $MOCHA tests/index_route-test.js
-	./node_modules/mocha/bin/mocha tests/*-test.js --exit
+	$MOCHA tests/ --exit
+	#./node_modules/mocha/bin/mocha tests/*-test.js --exit
 }
 
 function genddoc ()

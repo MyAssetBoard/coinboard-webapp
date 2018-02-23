@@ -4,11 +4,13 @@
 */
 
 /** PORT to connect to */
-var port;
-var io;
-var connected = 0;
-port = process.env.WSPORT || '3001';
-io = require('socket.io')(port);
+var port = process.env.WSPORT || '3001';
+/** SOCKET serv startup */
+var io = require('socket.io')(port);
+/** NUMBER of connected sesion on each room */
+var authco = 0,
+	regco = 0,
+	assetco = 0;
 
 var log = 'WEBSOCKET - Runnnig';
 process.env.NODE_ENV == 'development' ? console.log(log) : log;
@@ -17,20 +19,19 @@ process.env.NODE_ENV == 'development' ? console.log(log) : log;
 const assetMod = require('../methods/assets_methods');
 const authMod = require('../methods/auth_methods');
 
-io
-	.of('/auth')
+io.of('/auth')
 	.on('connection', function (socket) {
 		var log;
-		connected += 1;
+		authco += 1;
 		log = socket.id.replace(/\/auth#/g, 'User : ');
-		log += ' connected to [/auth] route | Connected : ' + connected;
+		log += ' connected to [/auth] route | Connected : ' + authco;
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
 		var scktid = socket.id.replace(/\/auth#/g, '');
 		var co_msg = {
 			'msg' : usrtmp,
 			'scktid' : scktid,
-			'tot' : connected
+			'tot' : authco
 		};
 		io.of('/auth')
 			.to(socket.id)
@@ -39,14 +40,14 @@ io
 			var auth = new authMod();
 			auth.checkcoData(data, socket, io);
 		});
-		socket.on('disconnect', function() { connected -= 1; });
+		socket.on('disconnect', function() { authco -= 1; });
 	});
 
-io
-	.of('/register')
+io.of('/register')
 	.on('connection', function (socket) {
+		regco += 1;
 		var log = socket.id.replace(/\/register#/g, 'User : ');
-		log += ' connected to [/register] route';
+		log += ' connected to [/register] route| Connected : ' + regco;
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var scktid = socket.id.replace(/\/register#/g, '');
 		var co_msg = { 'scktid' : scktid };
@@ -59,20 +60,20 @@ io
 			process.env.NODE_ENV == 'development' ? console.log(log) : log;
 			auth.checkRegData(data, socket, io);
 		});
-		socket.on('disconnect', function() { });
+		socket.on('disconnect', function() { regco -= 1; });
 	});
 
-io
-	.of('/assets')
+io.of('/assets')
 	.on('connection', function (socket) {
 		var log = socket.id.replace(/\/register#/g, 'User : ');
-		log += ' connected to [/assets] route';
+		assetco += 1;
+		log += ' connected to [/assets] route| Connected : ' + assetco;
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
-		var asset = new assetMod();
 		socket.on('add asset', function (data) {
+			var asset = new assetMod();
 			var log = 'add asset data returned :\n' + JSON.stringify(data);
 			process.env.NODE_ENV == 'development' ? console.log(log) : log;
 			asset.checkAssetData(data, socket, io);
 		});
-		socket.on('disconnect', function() { });
+		socket.on('disconnect', function() { assetco -= 1;});
 	});
