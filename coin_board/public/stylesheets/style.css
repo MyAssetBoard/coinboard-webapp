@@ -17,6 +17,15 @@ body, html {
 	padding: 10px;
 }
 
+canvas {
+  background-color: transparent;
+  width: 50px;
+  height: 100px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 .popUp {
 	padding: 5px 10px;
 	background-color: transparent !important;
@@ -30,7 +39,7 @@ body, html {
 	border-color: transparent;
 	border-width: large;
 	overflow: scroll;
-	height: 250px;
+	height: 600px;
 }
 
 .hidden {
