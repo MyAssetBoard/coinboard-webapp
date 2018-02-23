@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public/javascripts')));
 var output_avert = 'NODE_ENV=production| (No more console.log output)';
 output_avert += ' (unless true)';
 
-/* istanbul ignore if */
+/* istanbul ignore next */
 if (process.env.NODE_ENV == 'production') {
 	console.log(output_avert);
 }
@@ -91,7 +91,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
 	/** append header param to response */
 	for (var k in options) {
-		/* istanbul ignore if */
+		/* istanbul ignore next */
 		if (options.hasOwnProperty(k)) {
 			res.append(k, options[k]);
 		}
@@ -108,7 +108,7 @@ app.use(function(err, req, res, next) {
 	} else {
 		res.render('error', error_param);
 	}
-	/* istanbul ignore if */
+	/* istanbul ignore next */
 	if (next) { next = {}; }
 });
 
