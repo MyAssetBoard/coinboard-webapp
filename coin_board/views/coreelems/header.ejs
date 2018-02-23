@@ -29,18 +29,22 @@
  					 %>LOGIN<%
  				 }%>
 			</a> </li>
-			<li class="nav-item"> <a class="nav-link"
-				    href="/signin">
+			<% if (!locals.data || !locals.data.username) {
+				%>
+				<li class="nav-item"> <a class="nav-link"
+					    href="/signin">
 				<span class="lnr lnr-user"></span>
 				[+]Register
 			</a> </li>
-			<li class="nav-item"> <a class="nav-link"
-				    href="/assets">
+				<%
+			}%>
+					<li class="nav-item"> <a class="nav-link"
+						    href="/assets">
 				<span class="lnr lnr-rocket"></span>
 				Assets
 			</a> </li>
-			<li class="nav-item"> <a class="nav-link"
-				    href="https://bitbucket.org/trevisgulby/coin_board">
+					<li class="nav-item"> <a class="nav-link"
+						    href="https://bitbucket.org/trevisgulby/coin_board">
 				<span class="lnr lnr-briefcase"></span>
 				Bitbucket
 			</a> </li>
