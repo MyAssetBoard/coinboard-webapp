@@ -112,8 +112,6 @@ function app_tests ()
 	NODE_ENV='production'
 	$NYC --reporter=lcov $MOCHA $TESTM $TESTR --exit
 	$NYC report
-	$MOCHA $TESTM $TESTR --reporter mocha-junit-reporter \
-	--reporter-options mochaFile=./test-reports/junit.xml
 }
 
 function genddoc ()
