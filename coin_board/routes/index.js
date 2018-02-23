@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 				log += JSON.stringify(res.locals.data) + ']';
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
-				res.render('index', dup);
+				res.render('basepage', dup);
 			})
 			.catch(function (err) {
 				if (err) throw err;
@@ -40,7 +40,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(chck) + '] cookie ? [';
 		log += JSON.stringify(req.cookies) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
-		res.render('index', param);
+		res.render('basepage', param);
 	}
 });
 

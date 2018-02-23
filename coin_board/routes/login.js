@@ -12,7 +12,7 @@ express  = require('express');
 router = express.Router();
 const param = require('../params/login_param');
 authMod = require('../methods/auth_methods');
-redirco = 'http://localhost:3000/login';
+redirco = 'http://localhost:3000/assets';
 
 function render403(req, res) {
 	'use strict';
@@ -30,7 +30,7 @@ function setCookie(req, res) {
 		/** no: set a new cookie */
 		var setting = {
 			maxAge: 900000,
-			httpOnly: false 
+			httpOnly: false
 		};
 		res.cookie('uid',req.params.uid, setting);
 		console.log('cookie created successfully');
@@ -61,7 +61,7 @@ router.get('/', function(req, res, next) {
 				log += JSON.stringify(res.locals.data) + ']';
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
-				res.render('login', dup);
+				res.render('basepage', dup);
 			})
 			.catch(function (err) {
 				if (err) throw err;
@@ -72,7 +72,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(chck) + '] cookie ? [';
 		log += JSON.stringify(req.cookies) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
-		res.render('login', param);
+		res.render('basepage', param);
 	}
 });
 
