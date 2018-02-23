@@ -27,6 +27,7 @@ router.get('/', function(req, res, next) {
 				var log = 'signin| push user info in params \n[';
 				res.locals.data = result;
 				log += JSON.stringify(res.locals.data) + ']';
+				/* istanbul ignore next */
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
 				res.render('basepage', dup);

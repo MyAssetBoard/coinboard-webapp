@@ -26,6 +26,7 @@ router.post('/', render403);
 function setCookie(req, res) {
 	/** check if client sent cookie */
 	var cookie = req.cookies.uid;
+	var log = '';
 	if (cookie === undefined) {
 		/** no: set a new cookie */
 		var setting = {
@@ -33,10 +34,14 @@ function setCookie(req, res) {
 			httpOnly: false
 		};
 		res.cookie('uid',req.params.uid, setting);
-		console.log('cookie created successfully');
+		log = 'cookie successfully added';
+		process.env.NODE_ENV == 'development' ?
+			console.log(log) : log;
 	} else {
 		/** yes, cookie was already present */
-		console.log('cookie exists', cookie);
+		log = 'cookie already present';
+		process.env.NODE_ENV == 'development' ?
+			console.log(log) : log;
 	}
 }
 
@@ -46,9 +51,10 @@ function setCookie(req, res) {
 */
 router.get('/', function(req, res, next) {
 	var chck = req.cookies;
+	var log = '';
 
 	if (chck && chck.uid) {
-		var log = '/LOGIN-route : Auth user, session below\n[';
+		log = '/LOGIN-route : Auth user, session below\n[';
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
@@ -81,8 +87,9 @@ router.get('/', function(req, res, next) {
 */
 router.get('/id/:uid', function(req, res, next) {
 	var auth = new authMod();
+	var log = '';
 	if (auth.isvaliduid(req.params.uid)) {
-		var log = 'received id request with value :\n';
+		log = 'received id request with value :\n';
 		log += JSON.stringify(req.params);
 		log += '\nSession dump bellow\n[';
 		log += JSON.stringify(req.session) + ']';

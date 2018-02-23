@@ -27,7 +27,9 @@ router.get('/', function(req, res, next) {
 				var dup = param;
 				var log = 'myassets| push user info in params\n[';
 				res.locals.data = result;
+				/* istanbul ignore next */
 				log += JSON.stringify(res.locals.data) + ']';
+				/* istanbul ignore next */
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
 				res.render('basepage', dup);
@@ -37,9 +39,11 @@ router.get('/', function(req, res, next) {
 				next(err);
 			});
 	} else {
+		/* istanbul ignore next */
 		log = 'myassets-route| NonAUth user, session below\n[';
 		log += JSON.stringify(chck) + '] cookie ? [';
 		log += JSON.stringify(req.cookies) + ']';
+		/* istanbul ignore next */
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		res.render('basepage', param);
 	}
