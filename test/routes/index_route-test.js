@@ -6,8 +6,8 @@
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var request = require('supertest');
-var test_url = '/signin';
-var app = require('../coin_board/app');
+var test_url = '/';
+var app = require('../../coin_board/app');
 
 describe('GET index', function() {
 	before(function() {

@@ -5,7 +5,7 @@
 
 var request = require('supertest');
 var test_url = '/signin';
-var app = require('../coin_board/app');
+var app = require('../../coin_board/app');
 
 describe('Simple GET '+ test_url + ' on app', function() {
 	it('it respond with json', function(done) {

@@ -8,7 +8,7 @@ var sinon = require('sinon');
 var request = require('supertest');
 var fs = require('fs');
 var test_url = '/assets';
-var app = require('../coin_board/app');
+var app = require('../../coin_board/app');
 
 describe('GET /assets', function() {
 	before(function() {

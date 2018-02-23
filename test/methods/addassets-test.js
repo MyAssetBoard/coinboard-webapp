@@ -7,7 +7,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
-const AssetsMod = require('../coin_board/methods/assets_methods');
+const AssetsMod = require('../../coin_board/methods/assets_methods');
 var ekey = 'U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz';
 var assets = new AssetsMod();
 var mockVdata = {

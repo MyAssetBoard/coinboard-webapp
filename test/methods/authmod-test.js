@@ -2,7 +2,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var chaiAsPromised = require('chai-as-promised');
 chai.use(chaiAsPromised);
-const authMod = require('../coin_board/methods/auth_methods');
+const authMod = require('../../coin_board/methods/auth_methods');
 var auth = new authMod();
 
 const vmock = {

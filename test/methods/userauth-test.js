@@ -4,7 +4,7 @@
 */
 
 var request = require('supertest');
-var app = require('../coin_board/app');
+var app = require('../../coin_board/app');
 var encuid = 'U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz';
 var base_url = '/login/id/';
 var test_rdurl = base_url + 'R26536536565NDOMM';
