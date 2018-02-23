@@ -14,7 +14,8 @@ export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # Mocha test suite
 export MOCHA="./node_modules/mocha/bin/mocha"
-export TESTDIR="test/"
+export TESTM="./test/methods/"
+export TESTR="./test/routes/"
 # Istanbul reporter
 export NYC="./node_modules/nyc/bin/nyc.js"
 # coin_board app
@@ -109,9 +110,9 @@ function app_reload ()
 function app_tests ()
 {
 	NODE_ENV='production'
-	$NYC --reporter=lcov $MOCHA $TESTDIR --exit
+	$NYC --reporter=lcov $MOCHA $TESTM $TESTR --exit
 	$NYC report
-	$MOCHA $TESTDIR --reporter mocha-junit-reporter \
+	$MOCHA $TESTM $TESTR --reporter mocha-junit-reporter \
 	--reporter-options mochaFile=./test-reports/junit.xml
 }
 
