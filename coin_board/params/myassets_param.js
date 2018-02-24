@@ -19,7 +19,7 @@ const param = {
 	},
 	blocks : {
 		jumbo	: 'blocks/all/my_jumbotron',
-		assets	: 'blocks/assets/my_assetsBis'
+		assets	: 'blocks/assets/my_assets'
 	},
 	symb	: tickers
 };
