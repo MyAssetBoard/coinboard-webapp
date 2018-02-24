@@ -13,9 +13,9 @@ const param = {
 		trade 	: 'tradestream.js'
 	},
 	blocks : {
-		jumbo		: 'blocks/my_jumbotron',
-		ticker		: 'blocks/ticker_panel',
-		livestream	: 'blocks/tradestream'
+		jumbo		: 'blocks/all/my_jumbotron',
+		ticker		: 'blocks/index/ticker_panel',
+		livestream	: 'blocks/index/tradestream'
 	}
 };
 

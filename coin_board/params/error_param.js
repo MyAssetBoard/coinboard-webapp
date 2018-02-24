@@ -11,7 +11,7 @@ const param = {
 		reload		: 'to_homepage.js'
 	},
 	blocks : {
-		jumbo		: 'blocks/my_jumbotron'
+		jumbo		: 'blocks/all/my_jumbotron'
 	}
 };
 

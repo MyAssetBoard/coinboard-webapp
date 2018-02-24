@@ -18,8 +18,8 @@ const param = {
 		test	: 'draw_chart.js'
 	},
 	blocks : {
-		jumbo	: 'blocks/my_jumbotron',
-		assets	: 'blocks/my_assets'
+		jumbo	: 'blocks/all/my_jumbotron',
+		assets	: 'blocks/assets/my_assetsBis'
 	},
 	symb	: tickers
 };

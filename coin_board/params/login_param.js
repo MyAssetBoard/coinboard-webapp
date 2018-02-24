@@ -16,8 +16,8 @@ const param = {
 		mysocket	: 'auth_socket.js'
 	},
 	blocks : {
-		jumbo		: 'blocks/my_jumbotron',
-		topblock	: 'blocks/login_block'
+		jumbo		: 'blocks/all/my_jumbotron',
+		topblock	: 'blocks/login/login_block'
 	}
 };
 

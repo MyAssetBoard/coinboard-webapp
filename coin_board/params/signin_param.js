@@ -18,8 +18,8 @@ const param = {
 		mysocket	: 'signin_socket.js'
 	},
 	blocks : {
-		jumbo		: 'blocks/my_jumbotron',
-		topblock	: 'blocks/signin_block'
+		jumbo		: 'blocks/all/my_jumbotron',
+		topblock	: 'blocks/signin/signin_block'
 	}
 };
 

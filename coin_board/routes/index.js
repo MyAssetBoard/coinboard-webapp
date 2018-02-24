@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 				/* istanbul ignore next */
 				process.env.NODE_ENV == 'development' ?
 					console.log(log) : log;
-				res.render('basepage', dup);
+				res.render('page', dup);
 			})
 			.catch(function (err) {
 				if (err) throw err;
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(req.cookies) + ']';
 		/* istanbul ignore next */
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
-		res.render('basepage', param);
+		res.render('page', param);
 	}
 });
 
