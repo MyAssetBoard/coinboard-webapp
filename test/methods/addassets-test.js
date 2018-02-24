@@ -31,7 +31,7 @@ describe(desc, function () {
 
 desc = 'Add assets [' + JSON.stringify(mockCdata) + '] for user maintest';
 describe(desc, function () {
-	it('It reject promise with error : Invaild quantity', function() {
+	it('It reject promise with error : Invalid quantity', function() {
 		return assert.isRejected(assets.addAssets(mockCdata), 'Invalid quantity');
 	});
 });
