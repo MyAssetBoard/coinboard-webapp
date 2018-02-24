@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var assetws  = io.connect('http://localhost:3001/assets');
 
 	assetws.on('connect', function () {
-		console.log('Successfully conneted to /assets Coin_Board ws stream');
+		console.log('Successfully connected to /assets socket stream');
 	});
 
 	assetws.on('error', function (e) {
@@ -14,6 +14,14 @@ $(document).ready(function() {
 		$('#collapseOne').collapse('toggle');
 
 	});
+
+	$('#searchme').on('input', function() {
+		var r = $(this).val().trim();
+		r = r.toUpperCase();
+		var tgtElem = document.getElementById(r);
+		try {tgtElem.scrollIntoView();} catch (e) {if (e) return;}
+	});
+
 
 	var config = {
 		type:'line',
