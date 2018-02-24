@@ -104,7 +104,7 @@ function app_kill ()
 
 function app_reload ()
 {
-	app_kill && app_startDev
+	app_kill; app_startDev
 }
 
 function app_tests ()
