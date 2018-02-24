@@ -39,7 +39,6 @@ canvas {
 	border-color: transparent;
 	border-width: large;
 	overflow: scroll;
-	height: 600px;
 }
 
 .hidden {

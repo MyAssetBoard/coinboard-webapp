@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var assetws  = io.connect('http://localhost:3001/assets');
 
 	assetws.on('connect', function () {
-		console.log('ok co');
+		console.log('Successfully conneted to /assets Coin_Board ws stream');
 	});
 
 	assetws.on('error', function (e) {
@@ -54,6 +54,7 @@ $(document).ready(function() {
 	var my2chatr = [];
 	var i = 0;
 	var j = 0;
+	/* global Chart:false */
 	$('canvas[id^="myChart-"]').each(function () {
 		i += 1;
 		console.log('yolo');
@@ -61,7 +62,6 @@ $(document).ready(function() {
 	});
 	$('canvas[id^="myChart2-"]').each(function () {
 		j += 1;
-		console.log('yolo');
 		my2chatr[j] = new Chart($(this), config);
 	});
 
@@ -84,7 +84,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#add').click(function () {
+	$('#addme').click(function () {
 		var inputTicker = $( '#ticker option:selected' ).text();
 		var usrid = document.cookie.replace('uid=', '');
 		console.log(usrid);
