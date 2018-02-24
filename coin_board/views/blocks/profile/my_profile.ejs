@@ -1,8 +1,18 @@
 <% if (locals.data && Object.keys(data).length) {%>
-	<% for (var elems in data){ %>
-		<li label="<%=elems%>">
-			<%= elems != "assets" ? elems + ' : ' + data[elems] : '' %>
-		</li>
-		<%} %>
-			<%}
-%>
+	<%- include('profile_card') %>
+		<% for (var elems in data) {%>
+			<li label="<%=elems%>">
+				<%= elems != "assets" ? elems + ' : ' + data[elems] : '' %>
+			</li>
+		<%}
+	%>
+	<%
+} else {%>
+		<h1 class="text-white">=>Hey ! U must
+			<a href="/login">log in</a>
+			or
+			<a href="/signin">register</a>
+			before reaching
+			<%=title%>
+		</h1>
+	<% } %>
