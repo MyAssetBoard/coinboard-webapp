@@ -1,0 +1,10 @@
+<div class="card"
+    id="<%=data.symbol%>">
+	<div class="card-body"
+	    id="<%='body-' + data.symbol%>"><button class="btn btn-block"><a
+	href="<%= '#' + data.symbol %>"
+	    label="<%=data.symbol%>"
+	    class="<%= id == 0 ? 'list-group-item list-group-item-info active' : 'list-group-item list-group-item-info' %>">
+		<%= data.symbol + ' : ' + data.qtt %>
+	</a></button></div>
+</div>

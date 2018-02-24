@@ -5,79 +5,43 @@
 		<h5 class="mb-0">
 	<button class="btn btn-secondary btn-lg btn-block dropdown-toggle"
 	data-toggle="collapse" data-target="#collapseOne">
-	| View |
+	[<i class="lnr lnr-chart-bars"></i>] View
 </button> </h5> </div>
 	<div id="collapseOne"
 	    class="card-body collapse">
-		<%if (locals.data && locals.data.assets) {%>
-			<div class='infiList'>
-				<%for (var elem in locals.data.assets) {%> <button id="<%= 'Tick-'+ elem%>"
-					    class="btn btn-success btn-block">
-	<%= locals.data.assets[elem].symbol + ' | ' + locals.data.assets[elem].qtt%></button>
-					<div class="card text-center">
-						<div class="card-header">
-							<%= locals.data.assets[elem].symbol %>
-						</div>
-						<div class="card-body">
-							<p class="card-text">
-								<div class="row">
-									<div class="col"><canvas id="<%='myChart-' + elem%>"
-										    width="100"
-										    height="50"
-										    style="border:1px solid #000000;"></canvas></div>
-									<div class="col"><canvas id="<%='myChart2-' + elem%>"
-										    width="100"
-										    height="50"
-										    style="border:1px solid #000000;"></canvas></div>
-								</div>
-							</p>
-							<div class="btn-toolbar justify-content-between"
-							    role="toolbar"
-							    aria-label="Toolbar with button groups">
-								<div class="btn-group"
-								    role="group"
-								    aria-label="First group"> <button type="button"
-									    class="btn btn-secondary">1 Week</button> <button type="button"
-									    class="btn btn-secondary">1 Month</button> <button type="button"
-									    class="btn btn-secondary">3 Months</button> <button type="button"
-									    class="btn btn-secondary">1 Year</button> <button type="button"
-									    class="btn btn-secondary">3 Years</button> </div>
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<div class="input-group-text"
-										    id="btnGroupAddon2"></div>
-									</div> <input type="text"
-									    class="form-control"
-									    placeholder="Input group example"
-									    aria-label="Input group example"
-									    aria-describedby="btnGroupAddon2"> </div>
-							</div </div>
-							<div class="card-footer text-muted"> 2 days ago </div>
-						</div>
-					</div>
-			</div>
+		<% if (locals.data && data.assets && Object.keys(data.assets).length) {%>
+			<div class="infiList">
+				<%for(var elems in data.assets){%>
+					<%- include('asset_list', {
+						data: locals.data.assets[elems],
+						id: elems
+					}); %>
+						<%} %>
+			</div> <input id="searchme"
+			    type="text"
+			    placeholder="&#xf00e Search for Asset"
+			    style="font-family:Arial, FontAwesome"
+			    class=""></input>
+			<%
+		}%>
+				<% if (!locals.data) {
+			%>Please <a href="/login">LOGIN</a> to view your assets
+					<%}
+		%>
 	</div>
-	<% } %>
-</div>
-<% }
-else {
-	%> <a href="/login">LOGIN</a> or Add assets
-	<% }
-	%>
-		</div>
-		<div id="add"
-		    class="card">
-			<div class="card-header"
-			    id="headingTwo">
-				<h5 class="mb-0">
+	<div id="add"
+	    class="card">
+		<div class="card-header"
+		    id="headingTwo">
+			<h5 class="mb-0">
         <button class="btn btn-secondary btn-lg btn-block dropdown-toggle"
 	data-toggle="collapse" data-target="#collapseTwo">
-          [+] Add
+          [<i class="lnr lnr-cloud-sync"></i>] Add
   </button> </h5> </div>
-			<div id="collapseTwo"
-			    class="card-body collapse"> <select type="select"
-				    id="ticker"
-				    class="form-control">
+		<div id="collapseTwo"
+		    class="card-body collapse"> <select type="select"
+			    id="ticker"
+			    class="form-control">
 			<% if (locals.symb && Object.keys(symb).length) {%>
 				<% for (var elems in symb){ %>
 					<option label="<%=symb[elems]%>">
@@ -86,13 +50,13 @@ else {
 				<%}
 			%>
 			</select> <input id="qtt"
-				    type="number"
-				    step="0.000000001"
-				    min="0"
-				    class="form-control"
-				    placeholder="enter amount">
-				<div class="card-body"> <button id="addme"
-					    class="btn btn-lg btn-block btn-info"> OK
+			    type="number"
+			    step="0.000000001"
+			    min="0"
+			    class="form-control"
+			    placeholder="enter amount">
+			<div class="card-body"> <button id="addme"
+				    class="btn btn-lg btn-block btn-info"> OK
 			        </button> </div>
-			</div>
 		</div>
+	</div>
