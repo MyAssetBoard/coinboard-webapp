@@ -1,0 +1,8 @@
+<% if (locals.data && Object.keys(data).length) {%>
+	<% for (var elems in data){ %>
+		<li label="<%=elems%>">
+			<%= elems != "assets" ? elems + ' : ' + data[elems] : '' %>
+		</li>
+		<%} %>
+			<%}
+%>
