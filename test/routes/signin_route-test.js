@@ -20,7 +20,7 @@ describe('GET index', function() {
 		return request(app).get('/').expect(200);
 	});
 	return it('should render the "index" view', function() {
-		return expect(this.spy.getCall(0).args[0]).to.be.eql('basepage');
+		return expect(this.spy.getCall(0).args[0]).to.be.eql('page');
 	});
 });
 

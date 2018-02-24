@@ -21,7 +21,7 @@ describe('GET /assets', function() {
 		return request(app).get('/').expect(200);
 	});
 	return it('should render the "assets" view', function() {
-		return expect(this.spy.getCall(0).args[0]).to.be.eql('basepage');
+		return expect(this.spy.getCall(0).args[0]).to.be.eql('page');
 	});
 });
 
