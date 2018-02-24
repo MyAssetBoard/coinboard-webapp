@@ -45,7 +45,8 @@ Assets.prototype.addAssets = function (a) {
 
 Assets.prototype.checkAssetData = function (data, socket, io) {
 	if (data['ticker'] && data['qtt'] && data['id']) {
-		Assets.addAssets(data)
+		var asset = new Assets();
+		asset.addAssets(data)
 			.then(function (res) {
 				console.log(res);
 				io.of('/assets')
