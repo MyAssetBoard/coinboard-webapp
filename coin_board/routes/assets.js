@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 		log += JSON.stringify(chck) + ']';
 		process.env.NODE_ENV == 'development' ? console.log(log) : log;
 		var auth = new authMod();
-		auth.userisAuth(chck.uid)
+		auth.userisAuth(chck.uid, 'assets')
 			.then(function(result) {
 				var dup = param;
 				var log = 'myassets| push user info in params\n[';

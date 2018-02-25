@@ -52,6 +52,26 @@ function iscoinAddr(address) {
 	return match;
 }
 
+function stripD(d, path)
+{
+	const par = {
+		profile : ['_id', 'socketid', 'assets'],
+		index : ['_id', 'socketid', 'assets'],
+		login : ['_id', 'socketid', 'assets'],
+		assets : ['_id', 'socketid']
+	};
+	for (var el in par) {
+		if (el == path) {
+			for (var s in par[el]) {
+				var todel = par[el][s];
+				delete d[todel];
+			}
+			return;
+		}
+	}
+}
+
+/** Auth class contructor */
 function Auth() {
 }
 
@@ -60,14 +80,13 @@ function Auth() {
 *	exist in user collection and
 *	strip private fields from result
 */
-function checkUid(data) {
+function checkUid(data, path) {
 	return new Promise((resolve, reject) => {
 		var crud = new crudMod('test2');
 		var val = new ObjectID(data);
 		crud.FindInCollection('r_users', val, function (res) {
 			if (res) {
-				delete res._id;
-				delete res.socketid;
+				stripD(res, path);
 				resolve(res);
 			}
 			reject(new Error('Bad Id'));
@@ -193,10 +212,10 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 	return false;
 };
 
-Auth.prototype.userisAuth = function(eUid) {
+Auth.prototype.userisAuth = function(eUid, page) {
 	return new Promise((resolve, reject) => {
 		var duid = dcryptParams(eUid);
-		checkUid(duid)
+		checkUid(duid, page)
 			.then(function (res) {
 				resolve(res);
 			})
