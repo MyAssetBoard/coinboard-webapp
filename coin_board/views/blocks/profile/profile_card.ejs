@@ -1,27 +1,37 @@
+<div class="container-full-bg" style="padding-bottom: 10px;">
+	<button type="button" class="btn btn-primary btn-lg btn-block text-left"><%=title%></button>
+</div>
 <div class="card-columns">
 	<div class="card">
-		<img class="card-img-top" src="https://www.cryptosaurus.cc/ctrl/wp-content/uploads/MONERO.png" alt="Card image cap">
+		<img class="card-img-top" src="https://www.ethereum.org/images/logos/ETHEREUM-LOGO_PORTRAIT_Black_small.png" alt="Card image cap">
 		<div class="card-body">
-			<h5 class="card-title">Card title that wraps to a new line</h5>
-			<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+			<h5 class="card-title">D-App | Bots Contracts</h5>
+			<p class="card-text">View, edit, and create trading contracts</p>
 		</div>
 	</div>
 	<div class="card p-3">
+		<a href="/profile/settings"><img class="card-img-top" href="/profile/settings" src="http://www.myiconfinder.com/uploads/iconsets/256-256-ce95e9d2e86faee8a3a511af826f891e.png" alt="card image"></a>
 		<blockquote class="blockquote mb-0 card-body">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+			<h3>
+				<a href="/profile/settings">SETTINGS</a>
+			</h3>
 			<footer class="blockquote-footer">
 				<small class="text-muted">
-					Someone famous in
-					<cite title="Source Title">Source Title</cite>
+					Last updated on
+					<cite title="Source Title">[date]</cite>
 				</small>
 			</footer>
 		</blockquote>
 	</div>
 	<div class="card">
-		<img class="card-img-top" src="http://pngimg.com/uploads/bitcoin/bitcoin_PNG48.png" alt="Card image cap">
+		<img class="card-img-top" src="https://vignette.wikia.nocookie.net/logopedia/images/e/e1/Incognito_logo.png/revision/latest?cb=20160422124241" alt="Card image cap">
 		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+			<h5 class="card-title text-center"><%= username %></h5>
+			<li class="card-text"><%= useremail %></li>
+			<li class="card-text">
+				<a href="<%= 'https://etherscan.io/address/' + ethaddr %>"><%= ethaddr %></a>
+			</li>
+			<li class="card-text"><%= usercurrency %></li>
 			<p class="card-text">
 				<small class="text-muted">Last updated 3 mins ago</small>
 			</p>
@@ -29,11 +39,11 @@
 	</div>
 	<div class="card bg-primary text-white text-center p-3">
 		<blockquote class="blockquote mb-0">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+			<p>Price is what you pay. Value is what you get..</p>
 			<footer class="blockquote-footer">
 				<small>
-					Someone famous in
-					<cite title="Source Title">Source Title</cite>
+					By
+					<cite title="Source Title">Warren Buffet</cite>
 				</small>
 			</footer>
 		</blockquote>
@@ -48,7 +58,7 @@
 		</div>
 	</div>
 	<div class="card">
-		<img class="card-img" src="https://www.ethereum.org/images/logos/ETHEREUM-LOGO_PORTRAIT_Black_small.png" alt="Card image">
+		<a href="/assets/fiat"><img class="card-img" src="http://phoenixtradingacademy.com/wp-content/uploads/2016/08/Phoenix-Trading-Group-Currency-Symbols.png" alt="Card image"></a>
 	</div>
 	<div class="card p-3 text-right">
 		<blockquote class="blockquote mb-0">
@@ -63,8 +73,23 @@
 	</div>
 	<div class="card">
 		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+			<h5 class="card-title text-center">API's Settings</h5>
+			<p class="card-text">
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					<label class="btn btn-secondary active">
+						<input type="radio" name="options" id="option1" autocomplete="off" checked="checked">
+						Banks
+					</label>
+					<label class="btn btn-secondary">
+						<input type="radio" name="options" id="option2" autocomplete="off">
+						Crypto
+					</label>
+					<label class="btn btn-secondary">
+						<input type="radio" name="options" id="option3" autocomplete="off">
+						CBoard
+					</label>
+				</div>
+			</p>
 			<p class="card-text">
 				<small class="text-muted">Last updated 3 mins ago</small>
 			</p>
