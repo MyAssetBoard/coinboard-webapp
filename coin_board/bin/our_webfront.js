@@ -12,6 +12,8 @@ app = require('../app');
 debug = require('debug')('coin-board:server');
 http = require('http');
 
+/**  listening address definition */
+var addr = '0.0.0.0';
 /** Get port from environment and store in Express. */
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
@@ -24,7 +26,7 @@ process.env.NODE_ENV == 'development' ? console.log(log) : log;
 
 
 /** Listen on provided port, on all network interfaces. */
-server.listen(port, function () {
+server.listen(port, addr, function () {
 	var log = 'WEB_VIEW - server is listening';
 	process.env.NODE_ENV == 'development' ? console.log(log) : log;
 });
