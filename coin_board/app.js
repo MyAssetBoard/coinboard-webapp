@@ -16,6 +16,8 @@ const login = require('./routes/login');
 const signin = require('./routes/signin');
 /** Profile route import */
 const profile = require('./routes/profile');
+/** Livestream route import */
+const livestream = require('./routes/livestream');
 /** Error view params */
 const error_param = require('./params/error_param');
 const allowedMethods = ['GET'];
@@ -76,10 +78,11 @@ if (process.env.NODE_ENV == 'development') {
 }
 /** Routes import */
 app.use('/', index);
-app.use('/assets', assets);
 app.use('/login', login);
 app.use('/signin', signin);
+app.use('/assets', assets);
 app.use('/profile', profile);
+app.use('/livestream', livestream);
 
 /** catch 404 and forward to error handler */
 app.use(function(req, res, next) {
