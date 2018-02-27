@@ -36,9 +36,10 @@ io.of( '/auth' ).on( 'connection', function( socket ) {
                 'scktid': scktid,
                 'tot': authco,
         };
-        io.of( '/auth' ).to( socket.id ).emit( 'my-message', comsg );
+        let u = socket.id;
+        io.of( '/auth' ).to( u ).emit( 'nm', comsg );
         socket.on( 'user login', function( data ) {
-                let auth = new Auth();
+                const auth = new Auth();
                 auth.checkcoData( data, socket, io );
         } );
         socket.on( 'disconnect', function() {
@@ -57,7 +58,7 @@ io.of( '/register' ).on( 'connection', function( socket ) {
         let comsg = {
                 'scktid': scktid,
         };
-        io.of( '/register' ).to( socket.id ).emit( 'my-message', comsg );
+        io.of( '/register' ).to( socket.id ).emit( 'nm', comsg );
         socket.on( 'user signin', function( data ) {
                 let auth = new Auth();
                 let log = 'received : \n' + JSON.stringify( data );
