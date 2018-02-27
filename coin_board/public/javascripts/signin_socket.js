@@ -1,68 +1,76 @@
-/* global io:false*/
+/* global io:false */
 
-$(document).ready(function() {
-	var register = io.connect('http://localhost:3001/register');
+$( document ).ready( function() {
+        const register = io.connect( 'http://localhost:3001/register' );
 
-	function fillPopup(data) {
-		/** empty div before fill */
-		var elem = $('#popup');
-		$('#ppContent').text('');
-		$('#ppContent').removeClass('alert-danger');
-		$('#ppContent').addClass('alert-info');
-		if (data.scktid) {
-			$('#InputSocketid').val(data.scktid);
-		} else {
-			if (!data.errcode) {
-				$.each(data, function(key, value) {
-					var newline = $('<p>');
-					newline.html('<strong>' +
-					key +
-					' :</strong>');
-					newline.append(value);
-					$('#ppContent').append(newline);
-				});
-			} else {
-				$('#ppContent').toggleClass('alert-info alert-danger');
-				var newline = $('<p>');
-				newline.html('<strong> Error ' +
-				data.errcode +
-				' : </strong>');
-				newline.append(data.msg);
-				$('#ppContent').append(newline);
-			}
-			elem.fadeIn('fast');
-			setTimeout(function() {elem.fadeToggle('fast');}, 7000);
-		}
+        /**
+        * @param {Object} data
+        */
+        function fillPopup( data ) {
+                /** empty div before fill */
+                let elem = $( '#popup' );
+                $( '#ppContent' ).text( '' );
+                $( '#ppContent' ).removeClass( 'alert-danger' );
+                $( '#ppContent' ).addClass( 'alert-info' );
+                if ( data.scktid ) {
+                        $( '#InputSocketid' ).val( data.scktid );
+                } else {
+                        if ( !data.errcode ) {
+                                $.each( data, function( key, value ) {
+                                        let newline = $( '<p>' );
+                                        let ct = '<strong>' + key;
+                                        ct += ' :</strong>';
+                                        newline.html( ct );
+                                        newline.append( value );
+                                        $( '#ppContent' ).append( newline );
+                                } );
+                        } else {
+                                $( '#ppContent' ).toggleClass( 'alert-info alert-danger' );
+                                let newline = $( '<p>' );
+                                let ct = '<strong> Error ' + data.errcode;
+                                ct += ' : </strong>';
+                                newline.html( ct );
+                                newline.append( data.msg );
+                                $( '#ppContent' ).append( newline );
+                        }
+                        elem.fadeIn( 'fast' );
+                        setTimeout( function() {
+                                elem.fadeToggle( 'fast' );
+                        }, 7000 );
+                }
+        }
 
-	}
+        /**
+        * @brief trim value
+        * and call user signin method on auth socket
+        */
+        function regsend() {
+                let tosend = {};
+                console.log( 'ok' );
+                $( '[id^=\'Input\']' ).each( function() {
+                        tosend[this.id] = this.value.trim();
+                } );
+                console.log( 'sending to server : ' );
+                console.log( tosend );
+                register.emit( 'user signin', tosend );
+        }
 
-	function register_send() {
-		var tosend = {};
-		console.log('ok');
-		$('[id^=\'Input\']').each(function(){
-			tosend[this.id] = this.value.trim();
-		});
-		console.log('sending to server : ');
-		console.log(tosend);
-		register.emit('user signin', tosend);
-	}
-
-	register.on('connection', function ( ) { });
-	register.on('my-message', function (data) {
-		if (data.ok && data.ok == 1) {
-			fillPopup(data);
-			window.setTimeout(function(){
-				window.location.href = './login';
-			}, 2000);
-		} else {
-			fillPopup(data);
-		}
-		console.log(data);
-	});
-	register.on('error-message', function (data) {
-		console.log(data);
-		fillPopup(data);
-	});
-	/** dom manip -send event */
-	$('#register').click(register_send);
-});
+        register.on( 'connection', function() {} );
+        register.on( 'nm', function( data ) {
+                if ( data.ok && data.ok == 1 ) {
+                        fillPopup( data );
+                        window.setTimeout( function() {
+                                window.location.href = './login';
+                        }, 2000 );
+                } else {
+                        fillPopup( data );
+                }
+                console.log( data );
+        } );
+        register.on( 'em', function( data ) {
+                console.log( data );
+                fillPopup( data );
+        } );
+        /** dom manip -send event */
+        $( '#register' ).click( regsend );
+} );
