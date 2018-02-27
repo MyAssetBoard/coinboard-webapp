@@ -1,26 +1,27 @@
 {
-	"name": "coin_board",
-	"version": "0.0.1Beta",
-	"description": "Crypto assets management board",
-	"main": "./INIT_DEV -t",
-	"repository": "git@bitbucket.org:trevisgulby/coin_board.git",
-	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
-	"license": "MIT",
-	"dependencies": {
-		"chai-as-promised": "^7.1.1",
-		"eslint": "^4.18.0",
-		"mocha-junit-reporter": "^1.17.0",
-		"mongodb": "^3.0.2",
-		"nyc": "^11.4.1",
-		"pm2": "^2.9.1"
-	},
-	"devDependencies": {
-		"chai": "^4.1.2",
-		"ejs-lint": "^0.3.0",
-		"jsdoc": "^3.5.5",
-		"mocha": "^5.0.0",
-		"sinon": "^4.2.2",
-		"sinon-chai": "^2.14.0",
-		"supertest": "^3.0.0"
-	}
+  "name": "coin_board",
+  "version": "0.0.1Beta",
+  "description": "Crypto assets management board",
+  "main": "./INIT_DEV -t",
+  "repository": "git@bitbucket.org:trevisgulby/coin_board.git",
+  "author": "Trevis Gulby <trevisgulby@protonmail.ch>",
+  "license": "MIT",
+  "dependencies": {
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^4.18.0",
+    "mocha-junit-reporter": "^1.17.0",
+    "mongodb": "^3.0.2",
+    "nyc": "^11.4.1",
+    "pm2": "^2.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "ejs-lint": "^0.3.0",
+    "eslint-config-google": "^0.9.1",
+    "jsdoc": "^3.5.5",
+    "mocha": "^5.0.0",
+    "sinon": "^4.2.2",
+    "sinon-chai": "^2.14.0",
+    "supertest": "^3.0.0"
+  }
 }
