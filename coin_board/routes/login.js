@@ -6,7 +6,7 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
-const redirco = 'http://localhost:3000/assets';
+const redirco = 'http://xu6ylq4kzadh7bcm.onion/assets';
 const param = require( '../params/login_param' );
 
 /**
