@@ -6,7 +6,10 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
-const redirco = 'http://xu6ylq4kzadh7bcm.onion/assets';
+
+const redirco = process.env.SERV_ENV == 'onion'
+        ? 'http://xu6ylq4kzadh7bcm.onion/assets'
+        : 'http://localhost:3000/assets';
 const param = require( '../params/login_param' );
 
 /**
