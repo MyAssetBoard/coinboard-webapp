@@ -4,6 +4,17 @@ $( document ).ready( function() {
         const assetws = io.connect( url );
 
         /**
+        * @param {string} key
+        * @return {string} val
+        */
+        function getCookie( key ) {
+                let value = '; ' + document.cookie;
+                let parts = value.split( '; ' + key + '=' );
+                if ( parts.length == 2 ) {
+                        return parts.pop().split( ';' ).shift();
+                }
+        }
+        /**
         * @param {Object} data
         */
         function fillPopup( data ) {
@@ -70,74 +81,6 @@ $( document ).ready( function() {
                 }
         } );
 
-        let config = {
-                type: 'line',
-                data: {
-                        labels: [
-                                'January',
-                                'February',
-                                'March',
-                                'April',
-                                'May',
-                                'June',
-                                'July',
-                        ],
-                        datasets: [
-                                {
-                                        label: 'ETH',
-                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                        borderColor: 'rgba(54, 162, 235, 0.2)',
-                                        fill: false,
-                                }, {
-                                        label: 'EUR',
-                                        fill: false,
-                                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                        borderColor: 'rgba(54, 162, 235, 0.2)',
-                                        data: [
-                                                18,
-                                                33,
-                                                22,
-                                                19,
-                                                11,
-                                                39,
-                                                30,
-                                        ],
-                                },
-                        ],
-                },
-                options: {
-                        title: {
-                                display: true,
-                                text: 'Min and Max values',
-                        },
-                        scales: {
-                                yAxes: [
-                                        {
-                                                ticks: {
-                                                        suggestedMin: 10,
-                                                        suggestedMax: 50,
-                                                },
-                                        },
-                                ],
-                        },
-                },
-        };
-
-        let myChart = [];
-        let my2chatr = [];
-        let i = 0;
-        let j = 0;
-        /* global Chart:false */
-        $( 'canvas[id^="myChart-"]' ).each( function() {
-                i += 1;
-                console.log( 'yolo' );
-                myChart[i] = new Chart( $( this ), config );
-        } );
-        $( 'canvas[id^="myChart2-"]' ).each( function() {
-                j += 1;
-                my2chatr[j] = new Chart( $( this ), config );
-        } );
-
         $( 'button[id^="Tick-"]' ).click( function() {
                 let uri = 'https://min-api.cryptocompare.com/data/price';
                 let thisInput = {
@@ -161,7 +104,7 @@ $( document ).ready( function() {
 
         $( '#addme' ).click( function() {
                 let inputTicker = $( '#ticker option:selected' ).text();
-                let usrid = document.cookie.replace( 'uid=', '' );
+                let usrid = getCookie( 'uid' );
                 console.log( usrid );
                 let inputQtt = $( '#qtt' ).val();
                 inputTicker = inputTicker.trim();
