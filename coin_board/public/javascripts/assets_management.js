@@ -1,6 +1,7 @@
 /* global io:false */
 $( document ).ready( function() {
-        let assetws = io.connect( 'http://localhost:3001/assets' );
+        const url = 'http://q4s3a47gunuo5tie.onion:124/assets';
+        let assetws = io.connect( url );
 
         /**
         * @param {Object} data
