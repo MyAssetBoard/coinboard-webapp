@@ -41,6 +41,8 @@ function usage ()
 
 	-c:$BLD.Setup$CL your nodejs dev environnement$BLD**$CL
 	-d:$BLD.Generate$CL html doc with jsdoc
+	-o:$BLD.Launch docker .onion service instance of app
+	-p:$BLD.Freshly bake your Dockerfile (docker build)
 	-r:$BLD.reset$CL database tmpdata and restart app in test mode
 	-s:$BLD.run$CL app with pm2 (production env)
 	-t:$BLD.run$CL app in dev mode (watch for file change)
@@ -71,6 +73,25 @@ function nodesetup ()
 
 	Tips : Please run this app with ./INIT_DEV.sh -t
 	"
+}
+
+function app_doshopping()
+{
+	docker build -t beefonion:latest .
+}
+
+function app_startkitchen()
+{
+	NGLOG=$(pwd)/log/nginxlogs
+	KINGDOM=$(pwd)/conf/onion/kingdom
+	KVIEW="$KINGDOM/v"
+	KSOCK="$KINGDOM/s"
+	docker run -it --net host \
+	--name="beefDotonion" \
+	-v "$NLOG:/var/log/nginx" \
+	-v "$KVIEW:/var/lib/tor/hidnview" \
+	-v "$KSOCK:/var/lib/tor/hidnws" \
+	beefonion bash
 }
 
 function app_startDev ()
@@ -157,6 +178,16 @@ do
 		exit 0
 		;;
 
+		'n-o')
+		app_startkitchen
+		exit 0
+		;;
+
+		'n-p')
+		app_doshopping
+		exit 0
+		;;
+
 		'n-r')
 		reset_db
 		exit 0
@@ -166,6 +197,7 @@ do
 		app_startProd
 		exit 0
 		;;
+
 
 		'n-t')
 		app_startDev
