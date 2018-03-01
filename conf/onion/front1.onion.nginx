@@ -1,0 +1,11 @@
+server {
+	listen unix:/tmp/app.world;
+
+	# SSL configuration
+	#
+	# @TODO : Add self signed ssl conf for localhost paquets ? 
+
+	location / {
+		proxy_pass http://localhost:3000/;
+	}
+}
