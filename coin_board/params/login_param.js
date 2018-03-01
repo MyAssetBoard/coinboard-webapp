@@ -9,6 +9,8 @@ const cdn1 = 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js
 const param = {
         title: 'Login',
         author: '© Copyright 2018 coin_board ;)',
+        tsurl: 'q4s3a47gunuo5tie.onion',
+        tvurl: 'xu6ylq4kzadh7bcm.onion',
         page: 'login',
         scripts: {
                 socketio: cdn,

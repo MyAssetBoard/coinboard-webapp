@@ -10,6 +10,8 @@ const tickers = require( './tickers' );
 const param = {
         title: 'My assets',
         author: '© Copyright 2018 coin_board',
+        tsurl: 'q4s3a47gunuo5tie.onion',
+        tvurl: 'xu6ylq4kzadh7bcm.onion',
         page: 'assets',
         scripts: {
                 socketio: cdn,

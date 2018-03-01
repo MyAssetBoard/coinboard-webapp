@@ -6,12 +6,14 @@
 const param = {
         title: 'Coin_B. => ItsA(NastyBUG)',
         author: '© Copyright 2018 coin_board x)',
+        tsurl: 'q4s3a47gunuo5tie.onion',
+        tvurl: 'xu6ylq4kzadh7bcm.onion',
         page: 'error',
         scripts: {
-                reload: 'to_homepage.js'
+                reload: 'to_homepage.js',
         },
         blocks: {
-                jumbo: 'blocks/all/my_jumbotron'
+                jumbo: 'blocks/all/my_jumbotron',
         },
 };
 

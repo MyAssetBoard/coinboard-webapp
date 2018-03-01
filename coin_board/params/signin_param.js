@@ -9,6 +9,8 @@ const cdn1 = 'https://cdn.jsdelivr.net/npm/web3@0.19.0/dist/web3.min.js';
 const param = {
         title: 'Signin',
         author: '© Copyright 2018 coin_board ;)',
+        tsurl: 'q4s3a47gunuo5tie.onion',
+        tvurl: 'xu6ylq4kzadh7bcm.onion',
         page: 'signin',
         scripts: {
                 socketio: cdn,
