@@ -1,7 +1,7 @@
 /* global io:false */
 $( document ).ready( function() {
-        const url = 'http://q4s3a47gunuo5tie.onion:124/assets';
-        let assetws = io.connect( url );
+        let url = $( '#cbws' ).text().trim() + ':124/assets';
+        const assetws = io.connect( url );
 
         /**
         * @param {Object} data

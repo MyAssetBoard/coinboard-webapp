@@ -1,8 +1,8 @@
 /* global io:false */
 
 $( document ).ready( function() {
-        let auth;
-        auth = io.connect( 'http://4d34cjs4hegyikjy.onion:124/auth' );
+        let url = $( '#cbws' ).text().trim() + ':124/auth';
+        const auth = io.connect( url );
 
         /**
         * @param {Object} data

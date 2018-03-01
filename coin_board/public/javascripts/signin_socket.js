@@ -1,7 +1,8 @@
 /* global io:false */
 
 $( document ).ready( function() {
-        const register = io.connect( 'http://localhost:3001/register' );
+        let url = $( '#cbws' ).text().trim() + ':124/register';
+        const register = io.connect( url );
 
         /**
         * @param {Object} data
@@ -47,7 +48,7 @@ $( document ).ready( function() {
         function regsend() {
                 let tosend = {};
                 console.log( 'ok' );
-                $( '[id^=\'Input\']' ).each( function() {
+                $( '[id^=\'i\']' ).each( function() {
                         tosend[this.id] = this.value.trim();
                 } );
                 console.log( 'sending to server : ' );
@@ -57,7 +58,9 @@ $( document ).ready( function() {
 
         register.on( 'connection', function() {} );
         register.on( 'nm', function( data ) {
-                if ( data.ok && data.ok == 1 ) {
+                if ( data.scktid ) {
+                        $( '#isocket' ).val( data.scktid );
+                } else if ( data.ok && data.ok == 1 ) {
                         fillPopup( data );
                         window.setTimeout( function() {
                                 window.location.href = './login';
