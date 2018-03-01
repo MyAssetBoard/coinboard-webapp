@@ -76,6 +76,7 @@ if ( process.env.NODE_ENV == 'development' ) {
         console.log( output );
         app.use( logger( 'dev' ) );
 }
+
 /** Routes import */
 app.use( '/', index );
 app.use( '/login', login );
