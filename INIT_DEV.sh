@@ -131,6 +131,8 @@ function app_reload ()
 function app_tests ()
 {
 	NODE_ENV='production'
+	killall -9 mongod;
+	mongod -f conf/mongodb.conf &
 	$NYC --reporter=lcov $MOCHA $TESTM $TESTR --exit
 	$NYC report
 }
