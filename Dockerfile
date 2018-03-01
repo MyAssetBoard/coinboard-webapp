@@ -34,7 +34,7 @@ RUN   apt-get update && apt-get install -y \
 	build-essential \
         ca-certificates
 
-
+ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
 ADD   conf/onion/front1.onion.nginx /etc/nginx/sites-enabled/default
 ADD   conf/onion/torrc /etc/tor/torrc
 
@@ -48,5 +48,6 @@ COPY */package*.json ./coin_board/
 RUN npm install -g yarn
 RUN yarn install && cd coin_board && yarn install && cd ..
 COPY . .
+VOLUME ["/usr/src/app"]
 
 RUN chmod +x conf/onion/turnmeon.sh

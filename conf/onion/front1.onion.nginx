@@ -1,11 +1,14 @@
+limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
+
 server {
 	listen unix:/tmp/app.world;
 
 	# SSL configuration
 	#
-	# @TODO : Add self signed ssl conf for localhost paquets ? 
+	# @TODO : Add self signed ssl conf for localhost paquets ?
 
 	location / {
+		limit_req zone=mylimit burst=20 nodelay;
 		proxy_pass http://localhost:3000/;
 	}
 }
