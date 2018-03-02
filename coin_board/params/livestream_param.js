@@ -3,13 +3,19 @@
 * @author Trevis Gulby
 */
 
+const appvurl = process.env.SERV_ENV == 'onion'
+        ? 'http://xu6ylq4kzadh7bcm.onion/'
+        : 'http://localhost:3000/';
+const appsurl = process.env.SERV_ENV == 'onion'
+        ? 'http://q4s3a47gunuo5tie.onion:124/'
+        : 'http://localhost:3001/';
 const cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
 
 const param = {
         title: 'Live trading charts',
         author: '© Copyright 2018 coin_board',
-        tsurl: 'q4s3a47gunuo5tie.onion',
-        tvurl: 'xu6ylq4kzadh7bcm.onion',
+        tsurl: appsurl,
+        tvurl: appvurl,
         page: 'livestream',
         scripts: {
                 socket: cdn,
