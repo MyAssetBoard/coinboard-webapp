@@ -60,15 +60,15 @@ Assets.prototype.checkAssetData = function( data, socket, io ) {
         if ( data['ticker'] && data['qtt'] && data['id'] ) {
                 let asset = new Assets();
                 asset.addAssets( data ).then( function( res ) {
-                        console.log( res );
-                        io.of( '/assets' ).to( socket.id ).emit( 'nm', res );
+                        let nm = {};
+                        nm.msg = data.ticker + ' successfully added';
+                        io.of( '/assets' ).to( socket.id ).emit( 'nm', nm );
                         return true;
                 } ).catch( function( rej, err ) {
                         console.error( rej.message );
-                        let emsg = {
-                                errcode: 23,
-                                msg: rej.message,
-                        };
+                        let emsg = {};
+                        emsg.errcode = 23;
+                        emsg.msg = rej.message;
                         io.of( '/assets' ).to( socket.id ).emit( 'em', emsg );
                         if ( err ) {
                                 throw ( err );
