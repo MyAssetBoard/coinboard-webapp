@@ -7,9 +7,9 @@ const Crypt = require( '../methods/crypt_methods' );
 */
 function isEncoded( str ) {
         try {
-                let res = decodeURIComponent( str );
+                decodeURIComponent( str );
         } catch ( e ) {
-                if ( e || !res ) {
+                if ( e ) {
                         return false;
                 }
         }

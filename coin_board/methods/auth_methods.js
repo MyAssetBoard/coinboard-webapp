@@ -14,6 +14,21 @@ const Crud = require( '../methods/mongo_crud' );
 function Auth() {}
 
 /**
+* @param {string} str
+* @return {bool}
+*/
+function isEncoded( str ) {
+        try {
+                decodeURIComponent( str );
+        } catch ( e ) {
+                if ( e ) {
+                        return false;
+                }
+        }
+        return true;
+}
+
+/**
 * @param {string} address
 * @return {bool}
 */
@@ -124,7 +139,6 @@ function checkUsr( data ) {
 * @return {Object}
 */
 function checkRegFields( d ) {
-        console.log( 'check reg filed' );
         if ( !d.iname || !d.imail || !d.isocket ) {
                 return undefined;
         } else {
@@ -139,7 +153,6 @@ function checkRegFields( d ) {
                         : d.isocket.length < 10 || d.icurr.length != 3
                                 ? undefined
                                 : d;
-                console.log( d );
         }
         return d;
 }
@@ -229,16 +242,26 @@ Auth.prototype.checkcoData = function( data, socket, io ) {
 
 Auth.prototype.userisAuth = function( eUid, page ) {
         const crypt = new Crypt();
-        let cuid = crypt.decryptuid( eUid );
+        let cuid;
+        eUid = isEncoded( eUid )
+                ? decodeURIComponent( eUid )
+                : eUid;
+        cuid = eUid
+                ? crypt.decryptuid( eUid )
+                : undefined;
         return new Promise( ( resolve, reject ) => {
-                checkUid( cuid, page ).then( function( res ) {
-                        resolve( res );
-                } ).catch( function( rej, err ) {
-                        if ( err ) {
-                                throw err;
-                        }
+                if ( cuid === undefined ) {
                         reject( new Error( 'user not found' ) );
-                } );
+                } else {
+                        checkUid( cuid, page ).then( function( res ) {
+                                resolve( res );
+                        } ).catch( function( rej, err ) {
+                                if ( err ) {
+                                        throw err;
+                                }
+                                reject( new Error( 'user not found' ) );
+                        } );
+                }
         } );
 };
 
