@@ -81,11 +81,9 @@ router.get( '/', function( req, res, next ) {
                                 ? console.log( log )
                                 : log;
                         res.render( 'page', dup );
-                } ).catch( function( err ) {
-                        if ( err ) {
-                                throw err;
-                        }
-                        next( err );
+                } ).catch( function( rej, err ) {
+                        console.log( 'error user check' );
+                        res.render( 'page', param );
                 } );
         } else {
                 log = 'login-route| NonAUth user, session below\n[';
