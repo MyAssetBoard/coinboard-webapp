@@ -48,6 +48,5 @@ COPY */package*.json ./coin_board/
 RUN npm install -g yarn
 RUN yarn install && cd coin_board && yarn install && cd ..
 COPY . .
-VOLUME ["/usr/src/app"]
-
 RUN chmod +x conf/onion/turnmeon.sh
+VOLUME ["/usr/src/app"]
