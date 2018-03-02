@@ -96,8 +96,9 @@ function app_startkitchen()
 
 function app_startDev ()
 {
-	#*DEPRECATED exec $PM2DEV start $APPCONF
-	export NODE_ENV="development"
+	export NODE_ENV="$1"
+	#Init random key gen for uid
+	echo 'RANDOM' > log.txt;
 	# order matters !
 	mongod -f conf/mongodb.conf &
 	$PM2 start $APPCONF --only "$WSSERV" --env development --update-env;
@@ -125,7 +126,7 @@ function app_kill ()
 
 function app_reload ()
 {
-	app_kill; app_startDev
+	app_kill; app_startDev $1
 }
 
 function app_tests ()
@@ -212,7 +213,7 @@ do
 		;;
 
 		'n-rl')
-		app_reload
+		app_reload $2
 		exit 0
 		;;
 
