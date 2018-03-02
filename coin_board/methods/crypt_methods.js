@@ -5,11 +5,71 @@
 
 /** dep import */
 const CryptoJS = require( 'crypto-js' );
+const fs = require( 'fs' );
 
 /**
 *@brief Crypt class contructor
 */
 function Crypt() {}
+
+/**
+*/
+function cleartmp() {
+        ROOT_APP_PATH = fs.realpathSync( '.' );
+        fs.unlink( 'log.txt', ( err ) => {
+                if ( err ) {
+                        throw err;
+                }
+                console.log( 'delete' );
+        } );
+}
+
+/** Read tmp for new random key
+* @return {string}
+*/
+function readtmp() {
+        let buff = new Buffer( 22 );
+        buff = fs.readFileSync( 'log.txt', 'ascii' );
+        console.log( 'read' );
+        console.log( buff.toString() );
+        return buff.toString();
+}
+
+/** write tmp
+*@param {string} res
+*/
+function writetmp( res ) {
+        ROOT_APP_PATH = fs.realpathSync( '.' );
+        fs.writeFile( 'log.txt', res + '\n', function( err ) {
+                if ( err ) {
+                        return console.log( err );
+                }
+        } );
+}
+/** Extract buffer from dev.urandom
+* @param {function} callback
+* @return {string} 85 byte of random char
+*/
+function getRandom( callback ) {
+        return new Promise( ( resolve, reject ) => {
+                fs.open( '/dev/urandom', 'r', function( status, fd ) {
+                        if ( status ) {
+                                console.log( status.message );
+                                reject( new Error( 'file reading failed' ) );
+                        }
+                        let buff = new Buffer( 85 );
+                        fs.read( fd, buff, 0, 85, 0, function( err, res ) {
+                                let randstr = buff.toString( 'ascii', 0, res );
+                                randstr = randstr.replace( /\W/g, '' );
+                                randstr = randstr.length > 22
+                                        ? randstr.substring( 0, 22 )
+                                        : randstr;
+                                callback && callback( randstr );
+                                resolve( randstr );
+                        } );
+                } );
+        } );
+}
 
 /**
 * @param {string} p
@@ -18,8 +78,7 @@ function Crypt() {}
 function dcryptParams( p ) {
         let plaintext = null;
         if ( p ) {
-                /** @TODO lolilol to be randomized */
-                let enckey = 'yolo 123';
+                let enckey = readtmp();
                 let bytes = CryptoJS.AES.decrypt( p, enckey );
                 plaintext = bytes.toString( CryptoJS.enc.Utf8 );
                 let log = 'auth_methods.js|dcryptParams()\n';
@@ -37,8 +96,7 @@ function dcryptParams( p ) {
 * @return {string}
 */
 function encryptParams( p ) {
-        /** @TODO lolilol to be randomized */
-        let enckey = 'yolo 123';
+        let enckey = readtmp();
         let toenc = p._id.toString();
         let citxt = CryptoJS.AES.encrypt( toenc, enckey );
         let enc = citxt.toString();
@@ -66,6 +124,21 @@ Crypt.prototype.decryptuid = function( eUId ) {
 Crypt.prototype.encryptuid = function( cUId ) {
         let etext = encryptParams( cUId );
         return etext;
+};
+
+Crypt.prototype.genrandomtocken = function() {
+        cleartmp();
+        getRandom().then( function( res ) {
+                if ( res ) {
+                        console.log( res );
+                        writetmp( res );
+                        return res;
+                }
+        } ).catch( function( rej, err ) {
+                if ( err || rej ) {
+                        throw err;
+                }
+        } );
 };
 
 module.exports = Crypt;

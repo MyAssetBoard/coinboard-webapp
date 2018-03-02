@@ -4,6 +4,8 @@ const path = require( 'path' );
 const logger = require( 'morgan' );
 const cookieParser = require( 'cookie-parser' );
 const bodyParser = require( 'body-parser' );
+const Crypt = require( './methods/crypt_methods' );
+const crypt = new Crypt();
 
 /** index route import */
 const index = require( './routes/index' );
@@ -76,7 +78,10 @@ if ( process.env.NODE_ENV == 'development' ) {
         console.log( output );
         app.use( logger( 'dev' ) );
 }
-
+const h = 2;
+const intergen = h * 60 * 60 * 1000;
+crypt.genrandomtocken();
+setInterval( crypt.genrandomtocken, intergen );
 /** Routes import */
 app.use( '/', index );
 app.use( '/login', login );
