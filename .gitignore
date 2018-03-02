@@ -10,7 +10,9 @@ logs
 *.log
 log/
 tmpdata/
-
+#Various tmpfiles
+*.txt
+*.js
 # Runtime data
 pids
 *.pid
