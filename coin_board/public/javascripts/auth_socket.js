@@ -1,7 +1,7 @@
 /* global io:false */
 
 $( document ).ready( function() {
-        let url = $( '#cbws' ).text().trim() + ':124/auth';
+        let url = $( '#cbws' ).text().trim();
         const auth = io.connect( url );
 
         /**

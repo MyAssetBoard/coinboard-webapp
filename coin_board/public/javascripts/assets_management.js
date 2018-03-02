@@ -1,6 +1,6 @@
 /* global io:false */
 $( document ).ready( function() {
-        let url = $( '#cbws' ).text().trim() + ':124/assets';
+        let url = $( '#cbws' ).text().trim();
         const assetws = io.connect( url );
 
         /**
