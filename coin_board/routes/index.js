@@ -6,19 +6,19 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
+const auth = new Auth();
 const param = require( '../params/index_param' );
 
 /* GET home page. */
 router.get( '/', function( req, res, next ) {
         let chck = req.cookies;
 
-        if ( chck && chck.uid ) {
+        if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
                 let log = '/INDEX-route| Auth user, session below\n[';
                 log += JSON.stringify( chck ) + ']';
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
-                const auth = new Auth();
                 auth.userisAuth( chck.uid, 'index' ).then( function( result ) {
                         const dup = param;
                         let log = 'index| push user info in params \n[';
@@ -35,6 +35,7 @@ router.get( '/', function( req, res, next ) {
                                 throw err;
                         }
                         next( err );
+                        res.render( 'page', param );
                 } );
         } else {
                 log = 'index-route| NonAUth user, session below\n[';

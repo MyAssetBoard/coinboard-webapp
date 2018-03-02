@@ -6,19 +6,19 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
+const auth = new Auth();
 const param = require( '../params/myassets_param' );
 
 /* GET assets page. */
 router.get( '/', function( req, res, next ) {
         let chck = req.cookies;
 
-        if ( chck && chck.uid ) {
+        if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
                 let log = '/MYASSETS-route : Auth user, session below\n[';
                 log += JSON.stringify( chck ) + ']';
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
-                const auth = new Auth();
                 auth.userisAuth( chck.uid, 'assets' ).then( function( result ) {
                         let dup = param;
                         let log = 'myassets| push user info in params\n[';

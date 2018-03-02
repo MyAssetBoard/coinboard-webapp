@@ -6,6 +6,7 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
+const auth = new Auth();
 
 const redirco = process.env.SERV_ENV == 'onion'
         ? 'http://xu6ylq4kzadh7bcm.onion/assets'
@@ -64,13 +65,12 @@ router.get( '/', function( req, res, next ) {
         let chck = req.cookies;
         let log = '';
 
-        if ( chck && chck.uid ) {
+        if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
                 log = '/LOGIN-route : Auth user, session below\n[';
                 log += JSON.stringify( chck ) + ']';
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
-                const auth = new Auth();
                 auth.userisAuth( chck.uid, 'login' ).then( function( result ) {
                         let dup = param;
                         let log = 'login| push user info in params\n[';

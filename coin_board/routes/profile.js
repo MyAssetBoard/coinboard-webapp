@@ -6,19 +6,19 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
+const auth = new Auth();
 const param = require( '../params/profile_param' );
 
 /* GET profile page. */
 router.get( '/', function( req, res, next ) {
         let chck = req.cookies;
 
-        if ( chck && chck.uid ) {
+        if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
                 let log = '/PROFIlE-route| Auth user, session below\n[';
                 log += JSON.stringify( chck ) + ']';
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
-                const auth = new Auth();
                 auth.userisAuth( chck.uid, 'profile' ).then( function( ud ) {
                         const dup = param;
                         let log = 'profile| push user info in params \n[';
