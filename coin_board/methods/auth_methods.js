@@ -189,14 +189,21 @@ Auth.prototype.registerUsr = function( data ) {
 
 Auth.prototype.checkRegData = function( data, socket, io ) {
         if ( data && data.iname && data.imail && data.isocket ) {
-                if ( data['ieth'] && data['icurr'] ) {
+                if ( data.ieth && data.icurr ) {
                         const auth = new Auth();
                         auth.registerUsr( data ).then( function( res ) {
                                 let u = socket.id;
-                                io.of( '/register' ).to( u ).emit( 'nm', res );
+                                let nmsg = {
+                                        msg: 'Ok redirecting you to login page',
+                                        ok: 1,
+                                };
+                                io.of( '/register' ).to( u ).emit( 'nm', nmsg );
                                 return true;
                         } ).catch( function( rej, err ) {
-                                console.error( rej.message );
+                                let log = rej.message;
+                                process.env.NODE_ENV == 'development'
+                                        ? console.error( log )
+                                        : log;
                                 let emsg = {
                                         errcode: 22,
                                         msg: rej.message,
@@ -267,8 +274,11 @@ Auth.prototype.userisAuth = function( eUid, page ) {
 
 Auth.prototype.isvaliduid = function( eUid ) {
         const crypt = new Crypt();
-        let test = crypt.decryptuid( eUid );
-        return test
+        eUid = isEncoded( eUid )
+                ? decodeURIComponent( eUid )
+                : eUid;
+        let test;
+        return test = crypt.decryptuid( eUid )
                 ? true
                 : false;
 };
