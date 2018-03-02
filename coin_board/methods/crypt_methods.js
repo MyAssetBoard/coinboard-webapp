@@ -12,7 +12,7 @@ const fs = require( 'fs' );
 */
 function Crypt() {}
 
-/**
+/** self explanatory
 */
 function cleartmp() {
         ROOT_APP_PATH = fs.realpathSync( '.' );
@@ -20,7 +20,10 @@ function cleartmp() {
                 if ( err ) {
                         throw err;
                 }
-                console.log( 'delete' );
+                let log = 'Delete old cookie secret';
+                process.env.NODE_ENV == 'development'
+                        ? console.log( log )
+                        : log;
         } );
 }
 
@@ -30,8 +33,11 @@ function cleartmp() {
 function readtmp() {
         let buff = new Buffer( 22 );
         buff = fs.readFileSync( 'log.txt', 'ascii' );
-        console.log( 'read' );
-        console.log( buff.toString() );
+        let log = 'Read cookie secret : [';
+        log += buff.toString().trim() + ']';
+        process.env.NODE_ENV == 'infosec'
+                ? console.log( log )
+                : log;
         return buff.toString();
 }
 
@@ -44,6 +50,10 @@ function writetmp( res ) {
                 if ( err ) {
                         return console.log( err );
                 }
+                let log = 'Write new cookie secret';
+                process.env.NODE_ENV == 'infosec'
+                        ? console.log( log )
+                        : log;
         } );
 }
 /** Extract buffer from dev.urandom
@@ -82,7 +92,7 @@ function dcryptParams( p ) {
                 let bytes = CryptoJS.AES.decrypt( p, enckey );
                 plaintext = bytes.toString( CryptoJS.enc.Utf8 );
                 let log = 'auth_methods.js|dcryptParams()\n';
-                log += '==== (TODO :update enckey)\n plaintext if succeed [ ';
+                log += '====Plaintext if succeed [ ';
                 log += plaintext + ' ]';
                 process.env.NODE_ENV == 'infosec'
                         ? console.log( log )
@@ -101,7 +111,7 @@ function encryptParams( p ) {
         let citxt = CryptoJS.AES.encrypt( toenc, enckey );
         let enc = citxt.toString();
         let log = 'auth_methods.js|encryptParams(p)\n';
-        log += '==== (TODO :update enckey)\n => enc str if succeed [ ';
+        log += '=====> enc str if succeed [ ';
         log += enc + ' ]';
         process.env.NODE_ENV == 'infosec'
                 ? console.log( log )
@@ -130,7 +140,6 @@ Crypt.prototype.genrandomtocken = function() {
         cleartmp();
         getRandom().then( function( res ) {
                 if ( res ) {
-                        console.log( res );
                         writetmp( res );
                         return res;
                 }
