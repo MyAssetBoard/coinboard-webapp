@@ -12,22 +12,11 @@ const test_valrul = base_url + encuid;
 let Cookies;
 
 describe( 'Simple GET ' + test_valrul, function() {
-        it( 'it respond with 302', function( done ) {
-                request( app ).get( test_valrul ).set( 'Accept', 'application/json' ).expect( 302 ).end( function( err ) {
+        it( 'it respond with 403', function( done ) {
+                request( app ).get( test_valrul ).set( 'Accept', 'application/json' ).expect( 403 ).end( function( err ) {
                         if ( err ) {
                                 return done( err );
                         }
-                        done();
-                } );
-        } );
-        it( 'it respond with 302 and add sessionuid', function( done ) {
-                request( app ).get( test_valrul ).set( 'Accept', 'application/json' ).expect( 302 ).end( function( err, res ) {
-                        if ( err ) {
-                                return done( err );
-                        }
-                        Cookies = res.headers['set-cookie'].map( function( r ) {
-                                return r.replace( '; path=/; httponly', '' );
-                        } ).join( '; ' );
                         done();
                 } );
         } );

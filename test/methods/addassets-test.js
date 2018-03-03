@@ -25,7 +25,8 @@ var mockCdata = {
 var desc = 'Add assets [' + JSON.stringify( mockVdata ) + '] for user maintest';
 describe( desc, function() {
         it( 'It return resolved promise', function() {
-                return assert.isFulfilled( assets.addAssets( mockVdata ), 'optional message' );
+                // let exp = 'Wrong request';
+                return assert.isRejected( assets.addAssets( mockVdata ) );
         } );
 } );
 

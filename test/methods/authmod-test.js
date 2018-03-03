@@ -13,8 +13,8 @@ const vmock = {
         icurr: 'EUR',
 };
 const resvmock = {
+        msg: 'Ok redirecting you to login page',
         ok: 1,
-        nb: 1,
 };
 
 const emock = {
@@ -50,10 +50,10 @@ describe( desc, function() {
 
 desc = 'Test userisAuth with valid euid';
 describe( desc, function() {
-        let res = 'ok user foobar';
-        let euid = decodeURIComponent( 'U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz' );
+        let res = 'user not found';
+        let euid = encodeURIComponent( 'U2FsdGVkX19Qw8U0ksGrlaBPe5iKKhzTIoMewLn3L3sCneFkaeycy09%2Fnp2uB6cz' );
         it( 'It resove promise [' + res + ']', function() {
-                return assert.isFulfilled( auth.userisAuth( euid ), res );
+                return assert.isRejected( auth.userisAuth( euid ), res );
         } );
 } );
 
