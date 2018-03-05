@@ -16,7 +16,7 @@ RUN echo 'deb http://deb.torproject.org/torproject.org stretch main' \
 RUN echo 'deb-src http://deb.torproject.org/torproject.org stretch main' \
 	>> /etc/apt/sources.list
 
-RUN gpg --keyserver pgp.key-server.io --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 && \
+RUN gpg --keyserver keyserver.siccegge.de --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 && \
 gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
 
 RUN apt-get install -y curl
