@@ -94,6 +94,14 @@ function app_startkitchen()
 	beefonion bash
 }
 
+function app_cleankitchen()
+{
+	echo 'CleanKitchen : Removing all volumes'
+	docker volume rm $(docker volume ls -qf dangling=true)
+	echo 'CleanKitchen : Removing all orphaned images'
+	docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
+}
+
 function app_startDev ()
 {
 	export NODE_ENV="$1"
@@ -209,6 +217,11 @@ do
 
 		'n-k')
 		app_kill
+		exit 0
+		;;
+
+		'n-ck')
+		app_cleankitchen
 		exit 0
 		;;
 
