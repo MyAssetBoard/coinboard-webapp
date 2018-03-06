@@ -42,7 +42,7 @@ function usage ()
 	-c:$BLD.Setup$CL your nodejs dev environnement$BLD**$CL
 	-d:$BLD.Generate$CL html doc with jsdoc
 	-o:$BLD.Launch docker .onion service instance of app
-	-p:$BLD.Freshly bake your Dockerfile (docker build)
+	-p:$BLD.Freshly bake your Dockerfile for first time use
 	-r:$BLD.reset$CL database tmpdata and restart app in test mode
 	-s:$BLD.run$CL app with pm2 (production env)
 	-t:$BLD.run$CL app in dev mode (watch for file change)
@@ -77,6 +77,13 @@ function nodesetup ()
 
 function app_doshopping()
 {
+	sudo adduser --system \
+	--shell /bin/bash \
+	--group --gecos "docker onion usr" \
+	fofo && \
+	sudo chown -R fofo:$USER conf/onion/kingdom && \
+	sudo chmod -R 700 conf/onion/kingdom && \
+	#sudo chmod -R 600 conf/onion/kingdom/*/private_key && \
 	docker build -t beefonion:latest .
 }
 
@@ -105,6 +112,7 @@ function app_cleankitchen()
 function app_startDev ()
 {
 	export NODE_ENV="$1"
+	export SERV_ENV="$2"
 	#Init random key gen for uid
 	echo 'RANDOM' > log.txt;
 	# order matters !
