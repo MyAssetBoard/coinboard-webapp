@@ -24,29 +24,43 @@ RUN apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 
 RUN   apt-get update && apt-get install -y \
-        tor \
+	tor \
 	git \
+	sudo \
 	nginx \
 	nodejs \
 	screen \
 	python3 \
 	mongodb \
 	build-essential \
-        ca-certificates
+	ca-certificates
 
 ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
 ADD   conf/onion/front1.onion.nginx /etc/nginx/sites-enabled/default
 ADD   conf/onion/torrc /etc/tor/torrc
 
-RUN   chown -R root /var/lib/tor
-RUN   chmod -R 700 /var/lib/tor
 
-WORKDIR /usr/src/app
-RUN mkdir /usr/src/app/coin_board
-COPY package*.json ./
-COPY */package*.json ./coin_board/
+RUN useradd -m -p $(openssl passwd -1 'yoyyyoyocleartext') fofo
+RUN usermod -u 4523 fofo
+RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chown' >> /etc/sudoers
+RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chmod' >> /etc/sudoers
+RUN echo 'fofo ALL = (root) NOPASSWD: /usr/sbin/nginx' >> /etc/sudoers
+#Tor prop
+RUN usermod -aG debian-tor fofo
+RUN chown -R fofo:fofo /var/lib/tor
+RUN chmod -R 775 /var/lib/tor
 RUN npm install -g yarn
-RUN yarn install && cd coin_board && yarn install && cd ..
-COPY . .
-RUN chmod +x conf/onion/turnmeon.sh
+
+USER fofo
+WORKDIR /usr/src/app
+	RUN sudo chown -R fofo:fofo .
+	RUN mkdir /usr/src/app/coin_board
+	COPY package*.json ./
+	COPY */package*.json ./coin_board/
+	RUN yarn install && cd coin_board && yarn install && cd ..
+	COPY . .
+	RUN ls -la .
+	RUN sudo chmod +x conf/onion/turnmeon.sh
+	RUN sudo chown -R fofo:fofo /var/log/tor
+
 VOLUME ["/usr/src/app"]
