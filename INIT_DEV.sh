@@ -93,11 +93,13 @@ function app_startkitchen()
 	KINGDOM=$(pwd)/conf/onion/kingdom
 	KVIEW="$KINGDOM/v"
 	KSOCK="$KINGDOM/s"
+	KALT="$KINGDOM/altsdom"
 	docker run -it --net host \
 	--name="beefDotonion" \
 	-v "$NLOG:/var/log/nginx" \
 	-v "$KVIEW:/var/lib/tor/hidnview" \
 	-v "$KSOCK:/var/lib/tor/hidnws" \
+	-v "$KALT:/var/lib/tor/altd" \
 	beefonion bash
 }
 
@@ -117,8 +119,8 @@ function app_startDev ()
 	echo 'RANDOM' > log.txt;
 	# order matters !
 	mongod -f conf/mongodb.conf &
-	$PM2 start $APPCONF --only "$WSSERV" --env development --update-env;
-	$PM2 start $APPCONF --only "$WVSERV" --env development --update-env;
+	$PM2 start $APPCONF --only "$WSSERV"  --update-env;
+	$PM2 start $APPCONF --only "$WVSERV"  --update-env;
 }
 
 function app_startProd ()
@@ -142,7 +144,7 @@ function app_kill ()
 
 function app_reload ()
 {
-	app_kill; app_startDev $1
+	app_kill; app_startDev $1 $2
 }
 
 function app_tests ()
@@ -219,7 +221,7 @@ do
 
 
 		'n-t')
-		app_startDev
+		app_startDev $2 $3
 		exit 0
 		;;
 
@@ -234,7 +236,7 @@ do
 		;;
 
 		'n-rl')
-		app_reload $2
+		app_reload $2 $3
 		exit 0
 		;;
 
