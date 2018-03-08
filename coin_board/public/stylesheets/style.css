@@ -53,16 +53,15 @@ canvas {
 	padding: 10px;
 	background-color: white;
 }
-.showme{
-display: none;
-}
-
-.showhim:hover .showme{
-display : block;
-}
 
 .container-full-bg {
 	padding: 2px;
+}
+
+.btn-space {
+	 margin-right: 5px;
+	 margin-left: 5px;
+	 margin-top: 5px;
 }
 
 .BUY {
