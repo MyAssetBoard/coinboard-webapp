@@ -1,15 +1,15 @@
 # Rate limit entry on node view upstream
-limit_req_zone $binary_remote_addr zone=limitf1:10m rate=10r/s;
+limit_req_zone $binary_remote_addr zone=limitf2:10m rate=10r/s;
 
 server {
-	listen unix:/tmp/app.world;
+	listen unix:/tmp/repl.world;
 
 	# SSL configuration
 	#
 	# @TODO : Add self signed ssl conf for localhost paquets ?
 
 	location / {
-		limit_req zone=limitf1 burst=20 nodelay;
+		limit_req zone=limitf2 burst=20 nodelay;
 		proxy_pass http://localhost:3000/;
 	}
 }

@@ -15,7 +15,7 @@
 ## Tor opens a SOCKS proxy on port 9050 by default -- even if you don't
 ## configure one below. Set "SOCKSPort 0" if you plan to run Tor only
 ## as a relay, and not make any local application connections yourself.
-#SOCKSPort 9050 # Default: Bind to localhost:9050 for local connections.
+SOCKSPort 9070 # Default: Bind to localhost:9050 for local connections.
 #SOCKSPort 192.168.0.1:9100 # Bind to this address:port too.
 
 ## Entry policies to allow/deny SOCKS requests based on IP address.
@@ -74,8 +74,13 @@ DataDirectory /var/lib/tor
 ###########
 
 # Front --
+# -Fr 1 app :
 HiddenServiceDir /var/lib/tor/hidnview/
 HiddenServicePort 80 unix:/tmp/app.world
+# -Fr 2 repl :
+HiddenServiceDir /var/lib/tor/altd
+HiddenServicePort 80 unix:/tmp/repl.world
+
 # WebSocket --
 HiddenServiceDir  /var/lib/tor/hidnws/
 HiddenServicePort 124 127.0.0.1:3001
