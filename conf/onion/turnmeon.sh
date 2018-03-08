@@ -6,7 +6,8 @@
 #  /_/  \__,_/_/  /_/ /_/  /_/ /_/ /_/\___/   \____/_/ /_/
 # ---------------------TurnMeOn.sh --------------------
 # Usage : launched by the Dockerfile $ENTRYPOINT for Onion docker service
-export NODE_ENV='production' && export SERV_ENV='onion'
-tor && sudo nginx && ./INIT_DEV.sh -rl production && \
-screen -dmS applog ./node_modules/pm2/bin/pm2 logs && \
-screen -dmS servlog tail -f /var/log/nginx/*.log
+sudo chown -R fofo:fofo /var/lib/tor && \
+sudo chown -R fofo:fofo /var/log/tor && \
+sudo chown -R fofo:fofo log tmpdata && \
+tor && sudo nginx && ./INIT_DEV.sh -rl production onion && \
+screen -dmS applog ./node_modules/pm2/bin/pm2 logs
