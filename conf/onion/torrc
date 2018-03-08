@@ -41,7 +41,7 @@ Log notice file /var/log/tor/notices.log
 Log debug file /var/log/tor/debug.log
 
 ## Use tor for DNS TOO
-DNSPort 127.0.0.1:53
+DNSPort 127.0.0.1:5353
 
 ## Uncomment this to start the process in the background... or use
 ## --runasdaemon 1 on the command line. This is ignored on Windows;
