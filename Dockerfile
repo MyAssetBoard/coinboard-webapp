@@ -35,32 +35,37 @@ RUN   apt-get update && apt-get install -y \
 	build-essential \
 	ca-certificates
 
-ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
-ADD   conf/onion/front1.onion.nginx /etc/nginx/sites-enabled/default
-ADD   conf/onion/torrc /etc/tor/torrc
-
 
 RUN useradd -m -p $(openssl passwd -1 'yoyyyoyocleartext') fofo
 RUN usermod -u 4523 fofo
 RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chown' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chmod' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /usr/sbin/nginx' >> /etc/sudoers
-#Tor prop
-RUN usermod -aG debian-tor fofo
-RUN chown -R fofo:fofo /var/lib/tor
-RUN chmod -R 775 /var/lib/tor
+
 RUN npm install -g yarn
+# Sources files deploiement
+RUN mkdir -p /usr/src/app/coin_board
+COPY package*.json ./usr/src/app
+COPY */package*.json ./usr/src/app/coin_board/
+RUN cd /usr/src/app &&  yarn install && cd coin_board && yarn install
+COPY . ./usr/src/app/
+
+ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
+ADD   conf/onion/front1.onion.nginx /etc/nginx/sites-enabled/front1.onion.nginx
+ADD   conf/onion/front2.onion.nginx /etc/nginx/sites-enabled/front2.onion.nginx
+ADD   conf/onion/torrc /etc/tor/torrc
+
+#Tor prop for 'fofo' user
+RUN usermod -aG debian-tor fofo && \
+	chown -R fofo:fofo /var/lib/tor && \
+	chown -R root:fofo /var/log/tor && \
+	chmod -R 770 /var/log/tor && \
+	groupadd foobar && usermod -aG foobar fofo && \
+	usermod -aG foobar root && \
+	chown  root:fofo /usr/src/app/ && chmod 775 /usr/src/app && \
+	chmod +x /usr/src/app/conf/onion/turnmeon.sh && \
+	chown fofo:fofo /usr/src/app/log.txt && chmod u=rw /usr/src/app/log.txt
 
 USER fofo
-WORKDIR /usr/src/app
-	RUN sudo chown -R fofo:fofo .
-	RUN mkdir /usr/src/app/coin_board
-	COPY package*.json ./
-	COPY */package*.json ./coin_board/
-	RUN yarn install && cd coin_board && yarn install && cd ..
-	COPY . .
-	RUN ls -la .
-	RUN sudo chmod +x conf/onion/turnmeon.sh
-	RUN sudo chown -R fofo:fofo /var/log/tor
-
-VOLUME ["/usr/src/app"]
+ENV SERV_ENV=onion NODE_ENV=production
+CMD ["cd /usr/src/app/conf/ && ./conf/onion/turnmeon.sh"]
