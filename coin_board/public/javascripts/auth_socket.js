@@ -70,10 +70,10 @@ $( document ).ready( function() {
         } );
         auth.on( 'nm', function( data ) {
                 if ( data._id ) {
-                        fillPopup( data );
+                        fillPopup( {success: ' redirecting you to /assets'} );
                         window.setTimeout( function() {
                                 let uri = '/id/';
-                                uri += encodeURIComponent( data._id );
+                                uri += data._id;
                                 window.location.href += uri;
                         }, 2000 );
                 } else {
