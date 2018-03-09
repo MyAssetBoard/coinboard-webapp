@@ -11,7 +11,7 @@
 			<div class="infiList">
 				<div class="btn-group btn-group-lg" style="display: inline-block;">
 					<%for(var elems in data.assets){%>
-						<%- include('asset_list2', {
+						<%- include('asset_list', {
 						data: locals.data.assets[elems],
 						id: elems
 					}); %><%} %>
