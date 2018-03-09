@@ -23,7 +23,6 @@ const param = {
                 socketio: cdn,
                 chartcdn: cdn1,
                 manage: 'assets_management.js',
-                test: 'draw_chart.js',
         },
         blocks: {
                 jumbo: 'blocks/all/my_jumbotron',
