@@ -224,6 +224,7 @@ Auth.prototype.checkcoData = function( data, socket, io ) {
                 checkUsr( data ).then( function( res ) {
                         const crypt = new Crypt();
                         let enc = crypt.encryptuid( res );
+                        enc = encodeURIComponent( enc );
                         let resp = {
                                 _id: enc,
                         };
