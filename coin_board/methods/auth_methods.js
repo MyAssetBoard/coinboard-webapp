@@ -277,11 +277,15 @@ Auth.prototype.isvaliduid = function( eUid ) {
         const crypt = new Crypt();
         eUid = isEncoded( eUid )
                 ? decodeURIComponent( eUid )
-                : eUid;
+                : null;
         let test;
-        return test = crypt.decryptuid( eUid )
-                ? true
-                : false;
+        if ( eUid != null ) {
+                return test = crypt.decryptuid( eUid )
+                        ? true
+                        : false;
+        } else {
+                return false;
+        }
 };
 
 module.exports = Auth;
