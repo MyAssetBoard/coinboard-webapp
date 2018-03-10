@@ -1,0 +1,29 @@
+<div class="card">
+	<div class="card-header">
+		Data Feed
+	</div>
+	<div class="card-body">
+		<%if (locals.news && Object.keys(news).length) {%>
+			<div class="infiList">
+				<% for (var elems in news) {%>
+					<h4>
+						<%= news[elems].title %></h4>
+					<p>
+						<%= news[elems].description %>
+						<a href="<%= news[elems].link %>">Ref</a>
+					</p>
+				<%}%>
+			</div>
+		<%}%>
+	</div>
+</div>
+<div class="card">
+	<div class="card-header">
+		Data Miner
+	</div>
+	<div class="card-body">
+		<p class="card-text">
+			<a href="/assets/infofeed" class="btn btn-primary btn-block">Refresh</a>
+		</p>
+	</div>
+</div>
