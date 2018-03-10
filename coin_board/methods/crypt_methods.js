@@ -58,7 +58,7 @@ function writetmp( res ) {
 }
 /** Extract buffer from dev.urandom
 * @param {function} callback
-* @return {string} 85 byte of random char
+* @return {string} 85 bytes of random char
 */
 function getRandom( callback ) {
         return new Promise( ( resolve, reject ) => {
