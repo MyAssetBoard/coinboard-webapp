@@ -22,7 +22,7 @@ const param = {
         scripts: {
                 socketio: cdn,
                 chartcdn: cdn1,
-                manage: 'assets_management.js',
+                manage: '/assets_management.js',
         },
         blocks: {
                 jumbo: 'blocks/all/my_jumbotron',
