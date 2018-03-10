@@ -9,8 +9,8 @@ const Auth = require( '../methods/auth_methods' );
 const auth = new Auth();
 
 const redirco = process.env.SERV_ENV == 'onion'
-        ? 'http://xu6ylq4kzadh7bcm.onion/assets'
-        : 'http://localhost:3000/assets';
+        ? 'http://xu6ylq4kzadh7bcm.onion/assets/dashboard'
+        : 'http://localhost:3000/assets/dashboard';
 const param = require( '../params/login_param' );
 
 /**
@@ -36,24 +36,15 @@ function setCookie( req, res ) {
         /** check if client sent cookie */
         let cookie = req.cookies.uid;
         let log = '';
-        if ( cookie === undefined ) {
-                /** no: set a new cookie */
-                let setting = {
-                        maxAge: 900000,
-                        httpOnly: false,
-                };
-                res.cookie( 'uid', req.params.uid, setting );
-                log = 'cookie successfully added';
-                process.env.NODE_ENV == 'development'
-                        ? console.log( log )
-                        : log;
-        } else {
-                /** yes, cookie was already present */
-                log = 'cookie already present';
-                process.env.NODE_ENV == 'development'
-                        ? console.log( log )
-                        : log;
-        }
+        let setting = {
+                maxAge: 900000,
+                httpOnly: false,
+        };
+        res.cookie( 'uid', req.params.uid, setting );
+        log = 'cookie successfully added';
+        process.env.NODE_ENV == 'development'
+                ? console.log( log )
+                : log;
 }
 
 /**
@@ -92,6 +83,7 @@ router.get( '/', function( req, res, next ) {
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
+
                 res.render( 'page', param );
         }
 } );
