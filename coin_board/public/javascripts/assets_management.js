@@ -2,6 +2,7 @@
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
         const assetws = io.connect( url );
+        $( '#' + window.location.pathname.split( '/' )[2] ).toggleClass( 'active' );
 
         /**
         * @param {string} key
@@ -44,7 +45,7 @@ $( document ).ready( function() {
                 elem.fadeIn( 'fast' );
                 setTimeout( function() {
                         elem.fadeToggle( 'fast' );
-                }, 7000 );
+                }, 5000 );
         }
         assetws.on( 'connect', function() {
                 console.log( 'Connected to /assets socket stream' );
