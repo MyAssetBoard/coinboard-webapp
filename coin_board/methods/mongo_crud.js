@@ -32,19 +32,21 @@ Crud.prototype.insert = function( coll, data, callback ) {
                 dbo.collection( coll ).insertOne( data ).then( function( res ) {
                         log = 'MONGO| 1 document inserted :\n[';
                         log += JSON.stringify( data ) + ']';
-                        process.env.NODE_ENV == 'development'
+                        process.env.NODE_ENV == 'devdb'
                                 ? console.log( log )
                                 : log;
                         db.close();
                         callback && callback( res );
                         return res;
-                } ).catch( function( err ) {
-                        if ( err ) {
+                } ).catch( function( rej, err ) {
+                        if ( err || rej ) {
+                                callback && callback( err );
                                 throw err;
                         }
                 } );
-        } ).catch( function( err ) {
+        } ).catch( function( rej, err ) {
                 if ( err ) {
+                        callback && callback( err );
                         throw err;
                 }
         } );
@@ -100,7 +102,7 @@ Crud.prototype.finduser = function( who, callback ) {
         } );
 };
 
-Crud.prototype.find = function( who, what, callback ) {
+Crud.prototype.find = function( what, callback ) {
         let _this = this;
         MongoClient.connect( uri ).then( function( db ) {
                 let log = 'MONGO - Connected to ' + _this.dbName;
@@ -108,17 +110,14 @@ Crud.prototype.find = function( who, what, callback ) {
                         ? console.log( log )
                         : log;
                 let dbo = db.db( _this.dbName );
-                let req = {
-                        who,
-                        what,
-                };
-                dbo.collection( _this.coll ).find( req ).then( function( res ) {
+                dbo.collection( _this.coll ).find( what ).toArray( function( err, doc ) {
                         db.close();
-                        callback && callback( res );
-                        return res;
-                } ).catch( function( err ) {
                         if ( err ) {
+                                callback && callback( err );
                                 throw err;
+                        } else {
+                                callback && callback( doc );
+                                return doc;
                         }
                 } );
         } ).catch( function( err ) {
@@ -148,7 +147,7 @@ Crud.prototype.update = function( who, what, data, callback ) {
                         db.close();
                         log = 'MONGO | Inserted data :\n[';
                         log += JSON.stringify( data ) + ']';
-                        process.env.NODE_ENV == 'development'
+                        process.env.NODE_ENV == 'devdb'
                                 ? console.log( log )
                                 : log;
                         callback && callback( result );
@@ -185,7 +184,7 @@ Crud.prototype.add = function( who, what, data, callback ) {
                         db.close();
                         log = 'MONGO | Inserted data :\n[';
                         log += JSON.stringify( data ) + ']';
-                        process.env.NODE_ENV == 'development'
+                        process.env.NODE_ENV == 'devdb'
                                 ? console.log( log )
                                 : log;
                         callback && callback( result );
