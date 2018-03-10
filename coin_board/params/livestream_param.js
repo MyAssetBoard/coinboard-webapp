@@ -19,7 +19,7 @@ const param = {
         page: 'livestream',
         scripts: {
                 socket: cdn,
-                trade: 'tradestream.js',
+                trade: '/tradestream.js',
         },
         blocks: {
                 jumbo: 'blocks/all/my_jumbotron',

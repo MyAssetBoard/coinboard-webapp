@@ -21,7 +21,7 @@ const param = {
         scripts: {
                 socketio: cdn,
                 cryptojs: cdn1,
-                mysocket: 'auth_socket.js',
+                mysocket: '/auth_socket.js',
         },
         blocks: {
                 jumbo: 'blocks/all/my_jumbotron',

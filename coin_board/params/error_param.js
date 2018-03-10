@@ -17,7 +17,7 @@ const param = {
         tvurl: appvurl,
         page: 'error',
         scripts: {
-                reload: 'to_homepage.js',
+                reload: '/to_homepage.js',
         },
         blocks: {
                 jumbo: 'blocks/all/my_jumbotron',
