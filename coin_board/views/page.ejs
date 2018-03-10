@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<% include coreelems/head %>
-		</head>
-		<body>
-			<header>
-				<% include coreelems/header %>
-				</header>
-				<main>
-					<div class="main">
-						<% if (locals.blocks && Object.keys(blocks).length)
+	</head>
+
+	<body>
+		<header>
+			<% include coreelems/header %>
+		</header>
+		<main>
+			<div class="main">
+				<% if (locals.blocks && Object.keys(blocks).length)
 			{ %>
-							<!-- Page Blocks inclusion -->
-							<% for (var elems in blocks)
+					<!-- Page Blocks inclusion -->
+					<% for (var elems in blocks)
 				{ %>
-								<%- include(blocks[elems]) %><% } %>
-							<%
+						<%- include(blocks[elems]) %>
+							<% } %>
+								<%
 			} %>
-						</div>
-					</main>
-					<footer>
-						<% include coreelems/footer %>
-						</footer>
-						<noscript>
+			</div>
+		</main>
+		<footer>
+			<% include coreelems/footer %>
+		</footer> <noscript>
 							<div class="alert-danger" id="noscript-warning">
 								<h1 class="text-alert"><%= title %>
 									work best with JavaScript enabled</h1>
 							</div>
 						</noscript>
-						<%if (locals.scripts && Object.keys(scripts).length) {%>
-							<% for (var elems in scripts) {%>
-								<script src="<%- scripts[elems] %>"></script>
-							<%
+		<%if (locals.scripts && Object.keys(scripts).length) {%>
+			<% for (var elems in scripts) {%>
+				<script src="<%- scripts[elems] %>"></script>
+				<%
 			}%>
-						<%}
+					<%}
 %>
-					</body>
-				</html>
+	</body>
+
+</html>
