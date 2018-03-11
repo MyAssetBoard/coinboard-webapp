@@ -6,96 +6,9 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
-const DataJunk = require( '../bin/data_junk' );
-const auth = new Auth();
-const data = new DataJunk();
 const param = require( '../params/myassets_param' );
-
-const roads = {
-        a: {
-                path: '/assets/dashboard',
-                block: 'centerblock_dashboard',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_dashboard',
-                        };
-                        callback && callback( res );
-                },
-        },
-        b: {
-                path: '/assets/infofeed',
-                block: 'centerblock_infofeed',
-                func: function( callback ) {
-                        data.pukedata( {} ).then( function( r ) {
-                                let xx = {
-                                        block: 'centerblock_infofeed',
-                                        feed: r[0].feed,
-                                };
-                                callback && callback( xx );
-                        } );
-                },
-        },
-        c: {
-                path: '/assets/pricefeed',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-        d: {
-                path: '/assets/trade',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-        e: {
-                path: '/assets/api/param',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-        f: {
-                path: '/assets/trade/reports/currm',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-        g: {
-                path: '/assets/trade/reports/currquart',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-        h: {
-                path: '/assets/trade/reports/crowddata',
-                block: 'centerblock_pricefeed',
-                func: function( callback ) {
-                        let xx = {
-                                block: 'centerblock_pricefeed',
-                        };
-                        callback && callback( res );
-                },
-        },
-};
+const roads = require( './assets/assets_roads' );
+const auth = new Auth();
 
 function setpagecontent( req ) {
         return new Promise( ( resolve, reject ) => {
