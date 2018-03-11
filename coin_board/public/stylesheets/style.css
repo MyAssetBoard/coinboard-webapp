@@ -1,10 +1,19 @@
 body, html {
-	padding-top: 45px;
+	background: #1b2d3c !important;
+	font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
 	padding-left: 10px;
 	padding-right: 5px;
-	font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
-	background: #1b2d3c !important;
+	padding-top: 45px;
 	position: relative;
+}
+
+canvas {
+	background-color: transparent;
+	height: 100px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	width: 50px;
 }
 
 .navbar-default {
@@ -13,35 +22,28 @@ body, html {
 
 .jumbotron {
 	background-color: transparent !important;
-	border-style: solid;
 	border-color: white;
+	border-style: solid;
 	border-width: thin;
 	padding: 10px;
 }
 
-canvas {
-  background-color: transparent;
-  width: 50px;
-  height: 100px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
 
 .popUp {
-	padding: 5px 10px;
 	background-color: transparent !important;
-	text-decoration-color: white;
+	padding: 5px 10px;
 	position: fixed;
-	top: 0; right: 0;
+	right: 0;
+	text-decoration-color: white;
+	top: 0;
 }
 
 .infiList {
-	border-style: solid;
 	border-color: transparent;
+	border-style: solid;
 	border-width: large;
+	height: 250px;
 	overflow: scroll;
-	height: 150px;
 }
 
 .hidden {
@@ -49,11 +51,11 @@ canvas {
 }
 
 .form-group {
-	border-style: solid;
+	background-color: white;
 	border-color: white;
+	border-style: solid;
 	border-width: thin;
 	padding: 10px;
-	background-color: white;
 }
 
 .container-full-bg {
@@ -61,9 +63,9 @@ canvas {
 }
 
 .btn-space {
-	 margin-right: 5px;
-	 margin-left: 5px;
-	 margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 5px;
 }
 
 .BUY {
