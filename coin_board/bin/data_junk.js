@@ -12,6 +12,11 @@ function DataJunk() {
         this.reqmodels = reqmodels;
 }
 
+/**
+* Operations Pour tout les elements dans parseme (obj: )
+* @param {Object} dset results from feeds array in db
+* @return {Object} res parsed and colored data feed
+*/
 DataJunk.prototype.eat = function( dset ) {
         let ts = {
                 nb: 0,
@@ -58,6 +63,10 @@ DataJunk.prototype.eat = function( dset ) {
         } );
 };
 
+/**
+* @param {string} where
+* @param {function} callback
+*/
 DataJunk.prototype.begdata = function( where, callback ) {
         let req = http.get( where.req, function( res ) {
                 let bodyChunks = [];
@@ -69,12 +78,14 @@ DataJunk.prototype.begdata = function( where, callback ) {
                         let clean = [];
                         if ( test.query && test.query.results ) {
                                 let r = test.query.results;
-                                for ( item in r.item ) {
-                                        if ( r.item[item] ) {
-                                                let elem = r.item[item];
-                                                let dsc = where.clean( where.id, elem.description );
+                                for ( it in r.item ) {
+                                        if ( r.item[it] ) {
+                                                let elem = r.item[it];
+                                                let i = where.id;
+                                                let d = elem.description;
+                                                let dsc = where.clean( i, d );
                                                 elem.description = dsc;
-                                                clean[item] = elem;
+                                                clean[it] = elem;
                                         }
                                 }
                         }
@@ -90,7 +101,13 @@ DataJunk.prototype.begdata = function( where, callback ) {
         } );
 };
 
-DataJunk.prototype.writeres = function( fn, d ) {
+/**
+* wr stand for write file
+* @param {string} fn file name
+* @param {Object} d data to write json fmt
+* @return {Promise} d corresponding to writed data
+*/
+DataJunk.prototype.wr = function( fn, d ) {
         return new Promise( ( resolve, reject ) => {
                 ROOT_APP_PATH = fs.realpathSync( '.' );
                 fs.writeFile( fn, JSON.stringify( d ) + '\n', function( err ) {
@@ -116,7 +133,7 @@ DataJunk.prototype.goshopping = function( where ) {
                 let data = new DataJunk();
                 data.begdata( where, function( res, err ) {
                         if ( res ) {
-                                data.writeres( where.fname, res ).then( function( r ) {
+                                data.wr( where.fname, res ).then( function( r ) {
                                         resolve( r );
                                         return r;
                                 } ).catch( function( rej, err ) {
@@ -192,7 +209,8 @@ DataJunk.prototype.pukedata = function( what ) {
 };
 
 /**
-* @param {Object} where
+* Launch data crawl
+* @param {Object} where source id
 */
 function goeat( where ) {
         const data = new DataJunk();
@@ -225,7 +243,7 @@ function goeat( where ) {
 }
 
 /**
-* Simple launch mining aka 'eat' function
+* Simple launch data mining aka 'eat' function
 */
 function testmarks() {
         const data = new DataJunk();
