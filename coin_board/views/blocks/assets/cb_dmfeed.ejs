@@ -1,0 +1,54 @@
+<div class="card">
+	<div class="card-header">
+		<h5>Stats Feed :</h5>
+	</div>
+</div>
+<%if (locals.dms && dms.length) {%>
+	<div class="infiList">
+		<% for (var el in dms) {%>
+			<div class="<%='alert ' + (dms[el].type.match('bear') ? 'alert-success' : 'alert-danger') %>">
+				<a class="list-group-item list-group-item-action flex-column align-items-start">
+					<div class="d-flex w-100 justify-content-between">
+						<h5 class="mb-1"><%= 'ID : ' + el%></h5>
+					</div>
+					<h5 class="mb-1"><%='Subject : ' + dms[el].subject%></h5>
+					<h6 class="mb-1"><%='Type : ' + dms[el].type%></h6>
+					<h6 class="mb-1"><%='Flags : ' + dms[el].flag %>
+					</h6>
+				</a>
+			</div>
+		<%}%>
+	</div>
+<%}%>
+<div class="card">
+	<div class="card-header">
+		<h5>Stats summary :</h5>
+	</div>
+	<div class="card-body">
+		<canvas id="myChart"></canvas>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script>
+		const ctx = document
+			.getElementById('myChart')
+			.getContext('2d');
+		let toto = <%- 25 %>;
+		let data = {
+			datasets: [
+				{
+					data: [
+						25, 25, toto, 25
+					],
+					backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)', 'rgb(0,77,64)']
+				}
+			],
+			labels: ['Red', 'Blue', 'Yellow', 'Green']
+		};
+		let myPieChart = new Chart(ctx, {
+			type: 'pie',
+			data: data,
+			// options: options
+		});
+		console.log(toto);
+	</script>
+</div>

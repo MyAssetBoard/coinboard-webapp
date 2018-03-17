@@ -1,0 +1,24 @@
+<div class="list-group">
+	<%if (locals.news && Object.keys(news).length) {%>
+		<div class="card">
+			<div class="card-header">
+				<h5>News feed :
+				</h5>
+			</div>
+		</div>
+		<div class="infiList">
+			<% for (var elems in news) {%>
+				<a class="<%= 'list-group-item list-group-item-action flex-column align-items-start' + (elems == 1 ? 'active' : '')%>">
+					<div class="d-flex w-100 justify-content-between">
+						<h5 class="mb-1"><%=news[elems].title%></h5>
+						<small>ID :
+							<%= ' ' + elems%></small>
+					</div>
+					<p class="mb-1"><%= news[elems].description %>
+						<a href="<%= news[elems].link %>">Ref</a>
+					</p>
+				</a>
+			<%}%>
+		</div>
+	<%}%>
+</div>

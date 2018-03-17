@@ -1,0 +1,56 @@
+<div id="view" class="card">
+	<div class="card-header" id="headingOne">
+		<h5 class="mb-0">
+			<button class="btn btn-secondary btn-lg btn-block dropdown-toggle" data-toggle="collapse" data-target="#collapseOne">
+				[<i class="lnr lnr-chart-bars"></i>] View
+			</button>
+		</h5>
+	</div>
+	<div id="collapseOne" class="card-body collapse showme">
+		<% if (locals.data && data.assets && Object.keys(data.assets).length) {%>
+			<div class="infiList">
+				<div class="btn-group btn-group-lg" style="display: inline-block;">
+					<%for(var elems in data.assets){%>
+						<%- include('asset_list', {
+						data: locals.data.assets[elems],
+						id: elems
+					}); %><%} %>
+					</div>
+				</div>
+				<input id="searchme" type="text" placeholder="&#xf00e Search for Asset" style="font-family:Arial, FontAwesome" class=""></input>
+			<%
+		}%>
+			<% if (!locals.data) {%>
+				<p class="text-center">
+					Please
+					<a href="/login">LOGIN</a>
+					to view your assets</p>
+			<%}%>
+		</div>
+	</div>
+	<div id="add" class="card">
+		<div class="card-header" id="headingTwo">
+			<h5 class="mb-0">
+				<button class="btn btn-secondary btn-lg btn-block dropdown-toggle" data-toggle="collapse" data-target="#collapseTwo">
+					[<i class="lnr lnr-cloud-sync"></i>] Add
+				</button>
+			</h5>
+		</div>
+		<div id="collapseTwo" class="card-body collapse showme">
+			<select type="select" id="ticker" class="form-control">
+				<% if (locals.symb && Object.keys(symb).length) {%>
+					<% for (var elems in symb){ %>
+						<option label="<%=symb[elems]%>">
+							<%- elems %>
+							</option>
+						<%} %>
+					<%}%>
+				</select>
+				<input id="qtt" type="number" step="0.000000001" min="0" class="form-control" placeholder="enter amount">
+				<div class="card-body">
+					<button id="addme" class="btn btn-lg btn-block btn-info">
+						OK
+					</button>
+				</div>
+			</div>
+		</div>
