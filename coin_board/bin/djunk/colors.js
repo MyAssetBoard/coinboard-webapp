@@ -15,7 +15,6 @@ const colors = {
                                 'begining',
                                 'increase',
                                 'rise',
-                                '/\bup\b/',
                                 'growth',
                                 'partnership',
                                 'partners',
