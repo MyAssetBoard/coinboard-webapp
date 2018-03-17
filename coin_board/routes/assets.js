@@ -10,20 +10,25 @@ const param = require( '../params/myassets_param' );
 const roads = require( './assets/assets_roads' );
 const auth = new Auth();
 
+/**
+* @param {Object} req
+* @return {Promise}
+*/
 function setpagecontent( req ) {
         return new Promise( ( resolve, reject ) => {
                 let res = {};
                 for ( let property in roads ) {
                         if ( roads[property].path == req.originalUrl ) {
-                                if ( roads[property].func ) {
-                                        res.fn = roads[property].func;
+                                if ( roads[property].getd ) {
+                                        res.fn = roads[property].getd;
                                 }
+                                break;
                         }
                 }
                 if ( res.fn ) {
-                        res.fn( function( r ) {
-                                if ( r ) {
-                                        resolve( r );
+                        res.fn( function( rt ) {
+                                if ( rt ) {
+                                        resolve( rt );
                                 }
                         } );
                 } else {
@@ -37,7 +42,7 @@ router.get( '/*', function( req, res, next ) {
         let chck = req.cookies;
 
         if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
-                let log = req.originalUrl + '-route : Auth user, session below\n[';
+                let log = req.originalUrl + '-route : Auth user, session \n[';
                 log += JSON.stringify( chck ) + ']';
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
@@ -54,11 +59,12 @@ router.get( '/*', function( req, res, next ) {
                                 : log;
                         setpagecontent( req ).then( function( d ) {
                                 if ( d != 'nop' ) {
-                                        res.locals.routes = {
-                                                a: d.block,
-                                        };
-                                        if ( d.feed ) {
+                                        if ( d.feed && d.dm ) {
                                                 res.locals.news = d.feed;
+                                                res.locals.dms = d.dm;
+                                        }
+                                        if ( d.blocks ) {
+                                                res.locals.routes = d.blocks;
                                         }
                                 }
                                 res.render( 'page', dup );
@@ -73,7 +79,7 @@ router.get( '/*', function( req, res, next ) {
                 } );
         } else {
                 /* istanbul ignore next */
-                log = req.originalUrl + '-route| NonAUth user, session below\n[';
+                log = req.originalUrl + '-route| NonAUth user, session \n[';
                 log += JSON.stringify( chck ) + '] cookie ? [';
                 log += JSON.stringify( req.cookies ) + ']';
                 /* istanbul ignore next */
