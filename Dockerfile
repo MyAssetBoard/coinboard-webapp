@@ -66,6 +66,8 @@ RUN usermod -aG debian-tor fofo && \
 	chmod +x /usr/src/app/conf/onion/turnmeon.sh && \
 	chown fofo:fofo /usr/src/app/log.txt && chmod u=rw /usr/src/app/log.txt
 
+RUN apt-get install -y tree
+
 USER fofo
 ENV SERV_ENV=onion NODE_ENV=production
 CMD ["cd /usr/src/app/conf/ && ./conf/onion/turnmeon.sh"]
