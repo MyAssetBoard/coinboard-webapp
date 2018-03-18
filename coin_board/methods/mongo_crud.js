@@ -1,11 +1,10 @@
 /**
-* @file @mongo CRUD methods definitions
+* @file mongo CRUD methods definitions
 * @author based on Mongo doc and edited by Trevis Gulby
 */
 
 const MongoClient = require( 'mongodb' ).MongoClient;
 const ObjectId = require( 'mongodb' ).ObjectID;
-const Crypt = require( '../methods/crypt_methods' );
 const uri = 'mongodb://localhost:27017/';
 
 /**

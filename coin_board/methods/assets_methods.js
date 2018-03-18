@@ -1,3 +1,8 @@
+/**
+* @file Assets methods definition (use crud module)
+* @author Trevis Gulby
+*/
+
 const Crud = require( '../methods/mongo_crud' );
 const Crypt = require( '../methods/crypt_methods' );
 

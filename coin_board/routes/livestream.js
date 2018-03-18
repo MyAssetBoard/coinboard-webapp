@@ -1,5 +1,5 @@
 /**
-* @file @Livestream page route methods definitions
+* @file Livestream page main route controller
 * @author based on express boilerplate and edited by Trevis Gulby
 */
 

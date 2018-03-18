@@ -1,5 +1,9 @@
-const {spawn} = require( 'child_process' );
+/**
+* @file Refresh bot method definition
+* @author Trevis Gulby
+*/
 
+const {spawn} = require( 'child_process' );
 const refresh = {
         id: '/refresh',
         func: function( callback ) {

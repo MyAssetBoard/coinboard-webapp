@@ -1,3 +1,8 @@
+/**
+* @file Assets routes params and paths definitions (use datajunk module)
+* @author Trevis Gulby
+*/
+
 const DataJunk = require( '../../bin/data_junk' );
 const data = new DataJunk();
 const roads = {

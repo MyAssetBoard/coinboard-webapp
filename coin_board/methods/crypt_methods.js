@@ -1,6 +1,6 @@
 /**
-* @file @Crypt methods definitions
-* @author based on express boilerplate and edited by Trevis Gulby
+* @file Crypt methods definitions
+* @author Trevis Gulby
 */
 
 /** dep import */
@@ -8,11 +8,12 @@ const CryptoJS = require( 'crypto-js' );
 const fs = require( 'fs' );
 
 /**
-*@brief Crypt class contructor
+* @brief Crypt class contructor
 */
 function Crypt() {}
 
-/** self explanatory
+/**
+* self explanatory
 */
 function cleartmp() {
         ROOT_APP_PATH = fs.realpathSync( '.' );
@@ -27,7 +28,8 @@ function cleartmp() {
         } );
 }
 
-/** Read tmp for new random key
+/**
+* Read tmp for new random key
 * @return {string}
 */
 function readtmp() {
@@ -41,8 +43,9 @@ function readtmp() {
         return buff.toString();
 }
 
-/** write tmp
-*@param {string} res
+/**
+* write tmp
+* @param {string} res
 */
 function writetmp( res ) {
         ROOT_APP_PATH = fs.realpathSync( '.' );
@@ -56,9 +59,11 @@ function writetmp( res ) {
                         : log;
         } );
 }
-/** Extract buffer from dev.urandom
+
+/**
+* Extract buffer from dev.urandom
 * @param {function} callback
-* @return {string} 85 bytes of random char
+* @return {string} 22 bytes of 85 bytes random chars buffer
 */
 function getRandom( callback ) {
         return new Promise( ( resolve, reject ) => {
@@ -82,8 +87,9 @@ function getRandom( callback ) {
 }
 
 /**
+* Take a string p, and try decryption with 'log.txt' secret
 * @param {string} p
-* @return {string}
+* @return {string} plaintext
 */
 function dcryptParams( p ) {
         let plaintext = null;
@@ -102,6 +108,8 @@ function dcryptParams( p ) {
 }
 
 /**
+* Take a p plaintext string and encrypt it with AES
+* and the 'log.txt' secret
 * @param {string} p
 * @return {string}
 */

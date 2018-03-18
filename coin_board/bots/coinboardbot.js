@@ -1,6 +1,9 @@
-// const TelegramBot = require( 'node-telegram-bot-api' );
+/**
+* @file Main runable executable for CoinBoardBot micro service
+* @author based on telegraf module exemples and edited by Trevis Gulby
+*/
+
 const Telegraf = require( 'telegraf' );
-// const bot = new TelegramBot( token, { polling: true } );
 const rf = require( './acts/refresh_act' );
 const ls = require( './acts/showfiles_act' );
 

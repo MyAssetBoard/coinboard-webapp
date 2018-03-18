@@ -1,3 +1,8 @@
+/**
+* @file Crawler helper functions methods for DajaJunk module
+* @author Trevis Gulby
+*/
+
 const eatdiner = {
         checkwhat: function( obj, a ) {
                 let what = obj[a].toLowerCase();

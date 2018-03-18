@@ -1,5 +1,5 @@
 /**
-* @file @Index page route methods definitions
+* @file Index page main route controller
 * @author based on express boilerplate and edited by Trevis Gulby
 */
 

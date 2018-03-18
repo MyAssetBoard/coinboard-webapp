@@ -1,3 +1,8 @@
+/**
+* @file Parser wordlist and tags for DajaJunk module
+* @author Trevis Gulby
+*/
+
 const colors = {
         bull: {
                 sets: {

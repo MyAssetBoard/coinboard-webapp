@@ -1,5 +1,5 @@
 /**
-* @file Main runable executable for app
+* @file Main runable executable for webview micro service
 * @author base on Express app and edited by Trevis Gulby
 */
 

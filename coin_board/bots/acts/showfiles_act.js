@@ -1,5 +1,9 @@
-const {spawn} = require( 'child_process' );
+/**
+* @file Showfile (aka /tree) bot method definition
+* @author Trevis Gulby
+*/
 
+const {spawn} = require( 'child_process' );
 const showfiles = {
         id: '/tree',
         func: function( callback ) {

@@ -1,5 +1,5 @@
 /**
-* @file @Login methods definitions
+* @file login methods definitions
 * @author based on express boilerplate and edited by Trevis Gulby
 */
 
@@ -90,8 +90,8 @@ function stripD( d, path ) {
 
 /**
 * @brief basically checking is a decrypted _id
-*exist in user collection and
-*strip private fields from result
+* exist in user collection and
+* strip private fields from result
 * @param {Object} cuid
 * @param {string} path
 * @return {Promise}

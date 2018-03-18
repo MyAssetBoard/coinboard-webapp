@@ -1,3 +1,7 @@
+/**
+* @file DajaJunk module, our friendly scrapper / eater
+* @author Trevis Gulby
+*/
 const http = require( 'http' );
 const fs = require( 'fs' );
 const Crud = require( '../methods/mongo_crud' );

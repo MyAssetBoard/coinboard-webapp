@@ -1,5 +1,5 @@
 /**
-* @file @Register_assets page route methods definitions
+* @file Assets page main route controller
 * @author based on express boilerplate and edited by Trevis Gulby
 */
 
