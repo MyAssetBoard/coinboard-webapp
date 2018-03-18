@@ -3,7 +3,7 @@
 * @author Trevis Gulby
 */
 
-const DataJunk = require( '../../bin/data_junk' );
+const DataJunk = require( '../../methods/datajunk_methods' );
 const data = new DataJunk();
 const roads = {
         a: {

@@ -4,7 +4,7 @@
 */
 const http = require( 'http' );
 const fs = require( 'fs' );
-const Crud = require( '../methods/mongo_crud' );
+const Crud = require( './mongo_crud' );
 const colors = require( './djunk/colors' );
 const reqmodels = require( './djunk/reqmodels' );
 const eatdiner = require( './djunk/eatdiner' );
