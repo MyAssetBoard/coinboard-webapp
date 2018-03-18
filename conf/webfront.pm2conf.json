@@ -1,17 +1,14 @@
 {
-	"apps" :
-	[
-		{
-			"name": "mongodb.service",
-			"script": "./coin_board/bin/our_mongodb.js"
-		},
-		{
-			"name": "websocket.service",
-			"script": "./coin_board/bin/our_websocket.js"
-		},
-		{
-			"name": "webview.service",
-			"script": "./coin_board/bin/our_webfront.js"
-		}
-	]
+        "apps": [
+                {
+                        "name": "websocket.service",
+                        "script": "./coin_board/bin/our_websocket.js",
+                }, {
+                        "name": "webview.service",
+                        "script": "./coin_board/bin/our_webfront.js",
+                }, {
+                        "name": "CoinBoardBot.service",
+                        "script": "./coin_board/bots/coinboardbot.js"
+                },
+        ]
 }
