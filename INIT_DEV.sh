@@ -6,6 +6,8 @@
 #################InitDev.sh####################
 
 ## Variable Init
+# Node Param :
+export BOT_TOKEN="536901429:AAHoWwWtHY0TIxj3XtLG5HTLzr3-IgJwmpg";
 # Jsdoc
 export JSDOC="./node_modules/jsdoc/jsdoc.js"
 export JSDOCCONF="conf/jsdoc_conf.json"
@@ -21,8 +23,8 @@ export NYC="./node_modules/nyc/bin/nyc.js"
 # coin_board app
 export APPCONF="./conf/webfront.pm2conf.json"
 export WVSERV="webview.service"
-export DBSERV="mongodb.service"
 export WSSERV="websocket.service"
+export CBSERV="CoinBoardBot.service"
 
 #External ressources
 export TICKERURL="https://raw.githubusercontent.com/crypti/cryptocurrencies/master/"
@@ -121,6 +123,7 @@ function app_startDev ()
 	mongod -f conf/mongodb.conf &
 	$PM2 start $APPCONF --only "$WSSERV"  --update-env;
 	$PM2 start $APPCONF --only "$WVSERV"  --update-env;
+	$PM2 start $APPCONF --only "$CBSERV"  --update-env;
 }
 
 function app_startProd ()
