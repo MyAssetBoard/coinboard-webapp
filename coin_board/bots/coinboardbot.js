@@ -44,16 +44,14 @@ bot.hears( /\/(.+)/, ( ctx ) => {
         }
 } );
 
-// Listen for any kind of message. There are different kinds of
-// messages.
-bot.on( 'message', ( msg ) => {
-        // const chatId = msg.chat.id;
-        let usr = msg.from.first_name + ' ' + msg.from.last_name;
+/**
+* Listen for any kind of messages
+*/
+bot.on( 'message', ( ctx ) => {
+        let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
         console.log( 'COINBOARD_BOT: Received msg :' );
         console.log( 'from [' + usr + ']' );
-        console.log( msg.text );
-        // send a message to the chat acknowledging receipt of their message
-        // bot.sendMessage( chatId, 'Received your message' );
+        console.log( ctx.message.text );
 } );
 
 bot.startPolling();
