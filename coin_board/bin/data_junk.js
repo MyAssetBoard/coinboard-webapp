@@ -42,7 +42,7 @@ DataJunk.prototype.eat = function( dset ) {
                                                                                 cmp: res[ts.val - 1],
                                                                                 tg: '',
                                                                         };
-                                                                        // eatdiner.checkwrd( obj.wr, obj.wh );
+                                                                        eatdiner.checkwrd( obj.wr, obj.wh );
                                                                         if ( colors[b].check( obj ) ) {
                                                                                 res[ts.val] = eatdiner.getres( obj, ts );
                                                                         }
@@ -81,9 +81,8 @@ DataJunk.prototype.begdata = function( where, callback ) {
                                 for ( it in r.item ) {
                                         if ( r.item[it] ) {
                                                 let elem = r.item[it];
-                                                let i = where.id;
                                                 let d = elem.description;
-                                                let dsc = where.clean( i, d );
+                                                let dsc = where.clean( d );
                                                 elem.description = dsc;
                                                 clean[it] = elem;
                                         }
@@ -130,10 +129,10 @@ DataJunk.prototype.wr = function( fn, d ) {
 
 DataJunk.prototype.goshopping = function( where ) {
         return new Promise( ( resolve, reject ) => {
-                let data = new DataJunk();
-                data.begdata( where, function( res, err ) {
+                let dj = new DataJunk();
+                dj.begdata( where, function( res, err ) {
                         if ( res ) {
-                                data.wr( where.fname, res ).then( function( r ) {
+                                dj.wr( where.fname, res ).then( function( r ) {
                                         resolve( r );
                                         return r;
                                 } ).catch( function( rej, err ) {
@@ -214,20 +213,29 @@ DataJunk.prototype.pukedata = function( what ) {
 */
 function goeat( where ) {
         const data = new DataJunk();
-        data.goshopping( where ).then( function( res ) {
-                if ( res ) {
-                        let d = {
-                                id: where.id,
-                                path: where.fname,
-                                url: where.url,
-                        };
-                        data.digest( d ).then( function( res ) {
+        for ( let x in where ) {
+                if ( where[x] ) {
+                        let xx = where[x];
+                        data.goshopping( xx ).then( function( res ) {
                                 if ( res ) {
-                                        let log = 'DTAJNK: New feed';
-                                        log += ' inserted in db';
-                                        process.env.NODE_ENV == 'development'
-                                                ? console.log( log )
-                                                : log;
+                                        let d = {
+                                                id: xx.id,
+                                                path: xx.fname,
+                                                url: xx.url,
+                                        };
+                                        data.digest( d ).then( function( res ) {
+                                                if ( res ) {
+                                                        let log = 'DATA_JUNK: New feed ';
+                                                        log += 'inserted in db';
+                                                        process.env.NODE_ENV == 'development'
+                                                                ? console.log( log )
+                                                                : log;
+                                                }
+                                        } ).catch( function( rej, err ) {
+                                                if ( err || rej ) {
+                                                        throw err;
+                                                }
+                                        } );
                                 }
                         } ).catch( function( rej, err ) {
                                 if ( err || rej ) {
@@ -235,11 +243,7 @@ function goeat( where ) {
                                 }
                         } );
                 }
-        } ).catch( function( rej, err ) {
-                if ( err || rej ) {
-                        throw err;
-                }
-        } );
+        }
 }
 
 /**
@@ -258,7 +262,7 @@ function testmarks() {
 if ( process.env.LAUNCH_TASK == 'markme' ) {
         testmarks();
 } else if ( process.env.LAUNCH_TASK == 'goeat' ) {
-        goeat( reqmodels.ctaf );
+        goeat( reqmodels );
 }
 
 module.exports = DataJunk;
