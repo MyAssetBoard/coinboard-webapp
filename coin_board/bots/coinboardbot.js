@@ -1,71 +1,56 @@
-const readline = require( 'readline' );
-const request = require( 'request' );
-const interf = {
-        input: process.stdin,
-        output: process.stdout,
-};
-const rl = readline.createInterface( interf );
+// const TelegramBot = require( 'node-telegram-bot-api' );
+const Telegraf = require( 'telegraf' );
+// const bot = new TelegramBot( token, { polling: true } );
+const rf = require( './acts/refresh_act' );
+const ls = require( './acts/showfiles_act' );
 
-/**
-* @classdesc Bot : telegram bot
-* to control crawler requests and responses
-*/
-class Bot {
-        /**
-        * @param {string} TOKEN
-        * @return {Promise}
-        */
-        init( TOKEN ) {
-                return new Promise( ( resolve, reject ) => {
-                        let url = `https://api.telegram.org/bot${ TOKEN }/getMe`;
-                        request( url, ( error, r, body ) => {
-                                const response = JSON.parse( body ).result;
-                                if ( error ) {
-                                        return;
-                                }
-                                if ( !response ) {
-                                        return;
-                                }
-                                this.id = response.id || '';
-                                this.first_name = response.first_name || '';
-                                this.last_name = response.last_name || '';
-                                this.username = response.username || '';
-                                this.language_code = response.language_code || '';
-                                resolve();
+const bot = new Telegraf( process.env.BOT_TOKEN );
+bot.start( ( ctx ) => {
+        console.log( 'started:', ctx.from.id );
+        return ctx.reply( 'Welcome!' );
+} );
+bot.command( 'help', ( ctx ) => ctx.reply( 'Try send a sticker!' ) );
+bot.hears( 'hi', ( ctx ) => ctx.reply( 'Hey there!' ) );
+bot.hears( /buy/i, ( ctx ) => ctx.reply( 'Buy-buy!' ) );
+bot.on( 'sticker', ( ctx ) => ctx.reply( '👍' ) );
+
+bot.hears( /\/(.+)/, ( ctx ) => {
+        console.log( ctx.update );
+        let msgusr = ctx.from.first_name + ' ';
+        msgusr += ctx.from.last_name + '] ';
+        const chatId = ctx.from.id;
+        let cmd = ctx.message.text;
+        let log = 'COINBOARD_BOT: Received command [' + cmd + ']';
+        console.log( log );
+        log = 'from [' + msgusr + ' id :';
+        log += chatId;
+        console.log( log );
+        if ( chatId == 408942599 ) {
+                if ( cmd == rf.id ) {
+                        rf.func( function( d ) {
+                                ctx.reply( d );
                         } );
-                } );
-        }
-
-        /**
-        * @return {string}
-        */
-        getName() {
-                if ( this.last_name ) {
-                        return `${ this.first_name} ${ this.last_name }`;
+                } else if ( cmd == ls.id ) {
+                        ls.func( function( d ) {
+                                ctx.reply( d );
+                        } );
                 } else {
-                        return `${ this.first_name }`;
+                        let resp = '[' + cmd + '] : unknow command sorry';
+                        ctx.reply( resp );
                 }
         }
+} );
 
-        /**
-        * get bot name
-        */
-        introduceYourself() {
-                let res = 'Hello, my name is ' + this.getName();
-                res += '\nYou can talk to me through my username:';
-                res += this.username;
-                console.log( res );
-        }
+// Listen for any kind of message. There are different kinds of
+// messages.
+bot.on( 'message', ( msg ) => {
+        // const chatId = msg.chat.id;
+        let usr = msg.from.first_name + ' ' + msg.from.last_name;
+        console.log( 'COINBOARD_BOT: Received msg :' );
+        console.log( 'from [' + usr + ']' );
+        console.log( msg.text );
+        // send a message to the chat acknowledging receipt of their message
+        // bot.sendMessage( chatId, 'Received your message' );
+} );
 
-        /**
-        * get bot name
-        */
-        talktoMe() {
-                rl.question( 'EnterCMD> ', function( res ) {
-                        console.log( res );
-                        rl.close();
-                } );
-        }
-}
-
-module.exports = Bot;
+bot.startPolling();
