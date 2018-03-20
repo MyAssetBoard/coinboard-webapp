@@ -25,7 +25,7 @@ tmpst += d.getMinutes() < 10
 
 const reqmodels = {
         ctaf: {
-                id: 'ctaf',
+                id: 'n.ctaf',
                 url: 'https://cointelegraph.com/rss',
                 req: {
                         host: 'query.yahooapis.com',
@@ -39,9 +39,21 @@ const reqmodels = {
                                 : clean.toString().replace( /<\/?p>/g, '' );
                         return clean;
                 },
+                get: function( r, clean ) {
+                        for ( it in r.item ) {
+                                if ( r.item[it] ) {
+                                        let elem = r.item[it];
+                                        let d = elem.description;
+                                        let dsc = where.clean( d );
+                                        elem.description = dsc;
+                                        clean[it] = elem;
+                                }
+                        }
+                        return clean;
+                },
         },
         crnews: {
-                id: 'crnews',
+                id: 'n.crnews',
                 url: 'https://cryptocurrencynews.com/feed/',
                 req: {
                         host: 'query.yahooapis.com',
@@ -57,6 +69,29 @@ const reqmodels = {
                                 ? 'PARSING-ERROR'
                                 : rt.toString().split( 'Read The Full' )[0];
                         return rt;
+                },
+                get: function( r, clean ) {
+                        for ( it in r.item ) {
+                                if ( r.item[it] ) {
+                                        let elem = r.item[it];
+                                        let d = this.clean( elem.description );
+                                        elem.description = d;
+                                        clean[it] = elem;
+                                }
+                        }
+                        return clean;
+                },
+        },
+        crcomp: {
+                id: 'p.crccomp',
+                url: 'https://min-api.cryptocompare.com',
+                req: {
+                        host: 'min-api.cryptocompare.com',
+                        path: '/data/price?fsym=BTC&tsyms=USD,JPY,EUR',
+                },
+                fname: './DTAFOOD/prices/crcomp-btc.usd.jpy.eur-' + tmpst,
+                get: function( r, clean ) {
+                        return clean;
                 },
         },
 };
