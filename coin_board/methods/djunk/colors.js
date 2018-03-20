@@ -6,15 +6,13 @@
 const colors = {
         bull: {
                 sets: {
-                        l1: [
+                        a: [
                                 'amazing',
                                 'exceptionnal',
                                 'bull run',
                                 'exponential',
                                 'opportunity',
                                 'moon',
-                        ],
-                        l2: [
                                 'first',
                                 'innovation',
                                 'begining',
@@ -29,7 +27,6 @@ const colors = {
                                 'all-blockchain',
                                 'investing',
                         ],
-                        l3: ['recover', 'support'],
                 },
                 check: function( el ) {
                         let str = el.wh;
@@ -57,20 +54,28 @@ const colors = {
                                 ? true
                                 : false;
                 },
+                res: function( el ) {
+                        for ( let x in this.bull.sets ) {
+                                if ( this.bull.sets[x] ) {
+                                        for ( let y in this.bull.sets.x ) {
+                                                if ( el.match( this.bull.sets.x.y ) ) {}
+                                        }
+                                }
+                        }
+                },
         },
         bear: {
                 sets: {
-                        l1: [
+                        a: [
                                 'hack',
                                 'crash',
                                 'theft',
                                 'breach',
                                 'disaster',
                                 'bankrupcy',
-                        ],
-                        l2: [
                                 'fail',
                                 'drop',
+                                'sales',
                                 'doubt',
                                 'tumble',
                                 'fumble',
