@@ -2,7 +2,7 @@
 * @file DajaJunk module, our friendly scrapper / eater
 * @author Trevis Gulby
 */
-const http = require( 'http' );
+const https = require( 'https' );
 const fs = require( 'fs' );
 const Crud = require( './mongo_crud' );
 const colors = require( './djunk/colors' );
@@ -144,25 +144,20 @@ DataJunk.prototype.eat = function( dset ) {
 * @param {function} callback
 */
 DataJunk.prototype.begdata = function( where, callback ) {
-        let req = http.get( where.req, function( res ) {
+        let req = https.get( where.req, function( res ) {
                 let bodyChunks = [];
                 res.on( 'data', function( chunk ) {
                         bodyChunks.push( chunk );
                 } ).on( 'end', function() {
                         let body = Buffer.concat( bodyChunks );
-                        let test = JSON.parse( body );
+                        // Careful with non JSON Responses !!
+                        let ifjson = JSON.parse( body );
                         let clean = [];
-                        if ( test.query && test.query.results ) {
-                                let r = test.query.results;
-                                for ( it in r.item ) {
-                                        if ( r.item[it] ) {
-                                                let elem = r.item[it];
-                                                let d = elem.description;
-                                                let dsc = where.clean( d );
-                                                elem.description = dsc;
-                                                clean[it] = elem;
-                                        }
-                                }
+                        if ( ifjson.query && ifjson.query.results ) {
+                                let r = ifjson.query.results;
+                                clean = where.get( r, clean );
+                        } else {
+                                clean = ifjson;
                         }
                         callback && callback( clean );
                 } );
@@ -286,7 +281,13 @@ DataJunk.prototype.pukedata = function( what ) {
 if ( process.env.LAUNCH_TASK == 'markme' ) {
         testmarks();
 } else if ( process.env.LAUNCH_TASK == 'goeat' ) {
-        goeat( reqmodels );
+        // goeat( reqmodels );
+        let foo = new DataJunk();
+        foo.begdata( reqmodels.crcomp, function( res ) {
+                if ( res ) {
+                        console.log( res );
+                }
+        } );
 }
 
 module.exports = DataJunk;
