@@ -41,12 +41,67 @@ function flags( col, dt, res, ts ) {
                 }
         }
 };
+
+/**
+* Launch data crawl
+* @param {Object} where source id
+*/
+function goeat( where ) {
+        const data = new DataJunk();
+        for ( let x in where ) {
+                if ( where[x] ) {
+                        let xx = where[x];
+                        data.goshopping( xx ).then( function( res ) {
+                                if ( res ) {
+                                        let d = {
+                                                id: xx.id,
+                                                path: xx.fname,
+                                                url: xx.url,
+                                        };
+                                        data.digest( d ).then( function( res ) {
+                                                if ( res ) {
+                                                        let log = 'DATA_JUNK: New feed ';
+                                                        log += 'inserted in db';
+                                                        process.env.NODE_ENV == 'development'
+                                                                ? console.log( log )
+                                                                : log;
+                                                }
+                                        } ).catch( function( rej, err ) {
+                                                if ( err || rej ) {
+                                                        throw err;
+                                                }
+                                        } );
+                                }
+                        } ).catch( function( rej, err ) {
+                                if ( err || rej ) {
+                                        throw err;
+                                }
+                        } );
+                }
+        }
+}
+
+/**
+* Simple launch data mining aka 'eat' function
+*/
+function testmarks() {
+        const data = new DataJunk();
+        data.pukedata( {} ).then( function( res ) {
+                let test = data.eat( res );
+                if ( process.env.NODE_LOG == 'djunk' ) {
+                        console.log( test );
+                }
+        } );
+}
+
 /**
 * DataJunk class constructor
 */
 function DataJunk() {
         this.reqmodels = reqmodels;
         this.flags = flags;
+        this.goeat = goeat;
+        this.testmarks = testmarks;
 }
 
 /**
@@ -227,58 +282,6 @@ DataJunk.prototype.pukedata = function( what ) {
                 } );
         } );
 };
-
-/**
-* Launch data crawl
-* @param {Object} where source id
-*/
-function goeat( where ) {
-        const data = new DataJunk();
-        for ( let x in where ) {
-                if ( where[x] ) {
-                        let xx = where[x];
-                        data.goshopping( xx ).then( function( res ) {
-                                if ( res ) {
-                                        let d = {
-                                                id: xx.id,
-                                                path: xx.fname,
-                                                url: xx.url,
-                                        };
-                                        data.digest( d ).then( function( res ) {
-                                                if ( res ) {
-                                                        let log = 'DATA_JUNK: New feed ';
-                                                        log += 'inserted in db';
-                                                        process.env.NODE_ENV == 'development'
-                                                                ? console.log( log )
-                                                                : log;
-                                                }
-                                        } ).catch( function( rej, err ) {
-                                                if ( err || rej ) {
-                                                        throw err;
-                                                }
-                                        } );
-                                }
-                        } ).catch( function( rej, err ) {
-                                if ( err || rej ) {
-                                        throw err;
-                                }
-                        } );
-                }
-        }
-}
-
-/**
-* Simple launch data mining aka 'eat' function
-*/
-function testmarks() {
-        const data = new DataJunk();
-        data.pukedata( {} ).then( function( res ) {
-                let test = data.eat( res );
-                if ( process.env.NODE_LOG == 'djunk' ) {
-                        console.log( test );
-                }
-        } );
-}
 
 if ( process.env.LAUNCH_TASK == 'markme' ) {
         testmarks();
