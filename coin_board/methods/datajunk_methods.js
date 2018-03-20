@@ -10,10 +10,43 @@ const reqmodels = require( './djunk/reqmodels' );
 const eatdiner = require( './djunk/eatdiner' );
 
 /**
+* Parsing helper function
+* 1 - Tag subject from title
+* @param {Object} col
+* 2 - Tag bull type from description || title
+* @param {Object} dt
+* 3 - Tage bear type from description || title
+* @param {Object} res
+* 4 - Return res and updates counters
+* @param {Object} ts
+*/
+function flags( col, dt, res, ts ) {
+        for ( let c in col.sets ) {
+                if ( col.sets.a ) {
+                        for ( let d in col.sets[c] ) {
+                                if ( col.sets[c][d] ) {
+                                        let obj = {
+                                                wh: dt.toLowerCase(),
+                                                wr: col.sets[c][d],
+                                                id: col.id,
+                                                cmp: res[ts.val - 1],
+                                                tg: '',
+                                        };
+                                        eatdiner.checkwrd( obj.wr, obj.wh );
+                                        if ( col.check( obj ) ) {
+                                                res[ts.val] = eatdiner.getres( obj, ts );
+                                        }
+                                }
+                        }
+                }
+        }
+};
+/**
 * DataJunk class constructor
 */
 function DataJunk() {
         this.reqmodels = reqmodels;
+        this.flags = flags;
 }
 
 /**
@@ -35,30 +68,14 @@ DataJunk.prototype.eat = function( dset ) {
                         for ( let b in colors ) {
                                 if ( colors[b] ) {
                                         eatdiner.checkstyle( b );
-                                        for ( let c in colors[b].sets ) {
-                                                if ( colors[b].sets[c] ) {
-                                                        for ( let d in colors[b].sets[c] ) {
-                                                                if ( colors[b].sets[c][d] ) {
-                                                                        let obj = {
-                                                                                wh: parseme[a].toLowerCase(),
-                                                                                wr: colors[b].sets[c][d],
-                                                                                id: b,
-                                                                                cmp: res[ts.val - 1],
-                                                                                tg: '',
-                                                                        };
-                                                                        eatdiner.checkwrd( obj.wr, obj.wh );
-                                                                        if ( colors[b].check( obj ) ) {
-                                                                                res[ts.val] = eatdiner.getres( obj, ts );
-                                                                        }
-                                                                }
-                                                        }
-                                                }
-                                        }
+                                        colors[b].id = b;
+                                        flags( colors[b], parseme[a], res, ts );
                                 }
                         }
                 }
         }
-        log = '[[RESULTS:\t=>[' + res.length + '] results found!]]';
+        log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
+        log += JSON.stringify( res );
         if ( process.env.NODE_LOG == 'djunk' ) {
                 console.log( log );
         }
