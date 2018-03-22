@@ -2,13 +2,17 @@
 * @file Livestream view params
 * @author Trevis Gulby
 */
+const os = require( 'os' );
+const ni = os.networkInterfaces();
+const myip = ni.eth0[0].address;
 
 const appvurl = process.env.SERV_ENV == 'onion'
         ? 'http://xu6ylq4kzadh7bcm.onion/'
-        : 'http://localhost:3000/';
+        : 'http://' + myip + ':3000/';
 const appsurl = process.env.SERV_ENV == 'onion'
         ? 'http://q4s3a47gunuo5tie.onion:124/'
-        : 'http://localhost:3001/';
+        : 'http://' + myip + ':3001/';
+
 const cdn = 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js';
 
 const param = {
