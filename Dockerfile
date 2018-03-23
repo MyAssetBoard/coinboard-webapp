@@ -42,6 +42,7 @@ RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chown' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chmod' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /usr/sbin/nginx' >> /etc/sudoers
 
+RUN apt-get install -y paxctl && paxctl -cm $(which node)
 RUN npm install -g yarn
 # Sources files deploiement
 RUN mkdir -p /usr/src/app/coin_board
