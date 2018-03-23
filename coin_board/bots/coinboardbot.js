@@ -5,6 +5,7 @@
 
 const Telegraf = require( 'telegraf' );
 const rf = require( './acts/refresh_act' );
+const dm = require( './acts/datamine_act' );
 const ls = require( './acts/showfiles_act' );
 
 const bot = new Telegraf( process.env.BOT_TOKEN );
@@ -13,8 +14,9 @@ bot.start( ( ctx ) => {
         return ctx.reply( 'Welcome!' );
 } );
 bot.command( 'help', ( ctx ) => ctx.reply( 'Try send a sticker!' ) );
-bot.hears( 'hi', ( ctx ) => ctx.reply( 'Hey there!' ) );
-bot.hears( /buy/i, ( ctx ) => ctx.reply( 'Buy-buy!' ) );
+bot.hears( /hi/i, ( ctx ) => ctx.reply( 'Hey there!' ) );
+bot.hears( /hello/i, ( ctx ) => ctx.reply( 'Hey there!' ) );
+bot.hears( /buy/i, ( ctx ) => ctx.reply( 'Buy-buy! Money-Money!' ) );
 bot.on( 'sticker', ( ctx ) => ctx.reply( '👍' ) );
 
 bot.hears( /\/(.+)/, ( ctx ) => {
@@ -35,6 +37,10 @@ bot.hears( /\/(.+)/, ( ctx ) => {
                         } );
                 } else if ( cmd == ls.id ) {
                         ls.func( function( d ) {
+                                ctx.reply( d );
+                        } );
+                } else if ( cmd == dm.id ) {
+                        dm.func( function( d ) {
                                 ctx.reply( d );
                         } );
                 } else {

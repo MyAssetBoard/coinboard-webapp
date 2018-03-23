@@ -4,12 +4,12 @@
 */
 
 const {spawn} = require( 'child_process' );
-const refresh = {
-        id: '/refresh',
+const digest = {
+        id: '/digest',
         func: function( callback ) {
                 process.env['NODE_ENV'] = 'development';
                 process.env['NODE_LOG'] = 'djunk';
-                process.env['LAUNCH_TASK'] = 'goeat';
+                process.env['LAUNCH_TASK'] = 'markme';
                 const fp = 'coin_board/methods/datajunk_methods.js';
                 const exe = spawn( 'node', [fp] );
                 exe.stdout.on( 'data', ( data ) => {
@@ -23,9 +23,9 @@ const refresh = {
                 } );
 
                 exe.on( 'close', ( code ) => {
-                        r = 'Child process exited with code [' + code + ']';
+                        let r = 'Chid process exited with code [' + code + ']';
                         callback && callback( r );
                 } );
         },
 };
-module.exports = refresh;
+module.exports = digest;
