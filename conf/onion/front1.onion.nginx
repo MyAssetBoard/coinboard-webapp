@@ -10,6 +10,6 @@ server {
 
 	location / {
 		limit_req zone=limitf1 burst=20 nodelay;
-		proxy_pass http://localhost:3000/;
+		include /usr/src/app/ipview;
 	}
 }
