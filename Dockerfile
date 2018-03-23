@@ -51,8 +51,7 @@ RUN cd /usr/src/app &&  yarn install && cd coin_board && yarn install
 COPY . ./usr/src/app/
 
 ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
-ADD   conf/onion/front1.onion.nginx /etc/nginx/sites-enabled/front1.onion.nginx
-ADD   conf/onion/front2.onion.nginx /etc/nginx/sites-enabled/front2.onion.nginx
+ADD   conf/onion/*.onion.nginx /etc/nginx/sites-enabled/
 ADD   conf/onion/torrc /etc/tor/torrc
 
 #Tor prop for 'fofo' user
