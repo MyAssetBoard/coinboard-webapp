@@ -1,0 +1,15 @@
+# Rate limit entry on node view upstream
+limit_req_zone $binary_remote_addr zone=limitf3:2m rate=30r/s;
+
+server {
+	listen unix:/tmp/sock.world;
+
+	# SSL configuration
+	#
+	# @TODO : Add self signed ssl conf for localhost paquets ?
+
+	location / {
+		limit_req zone=limitf3 burst=20 nodelay;
+		include /usr/src/app/ipsock;
+	}
+}
