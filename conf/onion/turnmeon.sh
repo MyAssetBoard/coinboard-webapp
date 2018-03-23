@@ -14,5 +14,6 @@ sudo chown -R fofo:fofo log tmpdata && tor \
 > /usr/src/app/ipview && \
 echo "proxy_pass http://$(ip -o -4 a s eth0 | awk '{ print $4 }' | cut -d/ -f1):3001;" \
 > /usr/src/app/ipsock && \
+mkdir -p /usr/src/app/DTAFOOD/news && mkdir /usr/src/app/DTAFOOD/price \
 sudo nginx && ./INIT_DEV.sh -rl production onion && \
 screen -dmS applog ./node_modules/pm2/bin/pm2 logs
