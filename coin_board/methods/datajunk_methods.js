@@ -281,7 +281,7 @@ DataJunk.prototype.pukedata = function( what ) {
 if ( process.env.LAUNCH_TASK == 'markme' ) {
         testmarks();
 } else if ( process.env.LAUNCH_TASK == 'goeat' ) {
-        goshopping( reqmodels );
+        goeat( reqmodels );
 }
 
 module.exports = DataJunk;
