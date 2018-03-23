@@ -1,7 +1,7 @@
 /* global io:false */
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
-        const assetws = io.connect( url );
+        const assetws = io.connect( url + '/assets' );
         $( '#' + window.location.pathname.split( '/' )[2] ).toggleClass( 'active' );
 
         /**
