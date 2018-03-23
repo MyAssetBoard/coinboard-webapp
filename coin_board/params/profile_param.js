@@ -14,13 +14,15 @@ const toraddr = {
                 let buff = new Buffer( 22 );
                 let fn = '/var/lib/tor/hidnview/hostname';
                 buff = fs.readFileSync( fn, 'ascii' );
-                return buff.toString().replace( /\s+/g, ' ' ).trim();
+                let ret = buff.toString().replace( /\s+/g, ' ' ).trim();
+                return ret;
         },
         socks: function() {
                 let buff = new Buffer( 22 );
                 let fn = '/var/lib/tor/hidnws/hostname';
                 buff = fs.readFileSync( fn, 'ascii' );
-                return buff.toString().replace( /\s+/g, ' ' ).trim();
+                let ret = buff.toString().replace( /\s+/g, ' ' ).trim();
+                return ret += ':124';
         },
 };
 
