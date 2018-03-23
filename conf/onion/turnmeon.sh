@@ -10,8 +10,9 @@ cd /usr/src/app && \
 sudo chown -R fofo:fofo /var/lib/tor && \
 sudo chmod -R 700 /var/lib/tor && \
 sudo chown -R fofo:fofo /var/log/tor && \
-sudo chown -R fofo:fofo log tmpdata && tor \
+sudo chown -R fofo:fofo log tmpdata && \
 sudo chown -R fofo /var/log/nginx && \
+tor && \
 export IP=$(ip -o -4 a s eth0 | awk '{ print $4 }' | cut -d/ -f1) \
 && echo "proxy_pass http://$(ip -o -4 a s eth0 | awk '{ print $4 }' | cut -d/ -f1):3000;" \
 > /usr/src/app/ipview && \
