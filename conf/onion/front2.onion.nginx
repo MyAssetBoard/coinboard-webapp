@@ -10,6 +10,6 @@ server {
 
 	location / {
 		limit_req zone=limitf2 burst=20 nodelay;
-		include /usr/src/app/ipsocks;
+		include /usr/src/app/ipview;
 	}
 }
