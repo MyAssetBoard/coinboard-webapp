@@ -27,7 +27,7 @@ process.env.NODE_ENV == 'development'
 /** Listen on provided port, on all network interfaces. */
 server.listen( port, addr, function() {
         let log = 'WEB_VIEW - server is listening on :\n';
-        log += 'addr: [' + addr + ', port ' + port;
+        log += 'addr: [' + addr + '], port ' + port;
         process.env.NODE_ENV == 'development'
                 ? console.log( log )
                 : log;

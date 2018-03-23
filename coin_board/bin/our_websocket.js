@@ -20,7 +20,7 @@ let regco = 0;
 let assetco = 0;
 
 let log = 'WEBSOCKET - server is listening on :\n';
-log += 'addr: [' + addr + ', port ' + port;
+log += 'addr: [' + addr + '], port ' + port;
 process.env.NODE_ENV == 'development'
         ? console.log( log )
         : log;
