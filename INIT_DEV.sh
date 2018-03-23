@@ -43,8 +43,9 @@ function usage ()
 
 	-c:$BLD.Setup$CL your nodejs dev environnement$BLD**$CL
 	-d:$BLD.Generate$CL html doc with jsdoc
-	-o:$BLD.Launch docker .onion service instance of app
-	-p:$BLD.Freshly bake your Dockerfile for first time use
+	-o:$BLD.Launch docker$CL .onion service instance of app
+	-p:$BLD.Init$CL params and Cook your Dockerfile for first time
+	-rb:$BLD.Rebuild Dockerfile if alpine host
 	-r:$BLD.reset$CL database tmpdata and restart app in test mode
 	-s:$BLD.run$CL app with pm2 (production env)
 	-t:$BLD.run$CL app in dev mode (watch for file change)
@@ -77,7 +78,7 @@ function nodesetup ()
 	"
 }
 
-function app_doshopping()
+function app_initshop()
 {
 	sudo adduser --system \
 	--shell /bin/bash \
@@ -86,6 +87,13 @@ function app_doshopping()
 	sudo chown -R fofo:$USER conf/onion/kingdom && \
 	sudo chmod -R 700 conf/onion/kingdom && \
 	#sudo chmod -R 600 conf/onion/kingdom/*/private_key && \
+	docker build -t beefonion:latest .
+}
+
+function app_alpinecooking()
+{
+	sudo apk add paxctl && \
+	sudo paxctl -cm $(which node) && \
 	docker build -t beefonion:latest .
 }
 
@@ -208,7 +216,7 @@ do
 		;;
 
 		'n-p')
-		app_doshopping
+		app_initshop
 		exit 0
 		;;
 
@@ -235,6 +243,11 @@ do
 
 		'n-ck')
 		app_cleankitchen
+		exit 0
+		;;
+
+		'n-rb')
+		app_alpinecooking
 		exit 0
 		;;
 
