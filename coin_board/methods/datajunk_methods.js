@@ -117,7 +117,7 @@ function DataJunk() {
         this.reqmodels = reqmodels;
         this.flags = flags;
         this.goeat = goeat;
-        this.testmarks = testmarks;
+        this.gomine = gomine;
 }
 
 /**

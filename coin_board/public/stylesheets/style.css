@@ -13,7 +13,11 @@ canvas {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	-webkit-user-select: none;
-	width: 50px;
+	width: 150px;
+}
+
+iframe {
+	background-color: white;
 }
 
 .navbar-default {
