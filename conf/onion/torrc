@@ -83,7 +83,7 @@ HiddenServicePort 80 unix:/tmp/repl.world
 
 # WebSocket --
 HiddenServiceDir  /var/lib/tor/hidnws/
-HiddenServicePort 124 127.0.0.1:3001
+HiddenServicePort 124 unix:/tmp/sock.world
 
 ########################    ###############
 
