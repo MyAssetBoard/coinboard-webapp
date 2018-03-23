@@ -44,7 +44,7 @@ const reqmodels = {
                                 if ( r.item[it] ) {
                                         let elem = r.item[it];
                                         let d = elem.description;
-                                        let dsc = where.clean( d );
+                                        let dsc = this.clean( d );
                                         elem.description = dsc;
                                         clean[it] = elem;
                                 }
