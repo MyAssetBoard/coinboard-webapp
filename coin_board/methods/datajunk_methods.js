@@ -281,13 +281,7 @@ DataJunk.prototype.pukedata = function( what ) {
 if ( process.env.LAUNCH_TASK == 'markme' ) {
         testmarks();
 } else if ( process.env.LAUNCH_TASK == 'goeat' ) {
-        // goeat( reqmodels );
-        let foo = new DataJunk();
-        foo.begdata( reqmodels.crcomp, function( res ) {
-                if ( res ) {
-                        console.log( res );
-                }
-        } );
+        goshopping( reqmodels );
 }
 
 module.exports = DataJunk;
