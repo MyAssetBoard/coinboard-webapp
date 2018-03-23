@@ -5,6 +5,18 @@ $( document ).ready( function() {
         const auth = io.connect( url + '/auth' );
 
         /**
+        * Telegram auth
+        * @param {Object} user
+        */
+        function onTelegramAuth( user ) {
+                let lg = 'You are successfully logged in as ';
+                console.log( lg + user.first_name + (
+                        user.last_name
+                        ? ' ' + user.last_name
+                        : '') );
+        }
+
+        /**
         * @param {Object} data
         */
         function fillPopup( data ) {
