@@ -7,6 +7,7 @@ const os = require( 'os' );
 const ni = os.networkInterfaces();
 const myip = ni.eth0[0].address;
 /** Onion addr get method :*/
+const fs = require( 'fs' );
 const toraddr = {
         view: function() {
                 let buff = new Buffer( 22 );
