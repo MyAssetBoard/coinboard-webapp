@@ -21,7 +21,7 @@ gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
 
 RUN apt-get install -y curl
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 
 RUN   apt-get update && apt-get install -y \
 	tor \
