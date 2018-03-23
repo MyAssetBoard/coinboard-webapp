@@ -7,8 +7,17 @@ const fs = require( 'fs' );
 const Crud = require( './mongo_crud' );
 const colors = require( './djunk/colors' );
 const reqmodels = require( './djunk/reqmodels' );
-const eatdiner = require( './djunk/eatdiner' );
+const eatd = require( './djunk/eatdiner' );
 
+/**
+* Dummy helper function to avoid 80 column long line
+* @param {Object} res
+* @param {Object} ts
+* @param {Object} obj
+*/
+function getres( res, ts, obj ) {
+        res[ts.val] = eatd.getres( obj, ts );
+}
 /**
 * Parsing helper function
 * 1 - Tag subject from title
@@ -32,9 +41,9 @@ function flags( col, dt, res, ts ) {
                                                 cmp: res[ts.val - 1],
                                                 tg: '',
                                         };
-                                        eatdiner.checkwrd( obj.wr, obj.wh );
+                                        eatd.checkwrd( obj.wr, obj.wh );
                                         if ( col.check( obj ) ) {
-                                                res[ts.val] = eatdiner.getres( obj, ts );
+                                                getres( res, ts, obj );
                                         }
                                 }
                         }
@@ -43,7 +52,18 @@ function flags( col, dt, res, ts ) {
 };
 
 /**
-* Launch data crawl
+* Dummy helper for logging (and avoid 80 colomn long lines)
+*/
+function logeat() {
+        let log = 'DATA_JUNK: New feed ';
+        log += 'inserted in db';
+        process.env.NODE_ENV == 'development'
+                ? console.log( log )
+                : log;
+}
+
+/**
+* Launch data crawl for all sources in reqmodels
 * @param {Object} where source id
 */
 function goeat( where ) {
@@ -60,11 +80,7 @@ function goeat( where ) {
                                         };
                                         data.digest( d ).then( function( res ) {
                                                 if ( res ) {
-                                                        let log = 'DATA_JUNK: New feed ';
-                                                        log += 'inserted in db';
-                                                        process.env.NODE_ENV == 'development'
-                                                                ? console.log( log )
-                                                                : log;
+                                                        logeat();
                                                 }
                                         } ).catch( function( rej, err ) {
                                                 if ( err || rej ) {
@@ -84,7 +100,7 @@ function goeat( where ) {
 /**
 * Simple launch data mining aka 'eat' function
 */
-function testmarks() {
+function gomine() {
         const data = new DataJunk();
         data.pukedata( {} ).then( function( res ) {
                 let test = data.eat( res );
@@ -115,14 +131,14 @@ DataJunk.prototype.eat = function( dset ) {
                 val: 0,
         };
         let res = [];
-        let parseme = eatdiner.getparsed( dset, ts );
+        let parseme = eatd.getparsed( dset, ts );
 
         for ( let a in parseme ) {
                 if ( parseme[a] ) {
-                        eatdiner.checkwhat( parseme, a );
+                        eatd.checkwhat( parseme, a );
                         for ( let b in colors ) {
                                 if ( colors[b] ) {
-                                        eatdiner.checkstyle( b );
+                                        eatd.checkstyle( b );
                                         colors[b].id = b;
                                         flags( colors[b], parseme[a], res, ts );
                                 }
@@ -279,7 +295,7 @@ DataJunk.prototype.pukedata = function( what ) {
 };
 
 if ( process.env.LAUNCH_TASK == 'markme' ) {
-        testmarks();
+        gomine();
 } else if ( process.env.LAUNCH_TASK == 'goeat' ) {
         goeat( reqmodels );
 }
