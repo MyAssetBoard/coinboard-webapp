@@ -2,7 +2,7 @@
 
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
-        const auth = io.connect( url );
+        const auth = io.connect( url + '/login' );
 
         /**
         * @param {Object} data
