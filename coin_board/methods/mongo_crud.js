@@ -44,7 +44,7 @@ Crud.prototype.insert = function( coll, data, callback ) {
                         }
                 } );
         } ).catch( function( rej, err ) {
-                if ( err ) {
+                if ( err || rej ) {
                         callback && callback( err );
                         throw err;
                 }
