@@ -243,9 +243,11 @@ DataJunk.prototype.dbthis = function( s, callback ) {
         insert.feed = s.d;
         crud.insert( 'DTAFOOD', insert, function( res, err ) {
                 let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-                log += ' News 0 : ' + insert.feed[0].title;
+                log += '[ ' + insert.feed && insert.feed[0]
+                        ? insert.feed[0].title
+                        : JSON.stringify( insert );
                 process.env.NODE_ENV == 'development'
-                        ? console.log( log + '\n' + res.results )
+                        ? console.log( log + ']\nResults :\n' + res.results )
                         : log;
                 if ( err ) {
                         callback && callback( err );
