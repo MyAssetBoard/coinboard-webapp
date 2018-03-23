@@ -5,8 +5,15 @@
 
 /** PORT to connect to */
 const port = process.env.WSPORT || '3001';
+const os = require( 'os' );
+const ni = os.networkInterfaces();
+const addr = ni.eth0[0].address;
 /** SOCKET serv startup */
-const io = require( 'socket.io' )( port );
+const http = require( 'http' );
+const server = http.createServer();
+server.listen( port, addr );
+const io = require( 'socket.io' )( server );
+
 /** NUMBER of connected sesion on each room */
 let authco = 0;
 let regco = 0;
