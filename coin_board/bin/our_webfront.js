@@ -19,14 +19,15 @@ app.set( 'port', port );
 /** Create HTTP server.*/
 
 const server = http.createServer( app );
-let log = 'WEB_VIEW - coin_board micro service started';
+let log = 'WEB_VIEW - coin_board view micro service started';
 process.env.NODE_ENV == 'development'
         ? console.log( log )
         : log;
 
 /** Listen on provided port, on all network interfaces. */
 server.listen( port, addr, function() {
-        let log = 'WEB_VIEW - server is listening';
+        let log = 'WEB_VIEW - server is listening on :\n';
+        log += 'addr: [' + addr + ', port ' + port;
         process.env.NODE_ENV == 'development'
                 ? console.log( log )
                 : log;
