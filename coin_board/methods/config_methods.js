@@ -2,7 +2,7 @@ const os = require( 'os' );
 const ni = os.networkInterfaces();
 const myip = process.env.SERV_ENV == 'local'
         ? ni.wlan0[0].address
-        : ni.docker[0].address;
+        : ni.lo[0].address;
 const fs = require( 'fs' );
 let toraddr = {
         view: function() {
