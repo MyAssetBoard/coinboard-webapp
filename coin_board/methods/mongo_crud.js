@@ -1,5 +1,5 @@
 /**
-* @file mongo CRUD methods definitions
+* @file MongoDB CReateUpdateDelete methods definitions
 * @author based on Mongo doc and edited by Trevis Gulby
 */
 

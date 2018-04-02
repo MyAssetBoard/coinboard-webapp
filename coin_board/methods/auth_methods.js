@@ -1,21 +1,23 @@
 /**
 * @file login methods definitions
-* @author based on express boilerplate and edited by Trevis Gulby
+* @author Trevis Gulby
 */
 
-/** dep import */
+/** Mongodb database object import */
 const ObjectID = require( 'mongodb' ).ObjectID;
+/** Crypt methods import */
 const Crypt = require( '../methods/crypt_methods' );
+/** Crud methods import */
 const Crud = require( '../methods/mongo_crud' );
 
 /**
-*@brief Auth class contructor
+* Auth class contructor
 */
 function Auth() {}
 
 /**
-* @param {string} str
-* @return {bool}
+* @param {string} str the tested encoded string
+* @return {bool} is a valid encoded uri param
 */
 function isEncoded( str ) {
         try {
@@ -29,8 +31,8 @@ function isEncoded( str ) {
 }
 
 /**
-* @param {string} address
-* @return {bool}
+* @param {string} address ethereum address user supplied
+* @return {bool} true if is a valid address , false otherwise
 */
 function iscoinAddr( address ) {
         let ticker;
@@ -135,8 +137,8 @@ function checkUsr( data ) {
 }
 
 /**
-* @param {Object} d
-* @return {Object}
+* @param {Object} d the client sent object
+* @return {Object} the checked object if valid or undefined otherwise
 */
 function checkRegFields( d ) {
         if ( !d.iname || !d.imail || !d.isocket ) {

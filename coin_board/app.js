@@ -1,3 +1,8 @@
+/**
+* @file Application view setup and error management
+* @author based on Express app and edited by Trevis Gulby
+*/
+
 /** Depencies import */
 const express = require( 'express' );
 const path = require( 'path' );
@@ -7,19 +12,25 @@ const bodyParser = require( 'body-parser' );
 const Crypt = require( './methods/crypt_methods' );
 const crypt = new Crypt();
 
-/** routes, aka router overloads import */
+/** index router overloads import */
 const index = require( './routes/index' );
+/** assets router overloads import */
 const assets = require( './routes/assets' );
+/** login router overloads import */
 const login = require( './routes/login' );
+/** signin router overloads import */
 const signin = require( './routes/signin' );
+/** profile router overloads import */
 const profile = require( './routes/profile' );
+/** livestream router overloads import */
 const livestream = require( './routes/livestream' );
+/** error router overloads import */
 const errorp = require( './params/error_param' );
-
 /** Allowed methods settings */
 const allowedMethods = ['GET'];
-
+/** Yes this is an express app */
 const app = express();
+/** Http header sec settings */
 const options = {
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'DENY',
@@ -33,7 +44,7 @@ log += JSON.stringify( options ) + ' ]';
 process.env.NODE_ENV == 'infosec'
         ? console.log( log )
         : log;
-
+/** Favicon static param */
 const favOptions = {
         dotfiles: 'ignore',
         etag: false,
@@ -45,8 +56,9 @@ const favOptions = {
         redirect: false,
 };
 
-/** view engine setup */
+/** view engine path setup */
 app.set( 'views', path.join( __dirname, 'views' ) );
+/** view engine setup */
 app.set( 'view engine', 'ejs' );
 
 /** Global app setup */
@@ -59,7 +71,7 @@ app.use( cookieParser( 'random_string_goes_here' ) );
 app.use( express.static( path.join( __dirname, 'public' ), {etag: false} ) );
 app.use( express.static( path.join( __dirname, 'public/javascripts' ) ) );
 
-// Remove console log in production mode
+/** Remove console log in production mode */
 let outputavert = 'NODE_ENV=production| (No more console.log output)';
 outputavert += ' (unless true)';
 
@@ -74,19 +86,22 @@ if ( process.env.NODE_ENV == 'development' ) {
         console.log( output );
         app.use( logger( 'dev' ) );
 }
-/**
-* Refresh AES encrypt key every 2 hour
-*/
+/** Refresh AES encrypt key every 2 hour */
 const h = 2;
 const intergen = h * 60 * 60 * 1000;
 crypt.genrandomtocken();
 setInterval( crypt.genrandomtocken, intergen );
-/** Routes import */
+/** Index router import */
 app.use( '/', index );
+/** Login router import */
 app.use( '/login', login );
+/** Signin router import */
 app.use( '/signin', signin );
+/** Myassets router import */
 app.use( '/assets', assets );
+/** Profile router import */
 app.use( '/profile', profile );
+/** Livestream router import */
 app.use( '/livestream', livestream );
 
 /** catch 404 and forward to error handler */

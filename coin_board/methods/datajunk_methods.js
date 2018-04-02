@@ -2,11 +2,17 @@
 * @file DajaJunk module, our friendly scrapper / eater
 * @author Trevis Gulby
 */
+/** http module import for sources requests */
 const https = require( 'https' );
+/** Fs dep import for writing feeds */
 const fs = require( 'fs' );
+/** Home made crud module import */
 const Crud = require( './mongo_crud' );
+/** Parsing options import */
 const colors = require( './djunk/colors' );
+/** Remodels import */
 const reqmodels = require( './djunk/reqmodels' );
+/** Eatdiner import */
 const eatd = require( './djunk/eatdiner' );
 
 /**
@@ -64,7 +70,7 @@ function logeat() {
 
 /**
 * Launch data crawl for all sources in reqmodels
-* @param {Object} where source id
+* @param {Object} where source id, url, param etc
 */
 function goeat( where ) {
         const data = new DataJunk();
@@ -97,9 +103,7 @@ function goeat( where ) {
         }
 }
 
-/**
-* Simple launch data mining aka 'eat' function
-*/
+/** Simple launch data mining aka 'eat' function */
 function gomine() {
         const data = new DataJunk();
         data.pukedata( {} ).then( function( res ) {
@@ -110,9 +114,7 @@ function gomine() {
         } );
 }
 
-/**
-* DataJunk class constructor
-*/
+/** DataJunk class constructor */
 function DataJunk() {
         this.reqmodels = reqmodels;
         this.flags = flags;
@@ -156,8 +158,8 @@ DataJunk.prototype.eat = function( dset ) {
 };
 
 /**
-* @param {string} where
-* @param {function} callback
+* @param {string} where Object containing all source infos and parsing methods
+* @param {function} callback to get the result
 */
 DataJunk.prototype.begdata = function( where, callback ) {
         let req = https.get( where.req, function( res ) {
@@ -166,7 +168,7 @@ DataJunk.prototype.begdata = function( where, callback ) {
                         bodyChunks.push( chunk );
                 } ).on( 'end', function() {
                         let body = Buffer.concat( bodyChunks );
-                        // Careful with non JSON Responses !!
+                        /** Careful with non-JSON responses !! */
                         let ifjson = JSON.parse( body );
                         let clean = [];
                         if ( ifjson.query && ifjson.query.results ) {
@@ -188,7 +190,7 @@ DataJunk.prototype.begdata = function( where, callback ) {
 };
 
 /**
-* wr stand for write file
+* Wr aka write file, write gathered json inside DTAFOOD directory
 * @param {string} fn file name
 * @param {Object} d data to write json fmt
 * @return {Promise} d corresponding to writed data

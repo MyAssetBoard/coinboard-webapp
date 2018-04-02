@@ -1,6 +1,6 @@
 /**
 * @file Main runable executable for webview micro service
-* @author base on Express app and edited by Trevis Gulby
+* @author based on Express app and edited by Trevis Gulby
 */
 
 /** Module dependencies.*/
@@ -19,7 +19,6 @@ const port = normalizePort( process.env.PORT || '3000' );
 app.set( 'port', port );
 
 /** Create HTTP server.*/
-
 const server = http.createServer( app );
 let log = 'WEB_VIEW - coin_board view micro service started';
 process.env.NODE_ENV == 'development'
@@ -39,7 +38,7 @@ server.on( 'listening', onListening );
 
 /**
 * Normalize a port into a number, string, or false.
-* @param {number} val
+* @param {number} val port number gathered from host env
 * @return {number} val
 */
 function normalizePort( val ) {
@@ -59,8 +58,8 @@ function normalizePort( val ) {
 }
 
 /**
-*Event listener for HTTP server "error" event.
-* @param {Object} error
+* Event listener for HTTP server "error" event.
+* @param {Object} error throwed error from pages
 */
 function onError( error ) {
         if ( error.syscall !== 'listen' ) {
@@ -75,7 +74,7 @@ function onError( error ) {
                 ? 'Pipe ' + port
                 : 'Port ' + port;
 
-        // handle specific listen errors with friendly messages
+        /** handle specific listen errors with friendly messages */
         switch ( error.code ) {
                 case 'EACCES':
                         console.error( bind + ' requires elevated privileges' );

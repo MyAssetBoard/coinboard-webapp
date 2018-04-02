@@ -3,18 +3,15 @@
 * @author Trevis Gulby
 */
 
-/** dep import */
+/** CryptoJS dependency import for AES usage */
 const CryptoJS = require( 'crypto-js' );
+/** fs dep import for reding and writing encryption secret */
 const fs = require( 'fs' );
 
-/**
-* @brief Crypt class contructor
-*/
+/** Crypt class contructor */
 function Crypt() {}
 
-/**
-* self explanatory
-*/
+/** Pretty much self explanatory */
 function cleartmp() {
         ROOT_APP_PATH = fs.realpathSync( '.' );
         fs.unlink( 'log.txt', ( err ) => {
@@ -30,7 +27,7 @@ function cleartmp() {
 
 /**
 * Read tmp for new random key
-* @return {string}
+* @return {string} the readed buffer
 */
 function readtmp() {
         let buff = new Buffer( 22 );
@@ -44,8 +41,8 @@ function readtmp() {
 }
 
 /**
-* write tmp
-* @param {string} res
+* Write tmp
+* @param {string} res encryption secret
 */
 function writetmp( res ) {
         ROOT_APP_PATH = fs.realpathSync( '.' );
@@ -61,7 +58,7 @@ function writetmp( res ) {
 }
 
 /**
-* Extract buffer from dev.urandom
+* Extract 85 char buffer from host /dev/urandom
 * @param {function} callback
 * @return {string} 22 bytes of 85 bytes random chars buffer
 */
@@ -88,8 +85,8 @@ function getRandom( callback ) {
 
 /**
 * Take a string p, and try decryption with 'log.txt' secret
-* @param {string} p
-* @return {string} plaintext
+* @param {string} p the string to be decrypted
+* @return {string} plaintext, the decrypted p param
 */
 function dcryptParams( p ) {
         let plaintext = null;
@@ -114,8 +111,8 @@ function dcryptParams( p ) {
 /**
 * Take a p plaintext string and encrypt it with AES
 * and the 'log.txt' secret
-* @param {string} p
-* @return {string}
+* @param {string} p the string to be encrypt (the user db uuid mostly)
+* @return {string} the encrypted string
 */
 function encryptParams( p ) {
         let enckey = readtmp();

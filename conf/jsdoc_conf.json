@@ -1,22 +1,23 @@
 {
-  "tags": {
-    "allowUnknownTags": true
-  },
-  "source": {
-    "exclude": ["node_modules", "coin_board/node_modules"],
-    "include": ["coin_board/", "coin_board/bin"],
-    "includePattern": ".+\\.js(doc|x)?$",
-    "excludePattern": "(^|\\/|\\\\)_"
-  },
-  "plugins": [
-    "plugins/markdown",
-    "plugins/summarize"
-  ],
-  "templates": {
-    "cleverLinks": false,
-    "monospaceLinks": false,
-    "default": {
-      "outputSourceFiles": true
-    }
-  }
+        "tags": {
+                "allowUnknownTags": true
+        },
+        "source": {
+                "include": ["coin_board/", "coin_board/bin",
+			"coin_board/methods",
+			"coin_board/params",
+			"coin_board/routes"
+		],
+                "exclude": ["node_modules/"],
+                "includePattern": ".+\\.js(doc|x)?$",
+                "excludePattern": "(^|\\/|\\\\)_"
+        },
+        "plugins": [],
+        "templates": {
+                "cleverLinks": false,
+                "monospaceLinks": false,
+                "default": {
+                        "outputSourceFiles": true
+                }
+        }
 }

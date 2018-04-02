@@ -3,11 +3,15 @@
 * @author based on telegraf module exemples and edited by Trevis Gulby
 */
 
+/** Import telegraf module for bot management */
 const Telegraf = require( 'telegraf' );
+/** Import refresh bot function (aka fetch and store feeds ) */
 const rf = require( './acts/refresh_act' );
+/** Import datamine bot function (aka parse feeds ) */
 const dm = require( './acts/datamine_act' );
+/** Import tree bot function (aka $ tree DTAFOOD ) */
 const ls = require( './acts/showfiles_act' );
-
+/** telegraf module init */
 const bot = new Telegraf( process.env.BOT_TOKEN );
 bot.start( ( ctx ) => {
         console.log( 'started:', ctx.from.id );
@@ -18,7 +22,7 @@ bot.hears( /hi/i, ( ctx ) => ctx.reply( 'Hey there!' ) );
 bot.hears( /hello/i, ( ctx ) => ctx.reply( 'Hey there!' ) );
 bot.hears( /buy/i, ( ctx ) => ctx.reply( 'Buy-buy! Money-Money!' ) );
 bot.on( 'sticker', ( ctx ) => ctx.reply( '👍' ) );
-
+/** Main bot listening command 'getter' function */
 bot.hears( /\/(.+)/, ( ctx ) => {
         console.log( ctx.update );
         let msgusr = ctx.from.first_name + ' ';
@@ -30,6 +34,7 @@ bot.hears( /\/(.+)/, ( ctx ) => {
         log = 'from [' + msgusr + ' id :';
         log += chatId;
         console.log( log );
+        /** If chat id is your servitor, exec some commands */
         if ( chatId == 408942599 ) {
                 if ( cmd == rf.id ) {
                         rf.func( function( d ) {
@@ -50,9 +55,7 @@ bot.hears( /\/(.+)/, ( ctx ) => {
         }
 } );
 
-/**
-* Listen for any kind of messages
-*/
+/** Listen for any kind of messages */
 bot.on( 'message', ( ctx ) => {
         let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
         console.log( 'COINBOARD_BOT: Received msg :' );
@@ -60,4 +63,5 @@ bot.on( 'message', ( ctx ) => {
         console.log( ctx.message.text );
 } );
 
+/** Polling from telegram servers event */
 bot.startPolling();

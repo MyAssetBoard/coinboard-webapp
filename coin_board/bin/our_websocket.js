@@ -16,9 +16,11 @@ const server = http.createServer();
 server.listen( port, addr );
 const io = require( 'socket.io' )( server );
 
-/** NUMBER of connected sesion on each room */
+/** NUMBER of connected sessions on auth room */
 let authco = 0;
+/** NUMBER of connected sessions on register room */
 let regco = 0;
+/** NUMBER of connected sessions on assets room */
 let assetco = 0;
 
 let log = 'WEBSOCKET - server is listening on :\n';
@@ -26,11 +28,11 @@ log += 'addr: [' + addr + '], port ' + port;
 process.env.NODE_ENV == 'development'
         ? console.log( log )
         : log;
-
-/** dep import */
+/** Asset home made module import */
 const Asset = require( '../methods/assets_methods' );
+/** Auth home made module import */
 const Auth = require( '../methods/auth_methods' );
-
+/** Auth room function */
 io.of( '/auth' ).on( 'connection', function( socket ) {
         let log;
         authco += 1;
@@ -56,7 +58,7 @@ io.of( '/auth' ).on( 'connection', function( socket ) {
                 authco -= 1;
         } );
 } );
-
+/** Register room function */
 io.of( '/register' ).on( 'connection', function( socket ) {
         regco += 1;
         let log = socket.id.replace( /\/register#/g, 'User : ' );
@@ -81,7 +83,7 @@ io.of( '/register' ).on( 'connection', function( socket ) {
                 regco -= 1;
         } );
 } );
-
+/** Assets room function */
 io.of( '/assets' ).on( 'connection', function( socket ) {
         let log = socket.id.replace( /\/register#/g, 'User : ' );
         assetco += 1;
