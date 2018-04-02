@@ -9,7 +9,7 @@ const os = require( 'os' );
 const ni = os.networkInterfaces();
 const addr = process.env.SERV_ENV == 'local'
         ? ni.wlan0[0].address
-        : ni.docker[0].address;
+        : ni.docker0[0].address;
 /** SOCKET serv startup */
 const http = require( 'http' );
 const server = http.createServer();
