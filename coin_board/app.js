@@ -7,20 +7,16 @@ const bodyParser = require( 'body-parser' );
 const Crypt = require( './methods/crypt_methods' );
 const crypt = new Crypt();
 
-/** index route import */
+/** routes, aka router overloads import */
 const index = require( './routes/index' );
-/** Assets route import */
 const assets = require( './routes/assets' );
-/** Login route import */
 const login = require( './routes/login' );
-/** Signin route import */
 const signin = require( './routes/signin' );
-/** Profile route import */
 const profile = require( './routes/profile' );
-/** Livestream route import */
 const livestream = require( './routes/livestream' );
-/** Error view params */
 const errorp = require( './params/error_param' );
+
+/** Allowed methods settings */
 const allowedMethods = ['GET'];
 
 const app = express();
@@ -78,6 +74,9 @@ if ( process.env.NODE_ENV == 'development' ) {
         console.log( output );
         app.use( logger( 'dev' ) );
 }
+/**
+* Refresh AES encrypt key every 2 hour
+*/
 const h = 2;
 const intergen = h * 60 * 60 * 1000;
 crypt.genrandomtocken();
