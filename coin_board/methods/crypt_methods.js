@@ -95,8 +95,12 @@ function dcryptParams( p ) {
         let plaintext = null;
         if ( p ) {
                 let enckey = readtmp();
-                let bytes = CryptoJS.AES.decrypt( p, enckey );
-                plaintext = bytes.toString( CryptoJS.enc.Utf8 );
+                try {
+                        let bytes = CryptoJS.AES.decrypt( p, enckey );
+                        plaintext = bytes.toString( CryptoJS.enc.Utf8 );
+                } catch ( err ) {
+                        return plaintext;
+                }
                 let log = 'auth_methods.js|dcryptParams()\n';
                 log += '====Plaintext if succeed [ ';
                 log += plaintext + ' ]';
