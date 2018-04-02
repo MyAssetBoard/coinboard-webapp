@@ -6,11 +6,6 @@
 const express = require( 'express' );
 const router = express.Router();
 const Auth = require( '../methods/auth_methods' );
-const auth = new Auth();
-
-const redirco = process.env.SERV_ENV == 'onion'
-        ? 'http://xu6ylq4kzadh7bcm.onion/assets/dashboard'
-        : 'http://localhost:3000/assets/dashboard';
 const param = require( '../params/login_param' );
 
 /**
@@ -33,8 +28,6 @@ router.post( '/', render403 );
 * @param {Object} res
 */
 function setCookie( req, res ) {
-        /** check if client sent cookie */
-        let cookie = req.cookies.uid;
         let log = '';
         let setting = {
                 maxAge: 900000,
@@ -55,6 +48,7 @@ function setCookie( req, res ) {
 router.get( '/', function( req, res, next ) {
         let chck = req.cookies;
         let log = '';
+        const auth = new Auth();
 
         if ( chck && chck.uid && auth.isvaliduid( chck.uid ) ) {
                 log = '/LOGIN-route : Auth user, session below\n[';
@@ -108,7 +102,7 @@ router.get( '/id/:uid', function( req, res, next ) {
                 process.env.NODE_ENV == 'development'
                         ? console.log( log )
                         : log;
-                res.redirect( redirco );
+                res.redirect( param.tvurl + 'assets/dashboard' );
         } else {
                 log = ( 'invalid uid' );
                 process.env.NODE_ENV == 'development'
