@@ -2,7 +2,7 @@
 
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
-        const auth = io.connect( url + '/auth' );
+        const auth = io.connect( url + 'auth' );
 
         /**
         * Telegram auth

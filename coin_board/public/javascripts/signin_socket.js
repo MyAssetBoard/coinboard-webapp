@@ -2,7 +2,7 @@
 
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
-        const register = io.connect( url + '/register' );
+        const register = io.connect( url + 'register' );
 
         /**
         * @param {Object} data

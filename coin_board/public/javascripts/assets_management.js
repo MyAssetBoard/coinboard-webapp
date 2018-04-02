@@ -1,8 +1,9 @@
 /* global io:false */
 $( document ).ready( function() {
         let url = $( '#cbws' ).text().trim();
-        const assetws = io.connect( url + '/assets' );
-        $( '#' + window.location.pathname.split( '/' )[2] ).toggleClass( 'active' );
+        const assetws = io.connect( url + 'assets' );
+        let objid = '#' + window.location.pathname.split( '/' )[2];
+        $( objid ).toggleClass( 'active' );
 
         /**
         * @param {string} key
@@ -34,7 +35,8 @@ $( document ).ready( function() {
                                 $( '#ppContent' ).append( newline );
                         } );
                 } else {
-                        $( '#ppContent' ).toggleClass( 'alert-info alert-danger' );
+                        let elem = '#ppContent';
+                        $( elem ).toggleClass( 'alert-info alert-danger' );
                         let newline = $( '<p>' );
                         let ct = '<strong> <span class="lnr lnr-warning">';
                         ct += '</span> Error : </strong>';
@@ -92,11 +94,11 @@ $( document ).ready( function() {
 
                 if ( thisInput.iqtt.length && thisInput.isymb.length >= 2 ) {
                         uri += '?fsym=' + thisInput.isymb + '&tsyms=' + 'EUR';
-                        $.get( req_url, function( res ) {
+                        $.get( uri, function( res ) {
                                 if ( res ) {
-                                        let assetval = parseFloat( thisInput.iqtt );
-                                        assetval *= parseFloat( res.EUR );
-                                        res['val'] = assetval;
+                                        let aval = parseFloat( thisInput.iqtt );
+                                        aval *= parseFloat( res.EUR );
+                                        res['val'] = aval;
                                         console.log( res );
                                 }
                         } );
@@ -118,7 +120,8 @@ $( document ).ready( function() {
                                 qtt: inputQtt,
                                 id: usrid,
                         };
-                        console.log( 'to send\n[' + JSON.stringify( req ) + ']' );
+                        let log = 'to send\n[' + JSON.stringify( req ) + ']';
+                        console.log( log );
                         assetws.emit( 'add asset', req );
                 }
         } );

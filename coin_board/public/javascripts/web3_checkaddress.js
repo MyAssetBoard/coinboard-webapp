@@ -1,22 +1,30 @@
 /* global Web3:false */
 
+/**
+* @param {function} callback
+*/
 function getWeb3( callback ) {
         if ( typeof window.web3 === 'undefined' ) {
-                // no web3, use fallback
+                /** no web3, use fallback */
                 console.error( 'Please use a web3 browser' );
         } else {
-                // window.web3 == web3 most of the time. Don't override the provided,
-                // web3, just wrap it in your Web3.
+                /** window.web3 == web3 most of the time.
+                * Don't override the provided, web3, just wrap it in your Web3.
+                */
                 let myWeb3 = new Web3( window.web3.currentProvider );
 
-                // the default account doesn't seem to be persisted, copy it to our
-                // new instance
+                /** the default account doesn't seem to be persisted,
+                * copy it to our new instance
+                */
                 myWeb3.eth.defaultAccount = window.web3.eth.defaultAccount;
 
                 callback( myWeb3 );
         }
 }
 
+/**
+* @param {Object} web3
+*/
 function startApp( web3 ) {
         let yolo = web3.currentProvider;
         let account = web3.eth.defaultAccount;
@@ -49,6 +57,6 @@ function startApp( web3 ) {
 }
 
 window.addEventListener( 'load', function() {
-        // Load WEB3
+        /** Load WEB3 */
         getWeb3( startApp );
 } );
