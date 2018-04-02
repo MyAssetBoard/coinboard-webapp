@@ -278,7 +278,6 @@ Auth.prototype.isvaliduid = function( eUid ) {
         eUid = isEncoded( eUid )
                 ? decodeURIComponent( eUid )
                 : null;
-        let test;
         if ( eUid != null ) {
                 return test = crypt.decryptuid( eUid )
                         ? true
