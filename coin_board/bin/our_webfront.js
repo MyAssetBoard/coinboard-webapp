@@ -11,7 +11,9 @@ const http = require( 'http' );
 /**  listening address definition */
 const os = require( 'os' );
 const ni = os.networkInterfaces();
-const addr = ni.eth0[0].address;
+const addr = process.env.SERV_ENV == 'local'
+        ? ni.wlan0[0].address
+        : ni.docker[0].address;
 /** Get port from environment and store in Express. */
 const port = normalizePort( process.env.PORT || '3000' );
 app.set( 'port', port );

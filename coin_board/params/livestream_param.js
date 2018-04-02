@@ -4,7 +4,9 @@
 */
 const os = require( 'os' );
 const ni = os.networkInterfaces();
-const myip = ni.eth0[0].address;
+const myip = process.env.SERV_ENV == 'local'
+        ? ni.wlan0[0].address
+        : ni.docker[0].address;
 
 const appvurl = process.env.SERV_ENV == 'onion'
         ? 'http://xu6ylq4kzadh7bcm.onion/'

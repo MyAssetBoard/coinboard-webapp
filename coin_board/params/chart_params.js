@@ -36,24 +36,24 @@ const config = {
                                         30,
                                 ],
                         },
-                ]
+                ],
         },
         options: {
                 title: {
                         display: true,
-                        text: 'MinandMaxSettings'
+                        text: 'MinandMaxSettings',
                 },
                 scales: {
                         yAxes: [
                                 {
                                         ticks: {
                                                 suggestedMin: 10,
-                                                suggestedMax: 50
-                                        }
-                                }
-                        ]
-                }
-        }
+                                                suggestedMax: 50,
+                                        },
+                                },
+                        ],
+                },
+        },
 };
 
 module.exports = config;

@@ -6,7 +6,9 @@
 /** Classic ip get method :*/
 const os = require( 'os' );
 const ni = os.networkInterfaces();
-const myip = ni.eth0[0].address;
+const myip = process.env.SERV_ENV == 'local'
+        ? ni.wlan0[0].address
+        : ni.docker[0].address;
 /** Onion addr get method :*/
 const fs = require( 'fs' );
 let toraddr = {

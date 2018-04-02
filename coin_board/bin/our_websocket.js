@@ -7,7 +7,9 @@
 const port = process.env.WSPORT || '3001';
 const os = require( 'os' );
 const ni = os.networkInterfaces();
-const addr = ni.eth0[0].address;
+const addr = process.env.SERV_ENV == 'local'
+        ? ni.wlan0[0].address
+        : ni.docker[0].address;
 /** SOCKET serv startup */
 const http = require( 'http' );
 const server = http.createServer();
