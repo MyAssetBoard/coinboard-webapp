@@ -3,10 +3,10 @@
  * @author based on Mongo doc and edited by Trevis Gulby
  */
 
-/** local Mongodb url */
-const uri = 'mongodb://localhost:27017/';
-
 /**
+ * A new Crud object
+ * @class
+ * @constructor
  * @param {string} dbName
  * @param {string} coll
  */
@@ -19,11 +19,12 @@ function Crud(dbName, coll) {
         'r_users';
     this.MongoClient = require('mongodb').MongoClient;
     this.ObjectId = require('mongodb').ObjectID;
+    this.uri = 'mongodb://localhost:27017/';
 }
 
 Crud.prototype.insert = function(coll, data, callback) {
     let _this = this;
-    _this.MongoClient.connect(uri).then(function(db) {
+    _this.MongoClient.connect(this.uri).then(function(db) {
         const dbo = db.db(_this.dbName);
         let log = 'MONGO - Connected to ' + _this.dbName;
         process.env.NODE_ENV == 'development' ?
@@ -55,7 +56,7 @@ Crud.prototype.insert = function(coll, data, callback) {
 Crud.prototype.checkcred = function(c, callback) {
     let _this = this;
     if (c.username && c.socketid) {
-        _this.MongoClient.connect(uri).then(function(db) {
+        _this.MongoClient.connect(this.uri).then(function(db) {
             let log = 'MONGO - Connected to ' + _this.dbName;
             process.env.NODE_ENV == 'development' ?
                 console.log(log) :
@@ -80,7 +81,7 @@ Crud.prototype.checkcred = function(c, callback) {
 
 Crud.prototype.finduser = function(who, callback) {
     let _this = this;
-    _this.MongoClient.connect(uri).then(function(db) {
+    _this.MongoClient.connect(this.uri).then(function(db) {
         let log = 'MONGO - Connected to ' + _this.dbName;
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
@@ -104,7 +105,7 @@ Crud.prototype.finduser = function(who, callback) {
 
 Crud.prototype.find = function(what, callback) {
     let _this = this;
-    _this.MongoClient.connect(uri).then(function(db) {
+    _this.MongoClient.connect(this.uri).then(function(db) {
         let log = 'MONGO - Connected to ' + _this.dbName;
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
@@ -129,7 +130,7 @@ Crud.prototype.find = function(what, callback) {
 
 Crud.prototype.update = function(who, what, data, callback) {
     let _this = this;
-    _this.MongoClient.connect(uri).then(function(db) {
+    _this.MongoClient.connect(this.uri).then(function(db) {
         const dbo = db.db(_this.dbName);
         const uid = new _this.ObjectId(who);
         const opt = '$push';
@@ -166,7 +167,7 @@ Crud.prototype.update = function(who, what, data, callback) {
 
 Crud.prototype.add = function(who, what, data, callback) {
     let _this = this;
-    _this.MongoClient.connect(uri).then(function(db) {
+    _this.MongoClient.connect(this.uri).then(function(db) {
         const dbo = db.db(_this.dbName);
         const uid = new ObjectId(who);
         const opt = '$push';
