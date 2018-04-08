@@ -151,10 +151,11 @@ Crypt.prototype.encryptuid = function(cUId) {
 };
 
 Crypt.prototype.genrandomtocken = function() {
+    let _this = this;
     this.cleartmp();
     this.getRandom().then(function(res) {
         if (res) {
-            this.writetmp(res);
+            _this.writetmp(res);
             return res;
         }
     }).catch(function(rej, err) {
