@@ -1,3 +1,8 @@
+/**
+* @file Coinbase APIS requests definitions
+* @author coinbase node module and Trevis Gulby
+*/
+
 const Client = require( 'coinbase' ).Client;
 const KEY = process.env.CBK;
 const SC = process.env.CBS;

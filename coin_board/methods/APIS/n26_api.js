@@ -1,3 +1,8 @@
+/**
+* @file N26 APIS requests definitions
+* @author N26 node module and Trevis Gulby
+*/
+
 const N26 = require( 'n26' );
 
 /**
