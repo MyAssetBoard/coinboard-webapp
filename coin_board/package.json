@@ -8,6 +8,7 @@
 	"dependencies": {
 		"async": "^2.6.0",
 		"body-parser": "~1.18.2",
+		"casperjs": "^1.1.4",
 		"coinbase": "^2.0.7",
 		"cookie-parser": "~1.4.3",
 		"crypto-js": "^3.1.9-1",
@@ -15,7 +16,9 @@
 		"express": "~4.15.5",
 		"morgan": "~1.9.0",
 		"n26": "^1.5.3",
+		"oauth": "^0.9.15",
 		"socket.io": "^2.0.4",
-		"telegraf": "^3.19.0"
+		"telegraf": "^3.19.0",
+		"utils": "^0.3.1"
 	}
 }
