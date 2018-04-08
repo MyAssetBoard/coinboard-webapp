@@ -11,11 +11,13 @@ const Crypt = require( '../methods/crypt_methods' );
 const Crud = require( '../methods/mongo_crud' );
 
 /**
-* Auth class contructor
-*/
+ * A new Auth object
+ * @class
+ * @constructor
+ */
 function Auth() {}
 
-/**
+/** try to decode uri component
 * @param {string} str the tested encoded string
 * @return {bool} is a valid encoded uri param
 */
@@ -30,7 +32,7 @@ function isEncoded( str ) {
         return true;
 }
 
-/**
+/** check if user supplied eth address is a valid one
 * @param {string} address ethereum address user supplied
 * @return {bool} true if is a valid address , false otherwise
 */
@@ -51,9 +53,9 @@ function iscoinAddr( address ) {
         return match;
 }
 
-/**
-* @param {Object} d
-* @param {Object} path
+/** strip unecessary user data from db result as page request
+* @param {Object} d the db returned object to be trimed
+* @param {Object} path the requested page / path
 * @return {Object} stripped datas
 */
 function stripD( d, path ) {
@@ -90,12 +92,10 @@ function stripD( d, path ) {
         }
 }
 
-/**
-* @brief basically checking is a decrypted _id
-* exist in user collection and
+/** basically checking if a decrypted _id exist in user collection and
 * strip private fields from result
-* @param {Object} cuid
-* @param {string} path
+* @param {Object} cuid encrypted userid
+* @param {string} path the requested path for stripD()
 * @return {Promise}
 */
 function checkUid( cuid, path ) {
@@ -112,8 +112,7 @@ function checkUid( cuid, path ) {
         } );
 }
 
-/**
-* @brief username /password checking method
+/** username /password checking method
 * @param {Object} data
 * @return {Promise}
 */
@@ -159,8 +158,7 @@ function checkRegFields( d ) {
         return d;
 }
 
-/**
-* @brief register a new user based on a toregister format
+/** register a new user based on a toregister format
 * @param {Object} data
 * @return {Promise} result
 * @TODO : Make toRegister stick with r_usermodel
@@ -189,6 +187,11 @@ Auth.prototype.registerUsr = function( data ) {
         } );
 };
 
+/** check user submitted registering data object
+* @param {Object} data the user submitted datas
+* @param {Object} socket the socket object to get socket id
+* @param {Object} io the io object to send response to client
+*/
 Auth.prototype.checkRegData = function( data, socket, io ) {
         if ( data && data.iname && data.imail && data.isocket ) {
                 if ( data.ieth && data.icurr ) {
@@ -221,6 +224,12 @@ Auth.prototype.checkRegData = function( data, socket, io ) {
         }
 };
 
+/** check user submitted login data object
+* @param {Object} data the user submitted datas
+* @param {Object} socket the socket object to get socket id
+* @param {Object} io the io object to send response to client
+* @return {bool}
+*/
 Auth.prototype.checkcoData = function( data, socket, io ) {
         if ( data['iname'] && data['isocket'] ) {
                 checkUsr( data ).then( function( res ) {
@@ -289,4 +298,7 @@ Auth.prototype.isvaliduid = function( eUid ) {
         }
 };
 
+/** Auth Module to handle all login / signin / register controls
+* @module Auth
+*/
 module.exports = Auth;

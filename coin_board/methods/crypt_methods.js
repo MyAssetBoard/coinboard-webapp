@@ -8,7 +8,10 @@ const CryptoJS = require( 'crypto-js' );
 /** fs dep import for reding and writing encryption secret */
 const fs = require( 'fs' );
 
-/** Crypt class contructor */
+/** Crypt module , handle all the encrypt / infosec tasks
+* @module Crypt
+*/
+/** module::Crypt~Crypt  Crypt module constructor */
 function Crypt() {}
 
 /** Pretty much self explanatory */

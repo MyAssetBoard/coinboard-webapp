@@ -2,6 +2,7 @@
 * @file DajaJunk module, our friendly scrapper / eater
 * @author Trevis Gulby
 */
+
 /** http module import for sources requests */
 const https = require( 'https' );
 /** Fs dep import for writing feeds */
@@ -114,7 +115,11 @@ function gomine() {
         } );
 }
 
-/** DataJunk class constructor */
+/**
+ * A new DataJunk object
+ * @class
+ * @constructor
+ */
 function DataJunk() {
         this.reqmodels = reqmodels;
         this.flags = flags;
@@ -304,4 +309,7 @@ if ( process.env.LAUNCH_TASK == 'markme' ) {
         goeat( reqmodels );
 }
 
+/** DataJunk Module to parse / crawl news, prices etc etc
+* @module DataJunk
+*/
 module.exports = DataJunk;

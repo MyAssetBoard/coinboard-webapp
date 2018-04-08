@@ -3,12 +3,14 @@
 * @author Trevis Gulby
 */
 
+/** Crud methods import */
 const Crud = require( '../methods/mongo_crud' );
+/** Crypt methods import */
 const Crypt = require( '../methods/crypt_methods' );
 
-/**
-* @param {string} str
-* @return {bool}
+/** check if
+* @param {string} str is an encoded param
+* @return {bool} true if true false if not ;)
 */
 function isEncoded( str ) {
         try {
@@ -21,9 +23,17 @@ function isEncoded( str ) {
         return true;
 }
 
-/** Assets constructor */
+/**
+ * A new Asset object
+ * @class
+ * @constructor
+ */
 function Assets() {}
 
+/** Add assets to a user
+* @param {Object} a new client assets data to be recorded
+* @return {Promise} result if success new Error otherwise
+*/
 Assets.prototype.addAssets = function( a ) {
         return new Promise( ( resolve, reject ) => {
                 let crypt = new Crypt();
@@ -61,6 +71,12 @@ Assets.prototype.addAssets = function( a ) {
         } );
 };
 
+/** check user supplied assets
+* @param {Object} data new client assets data to be recorded
+* @param {Objet} socket the socket object to get the receiver id
+* @param {Object} io  the io object to send response
+* @return {bool} true if success false otherwise
+*/
 Assets.prototype.checkAssetData = function( data, socket, io ) {
         if ( data['ticker'] && data['qtt'] && data['id'] ) {
                 let asset = new Assets();
@@ -84,4 +100,7 @@ Assets.prototype.checkAssetData = function( data, socket, io ) {
         return false;
 };
 
+/** Asset Module
+* @module Assets
+*/
 module.exports = Assets;

@@ -1,8 +1,13 @@
+/**
+* @file appconfig module for listening address and more
+* @author Trevis Gulby
+*/
+
 const os = require( 'os' );
 const ni = os.networkInterfaces();
-const myip = process.env.SERV_ENV == 'local'
-        ? ni.wlan0[0].address
-        : ni.docker0[0].address;
+const myip = process.env.SERV_ENV == 'onion'
+        ? ni.docker0[0].address
+        : ni.wlan0[0].address;
 const fs = require( 'fs' );
 let toraddr = {
         view: function() {
@@ -31,5 +36,7 @@ const appconfig = {
         vaddr: appvurl,
         saddr: appsurl,
 };
-
+/** appconfig for listening addresses, hostnames and much more
+* @module appconfig
+*/
 module.exports = appconfig;
