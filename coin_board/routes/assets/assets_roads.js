@@ -56,7 +56,7 @@ const roads = {
                 path: '/assets/api/param',
                 getd: function( callback ) {
                         let xx = {
-                                blocks: ['cb_pfeed'],
+                                blocks: ['api_param'],
                         };
                         callback && callback( xx );
                 },
