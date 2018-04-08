@@ -26,7 +26,7 @@ const httpopts = {
 };
 let log = 'app.js| http options\n';
 log += '==== opts = [ ';
-log += JSON.stringify(options) + ' ]';
+log += JSON.stringify(httpopts) + ' ]';
 /* istanbul ignore next */
 process.env.NODE_ENV == 'infosec' ?
     console.log(log) :
@@ -107,8 +107,8 @@ app.use(function(err, req, res, next) {
     /** append header param to response */
     for (let k in httpopts) {
         /* istanbul ignore next */
-        if (options.hasOwnProperty(k)) {
-            res.append(k, options[k]);
+        if (httpopts.hasOwnProperty(k)) {
+            res.append(k, httpopts[k]);
         }
     }
     /** set locals, only providing error in development */
