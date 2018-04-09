@@ -38,7 +38,11 @@ const appvurl = process.env.SERV_ENV == 'onion' ?
 const appsurl = process.env.SERV_ENV == 'onion' ?
     toraddr.socks() :
     'http://' + myip + ':3001/';
-/** All module stuff */
+
+/** @namespace
+ * @property {string} vaddr view address string
+ * @property {string} saddr socket address string
+ */
 const AppConfig = {
     vaddr: appvurl,
     saddr: appsurl,

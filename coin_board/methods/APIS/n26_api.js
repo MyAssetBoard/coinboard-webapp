@@ -16,8 +16,9 @@ class N26Api {
         this.N26 = require('n26');
     }
 }
+
 /** Give expense, credit and sold for a key elem
- * @param {Object} id usr + psswd combo
+ * @param {Object} id usr + pw combo
  * @param {string} key the element to sum about
  * @return {Promise} res cred, deb and sum on string format if resolved
  */

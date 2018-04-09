@@ -181,8 +181,8 @@ Crypt.prototype.encryptuid = function(cUId) {
  */
 Crypt.prototype.genrandomtocken = function() {
     let _this = this;
-    this.cleartmp();
-    this.getRandom().then(function(res) {
+    _this.cleartmp();
+    _this.getRandom().then(function(res) {
         if (res) {
             _this.writetmp(res);
             return res;
