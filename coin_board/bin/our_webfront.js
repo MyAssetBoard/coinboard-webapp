@@ -70,6 +70,7 @@ CbView.prototype.onError = function(error) {
     }
 };
 
+/** Main launcher function for coinboard view service */
 CbView.prototype.lightmyfire = function() {
     let _this = this;
     let log = 'WEB_VIEW - coin_board view micro service started';
