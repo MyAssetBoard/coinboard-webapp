@@ -1,20 +1,35 @@
 {
+        "opts": {
+                "template": "templates/default",
+                "encoding": "utf8",
+                "destination": "./doc/",
+                "recurse": false
+        },
         "tags": {
                 "allowUnknownTags": true
         },
         "source": {
-                "include": ["coin_board/", "coin_board/bin",
-			"coin_board/methods",
-			"coin_board/params",
-			"coin_board/routes"
-		],
+                "include": [
+                        "coin_board/",
+                        "coin_board/bin",
+                        "coin_board/methods",
+                        "coin_board/bots",
+			"coin_board/bots/acts",
+                        "coin_board/methods/APIS",
+                        "coin_board/methods/djunk",
+                        "coin_board/params",
+                        "coin_board/routes"
+                ],
                 "exclude": ["node_modules/"],
-                "includePattern": ".+\\.js(doc|x)?$",
+                "includePattern": ".+\\.js(doc|md)?$",
                 "excludePattern": "(^|\\/|\\\\)_"
         },
-        "plugins": ["plugins/markdown"],
+        "sourceType": "module",
+        "plugins": [
+                "plugins/markdown"
+        ],
         "templates": {
-                "cleverLinks": false,
+                "cleverLinks": true,
                 "monospaceLinks": false,
                 "default": {
                         "outputSourceFiles": true
