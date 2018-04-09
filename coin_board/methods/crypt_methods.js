@@ -3,19 +3,26 @@
  * @author Trevis Gulby
  */
 
-/**
- * A new Crypt object
+/** Wow so much methods !
  * @class
- * @constructor
  */
-function Crypt() {
-    /** CryptoJS dependency import for AES usage */
-    this.CryptoJS = require('crypto-js');
-    /** fs dep import for reding and writing encryption secret */
-    this.fs = require('fs');
+class Crypt {
+    /** @constructor */
+    constructor() {
+        /**
+         * [CryptoJS](https://github.com/brix/crypto-js) module import
+         * for AES usage
+         */
+        this.CryptoJS = require('crypto-js');
+        /**
+         *[Fs](https://nodejs.org/api/fs.html) module import
+         * for reading and writing encryption secret
+         */
+        this.fs = require('fs');
+    }
 }
 
-/** Pretty much self explanatory */
+/** Pretty much self explanatory, delete old generated key if any */
 Crypt.prototype.cleartmp = function() {
     ROOT_APP_PATH = this.fs.realpathSync('.');
     this.fs.unlink('log.txt', (err) => {
@@ -30,8 +37,8 @@ Crypt.prototype.cleartmp = function() {
 };
 
 /**
- * Read tmp for new random key
- * @return {string} the readed buffer
+ * Read ./log.txt for new random key
+ * @return {string} the readed buffer, 22 bytes long
  */
 Crypt.prototype.readtmp = function() {
     let buff = new Buffer(22);
@@ -45,7 +52,7 @@ Crypt.prototype.readtmp = function() {
 };
 
 /**
- * Write tmp
+ * Write res buffer to temp location (for now as './log.txt')
  * @param {string} res encryption secret
  */
 Crypt.prototype.writetmp = function(res) {
@@ -62,7 +69,8 @@ Crypt.prototype.writetmp = function(res) {
 };
 
 /**
- * Extract 85 char buffer from host /dev/urandom
+ * Extract 85 char buffer from host /dev/urandom thanks to
+ * {@link Crypt#fs} imported module
  * @param {function} callback
  * @return {string} 22 bytes of 85 bytes random chars buffer
  */
@@ -89,9 +97,9 @@ Crypt.prototype.getRandom = function(callback) {
 };
 
 /**
- * Take a string p, and try decryption with 'log.txt' secret
+ * Take a string p, and try Aes decryption with 'log.txt' secret
  * @param {string} p the string to be decrypted
- * @return {string} plaintext, the decrypted p param
+ * @return {string} the decrypted p param as a cleartext string
  */
 Crypt.prototype.dcryptParams = function(p) {
     let plaintext = null;
@@ -114,8 +122,9 @@ Crypt.prototype.dcryptParams = function(p) {
 };
 
 /**
- * Take a p plaintext string and encrypt it with AES
- * and the 'log.txt' secret
+ * Take a p plaintext string read the 'log.txt' encryption secret with
+ * {@link Crypt#readtmp} method, encrypt-it thanks to {@link Crypt#CryptoJS}
+ * imported module and finally put the result to string before returning it.
  * @param {string} p the string to be encrypt (the user db uuid mostly)
  * @return {string} the encrypted string
  */
@@ -133,6 +142,10 @@ Crypt.prototype.encryptParams = function(p) {
     return enc;
 };
 
+/** Simple helper function around {@link Crypt#dcryptParams} method
+ * @param {string} eUid the string to be checked
+ * @return {bool} true if valid euid false otherwise
+ */
 Crypt.prototype.isvaliduid = function(eUid) {
     let test = this.dcryptParams(eUid);
     return test ?
@@ -140,16 +153,32 @@ Crypt.prototype.isvaliduid = function(eUid) {
         false;
 };
 
+/** Decrypt and AES encrypted user id with {@link Crypt#dcryptParams} method
+ * @param {string} eUId the string to be decrypted
+ * @return {string} the decrypted user id
+ * @see Crypt#dcryptParams
+ */
 Crypt.prototype.decryptuid = function(eUId) {
     let ctext = this.dcryptParams(eUId);
     return ctext;
 };
 
+/** Aes encrypt a user id with {@link Crypt#encryptParams} method
+ * @param {string} cUId the string to be encrypted
+ * @return {string} the encrypted user id
+ * @see Crypt#encryptParams
+ */
 Crypt.prototype.encryptuid = function(cUId) {
     let etext = this.encryptParams(cUId);
     return etext;
 };
 
+/**
+ * Clear any old generated key with {@link Crypt#cleartmp} if any,
+ * generate a new random string for Aes secret in {@link Crypt#getRandom} ,
+ * and finally write as 'log.txt' file in current directory thanks to
+ * {@link Crypt#writetmp}
+ */
 Crypt.prototype.genrandomtocken = function() {
     let _this = this;
     this.cleartmp();
@@ -166,3 +195,6 @@ Crypt.prototype.genrandomtocken = function() {
 };
 
 module.exports = Crypt;
+/** All crypto related methods
+ * @module Crypt
+ */

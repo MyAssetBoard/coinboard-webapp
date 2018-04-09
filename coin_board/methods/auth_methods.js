@@ -3,19 +3,24 @@
  * @author Trevis Gulby
  */
 
-/** Auth  class definition */
+/** Wow so much methods !
+ * @class
+ */
 class Auth {
     /** @constructor */
     constructor() {
-        /** Mongodb database object import */
+        /**
+         * [Mongodb](https://mongodb.github.io/node-mongodb-native/index.html),
+         *  [database object](https://bit.ly/2GJCpBY) constructor module import
+         */
         this.ObjectID = require('mongodb').ObjectID;
-        /** Crypt methods import */
+        /** {@link Crypt} methods import */
         this.Crypt = require('../methods/crypt_methods');
-        /** New Crypt Object */
+        /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
-        /** Crud methods import */
+        /** {@link Crud} methods import */
         this.Crud = require('../methods/mongo_crud');
-        /** New Crud Object */
+        /** New {@link Crud} Object */
         this.crud = new this.Crud();
     }
 }
@@ -260,6 +265,13 @@ Auth.prototype.checkcoData = function(data, socket, io) {
     return false;
 };
 
+/** check if eUid is a valid encrypted uid
+ * @param {string} eUid the user submitted datas
+ * @param {string} page the requested page for trimming accordingly by
+ * {@link Auth#stripD}
+ * @see Crypt
+ * @return {Promise} parsed user info if sucess new Error otherwise
+ */
 Auth.prototype.userisAuth = function(eUid, page) {
     let cuid;
     let _this = this;
@@ -285,6 +297,10 @@ Auth.prototype.userisAuth = function(eUid, page) {
     });
 };
 
+/** Check an encrypted Uid for validity
+ * @param {string} eUid
+ * @return {bool} true if true , false if false ;)
+ */
 Auth.prototype.isvaliduid = function(eUid) {
     let _this = this;
     eUid = _this.isEncoded(eUid) ?
@@ -299,8 +315,7 @@ Auth.prototype.isvaliduid = function(eUid) {
     }
 };
 
+module.exports = Auth;
 /** Login and register account methods
- * @see Auth
  * @module Auth
  */
-module.exports = Auth;

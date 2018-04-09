@@ -3,25 +3,26 @@
  * @author Trevis Gulby
  */
 
-/**
- * A new DataJunk object
+/** Wow so much methods !
  * @class
- * @constructor
  */
-function DataJunk() {
-    /** http module import for sources requests */
-    this.https = require('https');
-    /** Fs dep import for writing feeds */
-    this.fs = require('fs');
-    /** Home made crud module import */
-    this.Crud = require('./mongo_crud');
-    this.crud = new this.Crud('test2', 'DTAFOOD');
-    /** Parsing options import */
-    this.colors = require('./djunk/colors');
-    /** Remodels import */
-    this.reqmodels = require('./djunk/reqmodels');
-    /** Eatdiner import */
-    this.eatd = require('./djunk/eatdiner');
+class DataJunk {
+    /** @constructor */
+    constructor() {
+        /** http module import for sources requests */
+        this.https = require('https');
+        /** Fs dep import for writing feeds */
+        this.fs = require('fs');
+        /** Home made crud module import */
+        this.Crud = require('./mongo_crud');
+        this.crud = new this.Crud('test2', 'DTAFOOD');
+        /** Parsing options import */
+        this.colors = require('./djunk/colors');
+        /** Requests models import */
+        this.reqmodels = require('./djunk/reqmodels');
+        /** Eatdiner import */
+        this.eatd = require('./djunk/eatdiner');
+    }
 }
 
 /**
@@ -210,6 +211,12 @@ DataJunk.prototype.wr = function(fn, d) {
     });
 };
 
+/**
+ * {@link DataJunk#begdata}, then {@link DataJunk#wr} and finally
+ * return promise
+ * @param {Object} where see {@link DataJunk#reqmodels}
+ * @return {Promise}
+ */
 DataJunk.prototype.goshopping = function(where) {
     let _this = this;
     return new Promise((resolve, reject) => {
@@ -301,3 +308,6 @@ if (process.env.LAUNCH_TASK == 'markme') {
 }
 
 module.exports = DataJunk;
+/** Multi function module around datamining needs
+ * @module DataJunk
+ */

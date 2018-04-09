@@ -3,10 +3,7 @@
  * @author based on telegraf module exemples and edited by Trevis Gulby
  */
 
-/**
- * A new CoinboardBot object
- * @class
- */
+/** @class */
 class CbBot {
     /** @constructor */
     constructor() {
@@ -85,3 +82,7 @@ CbBot.prototype.turnmeon = function() {
 /** Launching bot !! */
 const mibot = new CbBot();
 mibot.turnmeon();
+/** Telegram bot for coin_board
+ * @see CbBot
+ * @module CbBot
+ */

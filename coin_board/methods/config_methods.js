@@ -3,12 +3,17 @@
  * @author Trevis Gulby
  */
 
+/** os dep to get network interface */
 const os = require('os');
+/** network interface import */
 const ni = os.networkInterfaces();
+/** what ip should i get ? */
 const myip = process.env.SERV_ENV == 'onion' ?
     ni.docker0[0].address :
     ni.wlan0[0].address;
+/** fs module import */
 const fs = require('fs');
+/** check tor hostname if onion service set */
 let toraddr = {
     view: function() {
         let buff = new Buffer(22);
@@ -25,18 +30,21 @@ let toraddr = {
         return ret += ':124';
     },
 };
+/** final app view url for reference in template */
 const appvurl = process.env.SERV_ENV == 'onion' ?
     toraddr.view() :
     'http://' + myip + ':3000/';
+/** final app socket url for reference in template */
 const appsurl = process.env.SERV_ENV == 'onion' ?
     toraddr.socks() :
     'http://' + myip + ':3001/';
-
+/** All module stuff */
 const AppConfig = {
     vaddr: appvurl,
     saddr: appsurl,
 };
-/** appconfig for listening addresses, hostnames and much more
+
+module.exports = AppConfig;
+/** App config module containing  listening addresses, hostnames and much more
  * @module AppConfig
  */
-module.exports = AppConfig;

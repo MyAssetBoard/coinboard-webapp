@@ -3,17 +3,19 @@
  * @author Trevis Gulby
  */
 
-/** Assets class definition */
+/** Wow so much methods !
+ * @class
+ */
 class Assets {
     /** @constructor */
     constructor() {
-        /** Crud methods import */
+        /** {@link Crud} methods import */
         this.Crud = require('../methods/mongo_crud');
-        /** New Crud Object */
+        /** New {@link Crud} Object */
         this.crud = new this.Crud('test2', 'r_users');
-        /** Crypt methods import */
+        /** {@link Crypt} methods import */
         this.Crypt = require('../methods/crypt_methods');
-        /** New Crypt Object */
+        /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
         /** check if
          * @param {string} str is an encoded param
@@ -101,8 +103,7 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
     return false;
 };
 
+module.exports = Assets;
 /** Registered User asset managements methods
- * @see Assets
  * @module Assets
  */
-module.exports = Assets;

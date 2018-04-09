@@ -3,26 +3,28 @@
  * @author based on Mongo doc and edited by Trevis Gulby
  */
 
-/**
- * A new Crud object
+/** Wow so much methods !
  * @class
- * @constructor
- * @param {string} dbName Name of the db to connect to
- * @param {string} coll Name of the db collection to create / update
  */
-function Crud(dbName, coll) {
-    this.dbName = dbName ?
-        dbName :
-        'test2';
-    this.coll = coll ?
-        coll :
-        'r_users';
-    /** Mongodb client object import */
-    this.MongoClient = require('mongodb').MongoClient;
-    /** Mongodb object id object import */
-    this.ObjectId = require('mongodb').ObjectID;
-    /** Mongodb local install uri */
-    this.uri = 'mongodb://localhost:27017/';
+class Crud {
+    /** @constructor
+     * @param {string} dbName Name of the db to connect to
+     * @param {string} coll Name of the db collection to create / update
+     */
+    constructor(dbName, coll) {
+        this.dbName = dbName ?
+            dbName :
+            'test2';
+        this.coll = coll ?
+            coll :
+            'r_users';
+        /** Mongodb client object import */
+        this.MongoClient = require('mongodb').MongoClient;
+        /** Mongodb object id object import */
+        this.ObjectId = require('mongodb').ObjectID;
+        /** Mongodb local install uri */
+        this.uri = 'mongodb://localhost:27017/';
+    }
 }
 
 /** Insert new data in existing collection
@@ -235,3 +237,6 @@ Crud.prototype.add = function(who, what, data, callback) {
 };
 
 module.exports = Crud;
+/** CReate Update Delete methods for mongodb
+ * @module Crud
+ */
