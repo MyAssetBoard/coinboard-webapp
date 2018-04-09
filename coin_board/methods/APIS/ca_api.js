@@ -5,11 +5,16 @@
 
 /**
  * CreditAgricole API wrapper
+ * see [here](https://www.creditagricolestore.fr/castore-data-provider/docs/V1/rest.html)
+ * for ideas
  * @class
  */
-class creditagricoleApi {
+class CreditagricoleApi {
     /** @constructor */
     constructor() {}
 }
 
-module.exports = creditagricoleApi;
+module.exports = CreditagricoleApi;
+/** ### Work In Progress module for [CreditAgricole](https://www.credit-agricole.fr/)
+ * @module CreditagricoleApi
+ */

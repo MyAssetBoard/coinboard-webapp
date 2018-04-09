@@ -7,10 +7,12 @@
  * My N26api overload
  * @class
  */
-class n26Api {
+class N26Api {
     /** @constructor */
     constructor() {
-        /** Perfect module for perfect usage */
+        /** Perfect module for perfect usage
+         * click [here](https://github.com/PierrickP/n26) for doc
+         */
         this.N26 = require('n26');
     }
 }
@@ -19,7 +21,7 @@ class n26Api {
  * @param {string} key the element to sum about
  * @return {Promise} res cred, deb and sum on string format if resolved
  */
-n26Api.prototype.gettrstats = function(id, key) {
+N26Api.prototype.gettrstats = function(id, key) {
     let _this = this;
     return new Promise((resolve, reject) => {
         const acc = new _this.N26(id.usr, id.pw);
@@ -56,3 +58,8 @@ n26Api.prototype.gettrstats = function(id, key) {
         });
     });
 };
+
+module.exports = N26Api;
+/** ### Work In Progress module for [N26](https://my.n26.com) bank
+ * @module N26Api
+ */
