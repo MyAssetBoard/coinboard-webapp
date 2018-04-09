@@ -4,8 +4,8 @@
  */
 
 /**
- * A new Auth object
- * @class
+ * A new Auth module object
+ * @module Auth
  * @constructor
  */
 function Auth() {
@@ -298,4 +298,7 @@ Auth.prototype.isvaliduid = function(eUid) {
     }
 };
 
+/** User login and register  methods
+ * @module Auth
+ */
 module.exports = Auth;

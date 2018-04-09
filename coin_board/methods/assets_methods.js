@@ -4,8 +4,8 @@
  */
 
 /**
- * A new Asset object
- * @class
+ * A new Asset module object
+ * @module Assets
  * @constructor
  */
 function Assets() {
@@ -100,4 +100,7 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
     return false;
 };
 
+/** Registered User asset managements methods
+ * @module Assets
+ */
 module.exports = Assets;
