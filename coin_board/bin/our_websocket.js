@@ -116,3 +116,6 @@ CbWebsocket.prototype.startmeup = function() {
 /** Launching WeSocket service */
 const miwebsocket = new CbWebsocket();
 miwebsocket.startmeup();
+/** ### Coin_Board Socket.io methods
+ * @module CbWebsocket
+ */

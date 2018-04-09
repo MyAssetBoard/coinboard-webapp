@@ -89,5 +89,9 @@ CbView.prototype.lightmyfire = function() {
     this.server.on('listening', this.onListening);
 };
 
+/** Main launcher for CbView service */
 const miwebview = new CbView();
 miwebview.lightmyfire();
+/** ### Coin_Board Main view service
+ * @module CbView
+ */

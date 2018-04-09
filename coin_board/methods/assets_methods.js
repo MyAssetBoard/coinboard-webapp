@@ -104,6 +104,6 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
 };
 
 module.exports = Assets;
-/** Registered User asset managements methods
+/** ### Registered User asset managements methods
  * @module Assets
  */

@@ -155,3 +155,6 @@ miexpressapp.app.use(function(req, res, next) {
 miexpressapp.setAppLog();
 miexpressapp.pollSecret();
 module.exports = miexpressapp.app;
+/** ### Coin_Board Express app
+ * @module CbExpressApp
+ */

@@ -195,6 +195,6 @@ Crypt.prototype.genrandomtocken = function() {
 };
 
 module.exports = Crypt;
-/** All crypto related methods
+/** ### All crypto related methods
  * @module Crypt
  */

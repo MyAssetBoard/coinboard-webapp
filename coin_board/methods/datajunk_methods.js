@@ -58,9 +58,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
     }
 };
 
-/**
- * Dummy helper for logging (and avoid 80 colomn long lines)
- */
+/** Dummy helper for logging progress */
 DataJunk.prototype.logeat = function() {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
@@ -70,7 +68,7 @@ DataJunk.prototype.logeat = function() {
 };
 
 /**
- * Launch data crawl for all sources in reqmodels
+ * Launch data crawl for all sources in {@link DataJunk#reqmodels}
  * @param {Object} where source id, url, param etc
  */
 DataJunk.prototype.goeat = function(where) {
@@ -104,7 +102,7 @@ DataJunk.prototype.goeat = function(where) {
     }
 };
 
-/** Simple launch data mining aka 'eat' function */
+/** Launch data mining aka {@link DataJunk#eat} function */
 DataJunk.prototype.gomine = function() {
     let _this = this;
     this.pukedata(
@@ -308,6 +306,6 @@ if (process.env.LAUNCH_TASK == 'markme') {
 }
 
 module.exports = DataJunk;
-/** Multi function module around datamining needs
+/** ### Multi task module around datamining needs
  * @module DataJunk
  */

@@ -8,8 +8,9 @@
  */
 class Crud {
     /** @constructor
-     * @param {string} dbName Name of the db to connect to
-     * @param {string} coll Name of the db collection to create / update
+     * @param {string} dbName Name of the db to connect to test2 if unset
+     * @param {string} coll Name of the db collection to create / update,
+     * r_users by default
      */
     constructor(dbName, coll) {
         this.dbName = dbName ?
@@ -237,6 +238,6 @@ Crud.prototype.add = function(who, what, data, callback) {
 };
 
 module.exports = Crud;
-/** CReate Update Delete methods for mongodb
+/** ### CReate Update Delete methods for mongodb
  * @module Crud
  */
