@@ -3,21 +3,6 @@
  * @author Trevis Gulby
  */
 
-/** check if
- * @param {string} str is an encoded param
- * @return {bool} true if true false if not ;)
- */
-function isEncoded(str) {
-    try {
-        decodeURIComponent(str);
-    } catch (e) {
-        if (e) {
-            return false;
-        }
-    }
-    return true;
-}
-
 /**
  * A new Asset object
  * @class
@@ -30,6 +15,20 @@ function Assets() {
     /** Crypt methods import */
     this.Crypt = require('../methods/crypt_methods');
     this.crypt = new this.Crypt();
+    /** check if
+     * @param {string} str is an encoded param
+     * @return {bool} true if true false if not ;)
+     */
+    this.isEncoded = function(str) {
+        try {
+            decodeURIComponent(str);
+        } catch (e) {
+            if (e) {
+                return false;
+            }
+        }
+        return true;
+    };
 }
 
 /** Add assets to a user
@@ -46,7 +45,7 @@ Assets.prototype.addAssets = function(a) {
         a.qtt = a.qtt ?
             parseFloat(a.qtt) :
             0.00;
-        a.id = isEncoded(a.id) ?
+        a.id = _this.isEncoded(a.id) ?
             decodeURIComponent(a.id) :
             null;
         a.id = a.id ?
