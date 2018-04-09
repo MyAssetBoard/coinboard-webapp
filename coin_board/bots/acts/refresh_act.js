@@ -1,5 +1,5 @@
 /**
- * @file Refresh bot method definition
+ * @file Refresh (aka /refresh) bot method definition
  * @author Trevis Gulby
  */
 
