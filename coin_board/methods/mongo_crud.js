@@ -22,6 +22,11 @@ function Crud(dbName, coll) {
     this.uri = 'mongodb://localhost:27017/';
 }
 
+/** Insert new data in existing collection
+ * @param {string} coll the string with the collection name
+ * @param {Objet} data the data to be inserted
+ * @param {function} callback to get the response
+ */
 Crud.prototype.insert = function(coll, data, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then(function(db) {
@@ -53,6 +58,10 @@ Crud.prototype.insert = function(coll, data, callback) {
     });
 };
 
+/** Check if user exist based on provided data uid + psswd
+ * @param {Objet} c the data to be checked
+ * @param {function} callback to get the response
+ */
 Crud.prototype.checkcred = function(c, callback) {
     let _this = this;
     if (c.username && c.socketid) {
