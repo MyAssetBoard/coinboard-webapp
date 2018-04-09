@@ -3,114 +3,128 @@
  * @author based on Express app and edited by Trevis Gulby
  */
 
-/** Depencies import */
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const Crypt = require('./methods/crypt_methods');
-const crypt = new Crypt();
-const Routes = require('./routes/routes');
-const errorp = require('./params/error_param');
-/** Allowed methods settings */
-const allowedMethods = ['GET'];
-/** Yes this is an express app */
-const app = express();
-/** Http header sec settings */
-const httpopts = {
-    'X-Content-Type-Options': 'nosniff',
-    'X-Frame-Options': 'DENY',
-    'X-XSS-Protection': '1; mode=block',
-    'etag': 'false',
-};
-let log = 'app.js| http options\n';
-log += '==== opts = [ ';
-log += JSON.stringify(httpopts) + ' ]';
-/* istanbul ignore next */
-process.env.NODE_ENV == 'infosec' ?
-    console.log(log) :
-    log;
-/** Favicon static param */
-const favOptions = {
-    dotfiles: 'ignore',
-    etag: false,
-    extensions: [
-        'htm', 'html',
-    ],
-    index: false,
-    maxAge: '1d',
-    redirect: false,
-};
-
-/** view engine path setup */
-app.set('views', path.join(__dirname, 'views'));
-/** view engine setup */
-app.set('view engine', 'ejs');
-
-/** Global app setup */
-app.disable('x-powered-by');
-app.disable('view cache');
-app.use('/favicon.ico', express.static('images/favicon.ico', favOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded(
-{
-    extended: true,
-}));
-app.use(cookieParser('random_string_goes_here'));
-app.use(express.static(path.join(__dirname, 'public'),
-{
-    etag: false,
-}));
-app.use(express.static(path.join(__dirname, 'public/javascripts')));
-
-/** Remove console log in production mode */
-let outputavert = 'NODE_ENV=production| (No more console.log output)';
-outputavert += ' (unless true)';
-
-/* istanbul ignore next */
-if (process.env.NODE_ENV == 'production') {
-    console.log(outputavert);
+/**
+ * A new express app overloaded class/ module
+ * Yeah yeah it's dirty code I know i'll rewrite later (maybe)
+ * @class
+ */
+class CbExpressApp {
+    /** @constructor */
+    constructor() {
+        let _this = this;
+        /** Depencies import */
+        this.express = require('express');
+        this.path = require('path');
+        this.logger = require('morgan');
+        this.cookieParser = require('cookie-parser');
+        this.bodyParser = require('body-parser');
+        this.Crypt = require('./methods/crypt_methods');
+        this.crypt = new this.Crypt();
+        this.Routes = require('./routes/routes');
+        this.errorp = require('./params/error_param');
+        /** Allowed methods settings */
+        this.allowedMethods = ['GET'];
+        /** Yes this is an express app */
+        this.app = this.express();
+        /** Http header sec settings */
+        this.httpopts = {
+            'X-Content-Type-Options': 'nosniff',
+            'X-Frame-Options': 'DENY',
+            'X-XSS-Protection': '1; mode=block',
+            'etag': 'false',
+        };
+        /** Favicon static param */
+        this.favOptions = {
+            dotfiles: 'ignore',
+            etag: false,
+            extensions: [
+                'htm', 'html',
+            ],
+            index: false,
+            maxAge: '1d',
+            redirect: false,
+        };
+        let log = 'app.js| http options\n';
+        log += '==== opts = [ ';
+        log += JSON.stringify(this.httpopts) + ' ]';
+        /* istanbul ignore next */
+        process.env.NODE_ENV == 'infosec' ?
+            console.log(log) :
+            log;
+        /** view engine path setup */
+        this.app.set('views', _this.path.join(__dirname, 'views'));
+        /** view engine setup */
+        this.app.set('view engine', 'ejs');
+        /** Global app setup */
+        this.app.disable('x-powered-by');
+        this.app.disable('view cache');
+        this.app.use('/favicon.ico',
+            _this.express.static('images/favicon.ico', _this.favOptions)
+        );
+        this.app.use(_this.bodyParser.json());
+        this.app.use(_this.bodyParser.urlencoded(
+        {
+            extended: true,
+        }));
+        this.app.use(_this.cookieParser('random_string_goes_here'));
+        this.app.use(
+            _this.express.static(_this.path.join(__dirname, 'public'),
+            {
+                etag: false,
+            }));
+        this.app.use(
+            _this.express.static(_this.path.join(__dirname,
+                'public/javascripts')));
+    }
 }
 
-/* istanbul ignore if */
-if (process.env.NODE_ENV == 'development') {
-    let output = 'NODE_ENV=development| (Use Morgan for logging requests)';
-    console.log(output);
-    app.use(logger('dev'));
-}
+/** blabla logging output */
+CbExpressApp.prototype.setAppLog = function() {
+    let _this = this;
+    /** Remove console log in production mode */
+    let outputavert = 'NODE_ENV=production| (No more console.log output)';
+    outputavert += ' (unless true)';
+
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV == 'production') {
+        console.log(outputavert);
+    }
+
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV == 'development') {
+        let output = 'NODE_ENV=development| (Use Morgan for logging requests)';
+        console.log(output);
+        _this.app.use(_this.logger('dev'));
+    }
+};
 
 /** Refresh AES encrypt key every 2 hour */
-const h = 2;
-const intergen = h * 60 * 60 * 1000;
-crypt.genrandomtocken();
-setInterval(crypt.genrandomtocken, intergen);
+CbExpressApp.prototype.pollSecret = function() {
+    let _this = this;
+    const h = 2;
+    const intergen = h * 60 * 60 * 1000;
+    this.crypt.genrandomtocken();
+    setInterval(_this.crypt.genrandomtocken, intergen);
+};
 
-/** Index router pages import */
-for (el in Routes) {
-    if (Routes[el]) {
+/** Main launcher for Express App */
+const miexpressapp = new CbExpressApp();
+for (el in miexpressapp.Routes) {
+    if (miexpressapp.Routes[el]) {
         if (el == 'index') {
-            app.use('/', Routes[el]);
+            miexpressapp.app.use('/', miexpressapp.Routes[el]);
         } else {
-            app.use('/' + el, Routes[el]);
+            miexpressapp.app.use('/' + el, miexpressapp.Routes[el]);
         }
     }
 }
 
-/** catch 404 and forward to error handler */
-app.use(function(req, res, next) {
-    let err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-/** error handler */
-app.use(function(err, req, res, next) {
+miexpressapp.app.use(function(err, req, res, next) {
     /** append header param to response */
-    for (let k in httpopts) {
+    for (let k in this.httpopts) {
         /* istanbul ignore next */
-        if (httpopts.hasOwnProperty(k)) {
-            res.append(k, httpopts[k]);
+        if (this.httpopts.hasOwnProperty(k)) {
+            res.append(k, this.httpopts[k]);
         }
     }
     /** set locals, only providing error in development */
@@ -122,7 +136,7 @@ app.use(function(err, req, res, next) {
     /** render the error page */
     res.status(err.status || 500);
     /** Check if method is GET or POST only */
-    if (!allowedMethods.includes(req.method)) {
+    if (!this.allowedMethods.includes(req.method)) {
         res.status(405).send('=> Not allowed ;)\n');
     } else {
         res.render('error', errorp);
@@ -132,5 +146,12 @@ app.use(function(err, req, res, next) {
         next = {};
     }
 });
-
-module.exports = app;
+/** catch 404 and forward to error handler below */
+miexpressapp.app.use(function(req, res, next) {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+miexpressapp.setAppLog();
+miexpressapp.pollSecret();
+module.exports = miexpressapp.app;
