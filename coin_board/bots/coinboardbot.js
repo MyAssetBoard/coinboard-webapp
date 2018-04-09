@@ -7,22 +7,33 @@
 class CbBot {
     /** @constructor */
     constructor() {
-        /** Import telegraf module for bot management */
+        /** Import [telegraf](https://github.com/telegraf/telegraf)
+         * module for easy bot management
+         */
         this.Telegraf = require('telegraf');
-        /** Import refresh bot function (aka fetch and store feeds ) */
-        this.rf = require('./acts/refresh_act');
-        /** Import datamine bot function (aka parse feeds ) */
-        this.dm = require('./acts/datamine_act');
-        /** Import tree bot function (aka tree DTAFOOD/ ) */
-        this.ls = require('./acts/showfiles_act');
-        /** Import BOT_TOKEN from env */
+        /** Import {@link refresh} bot function (aka fetch and store feeds )
+         */
+        this.rfrsh = require('./acts/refresh_act');
+        /** Import {@link digest} bot function (aka parse feeds )
+         */
+        this.digst = require('./acts/datamine_act');
+        /** Import {@link showfiles} bot function (aka tree DTAFOOD/ )
+         */
+        this.showf = require('./acts/showfiles_act');
+        /** Import BOT_TOKEN from env
+         */
         this.bottoken = process.env.BOT_TOKEN;
-        /** Bot startup */
+        /** Bot startup with new {@link Telegraf} object
+         */
         this.bot = new this.Telegraf(this.bottoken);
     }
 }
 
-/** Main launcher method */
+/** Main launcher method
+ *  @property {function} bot.start answer Welcome when start
+ *  @property {function} bot.command if help cmd answer 'Try send a sticker'
+ *  @property {function} bot.hears other way to get a repli from bot
+ */
 CbBot.prototype.turnmeon = function() {
     let _this = this;
     _this.bot.start((ctx) => {
@@ -48,16 +59,16 @@ CbBot.prototype.turnmeon = function() {
         console.log(log);
         /** If chat id is your servitor, exec some commands */
         if (chatId == 408942599) {
-            if (cmd == _this.rf.id) {
-                _this.rf.func(function(d) {
+            if (cmd == _this.rfrsh.id) {
+                _this.rfrsh.func(function(d) {
                     ctx.reply(d);
                 });
-            } else if (cmd == _this.ls.id) {
-                _this.ls.func(function(d) {
+            } else if (cmd == _this.showf.id) {
+                _this.showf.func(function(d) {
                     ctx.reply(d);
                 });
-            } else if (cmd == _this.dm.id) {
-                _this.dm.func(function(d) {
+            } else if (cmd == _this.digst.id) {
+                _this.digst.func(function(d) {
                     ctx.reply(d);
                 });
             } else {
@@ -82,7 +93,7 @@ CbBot.prototype.turnmeon = function() {
 /** Launching bot !! */
 const mibot = new CbBot();
 mibot.turnmeon();
-/** Telegram bot for coin_board
+/** [Telegram](https://telegram.org) bot for coin_board
  * @see CbBot
  * @module CbBot
  */
