@@ -35,7 +35,11 @@ class CbWebsocket {
     }
 }
 
-/** Main launcher method */
+/** Main launcher method
+ * @property {function} io.of.auth auth socket room event handling
+ * @property {function} io.of.register register socket room event handling
+ * @property {function} io.of.assets assets socket room event handling
+ */
 CbWebsocket.prototype.startmeup = function() {
     let _this = this;
     let log = 'WEBSOCKET - server is listening on :\n';
@@ -44,7 +48,6 @@ CbWebsocket.prototype.startmeup = function() {
         console.log(log) :
         log;
 
-    /** Auth room function */
     _this.io.of('/auth').on('connection', function(socket) {
         let log = socket.id.replace(/\/auth#/g, 'User : ');
         _this.authco += 1;
@@ -68,7 +71,7 @@ CbWebsocket.prototype.startmeup = function() {
             _this.authco -= 1;
         });
     });
-    /** Register room function */
+
     _this.io.of('/register').on('connection', function(socket) {
         let log = socket.id.replace(/\/register#/g, 'User : ');
         _this.regco += 1;
@@ -92,7 +95,7 @@ CbWebsocket.prototype.startmeup = function() {
             _this.regco -= 1;
         });
     });
-    /** Assets room function */
+
     _this.io.of('/assets').on('connection', function(socket) {
         let log = socket.id.replace(/\/register#/g, 'User : ');
         _this.assetco += 1;

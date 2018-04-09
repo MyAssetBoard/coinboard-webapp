@@ -11,11 +11,12 @@ class CbView {
     /** @constructor */
     constructor() {
         let _this = this;
-        /** Module dependencies.*/
+        /** Main {@link CbExpressApp} module import */
         this.app = require('../app');
+        /** debug function see [Morgan] */
         this.debug = require('debug')('coin-board:server');
+        /** The essential one ! */
         this.http = require('http');
-
         /**  listening address definition */
         this.os = require('os');
         this.ni = this.os.networkInterfaces();
@@ -70,14 +71,16 @@ CbView.prototype.onError = function(error) {
     }
 };
 
-/** Main launcher function for coinboard view service */
+/** Main launcher function for coinboard view service
+ * @property {function } server.listen listen on provided port,
+ * on all network interfaces.
+ */
 CbView.prototype.lightmyfire = function() {
     let _this = this;
     let log = 'WEB_VIEW - coin_board view micro service started';
     process.env.NODE_ENV == 'development' ?
         console.log(log) :
         log;
-    /** Listen on provided port, on all network interfaces. */
     this.server.listen(this.port, this.addr, function() {
         let log = 'WEB_VIEW - server is listening on :\n';
         log += 'addr: [' + _this.addr + '], port ' + _this.port;
