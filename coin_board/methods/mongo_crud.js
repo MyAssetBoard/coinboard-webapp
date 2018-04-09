@@ -7,15 +7,13 @@
  * A new Crud object
  * @class
  * @constructor
- * @param {string} dbName
- * @param {string} coll
+ * @param {string} dbName Name of the db to connect to
+ * @param {string} coll Name of the db collection to create / update
  */
 function Crud(dbName, coll) {
-    /** Name of the db to connect to */
     this.dbName = dbName ?
         dbName :
         'test2';
-    /** Name of the db collection to create / update */
     this.coll = coll ?
         coll :
         'r_users';
