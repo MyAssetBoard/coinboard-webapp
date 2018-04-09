@@ -1,24 +1,28 @@
 /**
-* @file Coinbase APIS requests definitions
-* @author coinbase node module and Trevis Gulby
-*/
+ * @file Coinbase APIS requests definitions
+ * @author coinbase node module and Trevis Gulby
+ */
 
-const Client = require( 'coinbase' ).Client;
-const KEY = process.env.CBK;
-const SC = process.env.CBS;
-const PAR = {
-        'apiKey': KEY,
-        'apiSecret': SC,
-        'version': 'YYYY-MM-DD',
+/**
+ * Coinbase API wrapper
+ * @class
+ */
+class coinbaseApi {
+    /** @constructor */
+    constructor() {
+        this.Client = require('coinbase').Client;
+        this.KEY = process.env.CBK;
+        this.SC = process.env.CBS;
+        this.Param = {
+            'apiKey': KEY,
+            'apiSecret': SC,
+            'version': 'YYYY-MM-DD',
+        };
+    }
+}
+
+coinbaseApi.prototype.cbgetaccount = function() {
+    this.client.getAccount(accid, function(err, accounts) {
+        console.log(accounts);
+    });
 };
-
-let cli = new Client( PAR );
-let accid = '';
-
-cli.getAccounts( {}, function( err, acs ) {
-        // console.log( acs );
-} );
-
-client.getAccount( accid, function( err, accounts ) {
-        console.log( accounts );
-} );
