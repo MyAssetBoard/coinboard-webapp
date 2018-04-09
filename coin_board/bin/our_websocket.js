@@ -35,6 +35,7 @@ class CbWebsocket {
     }
 }
 
+/** Main launcher method */
 CbWebsocket.prototype.startmeup = function() {
     let _this = this;
     let log = 'WEBSOCKET - server is listening on :\n';
