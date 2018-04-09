@@ -101,7 +101,4 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
     return false;
 };
 
-/** Asset Module
- * @module Assets
- */
 module.exports = Assets;
