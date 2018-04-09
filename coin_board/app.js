@@ -79,11 +79,13 @@ if (process.env.NODE_ENV == 'development') {
     console.log(output);
     app.use(logger('dev'));
 }
+
 /** Refresh AES encrypt key every 2 hour */
 const h = 2;
 const intergen = h * 60 * 60 * 1000;
 crypt.genrandomtocken();
 setInterval(crypt.genrandomtocken, intergen);
+
 /** Index router pages import */
 for (el in Routes) {
     if (Routes[el]) {
