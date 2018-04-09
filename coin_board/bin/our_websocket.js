@@ -3,106 +3,115 @@
  * @author based on socket.io doc app and edited by Trevis Gulby
  */
 
-/** PORT to connect to */
-const port = process.env.WSPORT || '3001';
-const os = require('os');
-const ni = os.networkInterfaces();
-const addr = process.env.SERV_ENV == 'local' ?
-    ni.wlan0[0].address :
-    ni.docker0[0].address;
-/** SOCKET serv startup */
-const http = require('http');
-const server = http.createServer();
-server.listen(port, addr);
-const io = require('socket.io')(server);
+/**
+ * A new CoinboardWebsocket object
+ * @class
+ */
+class CbWebsocket {
+    /** @constructor */
+    constructor() {
+        this.port = process.env.WSPORT || '3001';
+        this.os = require('os');
+        this.ni = this.os.networkInterfaces();
+        this.addr = process.env.SERV_ENV == 'local' ?
+            this.ni.wlan0[0].address :
+            this.ni.docker0[0].address;
+        this.http = require('http');
+        this.server = this.http.createServer();
+        this.server.listen(this.port, this.addr);
+        this.io = require('socket.io')(this.server);
+        /** Asset module dep import */
+        this.Asset = require('../methods/assets_methods');
+        this.asset = new this.Asset();
+        /** Auth module dep import */
+        this.Auth = require('../methods/auth_methods');
+        this.auth = new this.Auth();
+        /** NUMBER of connected sessions on auth room */
+        this.authco = 0;
+        /** NUMBER of connected sessions on register room */
+        this.regco = 0;
+        /** NUMBER of connected sessions on assets room */
+        this.assetco = 0;
+    }
+}
 
-/** NUMBER of connected sessions on auth room */
-let authco = 0;
-/** NUMBER of connected sessions on register room */
-let regco = 0;
-/** NUMBER of connected sessions on assets room */
-let assetco = 0;
-
-let log = 'WEBSOCKET - server is listening on :\n';
-log += 'addr: [' + addr + '], port ' + port;
-process.env.NODE_ENV == 'development' ?
-    console.log(log) :
-    log;
-
-/** Auth room function */
-io.of('/auth').on('connection', function(socket) {
-    let log;
-    authco += 1;
-    log = socket.id.replace(/\/auth#/g, 'User : ');
-    log += ' connected to [/auth] route | Connected : ' + authco;
+CbWebsocket.prototype.startmeup = function() {
+    let _this = this;
+    let log = 'WEBSOCKET - server is listening on :\n';
+    log += 'addr: [' + this.addr + '], port ' + this.port;
     process.env.NODE_ENV == 'development' ?
         console.log(log) :
         log;
-    let usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
-    let scktid = socket.id.replace(/\/auth#/g, '');
-    let comsg = {
-        'msg': usrtmp,
-        'scktid': scktid,
-        'tot': authco,
-    };
-    let u = socket.id;
-    io.of('/auth').to(u).emit('nm', comsg);
-    socket.on('user login', function(data) {
-        /** Auth home made module import */
-        let Auth = require('../methods/auth_methods');
-        const auth = new Auth();
-        auth.checkcoData(data, socket, io);
-    });
-    socket.on('disconnect', function() {
-        authco -= 1;
-    });
-});
-/** Register room function */
-io.of('/register').on('connection', function(socket) {
-    regco += 1;
-    let log = socket.id.replace(/\/register#/g, 'User : ');
-    log += ' connected to [/register] route| Connected : ' + regco;
-    process.env.NODE_ENV == 'development' ?
-        console.log(log) :
-        log;
-    let scktid = socket.id.replace(/\/register#/g, '');
-    let comsg = {
-        'scktid': scktid,
-    };
-    io.of('/register').to(socket.id).emit('nm', comsg);
-    socket.on('user signin', function(data) {
-        /** Auth home made module import */
-        let Auth = require('../methods/auth_methods');
-        let auth = new Auth();
-        let log = 'received : \n' + JSON.stringify(data);
+
+    /** Auth room function */
+    _this.io.of('/auth').on('connection', function(socket) {
+        let log = socket.id.replace(/\/auth#/g, 'User : ');
+        _this.authco += 1;
+        log += ' connected to [/auth] route | Connected : ' + _this.authco;
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        auth.checkRegData(data, socket, io);
+        let usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
+        let scktid = socket.id.replace(/\/auth#/g, '');
+        let comsg = {
+            'msg': usrtmp,
+            'scktid': scktid,
+            'tot': _this.authco,
+        };
+        let u = socket.id;
+        _this.io.of('/auth').to(u).emit('nm', comsg);
+        socket.on('user login', function(data) {
+            _this.auth.checkcoData(data, socket, _this.io);
+        });
+        socket.on('disconnect', function() {
+            _this.authco -= 1;
+        });
     });
-    socket.on('disconnect', function() {
-        regco -= 1;
-    });
-});
-/** Assets room function */
-io.of('/assets').on('connection', function(socket) {
-    let log = socket.id.replace(/\/register#/g, 'User : ');
-    assetco += 1;
-    log += ' connected to [/assets] route| Connected : ' + assetco;
-    process.env.NODE_ENV == 'development' ?
-        console.log(log) :
-        log;
-    socket.on('add asset', function(d) {
-        /** Asset home made module import */
-        let Asset = require('../methods/assets_methods');
-        let asset = new Asset();
-        let log = 'add asset data returned :\n' + JSON.stringify(d);
+    /** Register room function */
+    _this.io.of('/register').on('connection', function(socket) {
+        let log = socket.id.replace(/\/register#/g, 'User : ');
+        _this.regco += 1;
+        log += ' connected to [/register] route| Connected : ' + _this.regco;
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        asset.checkAssetData(d, socket, io);
+        let scktid = socket.id.replace(/\/register#/g, '');
+        let comsg = {
+            'scktid': scktid,
+        };
+        _this.io.of('/register').to(socket.id).emit('nm', comsg);
+        socket.on('user signin', function(data) {
+            let log = 'received : \n' + JSON.stringify(data);
+            process.env.NODE_ENV == 'development' ?
+                console.log(log) :
+                log;
+            _this.auth.checkRegData(data, socket, _this.io);
+        });
+        socket.on('disconnect', function() {
+            _this.regco -= 1;
+        });
     });
-    socket.on('disconnect', function() {
-        assetco -= 1;
+    /** Assets room function */
+    _this.io.of('/assets').on('connection', function(socket) {
+        let log = socket.id.replace(/\/register#/g, 'User : ');
+        _this.assetco += 1;
+        log += ' connected to [/assets] route| Connected : ' + _this.assetco;
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        socket.on('add asset', function(d) {
+            let log = 'add asset data returned :\n' + JSON.stringify(d);
+            process.env.NODE_ENV == 'development' ?
+                console.log(log) :
+                log;
+            _this.asset.checkAssetData(d, socket, _this.io);
+        });
+        socket.on('disconnect', function() {
+            _this.assetco -= 1;
+        });
     });
-});
+};
+
+/** Launching WeSocket service */
+const miwebsocket = new CbWebsocket();
+miwebsocket.startmeup();
