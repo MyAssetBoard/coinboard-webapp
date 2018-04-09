@@ -11,14 +11,19 @@
  * @param {string} coll
  */
 function Crud(dbName, coll) {
+    /** Name of the db to connect to */
     this.dbName = dbName ?
         dbName :
         'test2';
+    /** Name of the db collection to create / update */
     this.coll = coll ?
         coll :
         'r_users';
+    /** Mongodb client object import */
     this.MongoClient = require('mongodb').MongoClient;
+    /** Mongodb object id object import */
     this.ObjectId = require('mongodb').ObjectID;
+    /** Mongodb local install uri */
     this.uri = 'mongodb://localhost:27017/';
 }
 
@@ -88,6 +93,10 @@ Crud.prototype.checkcred = function(c, callback) {
     }
 };
 
+/** Check if user exist based on provided who object
+ * @param {Objet} who the data to be checked
+ * @param {function} callback to get the response
+ */
 Crud.prototype.finduser = function(who, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then(function(db) {
@@ -112,6 +121,10 @@ Crud.prototype.finduser = function(who, callback) {
     });
 };
 
+/** Make a db request with who param
+ * @param {Objet} what the data to be checked
+ * @param {function} callback to get the response
+ */
 Crud.prototype.find = function(what, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then(function(db) {
@@ -137,6 +150,12 @@ Crud.prototype.find = function(what, callback) {
     });
 };
 
+/** Update field in user collection
+ * @param {Objet} who the user to be updated
+ * @param {Objet} what the fields to be updated
+ * @param {Objet} data the new datas
+ * @param {function} callback to get the response
+ */
 Crud.prototype.update = function(who, what, data, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then(function(db) {
@@ -174,6 +193,12 @@ Crud.prototype.update = function(who, what, data, callback) {
     });
 };
 
+/** Add new data block in collection
+ * @param {Objet} who the user to update
+ * @param {Object} what the news name to add
+ * @param {Object} data the data to add
+ * @param {function} callback to get the response
+ */
 Crud.prototype.add = function(who, what, data, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then(function(db) {
