@@ -3,20 +3,21 @@
  * @author Trevis Gulby
  */
 
-/**
- * A new Auth module object
- * @module Auth
- * @constructor
- */
-function Auth() {
-    /** Mongodb database object import */
-    this.ObjectID = require('mongodb').ObjectID;
-    /** Crypt methods import */
-    this.Crypt = require('../methods/crypt_methods');
-    this.crypt = new this.Crypt();
-    /** Crud methods import */
-    this.Crud = require('../methods/mongo_crud');
-    this.crud = new this.Crud();
+/** Auth  class definition */
+class Auth {
+    /** @constructor */
+    constructor() {
+        /** Mongodb database object import */
+        this.ObjectID = require('mongodb').ObjectID;
+        /** Crypt methods import */
+        this.Crypt = require('../methods/crypt_methods');
+        /** New Crypt Object */
+        this.crypt = new this.Crypt();
+        /** Crud methods import */
+        this.Crud = require('../methods/mongo_crud');
+        /** New Crud Object */
+        this.crud = new this.Crud();
+    }
 }
 
 /** try to decode uri component
@@ -298,7 +299,8 @@ Auth.prototype.isvaliduid = function(eUid) {
     }
 };
 
-/** User login and register  methods
+/** Login and register account methods
+ * @see Auth
  * @module Auth
  */
 module.exports = Auth;

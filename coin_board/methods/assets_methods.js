@@ -3,32 +3,33 @@
  * @author Trevis Gulby
  */
 
-/**
- * A new Asset module object
- * @module Assets
- * @constructor
- */
-function Assets() {
-    /** Crud methods import */
-    this.Crud = require('../methods/mongo_crud');
-    this.crud = new this.Crud('test2', 'r_users');
-    /** Crypt methods import */
-    this.Crypt = require('../methods/crypt_methods');
-    this.crypt = new this.Crypt();
-    /** check if
-     * @param {string} str is an encoded param
-     * @return {bool} true if true false if not ;)
-     */
-    this.isEncoded = function(str) {
-        try {
-            decodeURIComponent(str);
-        } catch (e) {
-            if (e) {
-                return false;
+/** Assets class definition */
+class Assets {
+    /** @constructor */
+    constructor() {
+        /** Crud methods import */
+        this.Crud = require('../methods/mongo_crud');
+        /** New Crud Object */
+        this.crud = new this.Crud('test2', 'r_users');
+        /** Crypt methods import */
+        this.Crypt = require('../methods/crypt_methods');
+        /** New Crypt Object */
+        this.crypt = new this.Crypt();
+        /** check if
+         * @param {string} str is an encoded param
+         * @return {bool} true if true false if not ;)
+         */
+        this.isEncoded = function(str) {
+            try {
+                decodeURIComponent(str);
+            } catch (e) {
+                if (e) {
+                    return false;
+                }
             }
-        }
-        return true;
-    };
+            return true;
+        };
+    }
 }
 
 /** Add assets to a user
@@ -101,6 +102,7 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
 };
 
 /** Registered User asset managements methods
+ * @see Assets
  * @module Assets
  */
 module.exports = Assets;
