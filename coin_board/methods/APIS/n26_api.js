@@ -1,5 +1,5 @@
 /**
- * @file N26 APIS requests definitions
+ * @file {@link module:n26api~N26Api} requests definitions
  * @author N26 node module and Trevis Gulby
  */
 
@@ -62,5 +62,5 @@ N26Api.prototype.gettrstats = function(id, key) {
 
 module.exports = N26Api;
 /** ### Work In Progress module for [N26](https://my.n26.com) bank
- * @module N26Api
+ * @module n26api
  */

@@ -1,5 +1,5 @@
 /**
- * @file Assets methods definition (use crud module)
+ * @file {@link Assets} methods definition (use {@link Crud} module)
  * @author Trevis Gulby
  */
 
@@ -105,5 +105,5 @@ Assets.prototype.checkAssetData = function(data, socket, io) {
 
 module.exports = Assets;
 /** ### Registered User asset managements methods
- * @module Assets
+ * @module UserAssets
  */

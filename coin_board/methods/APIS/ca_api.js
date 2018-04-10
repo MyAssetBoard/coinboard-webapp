@@ -1,5 +1,5 @@
 /**
- * @file CreditAgricole APIS requests definitions
+ * @file {@link module:creditagricoleapi~CreditagricoleApi} requests definitions
  * @author Trevis Gulby
  */
 
@@ -16,5 +16,5 @@ class CreditagricoleApi {
 
 module.exports = CreditagricoleApi;
 /** ### Work In Progress module for [CreditAgricole](https://www.credit-agricole.fr/)
- * @module CreditagricoleApi
+ * @module creditagricoleapi
  */

@@ -1,5 +1,6 @@
 /**
- * @file Main runable executable for webview micro service
+ * @file Main runable executable for {@link module:cbview~CbView}
+ * service
  * @author based on Express app and edited by Trevis Gulby
  */
 
@@ -96,5 +97,5 @@ CbView.prototype.lightmyfire = function() {
 const miwebview = new CbView();
 miwebview.lightmyfire();
 /** ### Coin_Board Main view service
- * @module CbView
+ * @module cbview
  */

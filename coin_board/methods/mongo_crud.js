@@ -1,5 +1,5 @@
 /**
- * @file MongoDB CReateUpdateDelete methods definitions
+ * @file {@link Crud} CReateUpdateDelete methods definitions
  * @author based on Mongo doc and edited by Trevis Gulby
  */
 
@@ -239,5 +239,5 @@ Crud.prototype.add = function(who, what, data, callback) {
 
 module.exports = Crud;
 /** ### CReate Update Delete methods for mongodb
- * @module Crud
+ * @module crud
  */

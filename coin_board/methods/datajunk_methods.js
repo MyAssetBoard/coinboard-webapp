@@ -1,5 +1,5 @@
 /**
- * @file DajaJunk module, our friendly scrapper / eater
+ * @file {@link module:datajunk~DajaJunk} module class, our friendly scrapper / eater
  * @author Trevis Gulby
  */
 
@@ -13,14 +13,14 @@ class DataJunk {
         this.https = require('https');
         /** Fs dep import for writing feeds */
         this.fs = require('fs');
-        /** Home made crud module import */
+        /** Home made {@link Crud} module import */
         this.Crud = require('./mongo_crud');
         this.crud = new this.Crud('test2', 'DTAFOOD');
-        /** Parsing options import */
+        /** {@link colors} options import */
         this.colors = require('./djunk/colors');
-        /** Requests models import */
+        /** {@link reqmodels} models import */
         this.reqmodels = require('./djunk/reqmodels');
-        /** Eatdiner import */
+        /** {@link eatdiner} import */
         this.eatd = require('./djunk/eatdiner');
     }
 }
@@ -307,5 +307,5 @@ if (process.env.LAUNCH_TASK == 'markme') {
 
 module.exports = DataJunk;
 /** ### Multi task module around datamining needs
- * @module DataJunk
+ * @module datajunk
  */

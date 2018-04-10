@@ -1,5 +1,5 @@
 /**
- * @file Showfile (aka /tree) bot method definition
+ * @file Showfile (aka /tree {@link showfiles}) bot method definition
  * @author Trevis Gulby
  */
 

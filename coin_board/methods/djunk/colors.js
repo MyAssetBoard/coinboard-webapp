@@ -4,7 +4,7 @@
  * @see DataJunk
  */
 
-/** The DataJunk parsing Object
+/** ### Parsing method module for {@link module:datajunk~DataJunk} class
  * @namespace
  * @property {Object} bull the bull tendance object
  * @property {Object} bull.sets the bull tendance wordlist (very bull 'a' > 'x')
@@ -134,6 +134,3 @@ const colors = {
 };
 
 module.exports = colors;
-/** ### Parsing method module for {@link DataJunk}
- * @module colors
- */

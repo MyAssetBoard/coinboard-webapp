@@ -1,5 +1,5 @@
 /**
- * @file Application view setup and error management
+ * @file {@link module:cbexpressapp} view setup and error management
  * @author based on Express app and edited by Trevis Gulby
  */
 
@@ -12,12 +12,17 @@ class CbExpressApp {
     /** @constructor */
     constructor() {
         let _this = this;
-        /** Depencies import */
+        /** [Express doc](http://expressjs.com/en/api.html) */
         this.express = require('express');
+        /** [Path module](https://nodejs.org/api/path.html) */
         this.path = require('path');
+        /** [Morgan](https://github.com/expressjs/morgan) logger */
         this.logger = require('morgan');
         this.cookieParser = require('cookie-parser');
         this.bodyParser = require('body-parser');
+        /** {@link module:crypt} import for
+         * {@link module:crypt~Crypt#genrandomtocken} method routine
+         */
         this.Crypt = require('./methods/crypt_methods');
         this.crypt = new this.Crypt();
         this.Routes = require('./routes/routes');
@@ -53,7 +58,7 @@ class CbExpressApp {
             log;
         /** view engine path setup */
         this.app.set('views', _this.path.join(__dirname, 'views'));
-        /** view engine setup */
+        /** view engine setup see [Ejs](ejs.co) */
         this.app.set('view engine', 'ejs');
         /** Global app setup */
         this.app.disable('x-powered-by');
@@ -155,6 +160,6 @@ miexpressapp.app.use(function(req, res, next) {
 miexpressapp.setAppLog();
 miexpressapp.pollSecret();
 module.exports = miexpressapp.app;
-/** ### Coin_Board Express app
- * @module CbExpressApp
+/** ### Coin_Board [Express](expressjs.com) app module
+ * @module cbexpressapp
  */

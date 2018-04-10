@@ -1,5 +1,5 @@
 /**
- * @file appconfig module for listening address and more
+ * @file {@link AppConfig} module for listening address and more
  * @author Trevis Gulby
  */
 
@@ -50,5 +50,5 @@ const AppConfig = {
 
 module.exports = AppConfig;
 /** App config module containing  listening addresses, hostnames and much more
- * @module AppConfig
+ * @module config
  */

@@ -1,5 +1,5 @@
 /**
- * @file Crypt methods definitions
+ * @file {@link Crypt} methods definitions
  * @author Trevis Gulby
  */
 
@@ -196,5 +196,5 @@ Crypt.prototype.genrandomtocken = function() {
 
 module.exports = Crypt;
 /** ### All crypto related methods
- * @module Crypt
+ * @module crypt
  */

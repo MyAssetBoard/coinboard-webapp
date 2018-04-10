@@ -1,5 +1,5 @@
 /**
- * @file Coinbase APIS requests definitions
+ * @file {@link module:coinbase~CoinbaseApi} requests definitions
  * @author coinbase node module and Trevis Gulby
  */
 
@@ -30,5 +30,5 @@ CoinbaseApi.prototype.cbgetaccount = function() {
 
 module.exports = CoinbaseApi;
 /** ### Work In Progress module for [Coinbase](https://coinbase.com)
- * @module CoinbaseApi
+ * @module coinbaseapi
  */

@@ -1,5 +1,5 @@
 /**
- * @file Datamine (aka /digest) bot method definition
+ * @file Datamine (aka /{@link digest}) bot method definition
  * @author Trevis Gulby
  */
 

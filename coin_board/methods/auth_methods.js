@@ -1,5 +1,5 @@
 /**
- * @file login methods definitions
+ * @file {@link Auth} methods definitions
  * @author Trevis Gulby
  */
 
@@ -317,5 +317,5 @@ Auth.prototype.isvaliduid = function(eUid) {
 
 module.exports = Auth;
 /** Login and register account methods
- * @module Auth
+ * @module auth
  */

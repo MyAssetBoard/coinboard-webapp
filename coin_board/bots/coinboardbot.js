@@ -1,5 +1,5 @@
 /**
- * @file Main runable executable for CoinBoardBot micro service
+ * @file Main runable executable for {@link module:cbbot~CbBot} service
  * @author based on telegraf module exemples and edited by Trevis Gulby
  */
 
@@ -95,5 +95,5 @@ const mibot = new CbBot();
 mibot.turnmeon();
 /** [Telegram](https://telegram.org) bot for coin_board
  * @see CbBot
- * @module CbBot
+ * @module cbbot
  */

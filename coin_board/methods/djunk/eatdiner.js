@@ -1,9 +1,9 @@
 /**
- * @file Crawler helper functions methods for DajaJunk module
+ * @file Crawler helper functions methods for {@link module:datajunk}
  * @author Trevis Gulby
  */
 
-/** The other DataJunk parsing helpers Object
+/** The other parsing helper Object see {@link module:datajunk~DataJunk#eatd}
  * @namespace
  * @property {function} checkwhat identify news subject
  * @property {function} checkstyle identify news type (bearish or bullish)
@@ -12,6 +12,10 @@
  * @property {function} getparsed pre-parse news json from web scrapping
  */
 const eatdiner = {
+    /**
+     * @param {object} obj the parsed object composed of ...
+     * @param {number} a the parent process parser order
+     */
     checkwhat: function(obj, a) {
         let what = obj[a].toLowerCase();
         let log = 'Elem n°: [' + a;
@@ -20,12 +24,17 @@ const eatdiner = {
             console.log(log);
         }
     },
+    /** @param {string} b the parent process parser type  */
     checkstyle: function(b) {
         let log = 'Testing [' + b + '] type';
         if (process.env.NODE_LOG == 'djunk') {
             console.log(log);
         }
     },
+    /**
+     * @param {number} wrd the word in {@link colors} array's
+     * @param {string} str the string to parse
+     */
     checkwrd: function(wrd, str) {
         let log = 'Is there any [' + wrd + '] ?';
         log += str.match(wrd) ?
@@ -72,6 +81,3 @@ const eatdiner = {
 };
 
 module.exports = eatdiner;
-/** ### Parser du turfu !
- * @module eatdiner
- */

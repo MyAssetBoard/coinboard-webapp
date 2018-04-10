@@ -29,7 +29,7 @@ tmpst += date.getMinutes() < 10 ?
     '0' + date.getMinutes() + '.json' :
     date.getMinutes() + '.json';
 
-/** The DataJunk data crawling feeds parameters
+/**  ### All cryto news / price feeds methods (see {@link DataJunk})
  * @namespace
  * @property {Object} ctaf cointelegraph newsfeed methods
  * @property {function} ctaf.clean return only paragraph html elements
@@ -118,6 +118,3 @@ const reqmodels = {
 };
 
 module.exports = reqmodels;
-/** ### All cryto news / price feeds methods
- * @module reqmodels
- */

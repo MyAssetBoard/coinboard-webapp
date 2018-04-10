@@ -1,5 +1,6 @@
 /**
- * @file Main runable executable for websocket micro service
+ * @file Main runable executable for {@link module:cbwebsocket~CbWebsocket}
+ * service
  * @author based on socket.io doc app and edited by Trevis Gulby
  */
 
@@ -131,5 +132,5 @@ CbWebsocket.prototype.assetmanagmnt = function() {
 const miwebsocket = new CbWebsocket();
 miwebsocket.startmeup();
 /** ### Coin_Board Socket.io methods
- * @module CbWebsocket
+ * @module cbwebsocket
  */
