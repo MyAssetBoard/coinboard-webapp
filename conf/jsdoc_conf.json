@@ -11,6 +11,7 @@
         "source": {
                 "include": [
                         "coin_board/",
+			"coin_board/README.md",
                         "coin_board/bin",
                         "coin_board/methods",
                         "coin_board/bots",
@@ -21,7 +22,7 @@
                         "coin_board/routes"
                 ],
                 "exclude": ["node_modules/"],
-                "includePattern": ".+\\.js(doc|md)?$",
+                "includePattern": ".+\\.js(doc|.md)?$",
                 "excludePattern": "(^|\\/|\\\\)_"
         },
         "sourceType": "module",
