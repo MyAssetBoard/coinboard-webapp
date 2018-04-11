@@ -26,7 +26,6 @@
 
 html
 {
-    overflow: auto;
     background-color: #fff;
     font-size: 14px;
 }
@@ -70,6 +69,8 @@ tt, code, kbd, samp {
 }
 
 #main {
+	height: 1190px;
+	overflow: scroll;
     float: left;
     width: 70%;
 }
