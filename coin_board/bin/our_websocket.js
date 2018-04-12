@@ -14,9 +14,7 @@ class CbWebsocket {
         this.port = process.env.WSPORT || '3001';
         this.os = require('os');
         this.ni = this.os.networkInterfaces();
-        this.addr = process.env.SERV_ENV == 'local' ?
-            this.ni.wlan0[0].address :
-            this.ni.docker0[0].address;
+        this.addr = this.ni.wlan0[0].address;
         this.http = require('http');
         this.server = this.http.createServer();
         this.server.listen(this.port, this.addr);

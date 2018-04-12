@@ -8,9 +8,7 @@ const os = require('os');
 /** network interface import */
 const ni = os.networkInterfaces();
 /** what ip should i get ? */
-const myip = process.env.SERV_ENV == 'onion' ?
-    ni.docker0[0].address :
-    ni.wlan0[0].address;
+const myip = ni.wlan0[0].address;
 /** fs module import */
 const fs = require('fs');
 /** check tor hostname if onion service set */

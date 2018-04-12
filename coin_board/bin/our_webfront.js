@@ -21,9 +21,7 @@ class CbView {
         /**  listening address definition */
         this.os = require('os');
         this.ni = this.os.networkInterfaces();
-        this.addr = process.env.SERV_ENV == 'local' ?
-            this.ni.wlan0[0].address :
-            this.ni.docker0[0].address;
+        this.addr = this.ni.wlan0[0].address;
         /** Get port from environment and store in Express. */
         this.port = process.env.PORT || '3000';
         this.app.set('port', this.port);
