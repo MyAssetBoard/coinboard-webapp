@@ -3,13 +3,36 @@
  * @author based on express boilerplate and edited by Trevis Gulby
  */
 
+/**  ### {@link livestream} page router overload definitions
+ * @namespace livestream
+ * @memberof Routes.page
+ */
+/** The Express module import
+ * @memberof Routes.page.livestream
+ * @property {Object} express the express object
+ */
 const express = require('express');
+/** The Express router module import
+ * @memberof Routes.page.livestream
+ * @property {Object} router the express.Router object
+ */
 const router = express.Router();
+/** The {@link module:auth~Auth} import
+ * @memberof Routes.page.livestream
+ * @property {Object} Auth see Auth class
+ */
 const Auth = require('../../methods/auth_methods');
+/** The new auth object
+ * @memberof Routes.page.livestream
+ * @property {Object} auth see {@link module:auth~Auth()} class
+ */
 const auth = new Auth();
+/** @memberof Routes.page.livestream */
 const param = require('../../params/livestream_param');
 
-/* GET livestream page. */
+/** GET livestream page
+ * @memberof Routes.page.livestream
+ */
 router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
@@ -37,7 +60,7 @@ router.get('/', function(req, res, next) {
             next(err);
         });
     } else {
-        log = 'index-route| NonAUth user, session below\n[';
+        log = 'livestream-route| NonAUth user, session below\n[';
         log += JSON.stringify(chck) + '] cookie ? [';
         log += JSON.stringify(req.cookies) + ']';
         /* istanbul ignore next */

@@ -3,12 +3,30 @@
  * @author based on express boilerplate and edited by Trevis Gulby
  */
 
+/**  ### {@link login} page router overload definitions
+ * @namespace login
+ * @memberof Routes.page
+ */
+/** The Express module import
+ * @memberof Routes.page.login
+ * @property {Object} express the express object
+ */
 const express = require('express');
+/** The Express router module import
+ * @memberof Routes.page.login
+ * @property {Object} router the express.Router object
+ */
 const router = express.Router();
+/** The {@link module:auth~Auth} import
+ * @memberof Routes.page.login
+ * @property {Object} Auth see Auth class
+ */
 const Auth = require('../../methods/auth_methods');
+/** @memberof Routes.page.login */
 const param = require('../../params/login_param');
 
 /**
+ * @memberof Routes.page.login
  * @param {Object} req
  * @param {Object} res
  */
@@ -24,6 +42,7 @@ router.post('/', render403);
 /**
  * Set cookie with uid value for authentification
  * on other pages
+ * @memberof Routes.page.login
  * @param {Object} req
  * @param {Object} res
  */
@@ -44,6 +63,7 @@ function setCookie(req, res) {
  * @param {Object} req
  * @param {Object} res
  * @param {Object} next
+ * @memberof Routes.page.login
  */
 router.get('/', function(req, res, next) {
     let chck = req.cookies;
@@ -85,6 +105,7 @@ router.get('/', function(req, res, next) {
 /**
  * @param {string} path
  * @param {function} callback
+ * @memberof Routes.page.login
  */
 router.get('/id/:uid', function(req, res, next) {
     const auth = new Auth();

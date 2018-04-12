@@ -3,18 +3,25 @@
  * @author Trevis Gulby
  */
 
-let Routes = {};
-/** index router overloads import */
+/** @property {Object} Routes  router pages module
+ * @constructor
+ */
+const Routes = {};
+/** @property {Object} Routes.index page router overloads import */
 Routes.index = require('./index/index');
-/** assets router overloads import */
+/** @property {Object} assets page router overloads import */
 Routes.assets = require('./assets/assets');
-/** login router overloads import */
+/** @property {Object} login page router overloads import */
 Routes.login = require('./login/login');
-/** signin router overloads import */
+/** @property {Object} signin page router overloads import */
 Routes.signin = require('./signin/signin');
-/** profile router overloads import */
+/** @property {Object} profile page router overloads import */
 Routes.profile = require('./profile/profile');
-/** livestream router overloads import */
+/** @property {Object} livestream page router overloads import */
 Routes.livestream = require('./livestream/livestream');
 
 module.exports = Routes;
+/** ### Contains all this webapp pages
+ * @namespace page
+ * @memberof Routes
+ */

@@ -1,15 +1,17 @@
 /**
- * @file Datamine (aka /{@link digest}) bot method definition
+ * @file Datamine aka {@link module:cbbot~telegrambot.digest}
+ * bot method definition
  * @author Trevis Gulby
  */
 
-/** for launching unix process */
+
 const
 {
     spawn,
 } = require('child_process');
 /** The Telegram bot /digest command object
- *@namespace
+ * @namespace
+ * @memberof module:cbbot~telegrambot
  * @property {string} id telegram bot style command, '/ + cmd'
  * @property {function} func the actual command, here lanch data analyse task
  */

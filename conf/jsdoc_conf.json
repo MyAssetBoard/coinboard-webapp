@@ -19,9 +19,14 @@
                         "coin_board/methods/APIS",
                         "coin_board/methods/djunk",
                         "coin_board/params",
-                        "coin_board/routes"
+                        "coin_board/routes",
+			"coin_board/routes/assets",
+			"coin_board/routes/index",
+			"coin_board/routes/livestream",
+			"coin_board/routes/login",
+			"coin_board/routes/profile",
+			"coin_board/routes/signin"
                 ],
-                "exclude": ["node_modules/"],
                 "includePattern": ".+\\.js(doc|.md)?$",
                 "excludePattern": "(^|\\/|\\\\)_"
         },

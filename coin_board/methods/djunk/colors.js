@@ -6,6 +6,7 @@
 
 /** ### Parsing method module for {@link module:datajunk~DataJunk} class
  * @namespace
+ * @memberof module:datajunk~djunk
  * @property {Object} bull the bull tendance object
  * @property {Object} bull.sets the bull tendance wordlist (very bull 'a' > 'x')
  * @property {Array} bull.sets.a the 'max bull' flags word array

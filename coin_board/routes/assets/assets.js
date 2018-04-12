@@ -3,20 +3,48 @@
  * @author based on express boilerplate and edited by Trevis Gulby
  */
 
+/**  ### {@link assets} page router overload definitions
+ * @namespace assets
+ * @memberof Routes.page
+ */
+/** The Express module import
+ * @memberof Routes.page.assets
+ * @property {Object} express the express object
+ */
 const express = require('express');
+/** The Express router module import
+ * @memberof Routes.page.assets
+ * @property {Object} router the express.Router object
+ */
 const router = express.Router();
+/** The {@link module:auth~Auth} import
+ * @memberof Routes.page.assets
+ * @property {Object} Auth see Auth class
+ */
 const Auth = require('../../methods/auth_methods');
+/** @memberof Routes.page.assets */
 const param = require('../../params/myassets_param');
+/** This {@link page.assets} special router  import
+ * @memberof Routes.page.assets
+ * @property {Object} roads see ..
+ */
 const roads = require('./assets_roads');
+/** The new auth object
+ * @memberof Routes.page.assets
+ * @property {Object} auth see Auth() class
+ */
 const auth = new Auth();
 
 /** Dummy loggin' function
+ * Use [express session](https://www.npmjs.com/package/connect-mongodb-session)
+ * rather than the current method
+ * @memberof Routes.page.assets
  * @param {string} req the requested page
  * @param {Object} sess the user cookie session
- * @TODO Use express session rather than that
+ * @TODO cf desc
  */
 function logthisusr(req, sess) {
-    let log = req + '-route : Auth user, session \n[';
+    let log = req + '-route : Auth user, session bellow :\n[';
     log += JSON.stringify(sess) + ']';
     process.env.NODE_ENV == 'development' ?
         console.log(log) :
@@ -25,6 +53,7 @@ function logthisusr(req, sess) {
 
 /** Take the req original url and make it match with the right methods
  * in {@link module:router}
+ * @memberof Routes.page.assets
  * @param {string} req the requested route / methods
  * @param {Object} pageparam a copy of the original page template engine vars
  * @param {Object} dbr the user data to strip
@@ -64,7 +93,10 @@ function setpagecontent(req, pageparam, dbr) {
     });
 }
 
-/* GET assets page. */
+/** GET /assets/{all requests}.
+ * @memberof Routes.page.assets
+ * @param {Object} req the request starting with ADDR/assets/
+ */
 router.get('/*', function(req, res, next) {
     let chck = req.cookies;
 

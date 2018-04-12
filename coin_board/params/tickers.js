@@ -3,7 +3,10 @@
  * @author Trevis Gulby
  */
 
-/** crypto curr /assets tickers and name */
+/** crypto curr /assets tickers and name
+ * @namespace
+ * @memberof Routes.page.assets
+ */
 const tickers = {
     '42': '42 Coin',
     '365': '365Coin',

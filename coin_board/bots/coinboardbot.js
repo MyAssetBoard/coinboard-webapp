@@ -97,3 +97,6 @@ mibot.turnmeon();
  * @see CbBot
  * @module cbbot
  */
+/**
+ * @namespace telegrambot
+ */

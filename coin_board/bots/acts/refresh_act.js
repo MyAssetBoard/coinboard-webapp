@@ -1,15 +1,16 @@
 /**
- * @file Refresh (aka /{@link refresh}) bot method definition
+ * @file Refresh aka {@link module:cbbot~telegrambot.refresh}
+ * bot method definition
  * @author Trevis Gulby
  */
 
-/** for launching unix process */
 const
 {
     spawn,
 } = require('child_process');
 /** The Telegram bot /refresh command object
  * @namespace
+ * @memberof module:cbbot~telegrambot
  * @property {string} id telegram bot style command, '/ + cmd'
  * @property {function} func the actual command, here lanch data crawling task
  */

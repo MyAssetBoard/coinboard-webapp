@@ -1,5 +1,6 @@
 /**
- * @file {@link Assets} methods definition (use {@link Crud} module)
+ * @file {@link module:UserAssets} methods definition
+ * (use {@link module:crud})
  * @author Trevis Gulby
  */
 

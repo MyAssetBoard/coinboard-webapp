@@ -7,8 +7,24 @@ const Apis = require('../../methods/api_methods');
 const api = new Apis();
 const DataJunk = require('../../methods/datajunk_methods');
 const data = new DataJunk();
+/** ### Parsing method module for {@link module:router~Routes.assets} elem
+ * @namespace
+ * @memberof Routes.page.assets
+ * @property {Object} dashboard an element in roads object
+ * @property {string} dashboard.path the path string
+ * @property {function} dashboard.getd the get page data method
+ * @property {function} dashboard.stripd the remove unusued userdata from page
+ * @property {Object} infofeed an element in roads object
+ * @property {string} infofeed.path the path string
+ * @property {function} infofeed.getd the get page data method
+ * @property {function} infofeed.stripd the remove unusued userdata from page
+ * @property {Object} pricefeed an element in roads object
+ * @property {string} pricefeed.path the path string
+ * @property {function} pricefeed.getd the get page data method
+ * @property {function} pricefeed.stripd the remove unusued userdata from page
+ */
 const roads = {
-    a:
+    dashboard:
     {
         path: '/assets/dashboard',
         getd: function(callback) {
@@ -25,7 +41,7 @@ const roads = {
             }
         },
     },
-    b:
+    infofeed:
     {
         path: '/assets/infofeed',
         getd: function(callback) {
@@ -56,7 +72,7 @@ const roads = {
             }
         },
     },
-    c:
+    pricefeed:
     {
         path: '/assets/pricefeed',
         getd: function(callback) {
@@ -72,7 +88,7 @@ const roads = {
             }
         },
     },
-    d:
+    trade:
     {
         path: '/assets/trade',
         getd: function(callback) {
@@ -83,7 +99,7 @@ const roads = {
         },
         stripd: function(d) {},
     },
-    e:
+    apiparams:
     {
         path: '/assets/api/param',
         getd: function(callback) {
@@ -104,7 +120,7 @@ const roads = {
             }
         },
     },
-    f:
+    reportmonth:
     {
         path: '/assets/trade/reports/currm',
         getd: function(callback) {
@@ -114,7 +130,7 @@ const roads = {
             callback && callback(xx);
         },
     },
-    g:
+    reportthreemonths:
     {
         path: '/assets/trade/reports/currquart',
         getd: function(callback) {
@@ -124,7 +140,7 @@ const roads = {
             callback && callback(xx);
         },
     },
-    h:
+    crowddata:
     {
         path: '/assets/trade/reports/crowddata',
         getd: function(callback) {

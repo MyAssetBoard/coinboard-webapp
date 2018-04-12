@@ -309,3 +309,4 @@ module.exports = DataJunk;
 /** ### Multi task module around datamining needs
  * @module datajunk
  */
+/** @namespace djunk */

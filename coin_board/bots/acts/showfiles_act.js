@@ -1,15 +1,16 @@
 /**
- * @file Showfile (aka /tree {@link showfiles}) bot method definition
+ * @file Showfiles aka {@link module:cbbot~telegrambot.showfiles}
+ * bot method definition
  * @author Trevis Gulby
  */
 
-/** for launching unix process */
 const
 {
     spawn,
 } = require('child_process');
 /** The Telegram bot /tree command object
  * @namespace
+ * @memberof module:cbbot~telegrambot
  * @property {string} id telegram bot style command, '/ + $cmd'
  * @property {function} func the actual command, here lanch 'tree $datadir' cmd
  */

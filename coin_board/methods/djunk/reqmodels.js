@@ -3,20 +3,28 @@
  * @author Trevis Gulby
  */
 
-/** For timestamp */
+/** For timestamp
+ * @memberof djunk.reqmodels
+ */
 const date = new Date();
-/** cointelegraph request url with yahoo api (rss to json) */
+/** cointelegraph request url with yahoo api (rss to json)
+ * @memberof djunk.reqmodels
+ */
 let ctafjson = '/v1/public/yql?q=select%20title%2Clink%2Cdescription';
 ctafjson += '%20from%20rss%20' + 'where%20url';
 ctafjson += '%3D%22https%3A%2F%2Fcointelegraph.com%2Frss%3Fformat%3Dxml%22';
 ctafjson += '&format=json&diagnostics=true&callback=';
-/** cryptonews request url with yahoo api (rss to json) */
+/** cryptonews request url with yahoo api (rss to json)
+ * @memberof djunk.reqmodels
+ */
 let cryptonewsjson = '/v1/public/yql?q=select%20title%2Clink%2Cdescription';
 cryptonewsjson += '%20from%20rss%20' + 'where%20url';
 cryptonewsjson += '%3D%22https%3A%2F%2Fcryptocurrencynews.com%2F';
 cryptonewsjson += 'feed%2F%3Fformat%3Dxml%22';
 cryptonewsjson += '&format=json&diagnostics=true&callback=';
-/** the actual timestamp on format $source-DDMMYEAR_H-M.json*/
+/** the actual timestamp on format $source-DDMMYEAR_H-M.json
+ * @memberof djunk.reqmodels
+ */
 let tmpst = (date.getDate() + 1) < 10 ?
     '0' + (date.getDate() + 1) :
     date.getDate() + 1;
@@ -29,8 +37,9 @@ tmpst += date.getMinutes() < 10 ?
     '0' + date.getMinutes() + '.json' :
     date.getMinutes() + '.json';
 
-/**  ### All cryto news / price feeds methods (see {@link DataJunk})
+/**  ### All cryto news / price feeds methods
  * @namespace
+ * @memberof module:datajunk~djunk
  * @property {Object} ctaf cointelegraph newsfeed methods
  * @property {function} ctaf.clean return only paragraph html elements
  * @property {function} ctaf.get return a clean array

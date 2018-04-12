@@ -5,6 +5,7 @@
 
 /** The other parsing helper Object see {@link module:datajunk~DataJunk#eatd}
  * @namespace
+ * @memberof module:datajunk~djunk
  * @property {function} checkwhat identify news subject
  * @property {function} checkstyle identify news type (bearish or bullish)
  * @property {function} checkwrd check feed against wordlist to get intensity

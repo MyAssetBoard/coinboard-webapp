@@ -1,5 +1,6 @@
 /**
- * @file {@link Apis} methods definition (use {@link Crud} module)
+ * @file {@link module:api~Apis} methods definition
+ * (use {@link module:crud} and {@link module:crypt})
  * @author Trevis Gulby
  */
 

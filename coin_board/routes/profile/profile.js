@@ -3,13 +3,36 @@
  * @author based on express boilerplate and edited by Trevis Gulby
  */
 
+/**  ### {@link profile} page router overload definitions
+ * @namespace profile
+ * @memberof Routes.page
+ */
+/** The Express module import
+ * @memberof Routes.page.profile
+ * @property {Object} express the express object
+ */
 const express = require('express');
+/** The Express router module import
+ * @memberof Routes.page.profile
+ * @property {Object} router the express.Router object
+ */
 const router = express.Router();
+/** The {@link module:auth~Auth} import
+ * @memberof Routes.page.profile
+ * @property {Object} Auth see Auth class
+ */
 const Auth = require('../../methods/auth_methods');
+/** The new auth object
+ * @memberof Routes.page.profile
+ * @property {Object} auth see {@link module:auth~Auth()} class
+ */
 const auth = new Auth();
+/** @memberof Routes.page.profile */
 const param = require('../../params/profile_param');
 
-/* GET profile page. */
+/** GET profile page
+ * @memberof Routes.page.profile
+ */
 router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
