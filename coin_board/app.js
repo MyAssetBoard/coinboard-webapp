@@ -26,9 +26,6 @@ class CbExpressApp {
         this.Crypt = require('./methods/crypt_methods');
         this.crypt = new this.Crypt();
         this.Routes = require('./routes/routes');
-        this.errorp = require('./params/error_param');
-        /** Allowed methods settings */
-        this.allowedMethods = ['GET'];
         /** Yes this is an express app */
         this.app = this.express();
         /** Http header sec settings */
@@ -125,6 +122,8 @@ for (el in miexpressapp.Routes) {
 }
 
 miexpressapp.app.use(function(err, req, res, next) {
+    /** Allowed methods settings */
+    let allowedMethods = ['GET'];
     /** append header param to response */
     for (let k in this.httpopts) {
         /* istanbul ignore next */
@@ -141,9 +140,10 @@ miexpressapp.app.use(function(err, req, res, next) {
     /** render the error page */
     res.status(err.status || 500);
     /** Check if method is GET or POST only */
-    if (!this.allowedMethods.includes(req.method)) {
+    if (!allowedMethods.includes(req.method)) {
         res.status(405).send('=> Not allowed ;)\n');
     } else {
+        let errorp = require('./params/error_param');
         res.render('error', errorp);
     }
     /* istanbul ignore next */
