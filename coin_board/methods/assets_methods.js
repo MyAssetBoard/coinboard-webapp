@@ -82,8 +82,7 @@ Assets.prototype.addAssets = function(a) {
  */
 Assets.prototype.checkAssetData = function(data, socket, io) {
     if (data['ticker'] && data['qtt'] && data['id']) {
-        let asset = new Assets();
-        asset.addAssets(data).then(function(res) {
+        this.addAssets(data).then(function(res) {
             let nm = {};
             nm.msg = data.ticker + ' successfully added';
             io.of('/assets').to(socket.id).emit('nm', nm);
