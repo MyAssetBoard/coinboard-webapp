@@ -1,186 +1,61 @@
-<div class="card">
-	<div class="card-header text-center">
-		<h1>Banks
-		</h1>
+<% if (locals.data && data.apisv2 &&
+	Object.keys(data.apisv2).length) { %>
+	<%
+	for (var type in data.apisv2) { %>
+		<div class="card">
+			<div class="card-header text-center">
+				<h1><%= type %>
+				</h1>
+			</div>
+		</div>
+		<%
+		for (var el in data.apisv2[type]) {%>
+			<%- include('api_list', {
+				data: data.apisv2[type][el]
+			});%><% }
+		%>
+		<% } %>
+	<%
+}%>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addapimod">
+		Add account
+	</button>
+	<div class="modal fade" id="addapimod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Add api account
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="stype">Api type</label>
+						<select class="form-control" id="stype">
+							<option>Bank</option>
+							<option>Crypto</option>
+							<option>Markets</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="sname">Name</label>
+						<input type="text" class="form-control" id="sname" rows="1"></input>
+					</div>
+					<div class="form-group">
+						<label for="skey">Key</label>
+						<input type="text" class="form-control" id="skey" rows="1"></input>
+					</div>
+					<div class="form-group">
+						<label for="ssec">Secret</label>
+						<input type="text" class="form-control" id="ssec" rows="1"></input>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary text-white" id="addme">Save</button>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>CreditAgricole</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>N26</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>Revolut</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header text-center">
-		<h1>Crypto
-		</h1>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>Coinbase</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>Kucoin</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header text-center">
-		<h1>Options market
-		</h1>
-	</div>
-</div>
-<div class="card">
-	<div class="card-header">
-		<h3>
-			<li>Etoro</li>
-		</h3>
-	</div>
-	<div class="card-body">
-		<table class="table">
-			<thead>
-				<tr>
-					<th scope="col">#</th>
-					<th scope="col">Account</th>
-					<th scope="col">Secret</th>
-					<th scope="col">Last update</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>[account nbr]</td>
-					<td>[XXX]</td>
-					<td>Date</td>
-				</tr>
-			</tbody>
-		</table>
-		<a href="#" class="btn btn-primary">Add</a>
-	</div>
-</div>
