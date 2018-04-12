@@ -173,11 +173,12 @@ Crud.prototype.update = function(who, what, data, callback) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
+
         dbo.collection(_this.coll).update(fuid, fset).then(function(result) {
             db.close();
             log = 'MONGO | Inserted data :\n[';
             log += JSON.stringify(data) + ']';
-            process.env.NODE_ENV == 'devdb' ?
+            process.env.NODE_ENV == 'development' ?
                 console.log(log) :
                 log;
             callback && callback(result);
