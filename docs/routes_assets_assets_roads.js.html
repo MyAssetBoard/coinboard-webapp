@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>JSDoc:
+			Source: routes/assets/assets_roads.js
+		</title>
+		<script src="scripts/prettify/prettify.js">
+		</script>
+		<script src="scripts/prettify/lang-css.js">
+		</script>
+		<!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+		<link
+		        type="text/css"
+		        rel="stylesheet"
+		        href="styles/prettify-tomorrow.css"
+		>
+			<link
+			        type="text/css"
+			        rel="stylesheet"
+			        href="styles/jsdoc-default.css"
+			>
+	</head>
+
+	<body>
+		<div id="main">
+			<h1 class="page-title">Source: routes/assets/assets_roads.js
+				<a href="https://bitbucket.org/trevisgulby/coin_board">
+					rev 04.2018</a>
+			</h1>
+			<h2><u>Source files :</u></h2>
+			<div id="content">
+				
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Assets routes params and paths definitions (use datajunk module)
+ * @author Trevis Gulby
+ */
+
+const Apis = require('../../methods/api_methods');
+const api = new Apis();
+const DataJunk = require('../../methods/datajunk_methods');
+const data = new DataJunk();
+/** ### Parsing method module for {@link module:router~Routes.assets} elem
+ * @namespace
+ * @memberof Routes.page.assets
+ * @property {Object} dashboard an element in roads object
+ * @property {string} dashboard.path the path string
+ * @property {function} dashboard.getd the get page data method
+ * @property {function} dashboard.stripd the remove unusued userdata from page
+ * @property {Object} infofeed an element in roads object
+ * @property {string} infofeed.path the path string
+ * @property {function} infofeed.getd the get page data method
+ * @property {function} infofeed.stripd the remove unusued userdata from page
+ * @property {Object} pricefeed an element in roads object
+ * @property {string} pricefeed.path the path string
+ * @property {function} pricefeed.getd the get page data method
+ * @property {function} pricefeed.stripd the remove unusued userdata from page
+ */
+const roads = {
+    dashboard:
+    {
+        path: '/assets/dashboard',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_db'],
+                scripts: ['/assets_management.js'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+        stripd: function(d) {
+            if (d.hasOwnProperty('apisv2')) {
+                let todel = 'apisv2';
+                delete d[todel];
+            }
+        },
+    },
+    infofeed:
+    {
+        path: '/assets/infofeed',
+        getd: function(callback) {
+            data.pukedata(
+            {}).then(function(res) {
+                let mine = data.eat(res);
+                let rt = {};
+                let fd = [];
+                for (el in res) {
+                    if (res[el].feed) {
+                        fd = fd.concat(res[el].feed);
+                    }
+                }
+                rt['blocks'] = ['cb_ifeed', 'cb_dmfeed.ejs'];
+                rt['feed'] = fd;
+                rt['dm'] = mine;
+                callback &amp;&amp; callback(rt);
+            });
+        },
+        stripd: function(d) {
+            if (d.hasOwnProperty('apisv2')) {
+                let todel = 'apisv2';
+                delete d[todel];
+            }
+            if (d.hasOwnProperty('assets')) {
+                let todel = 'assets';
+                delete d[todel];
+            }
+        },
+    },
+    pricefeed:
+    {
+        path: '/assets/pricefeed',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_pfeed'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+        stripd: function(d) {
+            if (d.hasOwnProperty('apisv2')) {
+                let todel = 'apisv2';
+                delete d[todel];
+            }
+        },
+    },
+    trade:
+    {
+        path: '/assets/trade',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_pfeed'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+        stripd: function(d) {},
+    },
+    apiparams:
+    {
+        path: '/assets/api/param',
+        getd: function(callback) {
+            api.getAccounts(
+            {}).then(function(res, err) {
+                let xx = {
+                    blocks: ['api_param'],
+                    scripts: ['/api_settings.js'],
+                    userapi: res,
+                };
+                callback &amp;&amp; callback(xx);
+            });
+        },
+        stripd: function(d) {
+            if (d.hasOwnProperty('assets')) {
+                let todel = 'assets';
+                delete d[todel];
+            }
+        },
+    },
+    reportmonth:
+    {
+        path: '/assets/trade/reports/currm',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_pfeed'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+    },
+    reportthreemonths:
+    {
+        path: '/assets/trade/reports/currquart',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_pfeed'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+    },
+    crowddata:
+    {
+        path: '/assets/trade/reports/crowddata',
+        getd: function(callback) {
+            let xx = {
+                blocks: ['cb_pfeed'],
+            };
+            callback &amp;&amp; callback(xx);
+        },
+    },
+};
+
+module.exports = roads;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+			</div>
+		</div>
+		<nav>
+			<h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbexpressapp-CbExpressApp.html">cbexpressapp~CbExpressApp</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.assets.tickers.html">Routes.page.assets.tickers</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+		</nav> <br class="clear">
+		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+			 on
+				Thu Apr 12 2018 21:12:00 GMT+0200 (CEST)
+					 for CoinBoard | 2018 </footer>
+		<script>
+prettyPrint();
+		</script>
+		<script src="scripts/linenumber.js">
+		</script>
+	</body>
+
+</html>

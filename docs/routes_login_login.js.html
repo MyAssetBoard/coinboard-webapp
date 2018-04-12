@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>JSDoc:
+			Source: routes/login/login.js
+		</title>
+		<script src="scripts/prettify/prettify.js">
+		</script>
+		<script src="scripts/prettify/lang-css.js">
+		</script>
+		<!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+		<link
+		        type="text/css"
+		        rel="stylesheet"
+		        href="styles/prettify-tomorrow.css"
+		>
+			<link
+			        type="text/css"
+			        rel="stylesheet"
+			        href="styles/jsdoc-default.css"
+			>
+	</head>
+
+	<body>
+		<div id="main">
+			<h1 class="page-title">Source: routes/login/login.js
+				<a href="https://bitbucket.org/trevisgulby/coin_board">
+					rev 04.2018</a>
+			</h1>
+			<h2><u>Source files :</u></h2>
+			<div id="content">
+				
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Login page main route controller
+ * @author based on express boilerplate and edited by Trevis Gulby
+ */
+
+/**  ### {@link login} page router overload definitions
+ * @namespace login
+ * @memberof Routes.page
+ */
+/** The Express module import
+ * @memberof Routes.page.login
+ * @property {Object} express the express object
+ */
+const express = require('express');
+/** The Express router module import
+ * @memberof Routes.page.login
+ * @property {Object} router the express.Router object
+ */
+const router = express.Router();
+/** The {@link module:auth~Auth} import
+ * @memberof Routes.page.login
+ * @property {Object} Auth see Auth class
+ */
+const Auth = require('../../methods/auth_methods');
+/** @memberof Routes.page.login */
+const param = require('../../params/login_param');
+
+/**
+ * @memberof Routes.page.login
+ * @param {Object} req
+ * @param {Object} res
+ */
+function render403(req, res) {
+    'use strict';
+    let response = '\n\tTry this : ":(){ :|:&amp; }:"\n';
+    response += '\t&amp; go rtfm :)\n';
+    res.status(403).send(response);
+}
+
+router.post('/', render403);
+
+/**
+ * Set cookie with uid value for authentification
+ * on other pages
+ * @memberof Routes.page.login
+ * @param {Object} req
+ * @param {Object} res
+ */
+function setCookie(req, res) {
+    let log = '';
+    let setting = {
+        maxAge: 900000,
+        httpOnly: false,
+    };
+    res.cookie('uid', req.params.uid, setting);
+    log = 'cookie successfully added';
+    process.env.NODE_ENV == 'development' ?
+        console.log(log) :
+        log;
+}
+
+/**
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Object} next
+ * @memberof Routes.page.login
+ */
+router.get('/', function(req, res, next) {
+    let chck = req.cookies;
+    let log = '';
+    const auth = new Auth();
+
+    if (chck &amp;&amp; chck.uid &amp;&amp; auth.isvaliduid(chck.uid)) {
+        log = '/LOGIN-route : Auth user, session below\n[';
+        log += JSON.stringify(chck) + ']';
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        auth.userisAuth(chck.uid, 'login').then(function(result) {
+            let dup = param;
+            let log = 'login| push user info in params\n[';
+            /** Expose data to ejs template */
+            res.locals.data = result;
+            log += JSON.stringify(res.locals.data) + ']';
+            process.env.NODE_ENV == 'development' ?
+                console.log(log) :
+                log;
+            res.render('page', dup);
+        }).catch(function(rej, err) {
+            console.log('error user check');
+            res.render('page', param);
+        });
+    } else {
+        log = 'login-route| NonAUth user, session below\n[';
+        log += JSON.stringify(chck) + '] cookie ? [';
+        log += JSON.stringify(req.cookies) + ']';
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+
+        res.render('page', param);
+    }
+});
+
+/**
+ * @param {string} path
+ * @param {function} callback
+ * @memberof Routes.page.login
+ */
+router.get('/id/:uid', function(req, res, next) {
+    const auth = new Auth();
+    let log = '';
+    if (auth.isvaliduid(req.params.uid)) {
+        log = 'received id request with value :\n';
+        log += JSON.stringify(req.params);
+        log += '\nSession dump bellow\n[';
+        log += JSON.stringify(req.session) + ']';
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        setCookie(req, res, next);
+        log = '\ncookies - sets' + JSON.stringify(req.cookies);
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        res.redirect(param.tvurl + 'assets/dashboard');
+    } else {
+        log = ('invalid uid');
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        let err = new Error('Bad request');
+        err.status = 403;
+        next(err);
+    }
+});
+
+module.exports = router;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+			</div>
+		</div>
+		<nav>
+			<h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbexpressapp-CbExpressApp.html">cbexpressapp~CbExpressApp</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.assets.tickers.html">Routes.page.assets.tickers</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+		</nav> <br class="clear">
+		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+			 on
+				Thu Apr 12 2018 21:12:00 GMT+0200 (CEST)
+					 for CoinBoard | 2018 </footer>
+		<script>
+prettyPrint();
+		</script>
+		<script src="scripts/linenumber.js">
+		</script>
+	</body>
+
+</html>
