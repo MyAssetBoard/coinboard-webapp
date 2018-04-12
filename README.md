@@ -13,6 +13,7 @@ _____________________________________
 # Code analysis reports :
 [![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183)
 [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability)
 ## Features :
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 > - Train your application to **automate** your workflow (AI modules )
