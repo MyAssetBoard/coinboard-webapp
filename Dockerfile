@@ -51,9 +51,9 @@ COPY */package*.json ./usr/src/app/coin_board/
 RUN cd /usr/src/app &&  yarn install && cd coin_board && yarn install
 COPY . ./usr/src/app/
 
-ADD   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
-ADD   conf/onion/*.onion.nginx /etc/nginx/sites-enabled/
-ADD   conf/onion/torrc /etc/tor/torrc
+COPY   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
+COPY   conf/onion/*.onion.nginx /etc/nginx/sites-enabled/
+COPY   conf/onion/torrc /etc/tor/torrc
 
 #Tor prop for 'fofo' user
 RUN usermod -aG debian-tor fofo && \
