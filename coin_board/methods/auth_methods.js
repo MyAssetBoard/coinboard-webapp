@@ -152,7 +152,7 @@ Auth.prototype.checkRegFields = function(d) {
         return undefined;
     } else {
         d.iname = d.iname.replace(/\W/g, '');
-        d.imail = d.iname.trim();
+        d.imail = d.imail.trim();
         d.isocket = d.isocket.trim();
         d.ieth = this.iscoinAddr(d.ieth) ?
             d.ieth :
@@ -175,18 +175,20 @@ Auth.prototype.registerUsr = function(data) {
     return new Promise((resolve, reject) => {
         let chk = this.checkRegFields(data);
         if (chk != undefined) {
-            let ne = {
+            let nu = {
                 'username': chk.iname,
                 'useremail': chk.imail,
                 'socketid': chk.isocket,
                 'ethaddr': chk.ieth,
                 'usercurrency': chk.icurr,
             };
-            this.crud.insert('r_users', ne, function(result) {
+            this.crud.insert('r_users', nu, function(result, err) {
                 if (result) {
                     resolve(result);
                 }
-                reject(new Error('Db Error'));
+                reject(err ?
+                    new Error('Db Error \n' + JSON.stringify(err)) :
+                    new Error('something failed with db..'));
             });
         } else {
             reject(new Error('Invalid data submitted'));
@@ -202,7 +204,7 @@ Auth.prototype.registerUsr = function(data) {
 Auth.prototype.checkRegData = function(data, socket, io) {
     if (data && data.iname && data.imail && data.isocket) {
         if (data.ieth && data.icurr) {
-            this.auth.registerUsr(data).then(function(res) {
+            this.registerUsr(data).then(function(res) {
                 let u = socket.id;
                 let nmsg = {
                     msg: 'Ok redirecting you to login page',
