@@ -207,7 +207,7 @@ do
 		exit 0
 		;;
 
-		'n-d')
+		'n-gd')
 		genddoc
 		exit 0
 		;;
