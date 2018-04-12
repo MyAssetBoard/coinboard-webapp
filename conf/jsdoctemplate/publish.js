@@ -492,7 +492,6 @@ exports.publish = function(taffyData, opts, tutorials) {
                 shortened: null,
             };
             if (sourceFilePaths.indexOf(sourcePath) === -1) {
-                console.log(sourcePath);
                 sourceFilePaths.push(sourcePath);
             }
         }
