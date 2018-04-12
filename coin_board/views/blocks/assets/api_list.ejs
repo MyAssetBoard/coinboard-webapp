@@ -1,0 +1,36 @@
+<div class="card">
+	<div class="card-header">
+		<h3>
+			<li><%= data.id %></li>
+		</h3>
+	</div>
+	<div class="card-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#ID</th>
+					<th scope="col">Account</th>
+					<th scope="col">Secret</th>
+					<th scope="col">Act</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th class="input-group" scope="row">1</th>
+					<td>
+						<%= data.key %>
+					</td>
+					<td>
+						<%= data.secret %>
+					</td>
+					<td>
+						<a class="btn btn-primary
+						btn-sm text-white">
+							Update
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
