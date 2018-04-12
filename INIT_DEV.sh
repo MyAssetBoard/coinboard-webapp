@@ -110,7 +110,7 @@ function app_startkitchen()
 	-v "$KVIEW:/var/lib/tor/hidnview" \
 	-v "$KSOCK:/var/lib/tor/hidnws" \
 	-v "$KALT:/var/lib/tor/altd" \
-	beefonion bash
+	coinboardonionservice/deployhiddenservice:latest bash
 }
 
 function app_cleankitchen()
