@@ -64,6 +64,7 @@ RUN usermod -aG debian-tor fofo && \
 	usermod -aG foobar root && \
 	chown  root:fofo /usr/src/app/ && chmod 775 /usr/src/app && \
 	chmod +x /usr/src/app/conf/onion/turnmeon.sh && \
+	echo 'fooinitsecret' > /usr/src/app/log.txt && \
 	chown fofo:fofo /usr/src/app/log.txt && chmod u=rw /usr/src/app/log.txt
 
 RUN apt-get install -y tree
