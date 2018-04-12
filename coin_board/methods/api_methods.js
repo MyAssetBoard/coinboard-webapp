@@ -17,12 +17,6 @@ class Apis {
         this.Crypt = require('../methods/crypt_methods');
         /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
-        /** Enum for api type order */
-        this.ApiTypes = {
-            BANKS: 0,
-            CRYTO: 1,
-            MARKETS: 2,
-        };
         /** check if
          * @param {string} str is an encoded param
          * @return {bool} true if true false if not ;)
