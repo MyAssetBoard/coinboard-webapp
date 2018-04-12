@@ -27,12 +27,17 @@ class CbWebsocket {
         /** Auth module dep import */
         this.Auth = require('../methods/auth_methods');
         this.auth = new this.Auth();
-        /** NUMBER of connected sessions on auth room */
+        /** {@link userapis} import */
+        this.Apis = require('../methods/api_methods');
+        this.apiparam = new this.Apis();
+        /** NUMBER of current sessions on auth room */
         this.authco = 0;
-        /** NUMBER of connected sessions on register room */
+        /** NUMBER of current sessions on register room */
         this.regco = 0;
-        /** NUMBER of connected sessions on assets room */
+        /** NUMBER of current sessions on assets room */
         this.assetco = 0;
+        /** NUMBER of current sessions on api/param room */
+        this.api_paramco = 0;
     }
 }
 
@@ -47,6 +52,7 @@ CbWebsocket.prototype.startmeup = function() {
     _this.authentication();
     _this.register();
     _this.assetmanagmnt();
+    _this.apiparams();
 };
 
 /** @property {function} authentication auth socket room event handling */
@@ -116,7 +122,7 @@ CbWebsocket.prototype.assetmanagmnt = function() {
             console.log(log) :
             log;
         socket.on('add asset', function(d) {
-            let log = 'add asset data returned :\n' + JSON.stringify(d);
+            let log = 'add asset data get :\n' + JSON.stringify(d);
             process.env.NODE_ENV == 'development' ?
                 console.log(log) :
                 log;
@@ -124,6 +130,30 @@ CbWebsocket.prototype.assetmanagmnt = function() {
         });
         socket.on('disconnect', function() {
             _this.assetco -= 1;
+        });
+    });
+};
+
+/** @property {function} apiparams assets socket room event handling */
+CbWebsocket.prototype.apiparams = function() {
+    let _this = this;
+    _this.io.of('/api/param').on('connection', function(socket) {
+        let log = socket.id.replace(/\/api\/param#/g, 'User : ');
+        _this.api_paramco += 1;
+        log += ' connected to [/api/param] |\nConnected : ';
+        log += _this.api_paramco;
+        process.env.NODE_ENV == 'development' ?
+            console.log(log) :
+            log;
+        socket.on('update api creds', function(d) {
+            let log = 'update creds get :\n' + JSON.stringify(d);
+            process.env.NODE_ENV == 'development' ?
+                console.log(log) :
+                log;
+            _this.apiparam.checkApiParamsData(d, socket, _this.io);
+        });
+        socket.on('disconnect', function() {
+            _this.api_paramco -= 1;
         });
     });
 };
