@@ -169,15 +169,15 @@ function app_tests ()
 
 function genddoc ()
 {
-	rm -rf ~/Downloads/doc
-	$JSDOC -c $JSDOCCONF -d doc;
+	rm -rf ~/Downloads/docs
+	$JSDOC -c $JSDOCCONF;
 	echo -e "
 	** Documentation generation ok !
 	(logs on jsdoc.log)
 
 	Please open your favorite web browser to$BLD doc/index.html$CL
 	"
-	mv doc ~/Downloads/
+	mv docs ~/Downloads/
 }
 
 ### Scrit init

@@ -2,7 +2,7 @@
         "opts": {
                 "template": "./conf/jsdoctemplate",
                 "encoding": "utf8",
-                "destination": "./doc/",
+                "destination": "./docs/",
                 "recurse": false
         },
         "tags": {
