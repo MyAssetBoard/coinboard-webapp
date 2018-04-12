@@ -17,15 +17,16 @@ let toraddr = {
         let buff = new Buffer(22);
         let fn = '/var/lib/tor/hidnview/hostname';
         buff = fs.readFileSync(fn, 'ascii');
-        let ret = buff.toString().replace(/\s+/g, ' ').trim();
+        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+        ret += '/';
         return ret;
     },
     socks: function() {
         let buff = new Buffer(22);
         let fn = '/var/lib/tor/hidnws/hostname';
         buff = fs.readFileSync(fn, 'ascii');
-        let ret = buff.toString().replace(/\s+/g, ' ').trim();
-        return ret += ':124';
+        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+        return ret += ':124/';
     },
 };
 /** final app view url for reference in template */
