@@ -10,6 +10,8 @@
 ******* Coin_Board|<Readme.md>
 _____________________________________
 ```
+# Code analysis reports :
+[![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183)
 ## Features :
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 > - Train your application to **automate** your workflow (AI modules )
