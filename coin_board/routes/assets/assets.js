@@ -21,9 +21,9 @@ const router = express.Router();
  * @memberof Routes.page.assets
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** @memberof Routes.page.assets */
-const param = require('../../params/myassets_param');
+const param = require('../../params/def_params');
 /** This {@link page.assets} special router  import
  * @memberof Routes.page.assets
  * @property {Object} roads see ..
@@ -106,7 +106,7 @@ router.get('/*', function(req, res, next) {
         logthisusr(req.originalUrl, chck);
         auth.userisAuth(chck.uid, 'assets')
             .then(function(result) {
-                let dup = param;
+                let dup = param.assets;
                 res.locals.data = result;
                 setpagecontent(req.originalUrl, dup, res.locals.data)
                     .then(function(d) {
@@ -150,7 +150,7 @@ router.get('/*', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.render('page', param);
+        res.render('page', param.assets);
     }
 });
 

@@ -3,9 +3,9 @@
  * @author Trevis Gulby
  */
 
-const Apis = require('../../methods/api_methods');
+const Apis = require('../../controllers/api_methods');
 const api = new Apis();
-const DataJunk = require('../../methods/datajunk_methods');
+const DataJunk = require('../../controllers/datajunk_methods');
 const data = new DataJunk();
 /** ### Parsing method module for {@link module:router~Routes.assets} elem
  * @namespace

@@ -1,6 +1,6 @@
 /**
- * @file Livestream page main route controller
- * @author based on express boilerplate and edited by Trevis Gulby
+ * @file Livestream page
+ * @author Trevis Gulby
  */
 
 /**  ### {@link livestream} page router overload definitions
@@ -21,14 +21,14 @@ const router = express.Router();
  * @memberof Routes.page.livestream
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** The new auth object
  * @memberof Routes.page.livestream
  * @property {Object} auth see {@link module:auth~Auth()} class
  */
 const auth = new Auth();
 /** @memberof Routes.page.livestream */
-const param = require('../../params/livestream_param');
+const param = require('../../params/def_params');
 
 /** GET livestream page
  * @memberof Routes.page.livestream
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
         auth.userisAuth(chck.uid, 'livestream').then(function(ud) {
-            let dup = param;
+            let dup = param.livestream;
             let log = 'livestream| push user info in params \n[';
             res.locals.data = ud;
             /* istanbul ignore next */
@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.render('page', param);
+        res.render('page', param.livestream);
     }
 });
 

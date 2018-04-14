@@ -21,14 +21,14 @@ const router = express.Router();
  * @memberof Routes.page.profile
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** The new auth object
  * @memberof Routes.page.profile
  * @property {Object} auth see {@link module:auth~Auth()} class
  */
 const auth = new Auth();
 /** @memberof Routes.page.profile */
-const param = require('../../params/profile_param');
+const param = require('../../params/def_params');
 
 /** GET profile page
  * @memberof Routes.page.profile
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
         auth.userisAuth(chck.uid, 'profile').then(function(ud) {
-            const dup = param;
+            const dup = param.profile;
             let log = 'profile| push user info in params \n[';
             res.locals.data = ud;
             /* istanbul ignore next */
@@ -67,7 +67,7 @@ router.get('/', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.render('page', param);
+        res.render('page', param.profile);
     }
 });
 

@@ -21,14 +21,14 @@ const router = express.Router();
  * @memberof Routes.page.signin
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** The new auth object
  * @memberof Routes.page.signin
  * @property {Object} auth see {@link module:auth~Auth()} class
  */
 const auth = new Auth();
 /** @memberof Routes.page.signin */
-const param = require('../../params/signin_param');
+const param = require('../../params/def_params');
 
 /** GET signin page
  * @memberof Routes.page.signin
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
         auth.userisAuth(chck.uid, 'profile').then(function(ud) {
-            const dup = param;
+            const dup = param.profile;
             let log = 'signin| push user info in params \n[';
             res.locals.data = ud;
             log += JSON.stringify(res.locals.data) + ']';
@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.render('page', param);
+        res.render('page', param.profile);
     }
 });
 

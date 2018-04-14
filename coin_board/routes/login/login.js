@@ -16,14 +16,15 @@ const express = require('express');
  * @memberof Routes.page.login
  * @property {Object} router the express.Router object
  */
+
 const router = express.Router();
 /** The {@link module:auth~Auth} import
  * @memberof Routes.page.login
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** @memberof Routes.page.login */
-const param = require('../../params/login_param');
+const param = require('../../params/def_params');
 
 /**
  * @memberof Routes.page.login
@@ -77,7 +78,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
         auth.userisAuth(chck.uid, 'login').then(function(result) {
-            let dup = param;
+            let dup = param.login;
             let log = 'login| push user info in params\n[';
             /** Expose data to ejs template */
             res.locals.data = result;
@@ -88,7 +89,7 @@ router.get('/', function(req, res, next) {
             res.render('page', dup);
         }).catch(function(rej, err) {
             console.log('error user check');
-            res.render('page', param);
+            res.render('page', param.login);
         });
     } else {
         log = 'login-route| NonAUth user, session below\n[';
@@ -98,7 +99,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
 
-        res.render('page', param);
+        res.render('page', param.login);
     }
 });
 
@@ -123,7 +124,7 @@ router.get('/id/:uid', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.redirect(param.tvurl + 'assets/dashboard');
+        res.redirect(param.assets.tvurl + 'assets/dashboard');
     } else {
         log = ('invalid uid');
         process.env.NODE_ENV == 'development' ?

@@ -21,14 +21,14 @@ const router = express.Router();
  * @memberof Routes.page.index
  * @property {Object} Auth see Auth class
  */
-const Auth = require('../../methods/auth_methods');
+const Auth = require('../../controllers/auth_methods');
 /** The new auth object
  * @memberof Routes.page.index
  * @property {Object} auth see {@link module:auth~Auth()} class
  */
 const auth = new Auth();
 /** @memberof Routes.page.index */
-const param = require('../../params/index_param');
+const param = require('../../params/def_params');
 
 /** GET index page
  * @memberof Routes.page.index
@@ -43,7 +43,7 @@ router.get('/', function(req, res, next) {
             console.log(log) :
             log;
         auth.userisAuth(chck.uid, 'index').then(function(result) {
-            const dup = param;
+            const dup = param.index;
             let log = 'index| push user info in params \n[';
             res.locals.data = result;
             /* istanbul ignore next */
@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
                 throw err;
             }
             next(err);
-            res.render('page', param);
+            res.render('page', param.index);
         });
     } else {
         log = 'index-route| NonAUth user, session below\n[';
@@ -68,7 +68,7 @@ router.get('/', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        res.render('page', param);
+        res.render('page', param.index);
     }
 });
 
