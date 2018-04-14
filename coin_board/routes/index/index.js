@@ -37,37 +37,21 @@ router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        let log = '/INDEX-route| Auth user, session below\n[';
-        log += JSON.stringify(chck) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        auth.userisAuth(chck.uid, 'index').then(function(result) {
+        param.logco('INDEX', chck);
+        auth.userisAuth(chck.uid, 'index').then((userdata) => {
             const dup = param.index;
             let log = 'index| push user info in params \n[';
-            res.locals.data = result;
+            res.locals.data = userdata;
             /* istanbul ignore next */
             log += JSON.stringify(res.locals.data) + ']';
             /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             res.render('page', dup);
-        }).catch(function(err) {
-            if (err) {
-                throw err;
-            }
+        }).catch((err) => {
             next(err);
-            res.render('page', param.index);
         });
     } else {
-        log = 'index-route| NonAUth user, session below\n[';
-        log += JSON.stringify(chck) + '] cookie ? [';
-        log += JSON.stringify(req.cookies) + ']';
-        /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        param.lognoco('INDEX', chck);
         res.render('page', param.index);
     }
 });

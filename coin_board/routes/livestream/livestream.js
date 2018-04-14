@@ -37,36 +37,23 @@ router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        let log = '/INDEX-route| Auth user, session below\n[';
-        log += JSON.stringify(chck) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        auth.userisAuth(chck.uid, 'livestream').then(function(ud) {
+        param.logco('LIVESTREAM', chck);
+        auth.userisAuth(chck.uid, 'livestream').then((userdata) => {
             let dup = param.livestream;
             let log = 'livestream| push user info in params \n[';
-            res.locals.data = ud;
+            res.locals.data = userdata;
             /* istanbul ignore next */
             log += JSON.stringify(res.locals.data) + ']';
             /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             res.render('page', dup);
-        }).catch(function(err) {
-            if (err) {
-                throw err;
-            }
+        }).catch((err) => {
             next(err);
         });
     } else {
-        log = 'livestream-route| NonAUth user, session below\n[';
-        log += JSON.stringify(chck) + '] cookie ? [';
-        log += JSON.stringify(req.cookies) + ']';
+        param.lognoco('LIVESTREAM', chck);
         /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
         res.render('page', param.livestream);
     }
 });

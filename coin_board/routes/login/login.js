@@ -68,16 +68,11 @@ function setCookie(req, res) {
  */
 router.get('/', function(req, res, next) {
     let chck = req.cookies;
-    let log = '';
     const auth = new Auth();
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        log = '/LOGIN-route : Auth user, session below\n[';
-        log += JSON.stringify(chck) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        auth.userisAuth(chck.uid, 'login').then(function(result) {
+        param.logco('LOGIN', chck);
+        auth.userisAuth(chck.uid, 'login').then((result) => {
             let dup = param.login;
             let log = 'login| push user info in params\n[';
             /** Expose data to ejs template */
@@ -89,16 +84,10 @@ router.get('/', function(req, res, next) {
             res.render('page', dup);
         }).catch(function(rej, err) {
             console.log('error user check');
-            res.render('page', param.login);
+            res.render('page', param.error);
         });
     } else {
-        log = 'login-route| NonAUth user, session below\n[';
-        log += JSON.stringify(chck) + '] cookie ? [';
-        log += JSON.stringify(req.cookies) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-
+        param.lognoco('LOGIN', chck);
         res.render('page', param.login);
     }
 });

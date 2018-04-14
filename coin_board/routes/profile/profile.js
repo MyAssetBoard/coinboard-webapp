@@ -37,36 +37,21 @@ router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        let log = '/PROFIlE-route| Auth user, session below\n[';
-        log += JSON.stringify(chck) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        auth.userisAuth(chck.uid, 'profile').then(function(ud) {
+        param.logco('PROFILE', chck);
+        auth.userisAuth(chck.uid, 'profile').then((userdata) => {
             const dup = param.profile;
             let log = 'profile| push user info in params \n[';
-            res.locals.data = ud;
+            res.locals.data = userdata;
             /* istanbul ignore next */
             log += JSON.stringify(res.locals.data) + ']';
             /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             res.render('page', dup);
-        }).catch(function(err) {
-            if (err) {
-                throw err;
-            }
+        }).catch((err) => {
             next(err);
         });
     } else {
-        log = 'profile-route| NonAUth user, session below\n[';
-        log += JSON.stringify(chck) + '] cookie ? [';
-        log += JSON.stringify(req.cookies) + ']';
-        /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        param.lognoco('PROFILE', chck);
         res.render('page', param.profile);
     }
 });

@@ -37,35 +37,21 @@ router.get('/', function(req, res, next) {
     let chck = req.cookies;
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        let log = 'signin-route : Auth user | session below\n[';
-        log += JSON.stringify(chck) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        auth.userisAuth(chck.uid, 'profile').then(function(ud) {
-            const dup = param.profile;
+        param.logco('SIGNIN', chck);
+        auth.userisAuth(chck.uid, 'profile').then((userdata) => {
+            const dup = param.signin;
             let log = 'signin| push user info in params \n[';
-            res.locals.data = ud;
+            res.locals.data = userdata;
             log += JSON.stringify(res.locals.data) + ']';
             /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             res.render('page', dup);
-        }).catch(function(err) {
-            if (err) {
-                throw err;
-            }
+        }).catch((err) => {
             next(err);
         });
     } else {
-        log = 'signin-route| NonAUth user, session below\n[';
-        log += JSON.stringify(chck) + '] cookie ? [';
-        log += JSON.stringify(req.cookies) + ']';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-        res.render('page', param.profile);
+        param.lognoco('SIGNIN', chck);
+        res.render('page', param.signin);
     }
 });
 
