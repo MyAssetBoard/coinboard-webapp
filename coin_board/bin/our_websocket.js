@@ -109,20 +109,34 @@ CbWebsocket.prototype.register = function() {
     });
 };
 
+CbWebsocket.prototype.assetroom = function() {
+    let _this = this;
+    const assetroom = {
+        logger: function(d) {
+            let log = 'add asset data get :\n' + JSON.stringify(d);
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        },
+        handler: function(socket) {
+            _this.assetco += 1;
+            _this.logthisguy('asset', socket.id);
+            socket.on('add asset', function(d) {
+                this.logger(d);
+                _this.asset.checkAssetData(d, socket, _this.io);
+            });
+            socket.on('disconnect', function() {
+                _this.assetco -= 1;
+            });
+        },
+    };
+    return assetroom;
+};
+
 /** @property {function} assetmanagmnt assets socket room event handling */
 CbWebsocket.prototype.assetmanagmnt = function() {
     let _this = this;
-    _this.io.of('/assets').on('connection', function(socket) {
-        _this.assetco += 1;
-        _this.logthisguy('asset', socket.id);
-        socket.on('add asset', function(d) {
-            let log = 'add asset data get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
-            _this.asset.checkAssetData(d, socket, _this.io);
-        });
-        socket.on('disconnect', function() {
-            _this.assetco -= 1;
-        });
+    let ass = _this.assetroom();
+    _this.io.of('/assets').on('connection', (socket) => {
+        ass.handler(socket);
     });
 };
 
