@@ -17,6 +17,16 @@ let cdns = {
 };
 
 let param = {
+    logco: function(pagename, chck) {
+        log = '/' + pagename + '-route : Auth user, cookies below\n[';
+        log += JSON.stringify(chck) + ']';
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+    },
+    lognoco: function(pagename, chck) {
+        log = '/' + pagename + '-route : NonAuth user, cookies below\n[';
+        log += JSON.stringify(chck) + ']';
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+    },
     assets:
     {
         title: 'My assets',
