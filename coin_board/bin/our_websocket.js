@@ -35,7 +35,7 @@ class CbWebsocket {
         /** NUMBER of current sessions on assets room */
         this.assetco = 0;
         /** NUMBER of current sessions on api/param room */
-        this.api_paramco = 0;
+        this.apiparamco = 0;
     }
 }
 
@@ -53,16 +53,20 @@ CbWebsocket.prototype.startmeup = function() {
     _this.apiparams();
 };
 
+/** Log this user */
+CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
+    let log = usrid.replace(/\/auth#/g, 'User : ');
+    let conbr = this[roomname + 'co'];
+    log += ' connected to [/' + roomname + '] route | Connected : ' + conbr;
+    process.env.NODE_ENV == 'development' ? console.log(log) : log;
+};
+
 /** @property {function} authentication auth socket room event handling */
 CbWebsocket.prototype.authentication = function() {
     let _this = this;
     _this.io.of('/auth').on('connection', function(socket) {
-        let log = socket.id.replace(/\/auth#/g, 'User : ');
         _this.authco += 1;
-        log += ' connected to [/auth] route | Connected : ' + _this.authco;
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        _this.logthisguy('auth', socket.id);
         let usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
         let scktid = socket.id.replace(/\/auth#/g, '');
         let comsg = {
@@ -71,7 +75,7 @@ CbWebsocket.prototype.authentication = function() {
             'tot': _this.authco,
         };
         _this.io.of('/auth').to(socket.id).emit('nm', comsg);
-        socket.on('user login', function(data) {
+        socket.on('user login', (data) => {
             _this.auth.checkcoData(data, socket, _this.io);
         });
         socket.on('disconnect', function() {
@@ -84,23 +88,17 @@ CbWebsocket.prototype.authentication = function() {
 CbWebsocket.prototype.register = function() {
     let _this = this;
     _this.io.of('/register').on('connection', function(socket) {
-        let log = socket.id.replace(/\/register#/g, 'User : ');
         _this.regco += 1;
-        log += ' connected to [/register] route| Connected : ' + _this.regco;
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        _this.logthisguy('reg', socket.id);
         let scktid = socket.id.replace(/\/register#/g, '');
         let comsg = {
             'scktid': scktid,
         };
         _this.io.of('/register').to(socket.id).emit('nm', comsg);
-        socket.on('user signin', function(data) {
-            let log = 'received : \n' + JSON.stringify(data);
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
-            _this.auth.checkRegData(data, socket, _this.io);
+        socket.on('user signin', (inputdata) => {
+            let log = 'received : \n' + JSON.stringify(inputdata);
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            _this.auth.checkRegData(inputdata, socket, _this.io);
         });
         socket.on('disconnect', function() {
             _this.regco -= 1;
@@ -112,17 +110,11 @@ CbWebsocket.prototype.register = function() {
 CbWebsocket.prototype.assetmanagmnt = function() {
     let _this = this;
     _this.io.of('/assets').on('connection', function(socket) {
-        let log = socket.id.replace(/\/register#/g, 'User : ');
         _this.assetco += 1;
-        log += ' connected to [/assets] route| Connected : ' + _this.assetco;
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        _this.logthisguy('asset', socket.id);
         socket.on('add asset', function(d) {
             let log = 'add asset data get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             _this.asset.checkAssetData(d, socket, _this.io);
         });
         socket.on('disconnect', function() {
@@ -135,22 +127,15 @@ CbWebsocket.prototype.assetmanagmnt = function() {
 CbWebsocket.prototype.apiparams = function() {
     let _this = this;
     _this.io.of('/api/param').on('connection', function(socket) {
-        let log = socket.id.replace(/\/api\/param#/g, 'User : ');
-        _this.api_paramco += 1;
-        log += ' connected to [/api/param] |\nConnected : ';
-        log += _this.api_paramco;
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
+        _this.apiparamco += 1;
+        _this.logthisguy('apiparam', socket.id);
         socket.on('update api creds', function(d) {
             let log = 'update creds get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
+            process.env.NODE_ENV == 'development' ? console.log(log) : log;
             _this.apiparam.checkApiParamsData(d, socket, _this.io);
         });
         socket.on('disconnect', function() {
-            _this.api_paramco -= 1;
+            _this.apiparamco -= 1;
         });
     });
 };
