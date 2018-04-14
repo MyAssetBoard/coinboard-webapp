@@ -70,8 +70,7 @@ CbWebsocket.prototype.authentication = function() {
             'scktid': scktid,
             'tot': _this.authco,
         };
-        let u = socket.id;
-        _this.io.of('/auth').to(u).emit('nm', comsg);
+        _this.io.of('/auth').to(socket.id).emit('nm', comsg);
         socket.on('user login', function(data) {
             _this.auth.checkcoData(data, socket, _this.io);
         });
