@@ -49,10 +49,10 @@ Apis.prototype.trimnewaccount = function(data) {
     data.inputid = data.inputid.trim().replace(/[^0-9a-z]/gi, '');
     /** Api secret must be alphanum */
     data.inputpw = data.inputpw.trim().replace(/[^0-9a-z]/gi, '');
-    data.uid = _this.isEncoded(data.uid) ?
+    data.uid = this.isEncoded(data.uid) ?
         decodeURIComponent(data.uid) :
         null;
-    data.uid = data.uid ? _this.crypt.decryptuid(data.uid) : null;
+    data.uid = data.uid ? this.crypt.decryptuid(data.uid) : null;
     return (data);
 };
 
