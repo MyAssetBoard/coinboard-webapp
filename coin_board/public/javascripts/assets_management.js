@@ -1,73 +1,34 @@
 /* global io:false */
 $(document).ready(function() {
-    let url = $('#cbws').text().trim();
+    const url = $('#cbws').text().trim();
     const assetws = io.connect(url + 'assets');
+    const utils = new Commons();
     let objid = '#' + window.location.pathname.split('/')[2];
     $(objid).toggleClass('active');
 
-    /**
-     * @param {string} key
-     * @return {string} val
-     */
-    function getCookie(key) {
-        let value = '; ' + document.cookie;
-        let parts = value.split('; ' + key + '=');
-        if (parts.length == 2) {
-            return parts.pop().split(';').shift();
-        }
-    }
-    /**
-     * @param {Object} data
-     */
-    function fillPopup(data) {
-        $('#ppContent').text('');
-        $('#ppContent').removeClass('alert-danger');
-        $('#ppContent').addClass('alert-info');
-        if (!data.emsg) {
-            $.each(data, (key, value) => {
-                let newline = $('<p>');
-                let ct = '<strong>' + key + ' :</strong>';
-                newline.html(ct);
-                newline.append(value);
-                $('#ppContent').append(newline);
-            });
-        } else {
-            let newline = $('<p>');
-            let ct = '<strong> <span class="lnr lnr-warning">';
-            ct += '</span> Error : </strong>';
-            newline.html(ct);
-            newline.append(data.errmsg);
-            $('#ppContent').toggleClass('alert-info alert-danger');
-            $('#ppContent').append(newline);
-        }
-        $('#popup').fadeIn('fast');
-        setTimeout(() => {
-            elem.fadeToggle('fast');
-        }, 2000);
-    }
-    assetws.on('connect', function() {
+    assetws.on('connect', () => {
         console.log('Connected to /assets socket stream');
     });
 
-    assetws.on('error', function(e) {
+    assetws.on('error', (e) => {
         console.log(
-            'System', e ?
+            'System : ', e ?
             e :
             'A unknown error occurred');
     });
 
-    assetws.on('nm', function(data) {
-        fillPopup(data);
+    assetws.on('nm', (data) => {
+        utils.fillPopup(data);
     });
-    assetws.on('em', function(data) {
-        fillPopup(data);
+    assetws.on('em', (data) => {
+        utils.fillPopup(data);
     });
 
     $('#vadd').click(function() {
         $('#collapseOne').collapse('toggle');
     });
 
-    $('#searchme').on('input', function() {
+    $('#searchme').on('input', () => {
         let r = $(this).val().trim();
         r = r.toUpperCase();
         let tgtElem = document.getElementById(r);
@@ -80,7 +41,7 @@ $(document).ready(function() {
         }
     });
 
-    $('button[id^="Tick-"]').click(function() {
+    $('button[id^="Tick-"]').click(() => {
         let uri = 'https://min-api.cryptocompare.com/data/price';
         let thisInput = {
             'i': $(this).text().trim(),
@@ -90,7 +51,7 @@ $(document).ready(function() {
 
         if (thisInput.iqtt.length && thisInput.isymb.length >= 2) {
             uri += '?fsym=' + thisInput.isymb + '&tsyms=' + 'EUR';
-            $.get(uri, function(res) {
+            $.get(uri, (res) => {
                 if (res) {
                     let aval = parseFloat(thisInput.iqtt);
                     aval *= parseFloat(res.EUR);
@@ -101,9 +62,9 @@ $(document).ready(function() {
         }
     });
 
-    $('#addme').click(function() {
+    $('#addme').click(() => {
         let inputTicker = $('#ticker option:selected').text();
-        let usrid = getCookie('uid');
+        let usrid = utils.getCookie('uid');
         let inputQtt = $('#qtt').val();
         inputTicker = inputTicker.trim();
         inputQtt = inputQtt.trim();

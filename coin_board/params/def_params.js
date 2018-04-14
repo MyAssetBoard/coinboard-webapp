@@ -29,6 +29,7 @@ let param = {
         {
             socketio: cdns.socket,
             chartcdn: cdns.chartjs,
+            commons: '/common.js',
         },
         blocks:
         {
@@ -59,6 +60,7 @@ let param = {
         scripts:
         {
             socket: cdns.socket,
+            commons: '/common.js',
             trade: '/tradestream.js',
         },
         blocks:
@@ -79,6 +81,7 @@ let param = {
         {
             socketio: cdns.socket,
             cryptojs: cdns.cryptojs,
+            commons: '/common.js',
             mysocket: '/auth_socket.js',
         },
         blocks:
@@ -111,6 +114,7 @@ let param = {
         {
             socketio: cdns.socket,
             web3cdn: cdns.web3,
+            commons: '/common.js',
             myweb3: '/web3_checkaddress.js',
             mysocket: '/signin_socket.js',
         },

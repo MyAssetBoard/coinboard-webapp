@@ -1,54 +1,10 @@
 /* global io:false */
-
-$(document).ready(function() {
-    let url = $('#cbws').text().trim();
+$(document).ready(() => {
+    const url = $('#cbws').text().trim();
     const auth = io.connect(url + 'auth');
+    const utils = new Commons();
 
-    /**
-     * Telegram auth
-     * @param {Object} user
-     */
-    function onTelegramAuth(user) {
-        let lg = 'You are successfully logged in as ';
-        console.log(lg + user.first_name + (
-            user.last_name ?
-            ' ' + user.last_name :
-            ''));
-    }
-
-    /**
-     * @param {Object} data
-     */
-    function fillPopup(data) {
-        $('#ppContent').text('');
-        $('#ppContent').removeClass('alert-danger');
-        $('#ppContent').addClass('alert-info');
-        if (!data.emsg) {
-            $.each(data, (key, value) => {
-                let newline = $('<p>');
-                let ct = '<strong>' + key + ' :</strong>';
-                newline.html(ct);
-                newline.append(value);
-                $('#ppContent').append(newline);
-            });
-        } else {
-            let newline = $('<p>');
-            let ct = '<strong> <span class="lnr lnr-warning">';
-            ct += '</span> Error : </strong>';
-            newline.html(ct);
-            newline.append(data.errmsg);
-            $('#ppContent').toggleClass('alert-info alert-danger');
-            $('#ppContent').append(newline);
-        }
-        $('#popup').fadeIn('fast');
-        setTimeout(() => {
-            elem.fadeToggle('fast');
-        }, 2000);
-    }
-
-    /**
-     * @brief sendname event handler
-     */
+    /** sendname event handler */
     function sendname() {
         let name = $('#inputName').val();
         let scktid = $('#inputSocketid').val();
@@ -74,12 +30,12 @@ $(document).ready(function() {
         $('#inputSocketid').toggleClass('is-invalid');
     }
 
-    auth.on('connection', function(socket) {
+    auth.on('connection', (socket) => {
         console.log(socket.id);
     });
-    auth.on('nm', function(data) {
+    auth.on('nm', (data) => {
         if (data._id) {
-            fillPopup(
+            utils.fillPopup(
             {
                 success: ' redirecting you to /assets',
             });
@@ -89,15 +45,15 @@ $(document).ready(function() {
                 window.location.href += uri;
             }, 2000);
         } else {
-            fillPopup(data);
+            utils.fillPopup(data);
         }
     });
-    auth.on('em', function(data) {
+    auth.on('em', (data) => {
         printError(data);
-        fillPopup(data);
+        utils.fillPopup(data);
     });
     /** dom manip - login event */
-    $('#login').click(function() {
+    $('#login').click(() => {
         sendname();
     });
 });

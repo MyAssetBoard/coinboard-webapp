@@ -1,57 +1,18 @@
 $(document).ready(function() {
-    let url = $('#cbws').text().trim();
+    const url = $('#cbws').text().trim();
     const apiparamws = io.connect(url + 'api/param');
+    const utils = new Commons();
+
     let objid = '#' + window.location.pathname.split('/')[2];
     objid += window.location.pathname.split('/')[3];
     $(objid).toggleClass('active');
-
-    /**
-     * @param {Object} data
-     */
-    function fillPopup(data) {
-        $('#ppContent').text('');
-        $('#ppContent').removeClass('alert-danger');
-        $('#ppContent').addClass('alert-info');
-        if (!data.emsg) {
-            $.each(data, (key, value) => {
-                let newline = $('<p>');
-                let ct = '<strong>' + key + ' :</strong>';
-                newline.html(ct);
-                newline.append(value);
-                $('#ppContent').append(newline);
-            });
-        } else {
-            let newline = $('<p>');
-            let ct = '<strong> <span class="lnr lnr-warning">';
-            ct += '</span> Error : </strong>';
-            newline.html(ct);
-            newline.append(data.errmsg);
-            $('#ppContent').toggleClass('alert-info alert-danger');
-            $('#ppContent').append(newline);
-        }
-        $('#popup').fadeIn('fast');
-        setTimeout(() => {
-            elem.fadeToggle('fast');
-        }, 2000);
-    }
-    /**
-     * @param {string} key
-     * @return {string} val
-     */
-    function getCookie(key) {
-        let value = '; ' + document.cookie;
-        let parts = value.split('; ' + key + '=');
-        if (parts.length == 2) {
-            return parts.pop().split(';').shift();
-        }
-    }
     /** Trigering add /update user api settings */
     $('#addme').click(function() {
         let apitype = $('#stype').val();
         let inputid = $('#sname').val();
         let inputusr = $('#skey').val();
         let inputpw = $('#ssec').val();
-        let usrid = getCookie('uid');
+        let usrid = utils.getCookie('uid');
         let req = {
             'uid': usrid,
             'apitype': apitype,
@@ -84,9 +45,9 @@ $(document).ready(function() {
     });
 
     apiparamws.on('nm', function(data) {
-        fillPopup(data);
+        utils.fillPopup(data);
     });
     apiparamws.on('em', function(data) {
-        fillPopup(data);
+        utils.fillPopup(data);
     });
 });
