@@ -71,7 +71,7 @@ const eatdiner = {
                 }
             }
         }
-        if (process.env.NODE_LOG == 'djunk') {
+        if (process.env.NODE_LOG == 'development') {
             let log = '\n[[DATAJUNK:\t=> Ready to check [';
             log += ts.nb + ']';
             log += ' elems !]]';
