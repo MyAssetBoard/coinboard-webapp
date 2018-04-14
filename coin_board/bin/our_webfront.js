@@ -13,7 +13,7 @@ class CbView {
     constructor() {
         let _this = this;
         /** Main {@link CbExpressApp} module import */
-        this.app = require('../app');
+        this.app = require('../controllers/router_methods');
         /** debug function see [Morgan] */
         this.debug = require('debug')('coin-board:server');
         /** The essential one ! */
