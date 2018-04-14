@@ -46,29 +46,17 @@ Assets.prototype.addAssets = function(a) {
         a.qtt = typeof a.qtt === 'string' ?
             a.qtt.replace('(\\d)+\\.(\\d+)', '') :
             a.qtt;
-        a.qtt = a.qtt ?
-            parseFloat(a.qtt) :
-            0.00;
-        a.id = _this.isEncoded(a.id) ?
-            decodeURIComponent(a.id) :
-            null;
-        a.id = a.id ?
-            _this.crypt.decryptuid(a.id) :
-            null;
-
+        a.qtt = a.qtt ? parseFloat(a.qtt) : 0.00;
+        a.id = _this.isEncoded(a.id) ? decodeURIComponent(a.id) : null;
+        a.id = a.id ? _this.crypt.decryptuid(a.id) : null;
         let data = {
             'symbol': a.ticker,
             'qtt': a.qtt,
         };
         if (a.id && a.qtt) {
-            _this.crud.update(a.id, 'assets', data, function(result) {
-                if (result) {
-                    resolve(result);
-                }
-                reject(new Error('Db Error'));
+            _this.crud.update(a.id, 'assets', data, function(res, err) {
+                res ? resolve(res) : reject(new Error('Db Error' + err));
             });
-        } else if (!a.qtt) {
-            reject(new Error('Invalid quantity'));
         } else {
             reject(new Error('Wrong request'));
         }
