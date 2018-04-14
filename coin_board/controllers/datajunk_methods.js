@@ -1,5 +1,6 @@
 /**
- * @file {@link module:datajunk~DajaJunk} module class, our friendly scrapper / eater
+ * @file {@link module:datajunk~DajaJunk} module class,
+ * our friendly scrapper / eater
  * @author Trevis Gulby
  */
 
@@ -76,27 +77,23 @@ DataJunk.prototype.goeat = function(where) {
     for (let x in where) {
         if (where[x]) {
             let xx = where[x];
-            _this.goshopping(xx).then(function(res) {
+            _this.goshopping(xx).then((res) => {
                 if (res) {
                     let d = {
                         id: xx.id,
                         path: xx.fname,
                         url: xx.url,
                     };
-                    _this.digest(d).then(function(res) {
+                    _this.digest(d).then((res) => {
                         if (res) {
                             _this.logeat();
                         }
-                    }).catch(function(rej, err) {
-                        if (err || rej) {
-                            throw err;
-                        }
+                    }).catch((rej, err) => {
+                        throw err;
                     });
                 }
-            }).catch(function(rej, err) {
-                if (err || rej) {
-                    throw err;
-                }
+            }).catch((rej, err) => {
+                throw err;
             });
         }
     }
@@ -106,7 +103,7 @@ DataJunk.prototype.goeat = function(where) {
 DataJunk.prototype.gomine = function() {
     let _this = this;
     this.pukedata(
-    {}).then(function(res) {
+    {}).then((res) => {
         let test = _this.eat(res);
         if (process.env.NODE_LOG == 'djunk') {
             console.log(test);
@@ -156,9 +153,9 @@ DataJunk.prototype.eat = function(dset) {
 DataJunk.prototype.begdata = function(where, callback) {
     let req = this.https.get(where.req, function(res) {
         let bodyChunks = [];
-        res.on('data', function(chunk) {
+        res.on('data', (chunk) => {
             bodyChunks.push(chunk);
-        }).on('end', function() {
+        }).on('end', () => {
             let body = Buffer.concat(bodyChunks);
             /** Careful with non-JSON responses !! */
             let ifjson = JSON.parse(body);
@@ -174,9 +171,6 @@ DataJunk.prototype.begdata = function(where, callback) {
     });
     req.on('error', function(e) {
         console.log('DataJunk -ERROR: ' + e.message);
-        if (e) {
-            throw e;
-        }
         callback && callback(e);
     });
 };
@@ -194,15 +188,11 @@ DataJunk.prototype.wr = function(fn, d) {
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
-                process.env.NODE_ENV == 'development' ?
-                    console.log(log) :
-                    log;
+                process.env.NODE_ENV == 'development' ? console.log(log) : log;
                 reject(err);
             } else {
                 let log = 'Write news to DTAFOOD/news ';
-                process.env.NODE_ENV == 'development' ?
-                    console.log(log) :
-                    log;
+                process.env.NODE_ENV == 'development' ? console.log(log) : log;
                 resolve(d);
             }
         });
@@ -218,16 +208,13 @@ DataJunk.prototype.wr = function(fn, d) {
 DataJunk.prototype.goshopping = function(where) {
     let _this = this;
     return new Promise((resolve, reject) => {
-        _this.begdata(where, function(res, err) {
+        _this.begdata(where, (res, err) => {
             if (res) {
-                _this.wr(where.fname, res).then(function(r) {
+                _this.wr(where.fname, res).then((r) => {
                     resolve(r);
                     return r;
-                }).catch(function(rej, err) {
-                    if (err) {
-                        reject(err);
-                        throw err;
-                    }
+                }).catch((rej, err) => {
+                    reject(err);
                 });
             } else if (!res || err) {
                 reject(err);
@@ -241,17 +228,15 @@ DataJunk.prototype.dbthis = function(s, callback) {
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    this.crud.insert('DTAFOOD', insert, function(res, err) {
+    this.crud.insert('DTAFOOD', insert, (res, err) => {
         let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
         log += '[ ' + insert.feed && insert.feed[0] ?
             insert.feed[0].title :
             JSON.stringify(insert);
         process.env.NODE_ENV == 'development' ?
-            console.log(log + ']\nResults :\n' + res.results) :
-            log;
+            console.log(log + ']\nResults :\n' + res.results) : log;
         if (err) {
             callback && callback(err);
-            throw err;
         } else {
             callback && callback(res);
         }
@@ -260,7 +245,7 @@ DataJunk.prototype.dbthis = function(s, callback) {
 
 DataJunk.prototype.digest = function(what) {
     let _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
         if (!(what && what.id && what.path)) {
             let e = new Error('bad meal can\'t digest');
             reject(e);
@@ -269,11 +254,9 @@ DataJunk.prototype.digest = function(what) {
             what.d = writed;
             _this.dbthis(what, function(res, err) {
                 if (res) {
-                    resolve(res);
-                    return res;
+                    return resolve(res);
                 } else if (err) {
-                    reject(err);
-                    throw err;
+                    return reject(err);
                 }
             });
         }
