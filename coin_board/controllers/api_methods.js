@@ -32,6 +32,21 @@ class Apis {
             }
             return true;
         };
+        this.accmodel = function(a) {
+            return res = {
+                'id': a.apiid,
+                'key': a.inputid,
+                'secret': a.inputpw,
+            };
+        };
+        this.checksub = function(a) {
+            for (el in a) {
+                if (a[el].length == 0) {
+                    return false;
+                }
+            }
+            return true;
+        };
     }
 }
 
@@ -66,13 +81,8 @@ Apis.prototype.addAccount = function(a) {
     return new Promise((resolve, reject) => {
         a = _this.trimnewaccount(a);
         let where = 'apisv2' + '.' + a.apitype;
-        let insert = {
-            'id': a.apiid,
-            'key': a.inputid,
-            'secret': a.inputpw,
-        };
-        if (insert.id.length && insert.key.length &&
-            insert.secret.length) {
+        let insert = _this.accmodel(a);
+        if (_this.checksub(insert)) {
             _this.crud.update(a.uid, where, insert, (result, err) => {
                 if (result) {
                     resolve(result);
