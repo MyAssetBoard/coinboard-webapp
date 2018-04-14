@@ -138,11 +138,9 @@ DataJunk.prototype.eat = function(dset) {
     }
     log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
     log += JSON.stringify(res);
-    if (process.env.NODE_LOG == 'djunk') {
-        console.log(log);
-    }
-    return res = res.filter(function(n) {
-        return n != undefined;
+    process.env.NODE_LOG == 'djunk' ? console.log(log) : log;
+    return res = res.filter((elems) => {
+        return elems != undefined;
     });
 };
 
