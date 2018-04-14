@@ -67,8 +67,8 @@ function nodesetup ()
 
 	Enter the install command for your favorite apt-get method :
 	"
-	read aptget && sudo $aptget nodejs npm  && sudo npm  install -g yarn && \
-	yarn install && cd coin_board && yarn install &&
+	read -r aptget && sudo "$aptget" "nodejs" "npm"  && sudo npm  install -g yarn && \
+	yarn install && cd "coin_board" && yarn install &&
 	echo "
 	Et ...
 
@@ -84,7 +84,7 @@ function app_initshop()
 	--shell /bin/bash \
 	--group --gecos "docker onion usr" \
 	fofo && \
-	sudo chown -R fofo:$USER conf/onion/kingdom && \
+	sudo chown -R "fofo:$USER" conf/onion/kingdom && \
 	sudo chmod -R 700 conf/onion/kingdom && \
 	#sudo chmod -R 600 conf/onion/kingdom/*/private_key && \
 	docker build -t beefonion:latest .
@@ -99,11 +99,11 @@ function app_alpinecooking()
 
 function app_startkitchen()
 {
-	NGLOG=$(pwd)/log/nginxlogs
-	KINGDOM=$(pwd)/conf/onion/kingdom
-	KVIEW="$KINGDOM/v"
-	KSOCK="$KINGDOM/s"
-	KALT="$KINGDOM/altsdom"
+	export NGLOG="$(pwd)/log/nginxlogs"
+	export KINGDOM="$(pwd)/conf/onion/kingdom"
+	export KVIEW="$KINGDOM/v"
+	export KSOCK="$KINGDOM/s"
+	export KALT="$KINGDOM/altsdom"
 	docker run -it --net host \
 	--name="beefDotonion" \
 	-v "$NLOG:/var/log/nginx" \
@@ -129,15 +129,15 @@ function app_startDev ()
 	echo 'RANDOM' > log.txt;
 	# order matters !
 	mongod -f conf/mongodb.conf &
-	$PM2 start $APPCONF --only "$WSSERV"  --update-env;
-	$PM2 start $APPCONF --only "$WVSERV"  --update-env;
-	$PM2 start $APPCONF --only "$CBSERV"  --update-env;
+	"$PM2" start "$APPCONF" --only "$WSSERV"  --update-env;
+	"$PM2" start "$APPCONF" --only "$WVSERV"  --update-env;
+	"$PM2" start "$APPCONF" --only "$CBSERV"  --update-env;
 }
 
 function app_startProd ()
 {
 	export NODE_ENV="production"
-	exec $PM2 $APPBIN
+	exec "$PM2" "$APPBIN"
 }
 
 function reset_db ()
@@ -149,13 +149,13 @@ function reset_db ()
 
 function app_kill ()
 {
-	$PM2 kill
+	"$PM2" kill
 	killall -9 mongod;
 }
 
 function app_reload ()
 {
-	app_kill; app_startDev $1 $2
+	app_kill; app_startDev "$1" "$2"
 }
 
 function app_tests ()
@@ -163,14 +163,14 @@ function app_tests ()
 	NODE_ENV='production'
 	killall -9 mongod;
 	mongod -f conf/mongodb.conf &
-	$NYC --reporter=lcov $MOCHA $TESTM $TESTR --exit
-	$NYC report
+	"$NYC" --reporter=lcov "$MOCHA" "$TESTM" "$TESTR" --exit
+	"$NYC" report
 }
 
 function genddoc ()
 {
 	rm -rf ~/Downloads/docs
-	$JSDOC -c $JSDOCCONF;
+	"$JSDOC" -c "$JSDOCCONF";
 	echo -e "
 	** Documentation generation ok !
 	(logs on jsdoc.log)
@@ -234,7 +234,7 @@ do
 
 
 		'n-t')
-		app_startDev $2 $3
+		app_startDev "$2" "$3"
 		exit 0
 		;;
 
@@ -254,7 +254,7 @@ do
 		;;
 
 		'n-rl')
-		app_reload $2 $3
+		app_reload "$2" "$3"
 		exit 0
 		;;
 
