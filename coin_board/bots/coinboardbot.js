@@ -29,6 +29,65 @@ class CbBot {
     }
 }
 
+CbBot.prototype.runcommands = function(cmd, ctx) {
+    let _this = this;
+    switch (cmd) {
+    case _this.rfrsh.id:
+        _this.rfrsh.func(function(d) {
+            ctx.reply(d);
+        });
+        break;
+    case _this.showf.id:
+        _this.showf.func(function(d) {
+            ctx.reply(d);
+        });
+        break;
+    case _this.digst.id:
+        _this.digst.func(function(d) {
+            ctx.reply(d);
+        });
+        break;
+    default:
+        let resp = '[' + cmd + '] : unknow command sorry';
+        ctx.reply(resp);
+    }
+};
+
+CbBot.prototype.logthiscmd = function(cmd, usr) {
+    let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
+    log += '[' + usr.fname + ' ' + usr.lname + ']';
+    log += ' ID: ' + usr.id;
+    console.log(log);
+};
+
+CbBot.prototype.logthismsg = function() {
+    let _this = this;
+    _this.bot.on('message', (ctx) => {
+        let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
+        console.log('COINBOARD_BOT: Received msg :');
+        console.log('from [' + usr + ']');
+        console.log(ctx.message.text);
+    });
+};
+
+CbBot.prototype.getcommands = function() {
+    let _this = this;
+    /** Main bot listening command 'getter' function */
+    _this.bot.hears(/\/(.+)/, (ctx) => {
+        const chatId = ctx.from.id;
+        let cmd = ctx.message.text;
+        let usr = {
+            fname: ctx.from.first_name,
+            lname: ctx.from.last_name,
+            id: chatId,
+        };
+        _this.logthiscmd(cmd, usr);
+        /** If chat id is your servitor, exec some commands */
+        if (chatId == 408942599) {
+            _this.runcommands(cmd, ctx);
+        }
+    });
+};
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
  *  @property {function} bot.command if help cmd answer 'Try send a sticker'
@@ -40,52 +99,14 @@ CbBot.prototype.turnmeon = function() {
         console.log('started:', ctx.from.id);
         return ctx.reply('Welcome!');
     });
-    _this.bot.command('help', (ctx) => ctx.reply('Try send a sticker!'));
-    _this.bot.hears(/hi/i, (ctx) => ctx.reply('Hey there!'));
-    _this.bot.hears(/hello/i, (ctx) => ctx.reply('Hey there!'));
-    _this.bot.hears(/buy/i, (ctx) => ctx.reply('Buy-buy! Money-Money!'));
-    _this.bot.on('sticker', (ctx) => ctx.reply('👍'));
-    /** Main bot listening command 'getter' function */
-    _this.bot.hears(/\/(.+)/, (ctx) => {
-        console.log(ctx.update);
-        let msgusr = ctx.from.first_name + ' ';
-        msgusr += ctx.from.last_name + '] ';
-        const chatId = ctx.from.id;
-        let cmd = ctx.message.text;
-        let log = 'COINBOARD_BOT: Received command [' + cmd + ']';
-        console.log(log);
-        log = 'from [' + msgusr + ' id :';
-        log += chatId;
-        console.log(log);
-        /** If chat id is your servitor, exec some commands */
-        if (chatId == 408942599) {
-            if (cmd == _this.rfrsh.id) {
-                _this.rfrsh.func(function(d) {
-                    ctx.reply(d);
-                });
-            } else if (cmd == _this.showf.id) {
-                _this.showf.func(function(d) {
-                    ctx.reply(d);
-                });
-            } else if (cmd == _this.digst.id) {
-                _this.digst.func(function(d) {
-                    ctx.reply(d);
-                });
-            } else {
-                let resp = '[' + cmd + '] : unknow command sorry';
-                ctx.reply(resp);
-            }
-        }
+    _this.bot.hears(/hello/i, (ctx) => {
+        let rep = 'Hello M.' + ctx.from.last_name + ', how can I help you ?';
+        ctx.reply(rep);
     });
-
+    /** listen for commands */
+    _this.getcommands();
     /** Listen for any kind of messages */
-    _this.bot.on('message', (ctx) => {
-        let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
-        console.log('COINBOARD_BOT: Received msg :');
-        console.log('from [' + usr + ']');
-        console.log(ctx.message.text);
-    });
-
+    _this.logthismsg();
     /** Polling from telegram servers event */
     _this.bot.startPolling();
 };
