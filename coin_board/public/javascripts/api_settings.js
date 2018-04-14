@@ -9,34 +9,30 @@ $(document).ready(function() {
      * @param {Object} data
      */
     function fillPopup(data) {
-        /** empty div before fill */
-        let elem = $('#popup');
         $('#ppContent').text('');
         $('#ppContent').removeClass('alert-danger');
         $('#ppContent').addClass('alert-info');
         if (!data.emsg) {
-            $.each(data, function(key, value) {
+            $.each(data, (key, value) => {
                 let newline = $('<p>');
-                let ct = '<strong>' + key;
-                ct += ' :</strong>';
+                let ct = '<strong>' + key + ' :</strong>';
                 newline.html(ct);
                 newline.append(value);
                 $('#ppContent').append(newline);
             });
         } else {
-            let elem = '#ppContent';
-            $(elem).toggleClass('alert-info alert-danger');
             let newline = $('<p>');
             let ct = '<strong> <span class="lnr lnr-warning">';
             ct += '</span> Error : </strong>';
             newline.html(ct);
             newline.append(data.errmsg);
+            $('#ppContent').toggleClass('alert-info alert-danger');
             $('#ppContent').append(newline);
         }
-        elem.fadeIn('fast');
-        setTimeout(function() {
+        $('#popup').fadeIn('fast');
+        setTimeout(() => {
             elem.fadeToggle('fast');
-        }, 5000);
+        }, 2000);
     }
     /**
      * @param {string} key
