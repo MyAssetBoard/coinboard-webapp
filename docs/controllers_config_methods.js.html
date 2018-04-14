@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>JSDoc:
-			Module: api
+			Source: controllers/config_methods.js
 		</title>
 		<script src="scripts/prettify/prettify.js">
 		</script>
@@ -27,7 +27,7 @@
 
 	<body>
 		<div id="main">
-			<h1 class="page-title">Module: api
+			<h1 class="page-title">Source: controllers/config_methods.js
 				<a href="https://bitbucket.org/trevisgulby/coin_board">
 					rev 04.2018</a>
 			</h1>
@@ -37,131 +37,88 @@
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file {@link config} module for listening address and more
+ * @author Trevis Gulby
+ */
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><h3><a href="module-api-Apis.html"><code>module:api~Apis</code></a> class definition</h3></div>
-        
+/**
+ * An AppConfig class trying to unify alls
+ * methods and var used by pages
+ * @class
+ */
+class AppConfig {
+    /** @constructor */
+    constructor() {
+        /** os dep to get network interface */
+        this.os = require('os');
+        /** network interface import */
+        this.ni = this.os.networkInterfaces();
+        /** fs module import */
+        this.fs = require('fs');
+        /** what ip should i get ?
+         * @TODO : Add new methods to better select listening interface
+         */
+        this.myip = this.ni.wlan0[0].address;
+        this.runningaddrs = {
+            /** final app view url for reference in template */
+            appvurl: process.env.SERV_ENV == 'onion' ?
+                this.gettorhostname.view() : 'http://' + this.myip + ':3000/',
+            /** final app socket url for reference in template */
+            appsurl: process.env.SERV_ENV == 'onion' ?
+                this.gettorhostname.socks() : 'http://' + this.myip + ':3001/',
+        };
+    }
+}
 
-        
-            
+/** check tor hostname if onion service set */
+AppConfig.prototype.gettorhostname = {
+    view: function() {
+        let buff = new Buffer(22);
+        let fn = '/var/lib/tor/hidnview/hostname';
+        buff = this.fs.readFileSync(fn, 'ascii');
+        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+        ret += '/';
+        return ret;
+    },
+    socks: function() {
+        let buff = new Buffer(22);
+        let fn = '/var/lib/tor/hidnws/hostname';
+        buff = fs.readFileSync(fn, 'ascii');
+        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+        return ret += ':124/';
+    },
+};
 
+/** Http header sec settings */
+AppConfig.prototype.httpopts = {
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'X-XSS-Protection': '1; mode=block',
+    'etag': 'false',
+};
+/** Favicon static param */
+AppConfig.prototype.favopts = {
+    dotfiles: 'ignore',
+    etag: false,
+    extensions: [
+        'htm', 'html',
+    ],
+    index: false,
+    maxAge: '1d',
+    redirect: false,
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_api_methods.js.html">controllers/api_methods.js</a>, <a href="controllers_api_methods.js.html#line129">line 129</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-api-Apis.html">Apis</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = AppConfig;
+/** App config module containing  listening addresses, hostnames and much more
+ * @module config
+ */
+</code></pre>
+        </article>
+    </section>
 
 
 
