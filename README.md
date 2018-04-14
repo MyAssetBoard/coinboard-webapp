@@ -15,7 +15,8 @@ _____________________________________
 > - Train your application to **automate** your workflow (AI modules )
 > - **Tor [hidden service]((https://www.torproject.org/)) docker deployment** for improved sec and reliability
 > - **[MongoDB](https://www.mongodb.com) dbms** with [mongodb-native](http://mongodb.github.io/node-mongodb-native/3.0/reference/main/) driver module
-> - More to come ...
+> - A **gorgeous** and **up to date** [documentation](https://myassetboard.github.io/coinboard-webapp/index.html) gracefully hosted by @github
+> - A lot more to come ...
 ## App directory structure :
 > All information's about how this app is organized /coded
 ### coin_board/
@@ -41,9 +42,12 @@ Note :  A low 45 % global code coverage but should be improved
 - **test/routes/**: Tests for router overloads functions
 
 # Code quality metrics : (yes still more work is needed ;) :
-Security : [![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183)
-Unit testing : [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)
-Overall code quality : [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability)
+*Security :* [![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183)
+
+*Unit testing :* [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)
+
+*Overall code quality :* [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability)
+
 ## TODO
 
  - [x] Finish this task
