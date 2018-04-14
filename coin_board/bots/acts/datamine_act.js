@@ -18,8 +18,8 @@ const
 const digest = {
     id: '/digest',
     func: function(callback) {
-        process.env['NODE_ENV'] = 'development';
-        process.env['NODE_LOG'] = 'djunk';
+        process.env['NODE_ENV'] = 'a';
+        process.env['NODE_LOG'] = 'a';
         process.env['LAUNCH_TASK'] = 'markme';
         const fp = 'coin_board/controllers/datajunk_methods.js';
         const exe = spawn('node', [fp]);
