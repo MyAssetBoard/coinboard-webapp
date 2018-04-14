@@ -53,7 +53,10 @@ CbWebsocket.prototype.startmeup = function() {
     _this.apiparams();
 };
 
-/** Log this user */
+/** Log this user
+ * @param {string} roomname
+ * @param {string} usrid
+ */
 CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
     let log = usrid.replace(/\/auth#/g, 'User : ');
     let conbr = this[roomname + 'co'];
