@@ -20,13 +20,13 @@ class CbWebsocket {
         this.server.listen(this.port, this.addr);
         this.io = require('socket.io')(this.server);
         /** Asset module dep import */
-        this.Asset = require('../methods/assets_methods');
+        this.Asset = require('../controllers/assets_methods');
         this.asset = new this.Asset();
         /** Auth module dep import */
-        this.Auth = require('../methods/auth_methods');
+        this.Auth = require('../controllers/auth_methods');
         this.auth = new this.Auth();
         /** {@link userapis} import */
-        this.Apis = require('../methods/api_methods');
+        this.Apis = require('../controllers/api_methods');
         this.apiparam = new this.Apis();
         /** NUMBER of current sessions on auth room */
         this.authco = 0;
