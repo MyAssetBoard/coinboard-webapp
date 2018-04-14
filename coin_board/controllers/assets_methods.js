@@ -11,11 +11,11 @@ class Assets {
     /** @constructor */
     constructor() {
         /** {@link Crud} methods import */
-        this.Crud = require('../methods/mongo_crud');
+        this.Crud = require('../controllers/mongo_crud');
         /** New {@link Crud} Object */
         this.crud = new this.Crud('test2', 'r_users');
-        /** {@link Crypt} methods import */
-        this.Crypt = require('../methods/crypt_methods');
+        /** {@link Crypt} controllers import */
+        this.Crypt = require('../controllers/crypt_methods');
         /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
         /** check if

@@ -15,11 +15,11 @@ class Auth {
          */
         this.ObjectID = require('mongodb').ObjectID;
         /** {@link Crypt} methods import */
-        this.Crypt = require('../methods/crypt_methods');
+        this.Crypt = require('../controllers/crypt_methods');
         /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
         /** {@link Crud} methods import */
-        this.Crud = require('../methods/mongo_crud');
+        this.Crud = require('../controllers/mongo_crud');
         /** New {@link Crud} Object */
         this.crud = new this.Crud();
     }

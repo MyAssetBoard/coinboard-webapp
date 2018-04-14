@@ -22,18 +22,26 @@ class Crypt {
     }
 }
 
-/** Pretty much self explanatory, delete old generated key if any */
+/** Pretty much self explanatory, delete old generated key if any
+ * @return {bool} true if something cleared false if not
+ */
 Crypt.prototype.cleartmp = function() {
     ROOT_APP_PATH = this.fs.realpathSync('.');
-    this.fs.unlink('log.txt', (err) => {
-        if (err) {
-            throw err;
-        }
-        let log = 'Delete old cookie secret';
-        process.env.NODE_ENV == 'development' ?
-            console.log(log) :
-            log;
-    });
+    try {
+        this.fs.unlink('log.txt', (err) => {
+            if (err) {
+                throw err;
+            }
+            let log = 'Delete old cookie secret';
+            process.env.NODE_ENV == 'development' ?
+                console.log(log) :
+                log;
+        });
+    } catch (e) {
+        return false;
+    } finally {
+        return true;
+    }
 };
 
 /**
