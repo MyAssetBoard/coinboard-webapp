@@ -67,26 +67,15 @@ Auth.prototype.iscoinAddr = function(address) {
  * @return {Object} stripped datas
  */
 Auth.prototype.stripD = function(d, path) {
-    const par = {
-        profile: [
-            '_id', 'socketid', 'assets',
-        ],
-        index: [
-            '_id', 'socketid', 'assets',
-        ],
-        login: [
-            '_id', 'socketid', 'assets',
-        ],
-        logsock: [
-            'socketid',
-            'username',
-            'useremail',
-            'ethaddr',
-            'usercurrency',
-            'assets',
-        ],
-        assets: ['_id', 'socketid'],
-    };
+    let par = {};
+    par['assets'] = ['_id', 'socketid'];
+    par['profile'] = ['_id', 'socketid', 'assets'];
+    par['index'] = ['_id', 'socketid', 'assets'];
+    par['login'] = ['_id', 'socketid', 'assets'];
+    par['logsock'] = ['socketid', 'username', 'useremail', 'ethaddr',
+        'usercurrency',
+        'assets',
+    ];
     for (let el in par) {
         if (el == path) {
             for (let s in par[el]) {
@@ -204,28 +193,21 @@ Auth.prototype.registerUsr = function(data) {
 Auth.prototype.checkRegData = function(data, socket, io) {
     if (data && data.iname && data.imail && data.isocket) {
         if (data.ieth && data.icurr) {
-            this.registerUsr(data).then(function(res) {
+            this.registerUsr(data).then((res) => {
                 let u = socket.id;
                 let nmsg = {
                     msg: 'Ok redirecting you to login page',
-                    ok: 1,
                 };
                 io.of('/register').to(u).emit('nm', nmsg);
                 return true;
-            }).catch(function(rej, err) {
+            }).catch((rej, err) => {
                 let log = rej.message;
-                process.env.NODE_ENV == 'development' ?
-                    console.error(log) :
-                    log;
+                process.env.NODE_ENV == 'development' ? console.log(log) : log;
                 let emsg = {
-                    errcode: 22,
                     msg: rej.message,
                 };
                 let u = socket.id;
                 io.of('/register').to(u).emit('em', emsg);
-                if (err) {
-                    throw (err);
-                }
                 return false;
             });
         }
@@ -247,9 +229,7 @@ Auth.prototype.checkcoData = function(data, socket, io) {
             let resp = {
                 _id: enc,
             };
-            process.env.NODE_ENV == 'development' ?
-                console.log(resp) :
-                resp;
+            process.env.NODE_ENV == 'development' ? console.log(resp) : resp;
             io.of('/auth').to(socket.id).emit('nm', resp);
             return true;
         }).catch(function(rej, err) {
@@ -258,9 +238,6 @@ Auth.prototype.checkcoData = function(data, socket, io) {
                 errmsg: rej.message,
             };
             io.of('/auth').to(socket.id).emit('em', emsg);
-            if (err) {
-                throw (err);
-            }
             return false;
         });
     }
@@ -277,19 +254,15 @@ Auth.prototype.checkcoData = function(data, socket, io) {
 Auth.prototype.userisAuth = function(eUid, page) {
     let cuid;
     let _this = this;
-    eUid = this.isEncoded(eUid) ?
-        decodeURIComponent(eUid) :
-        eUid;
-    cuid = eUid ?
-        this.crypt.decryptuid(eUid) :
-        undefined;
+    eUid = this.isEncoded(eUid) ? decodeURIComponent(eUid) : eUid;
+    cuid = eUid ? this.crypt.decryptuid(eUid) : undefined;
     return new Promise((resolve, reject) => {
         if (cuid === undefined) {
             reject(new Error('user not found'));
         } else {
-            _this.checkUid(cuid, page).then(function(res) {
+            _this.checkUid(cuid, page).then((res) => {
                 resolve(res);
-            }).catch(function(rej, err) {
+            }).catch((rej, err) => {
                 if (err) {
                     throw err;
                 }
@@ -305,13 +278,9 @@ Auth.prototype.userisAuth = function(eUid, page) {
  */
 Auth.prototype.isvaliduid = function(eUid) {
     let _this = this;
-    eUid = _this.isEncoded(eUid) ?
-        decodeURIComponent(eUid) :
-        null;
+    eUid = _this.isEncoded(eUid) ? decodeURIComponent(eUid) : null;
     if (eUid != null) {
-        return test = _this.crypt.decryptuid(eUid) ?
-            true :
-            false;
+        return test = _this.crypt.decryptuid(eUid) ? true : false;
     } else {
         return false;
     }
