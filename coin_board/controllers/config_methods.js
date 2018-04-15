@@ -24,31 +24,37 @@ class AppConfig {
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV == 'onion' ?
-                this.gettorhostname.view() : 'http://' + this.myip + ':3000/',
+                this.gettorhostnames().view() : 'http://' + this.myip + ':3000/',
             /** final app socket url for reference in template */
             appsurl: process.env.SERV_ENV == 'onion' ?
-                this.gettorhostname.socks() : 'http://' + this.myip + ':3001/',
+                this.gettorhostnames().socks() : 'http://' + this.myip + ':3001/',
         };
     }
 }
 
-/** check tor hostname if onion service set */
-AppConfig.prototype.gettorhostname = {
-    view: function() {
-        let buff = new Buffer(22);
-        let fn = '/var/lib/tor/hidnview/hostname';
-        buff = this.fs.readFileSync(fn, 'ascii');
-        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
-        ret += '/';
-        return ret;
-    },
-    socks: function() {
-        let buff = new Buffer(22);
-        let fn = '/var/lib/tor/hidnws/hostname';
-        buff = fs.readFileSync(fn, 'ascii');
-        let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
-        return ret += ':124/';
-    },
+/** check tor hostname if onion service set
+ * @return {Object} rt
+ */
+AppConfig.prototype.gettorhostnames = function() {
+    let _this = this;
+    let rt = {
+        view: function() {
+            let buff = new Buffer(22);
+            let fn = '/var/lib/tor/hidnview/hostname';
+            buff = _this.fs.readFileSync(fn, 'ascii');
+            let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+            ret += '/';
+            return ret;
+        },
+        socks: function() {
+            let buff = new Buffer(22);
+            let fn = '/var/lib/tor/hidnws/hostname';
+            buff = _this.fs.readFileSync(fn, 'ascii');
+            let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
+            return ret += ':124/';
+        },
+    };
+    return rt;
 };
 
 /** Http header sec settings */
