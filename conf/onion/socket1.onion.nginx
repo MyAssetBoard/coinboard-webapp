@@ -10,7 +10,7 @@ server {
 
 	location / {
 		limit_req zone=limitf3 burst=20 nodelay;
-		include /usr/src/app/ipsock;
+		include /usr/src/app/coin_board/ipsock;
 		proxy_http_version 1.1;
 		proxy_set_header Upgrade $http_upgrade;
  		proxy_set_header Connection "upgrade";
