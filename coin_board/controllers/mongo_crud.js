@@ -49,15 +49,17 @@ Crud.prototype.insert = function(coll, data, callback) {
 };
 
 /** Check if user exist based on provided data uid + psswd
+ * or simply a telegramid
  * @param {Objet} c the data to be checked
  * @param {function} callback to get the response
  */
 Crud.prototype.checkcred = function(c, callback) {
     let _this = this;
-    if (c.username && c.socketid) {
+    if ((c.username && c.socketid) || c.telegramid) {
         _this.MongoClient.connect(this.uri).then((db) => {
             let log = 'Checkcred| MONGO - Connected to ' + _this.dbName;
             process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            console.log('checking ' + JSON.stringify(c));
             let dbo = db.db(_this.dbName);
             dbo.collection(_this.coll).findOne(c).then((res) => {
                 db.close();
