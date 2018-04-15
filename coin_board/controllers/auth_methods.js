@@ -52,8 +52,7 @@ Auth.prototype.iscoinAddr = function(address) {
     };
     for (ticker in regex) {
         if (regex.hasOwnProperty(ticker)) {
-            match = regex[ticker].test(address);
-            if (match) {
+            if ((match = regex[ticker].test(address))) {
                 break;
             }
         }
@@ -132,6 +131,22 @@ Auth.prototype.checkUsr = function(data) {
     });
 };
 
+Auth.prototype.trimthisregfields = function(fields) {
+    let _this = this;
+    /** Name fields must be only alpha characters */
+    fields.iname = fields.iname.replace(/\W/g, '');
+    /** Email string must be better checked ! */
+    fields.imail = fields.imail.trim();
+    /** Email string must be better checked ! */
+    fields.isocket = fields.isocket.trim();
+    fields.ieth = _this.iscoinAddr(fields.ieth) ? fields.ieth : 'NONE';
+    /** Final check !! */
+    fields = fields.iname.length < 3 || fields.imail < 8 ?
+        undefined : fields.isocket.length < 10 || fields.icurr.length != 3 ?
+        undefined : fields;
+    return fields;
+};
+
 /**
  * @param {Object} d the client sent object
  * @return {Object} the checked object if valid or undefined otherwise
@@ -140,17 +155,7 @@ Auth.prototype.checkRegFields = function(d) {
     if (!d.iname || !d.imail || !d.isocket) {
         return undefined;
     } else {
-        d.iname = d.iname.replace(/\W/g, '');
-        d.imail = d.imail.trim();
-        d.isocket = d.isocket.trim();
-        d.ieth = this.iscoinAddr(d.ieth) ?
-            d.ieth :
-            'NONE';
-        d = d.iname.length < 3 || d.imail < 8 ?
-            undefined :
-            d.isocket.length < 10 || d.icurr.length != 3 ?
-            undefined :
-            d;
+        d = this.trimthisregfields(d);
     }
     return d;
 };
