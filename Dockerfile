@@ -16,8 +16,9 @@ RUN echo 'deb http://deb.torproject.org/torproject.org stretch main' \
 RUN echo 'deb-src http://deb.torproject.org/torproject.org stretch main' \
 	>> /etc/apt/sources.list
 
-RUN gpg --keyserver keyserver.siccegge.de --recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 && \
-gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
+RUN gpg --keyserver pgp.mit.edu \
+	--recv A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 && \
+	gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | apt-key add -
 
 RUN apt-get install -y curl
 
@@ -41,34 +42,37 @@ RUN usermod -u 4523 fofo
 RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chown' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /bin/chmod' >> /etc/sudoers
 RUN echo 'fofo ALL = (root) NOPASSWD: /usr/sbin/nginx' >> /etc/sudoers
-
+# Fix trouble when deploy on Alpine host
 RUN apt-get install -y paxctl && paxctl -cm $(which node)
 RUN npm install -g yarn
 # Sources files deploiement
-RUN mkdir -p /usr/src/app/coin_board
-COPY package*.json ./usr/src/app
-COPY */package*.json ./usr/src/app/coin_board/
-RUN cd /usr/src/app &&  yarn install && cd coin_board && yarn install
-COPY . ./usr/src/app/
-
+RUN mkdir -p /usr/src/app/coin_board/coin_board
+COPY package*.json /usr/src/app/coin_board
+COPY */package.json /usr/src/app/coin_board/coin_board
+RUN cd /usr/src/app/coin_board &&  yarn install && cd coin_board && yarn install
+COPY . ./usr/src/app/coin_board
+#Conf options for to and nginx
 COPY   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
 COPY   conf/onion/*.onion.nginx /etc/nginx/sites-enabled/
 COPY   conf/onion/torrc /etc/tor/torrc
 
-#Tor prop for 'fofo' user
+#Tor properties settings for 'fofo' user
 RUN usermod -aG debian-tor fofo && \
 	chown -R fofo:fofo /var/lib/tor && \
 	chown -R root:fofo /var/log/tor && \
 	chmod -R 770 /var/log/tor && \
 	groupadd foobar && usermod -aG foobar fofo && \
 	usermod -aG foobar root && \
-	chown  root:fofo /usr/src/app/ && chmod 775 /usr/src/app && \
-	chmod +x /usr/src/app/conf/onion/turnmeon.sh && \
-	echo 'fooinitsecret' > /usr/src/app/log.txt && \
-	chown fofo:fofo /usr/src/app/log.txt && chmod u=rw /usr/src/app/log.txt
+	chown root:fofo /usr/src/app/coin_board && \
+	chmod 775 /usr/src/app/coin_board && \
+	chmod +x /usr/src/app/coin_board/conf/onion/turnmeon.sh && \
+	echo 'fooinitsecret' > /usr/src/app/coin_board/log.txt && \
+	chown fofo:fofo /usr/src/app/coin_board/log.txt && \
+	chmod u=rw /usr/src/app/coin_board/log.txt
 
 RUN apt-get install -y tree
 
 USER fofo
 ENV SERV_ENV=onion NODE_ENV=production
-CMD ["cd /usr/src/app/conf/ && ./conf/onion/turnmeon.sh"]
+WORKDIR /usr/src/app/coin_board
+ENTRYPOINT /usr/src/app/coin_board
