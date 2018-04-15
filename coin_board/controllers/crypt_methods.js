@@ -202,6 +202,22 @@ Crypt.prototype.genrandomtocken = function() {
     });
 };
 
+/** Dummy helper function to properly check
+ * if a param is an encodeURIComponent valid one
+ * @param {string} str the string to be checked
+ * @return {bool} true if encode , false if not
+ */
+Crypt.prototype.isEncoded = function(str) {
+    try {
+        decodeURIComponent(str);
+    } catch (e) {
+        if (e) {
+            return false;
+        }
+    }
+    return true;
+};
+
 module.exports = Crypt;
 /** ### All crypto related methods
  * @module crypt
