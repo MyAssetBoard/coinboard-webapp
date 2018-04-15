@@ -18,37 +18,35 @@ class Apis {
         this.Crypt = require('../controllers/crypt_methods');
         /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
-        /** check if
-         * @param {string} str is an encoded param
-         * @return {bool} true if true false if not ;)
-         */
-        this.isEncoded = function(str) {
-            try {
-                decodeURIComponent(str);
-            } catch (e) {
-                if (e) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        this.accmodel = function(a) {
-            return res = {
-                'id': a.apiid,
-                'key': a.inputid,
-                'secret': a.inputpw,
-            };
-        };
-        this.checksub = function(a) {
-            for (el in a) {
-                if (a[el].length == 0) {
-                    return false;
-                }
-            }
-            return true;
-        };
     }
 }
+
+/** Dummy helper function to fill new account model with user input
+ * @param {Object} a new api account creds
+ * @return {Objet} res see todo
+ * @TODO document this model !
+ */
+Apis.prototype.accmodel = function(a) {
+    return res = {
+        'id': a.apiid,
+        'key': a.inputid,
+        'secret': a.inputpw,
+    };
+};
+
+/** Dummy helper function tp check user submitted data for empty string :
+ * @param {Object} a new api account creds to be checked
+ * @return {bool} False if empty string found, true otherwise
+ * @TODO document this model !
+ */
+Apis.prototype.checksub = function(a) {
+    for (el in a) {
+        if (a[el].length == 0) {
+            return false;
+        }
+    }
+    return true;
+};
 
 /** Parse user submitted new api account fields
  * @param {Object} data new api account creds to be trimed
@@ -64,7 +62,7 @@ Apis.prototype.trimnewaccount = function(data) {
     data.inputid = data.inputid.trim().replace(/[^0-9a-z]/gi, '');
     /** Api secret must be alphanum */
     data.inputpw = data.inputpw.trim().replace(/[^0-9a-z]/gi, '');
-    data.uid = this.isEncoded(data.uid) ?
+    data.uid = this.crypt.isEncoded(data.uid) ?
         decodeURIComponent(data.uid) :
         null;
     data.uid = data.uid ? this.crypt.decryptuid(data.uid) : null;
