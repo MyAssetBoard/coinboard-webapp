@@ -137,6 +137,8 @@ Auth.prototype.trimthisregfields = function(fields) {
     fields.iname = fields.iname.replace(/\W/g, '');
     /** Email string must be better checked ! */
     fields.imail = fields.imail.trim();
+    /** Telegram id must be only numeric */
+    fields.iteleid = fields.iteleid.replace('/\D/g,', '');
     /** Email string must be better checked ! */
     fields.isocket = fields.isocket.trim();
     fields.ieth = _this.iscoinAddr(fields.ieth) ? fields.ieth : 'NONE';
@@ -172,6 +174,7 @@ Auth.prototype.registerUsr = function(data) {
             let nu = {
                 'username': chk.iname,
                 'useremail': chk.imail,
+                'telegramid': chk.iteleid,
                 'socketid': chk.isocket,
                 'ethaddr': chk.ieth,
                 'usercurrency': chk.icurr,
