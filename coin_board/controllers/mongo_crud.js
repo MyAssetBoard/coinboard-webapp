@@ -115,7 +115,7 @@ Crud.prototype.find = function(what, callback) {
     });
 };
 
-/** Update field in user collection
+/** Update a who user collection with what.data
  * @param {Objet} who the user to be updated
  * @param {Objet} what the fields to be updated
  * @param {Objet} data the new datas
@@ -143,39 +143,6 @@ Crud.prototype.update = function(who, what, data, callback) {
         });
     }).catch((err) => {
         return callback && callback(err);
-    });
-};
-
-/** Add new data block in collection
- * @param {Objet} who the user to update
- * @param {Object} what the news name to add
- * @param {Object} data the data to add
- * @param {function} callback to get the response
- */
-Crud.prototype.add = function(who, what, data, callback) {
-    let _this = this;
-    _this.MongoClient.connect(_this.uri).then((db) => {
-        let log = 'Add| MONGO - Connected to ' + _this.dbName;
-        const dbo = db.db(_this.dbName);
-        const uid = new ObjectId(who);
-        let fuid = {};
-        let fset = {};
-
-        fset['$push'] = {};
-        fuid['_id'] = uid;
-        fset['$push'][what] = data;
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
-        dbo.collection(_this.coll).update(fuid, fset).then((result) => {
-            db.close();
-            log = 'MONGO - Inserted :\n[' + JSON.stringify(data) + ']';
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
-            callback && callback(result);
-            return result;
-        }).catch((err) => {
-            throw err;
-        });
-    }).catch((err) => {
-        throw err;
     });
 };
 
