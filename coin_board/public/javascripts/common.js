@@ -14,6 +14,9 @@ class Commons {
     }
 }
 
+/** DOM manip for user reading of websocket feed
+ * @param {Object} data new received data
+ */
 Commons.prototype.fillPopup = function(data) {
     $('#ppContent').text('');
     $('#ppContent').removeClass('alert-danger');
