@@ -18,4 +18,4 @@ sudo chown -R fofo /var/log/nginx
 tor
 mkdir -p /usr/src/app/coin_board/DTAFOOD/{news,prices}
 sudo nginx -t && sudo nginx && ./INIT_DEV.sh -rl production onion
-screen -dmS applog ./usr/src/app/coin_board/node_modules/pm2/bin/pm2 logs
+screen -dmS applog /node_modules/pm2/bin/pm2 logs
