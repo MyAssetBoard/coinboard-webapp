@@ -75,4 +75,4 @@ RUN apt-get install -y tree
 USER fofo
 ENV SERV_ENV=onion NODE_ENV=production
 WORKDIR /usr/src/app/coin_board
-ENTRYPOINT /usr/src/app/coin_board/onion/conf/turnmeon.sh
+ENTRYPOINT /usr/src/app/coin_board/conf/onion/turnmeon.sh

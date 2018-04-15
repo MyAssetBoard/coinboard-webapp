@@ -6,7 +6,7 @@
 #  /_/  \__,_/_/  /_/ /_/  /_/ /_/ /_/\___/   \____/_/ /_/
 # ---------------------TurnMeOn.sh --------------------
 # Usage : launched by the Dockerfile $ENTRYPOINT for Onion docker service
-set +e
+set -e
 export IP=$(ip -o -4 a s wlan0 | awk '{ print $4 }' | cut -d/ -f1)
 echo "proxy_pass http://$IP:3000;" > /usr/src/app/coin_board/ipview
 echo "proxy_pass http://$IP:3001;" > /usr/src/app/coin_board/ipsock
@@ -19,3 +19,6 @@ tor
 mkdir -p /usr/src/app/coin_board/DTAFOOD/{news,prices}
 sudo nginx -t && sudo nginx && ./INIT_DEV.sh -rl production onion
 screen -dmS applog /node_modules/pm2/bin/pm2 logs
+#Welcome message to keep container running
+echo "[hit enter key to exit] or run 'docker stop <container>'"
+read
