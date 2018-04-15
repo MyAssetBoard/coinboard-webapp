@@ -22,9 +22,10 @@ class CbBot {
         this.showf = require('./acts/showfiles_act');
         /** Commands array */
         this.cmds = [this.rfrsh, this.digst, this.showf];
-        /** Import BOT_TOKEN from env
+        /** Import BOT_TOKEN from creds json file
          */
-        this.bottoken = process.env.BOT_TOKEN;
+        this.creds = require('../../creds');
+        this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
         /** Bot startup with new {@link Telegraf} object
          */
         this.bot = new this.Telegraf(this.bottoken);
@@ -36,9 +37,8 @@ class CbBot {
 
 CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
-    let who = {
-        telegramid: user.id.toString(),
-    };
+    let who = {};
+    who['telegramid'] = user.id.toString();
     this.crud.finduser(who, (res) => {
         if (res && res.username) {
             _this.runcommands(cmd, ctx);

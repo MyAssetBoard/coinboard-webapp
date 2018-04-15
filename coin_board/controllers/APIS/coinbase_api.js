@@ -12,13 +12,11 @@ class CoinbaseApi {
     constructor() {
         /** See [here](https://developers.coinbase.com) for doc */
         this.Client = require('coinbase').Client;
-        this.KEY = process.env.CBK;
-        this.SC = process.env.CBS;
-        this.Param = {
-            'apiKey': KEY,
-            'apiSecret': SC,
-            'version': 'YYYY-MM-DD',
-        };
+        this.creds = require('../../../creds');
+        this.Param = {};
+        this.Param.apikey = this.creds.CoinbaseApi.key;
+        this.Param.apiSecret = this.creds.CoinbaseApi.secret;
+        this.Param.version = 'YYYY-MM-DD';
     }
 }
 
