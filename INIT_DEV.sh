@@ -6,8 +6,6 @@
 #################InitDev.sh####################
 
 ## Variable Init
-# Node Param :
-export BOT_TOKEN="536901429:AAHoWwWtHY0TIxj3XtLG5HTLzr3-IgJwmpg";
 # Jsdoc
 export JSDOC="./node_modules/jsdoc/jsdoc.js"
 export JSDOCCONF="conf/jsdoc_conf.json"
