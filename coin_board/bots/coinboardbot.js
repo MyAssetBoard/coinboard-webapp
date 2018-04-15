@@ -20,34 +20,46 @@ class CbBot {
         /** Import {@link showfiles} bot function (aka tree DTAFOOD/ )
          */
         this.showf = require('./acts/showfiles_act');
+        /** Commands array */
+        this.cmds = [this.rfrsh, this.digst, this.showf];
         /** Import BOT_TOKEN from env
          */
         this.bottoken = process.env.BOT_TOKEN;
         /** Bot startup with new {@link Telegraf} object
          */
         this.bot = new this.Telegraf(this.bottoken);
+        /** For checking if user is registered */
+        this.Crud = require('../controllers/mongo_crud');
+        this.crud = new this.Crud('test2', 'r_users');
     }
 }
 
+CbBot.prototype.authme = function(cmd, user, ctx) {
+    let _this = this;
+    let who = {
+        telegramid: user.id.toString(),
+    };
+    this.crud.finduser(who, (res) => {
+        if (res && res.username) {
+            _this.runcommands(cmd, ctx);
+        } else {
+            ctx.reply('Sorry, you must be registered to use bot functions');
+        }
+    });
+};
+
 CbBot.prototype.runcommands = function(cmd, ctx) {
     let _this = this;
-    switch (cmd) {
-    case _this.rfrsh.id:
-        _this.rfrsh.func(function(d) {
-            ctx.reply(d);
-        });
-        break;
-    case _this.showf.id:
-        _this.showf.func(function(d) {
-            ctx.reply(d);
-        });
-        break;
-    case _this.digst.id:
-        _this.digst.func(function(d) {
-            ctx.reply(d);
-        });
-        break;
-    default:
+    let exec = 0;
+    for (let el in this.cmds) {
+        if (this.cmds[el] && this.cmds[el].id == cmd) {
+            exec += 1;
+            _this.cmds[el].func((d) => {
+                ctx.reply(d);
+            });
+        }
+    }
+    if (!exec) {
         let resp = '[' + cmd + '] : unknow command sorry';
         ctx.reply(resp);
     }
@@ -82,15 +94,12 @@ CbBot.prototype.getcommands = function() {
             id: chatId,
         };
         _this.logthiscmd(cmd, usr);
-        /** If chat id is your servitor, exec some commands */
-        if (chatId == 408942599) {
-            _this.runcommands(cmd, ctx);
-        }
+        _this.authme(cmd, usr, ctx);
     });
 };
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
- *  @property {function} bot.command if help cmd answer 'Try send a sticker'
+ *  @property {function} bot.hello if hello cmd answer with Welcome message
  *  @property {function} bot.hears other way to get a repli from bot
  */
 CbBot.prototype.turnmeon = function() {
