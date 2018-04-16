@@ -17,7 +17,7 @@ class N26Api {
     }
 }
 
-N26Api.prototype.getsums = function(tr) {
+N26Api.prototype.getsums = function(tr, key) {
     let sum = 0;
     let min = 0;
     let plus = 0;
@@ -48,13 +48,15 @@ N26Api.prototype.getsums = function(tr) {
 N26Api.prototype.gettrstats = function(id, key) {
     let _this = this;
     return new Promise((resolve, reject) => {
-        const acc = new _this.N26(id.usr, id.pw);
-        acc.then(function(account) {
+        const acc = new _this.N26(id.usr.toString(), id.pw.toString());
+        acc.then((account) => {
             account.transactions(
             {
                 text: key,
             }).then((tr) => {
-                resolve(_this.getsums(tr));
+                resolve(_this.getsums(tr, key));
+            }).catch((err) => {
+                reject(err);
             });
         });
     });
