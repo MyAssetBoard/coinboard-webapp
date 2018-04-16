@@ -24,12 +24,7 @@
 		</main>
 		<footer>
 			<% include coreelems/footer %>
-		</footer> <noscript>
-							<div class="alert-danger" id="noscript-warning">
-								<h1 class="text-alert"><%= title %>
-									work best with JavaScript enabled</h1>
-							</div>
-						</noscript>
+		</footer>
 		<%if (locals.scripts && Object.keys(scripts).length) {%>
 			<% for (var elems in scripts) {%>
 				<script src="<%- scripts[elems] %>"></script>
