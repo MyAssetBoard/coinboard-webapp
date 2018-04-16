@@ -53,6 +53,14 @@ CbWebsocket.prototype.startmeup = function() {
     _this.apiparams();
 };
 
+/** Log received data
+ *@param {Object} d data to logg
+ */
+CbWebsocket.prototype.logger = function(d) {
+    let log = 'add asset data get :\n' + JSON.stringify(d);
+    process.env.NODE_ENV == 'development' ? console.log(log) : log;
+};
+
 /** Log this user
  * @param {string} roomname
  * @param {string} usrid
@@ -120,7 +128,7 @@ CbWebsocket.prototype.assetroom = function() {
             _this.assetco += 1;
             _this.logthisguy('asset', socket.id);
             socket.on('add asset', function(d) {
-                this.logger(d);
+                _this.logger(d);
                 _this.asset.checkAssetData(d, socket, _this.io);
             });
             socket.on('disconnect', function() {
