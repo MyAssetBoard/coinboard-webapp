@@ -4,46 +4,41 @@
 			work best with JavaScript enabled ;)</h2>
 	</div>
 </noscript>
-<nav class="navbar navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-dark flex-column flex-md-row fixed-top bg-primary">
 	<a class="navbar-brand mr-0 mr-md-2" href="/">
-		<button class="navbar-toggler" type="button">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<span class="navbar-toggler-icon"></span>
 		<span class="lnr lnr-diamond text-white">
 			Coin_Board
 		</span>
 	</a>
-	<ul class="navbar-nav bd-navbar-nav flex-row">
-		<nav class="nav nav-pills">
-			<% if (locals.data && locals.data.username) {%>
-				<a class="nav-item nav-link text-white" style="padding-right: 20px" href="/profile">
-					<span class="lnr lnr-user"></span>
-					<%=locals.data.username%>
-				</a>
-			<%}%>
-			<% if (!locals.data || !locals.data.username) {%>
-				<a class="nav-item nav-link text-white" style="padding-right: 20px" href="/login">
-					<span class="lnr lnr-enter"></span>
-					Login
-				</a>
-				<a class="nav-item nav-link text-white" style="padding-left: 20px; padding-right: 20px" href="/signin">
-					<span class="lnr lnr-user"></span>
-					Register
-				</a>
-			<%}%>
-			<a class="nav-item nav-link text-white" href="/assets" style="padding-left: 20px; padding-right: 20px">
-				<span class="lnr lnr-rocket"></span>
-				Assets
-			</a>
-			<a class="nav-item nav-link text-white" href="/livestream" style="padding-left: 20px; padding-right: 20px">
-				<span class="lnr lnr-bullhorn"></span>
-				Live trade
-			</a>
-			<a class="nav-item nav-link text-white" style="font-family: Arial, FontAwesome; padding-left: 20px; padding-right: 20px" href="/livestream">
-				 Repo
-			</a>
-		</nav>
-	</ul>
+	<% if (locals.data && locals.data.username) {%>
+		<a class="navbar-text text-white" href="/profile">
+			<span class="lnr lnr-user"></span>
+			<%= locals.data.username %>
+		</a>
+	<%}%>
+	<% if (!locals.data || !locals.data.username) {%>
+		<a class="navbar-text text-white" href="/login">
+			<span class="lnr lnr-power-switch"></span>
+			Login
+		</a>
+		<a class="navbar-text text-white" href="/signin">
+			<span class="lnr lnr-database"></span>
+			Register
+		</a>
+	<%}%>
+	<a class="navbar-text text-white" href="/assets/dashboard">
+		<span class="lnr lnr-rocket"></span>
+		Dashboard
+	</a>
+	<a class="navbar-text text-white" href="/assets/infofeed">
+		<span class="lnr lnr-bullhorn"></span>
+		News Feeds
+	</a>
+	<a class="navbar-text text-white" href="https://github.com/MyAssetBoard/coinboard-webapp">
+		<span class="lnr lnr-code"></span>
+		Github
+	</a>
 	<div class="float-right popUp hidden" id="popup">
 		<div class="alert" id="ppContent"></div>
 	</div>
