@@ -17,7 +17,7 @@ const
  */
 const digest = {
     id: '/digest',
-    func: function(callback) {
+    func: function(args, usr, callback) {
         process.env['NODE_ENV'] = 'a';
         process.env['NODE_LOG'] = 'a';
         process.env['LAUNCH_TASK'] = 'markme';
