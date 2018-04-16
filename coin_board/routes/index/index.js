@@ -3,6 +3,12 @@
  * @author based on express boilerplate and edited by Trevis Gulby
  */
 
+/** WIP REACT */
+// const React = require('react');
+// const myComponent = require('../../HelloComponent');
+// const ReactComponent = React.createFactory(myComponent);
+
+
 /**  ### {@link index} page router overload definitions
  * @namespace index
  * @memberof Routes.page
