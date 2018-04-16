@@ -20,8 +20,10 @@ class CbBot {
         /** Import {@link showfiles} bot function (aka tree DTAFOOD/ )
          */
         this.showf = require('./acts/showfiles_act');
+        /** Import {@link mibank} bot function (get bank account status) */
+        this.mibank = require('./acts/mibank_act');
         /** Commands array */
-        this.cmds = [this.rfrsh, this.digst, this.showf];
+        this.cmds = [this.rfrsh, this.digst, this.showf, this.mibank];
         /** Import BOT_TOKEN from creds json file
          */
         this.creds = require('../../creds');
@@ -34,36 +36,6 @@ class CbBot {
         this.crud = new this.Crud('test2', 'r_users');
     }
 }
-
-CbBot.prototype.authme = function(cmd, user, ctx) {
-    let _this = this;
-    let who = {};
-    who['telegramid'] = user.id.toString();
-    this.crud.finduser(who, (res) => {
-        if (res && res.username) {
-            _this.runcommands(cmd, ctx);
-        } else {
-            ctx.reply('Sorry, you must be registered to use bot functions');
-        }
-    });
-};
-
-CbBot.prototype.runcommands = function(cmd, ctx) {
-    let _this = this;
-    let exec = 0;
-    for (let el in this.cmds) {
-        if (this.cmds[el] && this.cmds[el].id == cmd) {
-            exec += 1;
-            _this.cmds[el].func((d) => {
-                ctx.reply(d);
-            });
-        }
-    }
-    if (!exec) {
-        let resp = '[' + cmd + '] : unknow command sorry';
-        ctx.reply(resp);
-    }
-};
 
 CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
@@ -79,6 +51,40 @@ CbBot.prototype.logthismsg = function() {
         console.log('COINBOARD_BOT: Received msg :');
         console.log('from [' + usr + ']');
         console.log(ctx.message.text);
+    });
+};
+
+CbBot.prototype.runcommands = function(cmd, ctx, who) {
+    let _this = this;
+    let exec = 0;
+    for (let el in this.cmds) {
+        if (this.cmds[el] && cmd.search(this.cmds[el].id) != -1) {
+            exec += 1;
+            let args = cmd.split(' ')[1] != undefined ? cmd.split(' ')[1] : '';
+            _this.cmds[el].func(args, who, (d) => {
+                console.log(who);
+                ctx.reply(d);
+            });
+        }
+    }
+    if (!exec) {
+        let resp = '[' + cmd + '] : unknow command sorry';
+        ctx.reply(resp);
+    }
+};
+
+CbBot.prototype.authme = function(cmd, user, ctx) {
+    let _this = this;
+    let who = {};
+    who['telegramid'] = user.id.toString();
+    this.crud.finduser(who, (res) => {
+        if (res && res.username) {
+            who['apis'] = res.apisv2 ? res.apisv2 : '';
+            return _this.runcommands(cmd, ctx, who);
+        } else {
+            ctx.reply('Sorry, you must be registered to use bot functions');
+            return;
+        }
     });
 };
 
