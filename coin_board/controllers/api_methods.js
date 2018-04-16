@@ -18,6 +18,9 @@ class Apis {
         this.Crypt = require('../controllers/crypt_methods');
         /** New {@link Crypt} Object */
         this.crypt = new this.Crypt();
+        /** N26 API module dep */
+        this.N26Api = require('./APIS/n26_api');
+        this.n26 = new this.N26Api();
     }
 }
 
@@ -59,7 +62,7 @@ Apis.prototype.trimnewaccount = function(data) {
     /** Api type must be Bank, Crypto, or Market */
     data.apitype = data.apitype.trim().replace(/[^0-9a-z]/gi, '');
     /** Api key must be alphanum */
-    data.inputid = data.inputid.trim().replace(/[^0-9a-z]/gi, '');
+    data.inputid = data.inputid.trim();
     /** Api secret must be alphanum */
     data.inputpw = data.inputpw.trim().replace(/[^0-9a-z]/gi, '');
     data.uid = this.crypt.isEncoded(data.uid) ?
@@ -96,24 +99,53 @@ Apis.prototype.addAccount = function(a) {
 };
 
 /** Return a filtered request on user api collection for template rendering
- * @param {Object} what the filter for results
- * @return {Promise} result if success new Error otherwise
+ * @param {Object} usr a combo key pair to find user usrnmae socket id or
+ * username telegramid if requested through bot
+ * @return {Promise} the requested account details if success or a new Error
  */
-Apis.prototype.getAccounts = function(what) {
+Apis.prototype.getAccounts = function(usr) {
     let _this = this;
-    what ? what :
+    usr ? usr :
     {};
     return new Promise((resolve, reject) => {
-        _this.crud.find(what, (res, err) => {
+        _this.crud.finduser(usr, (res, err) => {
             if (res) {
-                let result = res[0] && res[0].apis ? res[0].apis : [];
+                let result = res && res.apisv2 ? res.apisv2 : [];
                 resolve(result);
             } else {
-                reject(new Error('failed to find'));
+                reject(new Error('failed to find account'));
             }
         });
     });
 };
+
+/** Gather all bank api informations
+ * @param {Object} key the key elems to search forr
+ * @param {Object} usr a combo key pair to find user
+ * @return {Promise} current account sold if success reject else
+ */
+Apis.prototype.getbankposition = function(key, usr) {
+    let _this = this;
+    let id = {};
+    return new Promise((resolve, reject) => {
+        if (usr.apis.Bank) {
+            for (let el in usr.apis.Bank) {
+                if (usr.apis.Bank[el] && usr.apis.Bank[el].id == 'n26') {
+                    id['usr'] = usr.apis.Bank[el].key;
+                    id['pw'] = usr.apis.Bank[el].secret;
+                    _this.n26.gettrstats(id, key).then((res) => {
+                        resolve(res);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+                }
+            }
+        } else {
+            reject(new Error('No banking api configured'));
+        }
+    });
+};
+
 /** check user supplied api account
  * @param {Object} data new client assets data to be recorded
  * @param {Objet} socket the socket object to get the receiver id
