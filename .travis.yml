@@ -1,0 +1,8 @@
+language: node_js
+sudo: false
+node_js:
+  - "8.9"
+install:
+  - yarn install && yarn add coin_board
+script:
+  - yarn test
