@@ -5,4 +5,4 @@ node_js:
 install:
   - yarn install && cd coin_board && yarn install && cd ..
 script:
-  - yarn test
+  - ./INIT_DEV.sh -lt
