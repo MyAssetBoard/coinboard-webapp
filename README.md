@@ -11,6 +11,8 @@
 _____________________________________
 ```
 ## Features :
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/MyAssetBoard/coinboard-webapp.svg)](https://greenkeeper.io/)
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 > - **Train your application** to automate your cash flows (AI modules )
 > - **Tor** [hidden service](https://www.torproject.org/) docker deployment for easy access everywhere, improved security and reliability
