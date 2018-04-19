@@ -138,7 +138,9 @@ Auth.prototype.trimthisregfields = function(fields) {
     /** Email string must be better checked ! */
     fields.imail = fields.imail.trim();
     /** Telegram id must be only numeric */
-    fields.iteleid = fields.iteleid.replace('/\D/g,', '');
+    fields.iteleid = fields.iteleid ?
+        fields.iteleid.replace('/\D/g,', '') :
+        undefined;
     /** Email string must be better checked ! */
     fields.isocket = fields.isocket.trim();
     fields.ieth = _this.iscoinAddr(fields.ieth) ? fields.ieth : 'NONE';
