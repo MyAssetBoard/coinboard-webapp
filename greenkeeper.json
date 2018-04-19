@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "coin_board/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
