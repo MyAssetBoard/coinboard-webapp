@@ -1,6 +1,6 @@
 /**
  * @file {@link Crud} CReateUpdateDelete methods definitions
- * @author based on Mongo doc and edited by Trevis Gulby
+ * @author Based on Mongo doc and edited by Trevis Gulby
  */
 
 /** Wow so much methods !

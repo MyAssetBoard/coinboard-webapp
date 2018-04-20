@@ -1,6 +1,7 @@
 /**
  * @file {@link module:n26api~N26Api} requests definitions
  * @author N26 node module and Trevis Gulby
+ * @license MIT
  */
 
 /**

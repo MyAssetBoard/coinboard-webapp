@@ -1,6 +1,7 @@
 /**
  * @file Main runable executable for {@link module:cbbot~CbBot} service
  * @author based on telegraf module exemples and edited by Trevis Gulby
+ * @license MIT
  */
 
 /** @class */
@@ -8,28 +9,22 @@ class CbBot {
     /** @constructor */
     constructor() {
         /** Import [telegraf](https://github.com/telegraf/telegraf)
-         * module for easy bot management
-         */
+         * module for easy bot management */
         this.Telegraf = require('telegraf');
-        /** Import {@link refresh} bot function (aka fetch and store feeds )
-         */
+        /** Import {@link refresh} bot function (aka fetch and store feeds ) */
         this.rfrsh = require('./acts/refresh_act');
-        /** Import {@link digest} bot function (aka parse feeds )
-         */
+        /** Import {@link digest} bot function (aka parse feeds ) */
         this.digst = require('./acts/datamine_act');
-        /** Import {@link showfiles} bot function (aka tree DTAFOOD/ )
-         */
+        /** Import {@link showfiles} bot function (aka tree DTAFOOD/ ) */
         this.showf = require('./acts/showfiles_act');
         /** Import {@link mibank} bot function (get bank account status) */
         this.mibank = require('./acts/mibank_act');
         /** Commands array */
         this.cmds = [this.rfrsh, this.digst, this.showf, this.mibank];
-        /** Import BOT_TOKEN from creds json file
-         */
+        /** Import BOT_TOKEN from creds json file */
         this.creds = require('../../creds');
         this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
-        /** Bot startup with new {@link Telegraf} object
-         */
+        /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);
         /** For checking if user is registered */
         this.Crud = require('../controllers/mongo_crud');
@@ -37,6 +32,10 @@ class CbBot {
     }
 }
 
+/** Dummy logger helper function to print received cmd
+ * @param {string} cmd new client assets data to be recorded
+ * @param {Objet} usr user first_name , last_name and socket ID
+ */
 CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
     log += '[' + usr.fname + ' ' + usr.lname + ']';
@@ -44,6 +43,7 @@ CbBot.prototype.logthiscmd = function(cmd, usr) {
     console.log(log);
 };
 
+/** Logging helper function to print all messages sent to bot */
 CbBot.prototype.logthismsg = function() {
     let _this = this;
     _this.bot.on('message', (ctx) => {
@@ -54,6 +54,11 @@ CbBot.prototype.logthismsg = function() {
     });
 };
 
+/** Kind of switch statement for running known bot command's
+ * @param {string} cmd The requested command [ /cmd + args ]
+ * @param {Objet} ctx The telegraf object containing methods and user chat
+ * @param {Object} who The object containing all user data from db
+ */
 CbBot.prototype.runcommands = function(cmd, ctx, who) {
     let _this = this;
     let exec = 0;
@@ -73,6 +78,11 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
     }
 };
 
+/** Authentification based on in chat Telegram user ID and local db records
+ * @param {string} cmd The requested command [ /cmd + args ]
+ * @param {Objet} user An object containing first and last names and TelegramID
+ * @param {Object} ctx The telegraf object containing methods and user chat
+ */
 CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
     let who = {};
@@ -88,6 +98,9 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     });
 };
 
+/** Listen for '/[cmd]' style message to run
+ * bot functions for registered users
+ */
 CbBot.prototype.getcommands = function() {
     let _this = this;
     /** Main bot listening command 'getter' function */
@@ -103,6 +116,7 @@ CbBot.prototype.getcommands = function() {
         _this.authme(cmd, usr, ctx);
     });
 };
+
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
  *  @property {function} bot.hello if hello cmd answer with Welcome message

@@ -2,6 +2,7 @@
  * @file Refresh aka {@link module:cbbot~telegrambot.refresh}
  * bot method definition
  * @author Trevis Gulby
+ * @license MIT
  */
 
 const

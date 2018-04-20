@@ -2,8 +2,8 @@
  * @file Datamine aka {@link module:cbbot~telegrambot.digest}
  * bot method definition
  * @author Trevis Gulby
+ * @license MIT
  */
-
 
 const
 {

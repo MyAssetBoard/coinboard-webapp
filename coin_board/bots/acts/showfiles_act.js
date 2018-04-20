@@ -2,6 +2,7 @@
  * @file Showfiles aka {@link module:cbbot~telegrambot.showfiles}
  * bot method definition
  * @author Trevis Gulby
+ * @license MIT
  */
 
 const

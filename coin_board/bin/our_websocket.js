@@ -1,7 +1,7 @@
 /**
- * @file Main runable executable for {@link module:cbwebsocket~CbWebsocket}
- * service
- * @author based on socket.io doc app and edited by Trevis Gulby
+ * @file Main exec file for {@link module:cbwebsocket~CbWebsocket} service
+ * @author Based on socket.io doc and edited by Trevis Gulby
+ * @license MIT
  */
 
 /**

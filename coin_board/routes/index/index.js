@@ -1,6 +1,6 @@
 /**
  * @file Index page main route controller
- * @author based on express boilerplate and edited by Trevis Gulby
+ * @author Based on express boilerplate and edited by Trevis Gulby
  */
 
 /** WIP REACT */

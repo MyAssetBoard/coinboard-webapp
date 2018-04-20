@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>JSDoc:
-			Source: routes/routes.js
+			Namespace: mibank
 		</title>
 		<script src="scripts/prettify/prettify.js">
 		</script>
@@ -29,46 +29,177 @@
 		<div id="main">
 			<h1 class="page-title">
 				<a href="https://github.com/MyAssetBoard/coinboard-webapp/tree/master/docs">
-					Source: routes/routes.js</a>
+					Namespace: mibank</a>
 			</h1>
 			<div id="content">
 				
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file Route module overload definitions, own routes import
- * @author Trevis Gulby
- */
+        <h2>
+            <span class="ancestors"><a href="module-cbbot.html">cbbot</a><a href="module-cbbot-telegrambot.html">~telegrambot</a>.</span>mibank</h2>
+        
+    
+</header>
 
-/** @property {Object} Routes  router pages module
- * @constructor
- */
-const Routes = {};
-/** @property {Object} Routes.index page router overloads import */
-Routes.index = require('./index/index');
-/** @property {Object} assets page router overloads import */
-Routes.assets = require('./assets/assets');
-/** @property {Object} login page router overloads import */
-Routes.login = require('./login/login');
-/** @property {Object} signin page router overloads import */
-Routes.signin = require('./signin/signin');
-/** @property {Object} profile page router overloads import */
-Routes.profile = require('./profile/profile');
-/** @property {Object} livestream page router overloads import */
-Routes.livestream = require('./livestream/livestream');
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>The Telegram bot /mibank command object</p></div>
+        
 
-module.exports = Routes;
-/** ### Contains all this webapp pages
- * @namespace page
- * @memberof Routes
- */
-</code></pre>
-        </article>
-    </section>
+        
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>telegram bot style command, '/ + cmd'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>func</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the actual command, here lanch get bank account
+balance per param element</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bots_acts_mibank_act.js.html">bots/acts/mibank_act.js</a>, <a href="bots_acts_mibank_act.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -27,11 +27,10 @@
 
 	<body>
 		<div id="main">
-			<h1 class="page-title">Source: bots/coinboardbot.js
-				<a href="https://bitbucket.org/trevisgulby/coin_board">
-					rev 04.2018</a>
+			<h1 class="page-title">
+				<a href="https://github.com/MyAssetBoard/coinboard-webapp/tree/master/docs">
+					Source: bots/coinboardbot.js</a>
 			</h1>
-			<h2><u>Source files :</u></h2>
 			<div id="content">
 				
 
@@ -43,6 +42,7 @@
             <pre class="prettyprint source linenums"><code>/**
  * @file Main runable executable for {@link module:cbbot~CbBot} service
  * @author based on telegraf module exemples and edited by Trevis Gulby
+ * @license MIT
  */
 
 /** @class */
@@ -50,28 +50,22 @@ class CbBot {
     /** @constructor */
     constructor() {
         /** Import [telegraf](https://github.com/telegraf/telegraf)
-         * module for easy bot management
-         */
+         * module for easy bot management */
         this.Telegraf = require('telegraf');
-        /** Import {@link refresh} bot function (aka fetch and store feeds )
-         */
+        /** Import {@link refresh} bot function (aka fetch and store feeds ) */
         this.rfrsh = require('./acts/refresh_act');
-        /** Import {@link digest} bot function (aka parse feeds )
-         */
+        /** Import {@link digest} bot function (aka parse feeds ) */
         this.digst = require('./acts/datamine_act');
-        /** Import {@link showfiles} bot function (aka tree DTAFOOD/ )
-         */
+        /** Import {@link showfiles} bot function (aka tree DTAFOOD/ ) */
         this.showf = require('./acts/showfiles_act');
         /** Import {@link mibank} bot function (get bank account status) */
         this.mibank = require('./acts/mibank_act');
         /** Commands array */
         this.cmds = [this.rfrsh, this.digst, this.showf, this.mibank];
-        /** Import BOT_TOKEN from creds json file
-         */
+        /** Import BOT_TOKEN from creds json file */
         this.creds = require('../../creds');
         this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
-        /** Bot startup with new {@link Telegraf} object
-         */
+        /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);
         /** For checking if user is registered */
         this.Crud = require('../controllers/mongo_crud');
@@ -79,6 +73,10 @@ class CbBot {
     }
 }
 
+/** Dummy logger helper function to print received cmd
+ * @param {string} cmd new client assets data to be recorded
+ * @param {Objet} usr user first_name , last_name and socket ID
+ */
 CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
     log += '[' + usr.fname + ' ' + usr.lname + ']';
@@ -86,6 +84,7 @@ CbBot.prototype.logthiscmd = function(cmd, usr) {
     console.log(log);
 };
 
+/** Logging helper function to print all messages sent to bot */
 CbBot.prototype.logthismsg = function() {
     let _this = this;
     _this.bot.on('message', (ctx) => {
@@ -96,6 +95,11 @@ CbBot.prototype.logthismsg = function() {
     });
 };
 
+/** Kind of switch statement for running known bot command's
+ * @param {string} cmd The requested command [ /cmd + args ]
+ * @param {Objet} ctx The telegraf object containing methods and user chat
+ * @param {Object} who The object containing all user data from db
+ */
 CbBot.prototype.runcommands = function(cmd, ctx, who) {
     let _this = this;
     let exec = 0;
@@ -115,6 +119,11 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
     }
 };
 
+/** Authentification based on in chat Telegram user ID and local db records
+ * @param {string} cmd The requested command [ /cmd + args ]
+ * @param {Objet} user An object containing first and last names and TelegramID
+ * @param {Object} ctx The telegraf object containing methods and user chat
+ */
 CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
     let who = {};
@@ -130,6 +139,9 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     });
 };
 
+/** Listen for '/[cmd]' style message to run
+ * bot functions for registered users
+ */
 CbBot.prototype.getcommands = function() {
     let _this = this;
     /** Main bot listening command 'getter' function */
@@ -145,6 +157,7 @@ CbBot.prototype.getcommands = function() {
         _this.authme(cmd, usr, ctx);
     });
 };
+
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
  *  @property {function} bot.hello if hello cmd answer with Welcome message
@@ -188,12 +201,12 @@ mibot.turnmeon();
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.Apis.html">cbbot~telegrambot.Apis</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Fri Apr 20 2018 13:04:38 GMT+0200 (CEST)
-					 for CoinBoard | 2018 </footer>
+				Fri Apr 20 2018 14:13:26 GMT+0200 (CEST)
+					 for CoinBoard</footer>
 		<script>
 prettyPrint();
 		</script>

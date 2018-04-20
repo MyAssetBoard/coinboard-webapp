@@ -82,8 +82,8 @@ AppConfig.prototype.favopts = {
 AppConfig.prototype.httpsc = function() {
     let _this = this;
     let httpsc = {};
-    httpsc.key = _this.fs.readFileSync('localhost.key');
-    httpsc.cert = _this.fs.readFileSync('localhost.cert');
+    httpsc.key = _this.fs.readFileSync('coin_board/params/localhost.key');
+    httpsc.cert = _this.fs.readFileSync('coin_board/params/localhost.cert');
     httpsc.requestCert = false;
     httpsc.rejectUnauthorized = false;
     return httpsc;

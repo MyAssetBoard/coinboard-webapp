@@ -1,10 +1,10 @@
 /**
- * @file {@link module:coinbase~CoinbaseApi} requests definitions
- * @author coinbase node module and Trevis Gulby
+ * @file {@link module:coinbaseapi~CoinbaseApi} requests definitions
+ * @author Coinbase node module samples and Trevis Gulby
+ * @license MIT
  */
 
-/**
- * Coinbase API wrapper
+/** Coinbase API wrapper
  * @class
  */
 class CoinbaseApi {

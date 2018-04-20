@@ -1,11 +1,10 @@
 /**
- * @file Main runable executable for {@link module:cbview~CbView}
- * service
- * @author based on Express app and edited by Trevis Gulby
+ * @file Main runable executable for {@link module:cbview~CbView} service
+ * @author Based on Express app and edited by Trevis Gulby
+ * @license MIT
  */
 
-/**
- * A new CoinboardWebfront object / service
+/** A new CoinboardWebfront object / service
  * @class
  */
 class CbView {

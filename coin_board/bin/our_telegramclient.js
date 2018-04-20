@@ -1,15 +1,32 @@
+/**
+ * @file  personnal telegram client
+ * @TODO implement an html view and js controllers to have
+ * an inpage telegram chat element
+ * @author based on Some github sample and edited by Trevis Gulby
+ * @license MIT
+ */
+
+/** ### Coin_Board Telegram client methods
+ * @module cbtelegramchatclient
+ */
+
+/** Private credentials json format import */
 const creds = require('../../creds');
+/** Telegram client main component import */
 const
 {
     MTProto
 } = require('telegram-mtproto')
+/** @TODO -> add mongo connector */
 const
 {
     Storage
 } = require('mtproto-storage-fs')
 const readline = require('readline')
 
-// The api_id and api_hash values can be obtained here: https://my.telegram.org/
+/** The api_id and api_hash values can be obtained
+ * here {@link https://my.telegram.org/}
+ */
 const config = {
     "phone_number": creds.TelegramClient.PHONE_NBR,
     "api_id": creds.TelegramClient.API_ID,
@@ -41,8 +58,9 @@ const client = MTProto(
     app
 })
 
-// This function will stop execution of the program until you enter the code
-// that is sent via SMS or Telegram.
+/** This function will stop execution of the program until you enter the code
+ * that is sent via SMS or Telegram.
+ */
 const askForCode = () =>
 {
     return new Promise((resolve) =>
@@ -61,9 +79,10 @@ const askForCode = () =>
     })
 }
 
-// First you will receive a code via SMS or Telegram, which you have to enter
-// directly in the command line. If you entered the correct code, you will be
-// logged in and the credentials are saved.
+/** First you will receive a code via SMS or Telegram, which you have to enter
+ * directly in the command line. If you entered the correct code, you will be
+ * logged in and the credentials are saved.
+ */
 const login = async (client, phone) =>
 {
     const
@@ -102,8 +121,9 @@ const getDialogs = async () =>
     console.log('dialogs', dialogs)
 }
 
-// First check if we are already signed in (if credentials are stored). If we
-// are logged in, execution continues, otherwise the login process begins.
+/** First check if we are already signed in (if credentials are stored).
+ * If we are logged in, execution continues, otherwise the login process begins.
+ */
 (async function ()
 {
     if(!(await app.storage.get('signedin')))

@@ -1,24 +1,24 @@
 'use strict';
 
-var doop = require('jsdoc/util/doop');
-var env = require('jsdoc/env');
-var fs = require('jsdoc/fs');
-var helper = require('jsdoc/util/templateHelper');
-var logger = require('jsdoc/util/logger');
-var path = require('jsdoc/path');
-var taffy = require('taffydb').taffy;
-var template = require('jsdoc/template');
-var util = require('util');
+let doop = require('jsdoc/util/doop');
+let env = require('jsdoc/env');
+let fs = require('jsdoc/fs');
+let helper = require('jsdoc/util/templateHelper');
+let logger = require('jsdoc/util/logger');
+let path = require('jsdoc/path');
+let taffy = require('taffydb').taffy;
+let template = require('jsdoc/template');
+let util = require('util');
 
-var htmlsafe = helper.htmlsafe;
-var linkto = helper.linkto;
-var resolveAuthorLinks = helper.resolveAuthorLinks;
-var hasOwnProp = Object.prototype.hasOwnProperty;
+let htmlsafe = helper.htmlsafe;
+let linkto = helper.linkto;
+let resolveAuthorLinks = helper.resolveAuthorLinks;
+let hasOwnProp = Object.prototype.hasOwnProperty;
 
-var data;
-var view;
+let data;
+let view;
 
-var outdir = path.normalize(env.opts.destination);
+let outdir = path.normalize(env.opts.destination);
 
 function find(spec) {
     return helper.find(data, spec);
@@ -267,15 +267,17 @@ function generateSourceFiles(sourceFiles, encoding) {
 }
 
 /**
- * Look for classes or functions with the same name as modules (which indicates that the module
- * exports only that class or function), then attach the classes or functions to the `module`
- * property of the appropriate module doclets. The name of each class or function is also updated
- * for display purposes. This function mutates the original arrays.
- *
+ * Look for classes or functions with the same name as modules
+ * (which indicates that the module exports only that class or function),
+ * then attach the classes or functions to the `module`
+ * property of the appropriate module doclets. The name of each class or
+ * function is also updated for display purposes.
+ * This function mutates the original arrays.
  * @private
- * @param {Array.<module:jsdoc/doclet.Doclet>} doclets - The array of classes and functions to
- * check.
- * @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of module doclets to search.
+ * @param {Array.<module:jsdoc/doclet.Doclet>} doclets - The array of
+ * classes and functions to check.
+ * @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of
+ * module doclets to search.
  */
 function attachModuleSymbols(doclets, modules) {
     let symbols = {};
@@ -646,7 +648,8 @@ exports.publish = function(taffyData, opts, tutorials) {
             {
                 kind: 'mainpage',
                 readme: opts.readme,
-                longname: (opts.mainpagetitle) ? opts.mainpagetitle : 'Main Page',
+                longname: (opts.mainpagetitle) ?
+                    opts.mainpagetitle : 'Main Page',
             }]
         ).concat(files), indexUrl);
 
