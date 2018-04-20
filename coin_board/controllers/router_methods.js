@@ -10,11 +10,34 @@
 const appconf = require('./config_methods');
 /** [Express doc](http://expressjs.com/en/api.html) */
 const express = require('express');
+/** [express-session](https://github.com/expressjs/session) module import */
+const session = require('express-session');
+/** [connect-mongodb-session](https://github.com/mongodb-js/connect-mongodb-session) module */
+const MongoDBStore = require('connect-mongodb-session')(session);
 /** [Path module](https://nodejs.org/api/path.html) */
 const path = require('path');
 /** [Morgan](https://github.com/expressjs/morgan) logger */
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+
+const store = new MongoDBStore(
+{
+    uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+    databaseName: 'session_test',
+    collection: 'testsess',
+});
+/** Session storage config using mongodb store */
+const sess = {
+    secret: 'keyboard cat',
+    cookie:
+    {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+    store: store,
+    resave: true,
+    saveUninitialized: true,
+};
+sess.cookie.secure = true;
 
 const Routes = require('../routes/routes');
 const httpopts = appconf.headeropts;
@@ -43,6 +66,8 @@ app.use(bodyParser.urlencoded(
 {
     extended: true,
 }));
+app.set('trust proxy', 1); // trust first proxy
+app.use(session(sess));
 
 app.use(
     express.static(path.join(__dirname, '../public'),
