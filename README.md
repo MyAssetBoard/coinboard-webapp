@@ -1,16 +1,17 @@
 ```
-._____......._...............______....................._.
-/..__.\.....(_)..............|.___.\...................|.|
-|./..\/.___.._._.__..........|.|_/./.___...__._._.__.__|.|
-|.|..../._.\|.|.'_.\.........|.___.\/._.\./._`.|.'__/._`.|
-|.\__/\.(_).|.|.|.|.|........|.|_/./.(_).|.(_|.|.|.|.(_|.|
-.\____/\___/|_|_|.|_|........\____/.\___/.\__,_|_|..\__,_|
-..................______.______...........................
-.................|______|______|..........................
-******* Coin_Board|<Readme.md>
+........._____......._...............______....................._.
+......./ ..__.\.....(_)..............|.___.\...................|.|
+.......| ./..\/.___.._._.__..........|.|_/./.___...__._._.__.__|.|
+.......| .|..../._.\|.|.'_.\.........|.___.\/._.\./._`.|.'__/._`.|
+.......| .\__/\.(_).|.|.|.|.|........|.|_/./.(_).|.(_|.|.|.|.(_|.|
+........\ ____/\___/|_|_|.|_|........\____/.\___/.\__,_|_|..\__,_|
+..........................______.______...........................
+.........................|______|______|..........................
+           ******* Coin_Board|<Readme.md>
 _____________________________________
 ```
-[![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183) [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)* [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability) [![Build Status](https://travis-ci.org/MyAssetBoard/coinboard-webapp.svg?branch=master)](https://travis-ci.org/MyAssetBoard/coinboard-webapp) [![Greenkeeper badge](https://badges.greenkeeper.io/greenkeeperio/badges.svg)](https://greenkeeper.io/)
+[![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183) [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)* [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability) [![Build Status](https://travis-ci.org/MyAssetBoard/coinboard-webapp.svg?branch=master)](https://travis-ci.org/MyAssetBoard/coinboard-webapp) [![Greenkeeper badge](https://badges.greenkeeper.io/MyAssetBoard/coinboard-webapp.svg)](https://greenkeeper.io/)
+
 ## Features :
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 > - **Train your application** to automate your cash flows (AI modules )
