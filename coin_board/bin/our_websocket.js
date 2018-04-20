@@ -12,13 +12,16 @@ class CbWebsocket {
     /** @constructor */
     constructor() {
         this.port = process.env.WSPORT || '3001';
-        this.os = require('os');
-        this.ni = this.os.networkInterfaces();
-        this.addr = this.ni.wlan0[0].address;
-        this.http = require('http');
-        this.server = this.http.createServer();
-        this.server.listen(this.port, this.addr);
-        this.io = require('socket.io')(this.server);
+        this.https = require('https');
+        /** Creds import */
+        this.AppConfig = require('../controllers/config_methods');
+        this.conf = new this.AppConfig();
+        this.server = this.https.createServer(this.conf.httpsc());
+        this.server.listen(this.port);
+        this.io = require('socket.io')(this.server,
+        {
+            cookie: false,
+        });
         /** Asset module dep import */
         this.Asset = require('../controllers/assets_methods');
         this.asset = new this.Asset();
@@ -117,6 +120,9 @@ CbWebsocket.prototype.register = function() {
     });
 };
 
+/** @property {function} assetroom add assets to user collection
+ * @return {Object} assetroom with logger and handler functions inside
+ */
 CbWebsocket.prototype.assetroom = function() {
     let _this = this;
     const assetroom = {

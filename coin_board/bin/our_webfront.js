@@ -16,17 +16,16 @@ class CbView {
         this.app = require('../controllers/router_methods');
         /** debug function see [Morgan] */
         this.debug = require('debug')('coin-board:server');
-        /** The essential one ! */
-        this.http = require('http');
-        /**  listening address definition */
-        this.os = require('os');
-        this.ni = this.os.networkInterfaces();
-        this.addr = this.ni.wlan0[0].address;
+        /** The essential one ;) */
+        this.https = require('https');
+        /** Creds import */
+        this.AppConfig = require('../controllers/config_methods');
+        this.conf = new this.AppConfig();
         /** Get port from environment and store in Express. */
         this.port = process.env.PORT || '3000';
         this.app.set('port', this.port);
-        /** Create HTTP server.*/
-        this.server = this.http.createServer(this.app);
+        /** Create HTTPS server.*/
+        this.server = this.https.createServer(this.conf.httpsc(), this.app);
         /** Event listener for HTTP server */
         this.onListening = function() {
             let addr = _this.server.address();
