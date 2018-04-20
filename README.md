@@ -10,6 +10,7 @@
 ******* Coin_Board|<Readme.md>
 _____________________________________
 ```
+[![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183) [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)* [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability) [![Build Status](https://travis-ci.org/MyAssetBoard/coinboard-webapp.svg?branch=master)](https://travis-ci.org/MyAssetBoard/coinboard-webapp) [![Greenkeeper badge](https://badges.greenkeeper.io/greenkeeperio/badges.svg)](https://greenkeeper.io/)
 ## Features :
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 > - **Train your application** to automate your cash flows (AI modules )
@@ -41,10 +42,7 @@ Note :  A low 45 % global code coverage but should be improved
 - **test/page_mockup/**: For rendering tests
 - **test/routes/**: Tests for router overloads functions
 
-# Code quality metrics : (yes still more work is needed ;) :
-[![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183) [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp) [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability) [![Build Status](https://travis-ci.org/MyAssetBoard/coinboard-webapp.svg?branch=master)](https://travis-ci.org/MyAssetBoard/coinboard-webapp) [![Greenkeeper badge](https://badges.greenkeeper.io/greenkeeperio/badges.svg)](https://greenkeeper.io/)
-
 ## TODO
 
  - [x] Finish this task
- - [ ] Add some more tests ..
+ - [ ] * Add some more tests ..
