@@ -24,10 +24,10 @@ class AppConfig {
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV == 'onion' ?
-                this.gettorhostnames().view() : 'http://' + this.myip + ':3000/',
+                this.gettorhostnames().view() : 'https://' + this.myip + ':3000/',
             /** final app socket url for reference in template */
             appsurl: process.env.SERV_ENV == 'onion' ?
-                this.gettorhostnames().socks() : 'http://' + this.myip + ':3001/',
+                this.gettorhostnames().socks() : 'https://' + this.myip + ':3001/',
         };
     }
 }
@@ -75,6 +75,20 @@ AppConfig.prototype.favopts = {
     maxAge: '1d',
     redirect: false,
 };
+
+/** Https parameter key + cert (self signed)
+ * @return {Object} httpsc
+ */
+AppConfig.prototype.httpsc = function() {
+    let _this = this;
+    let httpsc = {};
+    httpsc.key = _this.fs.readFileSync('localhost.key');
+    httpsc.cert = _this.fs.readFileSync('localhost.cert');
+    httpsc.requestCert = false;
+    httpsc.rejectUnauthorized = false;
+    return httpsc;
+};
+
 
 module.exports = AppConfig;
 /** App config module containing  listening addresses, hostnames and much more
