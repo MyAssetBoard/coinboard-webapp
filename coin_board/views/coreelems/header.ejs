@@ -1,45 +1,47 @@
 <noscript>
 	<div class="alert alert-danger text-center flex-row" role="alert">
-		<h2><%= title %>
+		<h2><%= app %>
 			work best with JavaScript enabled ;)</h2>
 	</div>
 </noscript>
-<nav class="navbar navbar-dark flex-column flex-md-row fixed-top bg-primary">
-	<a class="navbar-brand mr-0 mr-md-2" href="/">
+<nav class="navbar navbar-dark flex-column navbar-expand-lg flex-md-row fixed-top bg-primary">
+	<a class="navbar-brand" href="/">
+		<span class="lnr lnr-mustache text-white"></span>
+		<%= app %>
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon" style="padding-right: 50px;"></span>
-		<span class="lnr lnr-diamond text-white">
-			Coin_Board
-		</span>
-	</a>
-	<% if (locals.data && locals.data.username) {%>
-		<a class="navbar-text text-white" href="/profile">
-			<span class="lnr lnr-user"></span>
-			<%= locals.data.username %>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+		<% if (locals.data && locals.data.username) {%>
+			<a class="nav-item top-nav-item navbar-text text-white" href="/profile">
+				<span class="lnr lnr-user"></span>
+				<%= locals.data.username %>
+			</a>
+		<%}%>
+		<% if (!locals.data || !locals.data.username) {%>
+			<a class="nav-item top-nav-item navbar-text text-white" href="/login">
+				<span class="lnr lnr-power-switch"></span>
+				Login
+			</a>
+			<a class="nav-item top-nav-item navbar-text text-white" href="/signin">
+				<span class="lnr lnr-database"></span>
+				Register
+			</a>
+		<%}%>
+		<a class="nav-item top-nav-item navbar-text text-white" href="/assets/dashboard">
+			<span class="lnr lnr-rocket"></span>
+			Dashboard
 		</a>
-	<%}%>
-	<% if (!locals.data || !locals.data.username) {%>
-		<a class="navbar-text text-white" href="/login">
-			<span class="lnr lnr-power-switch"></span>
-			Login
+		<a class="nav-item top-nav-item navbar-text text-white" href="/assets/infofeed">
+			<span class="lnr lnr-bullhorn"></span>
+			News Feeds
 		</a>
-		<a class="navbar-text text-white" href="/signin">
-			<span class="lnr lnr-database"></span>
-			Register
+		<a class="nav-item top-nav-item navbar-text text-white" href="https://github.com/MyAssetBoard/coinboard-webapp">
+			<span class="lnr lnr-code"></span>
+			Github
 		</a>
-	<%}%>
-	<a class="navbar-text text-white" href="/assets/dashboard">
-		<span class="lnr lnr-rocket"></span>
-		Dashboard
-	</a>
-	<a class="navbar-text text-white" href="/assets/infofeed">
-		<span class="lnr lnr-bullhorn"></span>
-		News Feeds
-	</a>
-	<a class="navbar-text text-white" href="https://github.com/MyAssetBoard/coinboard-webapp">
-		<span class="lnr lnr-code"></span>
-		Github
-	</a>
-	<div class="float-right popUp hidden" id="popup">
-		<div class="alert" id="ppContent"></div>
-	</div>
-</nav>
+		<div></nav>
+		<div class="float-right popUp hidden" id="popup">
+			<div class="alert" id="ppContent"></div>
+		</div>

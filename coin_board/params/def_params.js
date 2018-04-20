@@ -5,6 +5,8 @@
 
 const Myconf = require('../controllers/config_methods');
 
+const settings = require('../settings');
+
 const confell = new Myconf();
 
 const tickers = require('./tickers');
@@ -29,8 +31,9 @@ let param = {
     },
     assets:
     {
+        app: settings.apptitle,
         title: 'My assets',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'index',
@@ -50,8 +53,9 @@ let param = {
     },
     index:
     {
+        app: settings.apptitle,
         title: 'Coin_Board',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'index',
@@ -62,8 +66,9 @@ let param = {
     },
     livestream:
     {
+        app: settings.apptitle,
         title: 'Live trading charts',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'livestream',
@@ -82,8 +87,9 @@ let param = {
     },
     login:
     {
+        app: settings.apptitle,
         title: 'Login',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'login',
@@ -102,8 +108,9 @@ let param = {
     },
     profile:
     {
+        app: settings.apptitle,
         title: 'Profile',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'profile',
@@ -115,8 +122,9 @@ let param = {
     },
     signin:
     {
+        app: settings.apptitle,
         title: 'Signin',
-        author: '© Copyright 2018 coin_board',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'signin',
@@ -136,8 +144,9 @@ let param = {
     },
     error:
     {
-        title: 'Coin_B. => ItsA(NastyBUG)',
-        author: '© Copyright 2018 coin_board',
+        app: settings.apptitle,
+        title: 'ItsA(NOtFound)Here ;)',
+        author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'error',

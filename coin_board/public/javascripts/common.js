@@ -23,14 +23,12 @@ Commons.prototype.fillPopup = function(data) {
     $('#ppContent').addClass('alert-info');
     if (!data.emsg) {
         $.each(data, (key, value) => {
-            let newline = $('<p>');
-            let ct = '<strong>' + key + ' :</strong>';
-            newline.html(ct);
+            let newline = $('<li id=' + 'key' + '>');
             newline.append(value);
             $('#ppContent').append(newline);
         });
     } else {
-        let newline = $('<p>');
+        let newline = $('<li>');
         let ct = '<strong> <span class="lnr lnr-warning">';
         ct += '</span> Error : </strong>';
         newline.html(ct);
