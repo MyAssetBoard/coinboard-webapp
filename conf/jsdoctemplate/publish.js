@@ -364,7 +364,7 @@ function linktoExternal(longName, name) {
  */
 function buildNav(members) {
     let globalNav;
-    let nav = '<h2><a href="index.html">Index</a></h2>';
+    let nav = '<h2><a href="index.html">Home</a></h2>';
     let seen = {};
     let seenTutorials = {};
 
@@ -642,7 +642,7 @@ exports.publish = function(taffyData, opts, tutorials) {
         kind: 'package',
     });
 
-    generate('CoinBoard_Doc',
+    generate('CoinBoard',
         packages.concat(
             [
             {
