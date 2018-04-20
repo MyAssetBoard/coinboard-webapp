@@ -49,11 +49,7 @@ router.post('/', render403);
  */
 function setCookie(req, res) {
     let log = '';
-    let setting = {
-        maxAge: 900000,
-        httpOnly: false,
-    };
-    res.cookie('uid', req.params.uid, setting);
+    req.session.uid = req.params.uid;
     log = 'cookie successfully added';
     process.env.NODE_ENV == 'development' ?
         console.log(log) :
@@ -67,7 +63,7 @@ function setCookie(req, res) {
  * @memberof Routes.page.login
  */
 router.get('/', function(req, res, next) {
-    let chck = req.cookies;
+    let chck = req.session;
     const auth = new Auth();
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
@@ -108,8 +104,8 @@ router.get('/id/:uid', function(req, res, next) {
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;
-        setCookie(req, res, next);
-        log = '\ncookies - sets' + JSON.stringify(req.cookies);
+        setCookie(req, res);
+        log = '\ncookies - sets' + JSON.stringify(req.session);
         process.env.NODE_ENV == 'development' ?
             console.log(log) :
             log;

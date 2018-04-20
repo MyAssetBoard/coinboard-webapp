@@ -34,7 +34,7 @@ const param = require('../../params/def_params');
  * @memberof Routes.page.signin
  */
 router.get('/', function(req, res, next) {
-    let chck = req.cookies;
+    let chck = req.session;
 
     if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
         param.logco('SIGNIN', chck);
