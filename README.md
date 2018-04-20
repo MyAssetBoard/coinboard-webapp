@@ -16,7 +16,7 @@ _____________________________________
 > - **Train your application** to automate your cash flows (AI modules )
 > - **Tor** [hidden service](https://www.torproject.org/) docker deployment for easy access everywhere, improved security and reliability
 > - **MongoDB dbms** with [mongodb-native](http://mongodb.github.io/node-mongodb-native/3.0/reference/main/) driver module
-> - A **gorgeous** and **up to date** [documentation](https://myassetboard.github.io/coinboard-webapp/index.html) gracefully hosted by @github
+> - A gorgeous and up to date [**documentation**](https://myassetboard.github.io/coinboard-webapp/index.html) gracefully hosted by @github
 > - A **lot** more to come ...
 ## App directory structure :
 > All information's about how this app is organized /coded
