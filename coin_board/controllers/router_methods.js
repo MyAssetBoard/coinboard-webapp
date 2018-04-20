@@ -14,7 +14,6 @@ const express = require('express');
 const path = require('path');
 /** [Morgan](https://github.com/expressjs/morgan) logger */
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const Routes = require('../routes/routes');
@@ -44,7 +43,7 @@ app.use(bodyParser.urlencoded(
 {
     extended: true,
 }));
-app.use(cookieParser('random_string_goes_here'));
+
 app.use(
     express.static(path.join(__dirname, '../public'),
     {
