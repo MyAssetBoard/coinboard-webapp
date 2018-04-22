@@ -11,6 +11,7 @@ class Commons {
                 return parts.pop().split(';').shift();
             }
         };
+        this.msgcnt = 0;
     }
 }
 
@@ -18,9 +19,11 @@ class Commons {
  * @param {Object} data new received data
  */
 Commons.prototype.fillPopup = function(data) {
+    let _this = this;
     $('#ppContent').text('');
     $('#ppContent').removeClass('alert-danger');
     $('#ppContent').addClass('alert-info');
+    _this.msgcnt += 1;
     if (!data.emsg) {
         $.each(data, (key, value) => {
             let newline = $('<li id=' + 'key' + '>');
@@ -37,6 +40,7 @@ Commons.prototype.fillPopup = function(data) {
         $('#ppContent').append(newline);
     }
     $('#popup').fadeIn('fast');
+    $('#msgnb').html(_this.msgcnt.toString());
     setTimeout(() => {
         $('#popup').fadeToggle('fast');
     }, 2500);
