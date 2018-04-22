@@ -1,15 +1,14 @@
 <div class="container-fluid">
 	<div class="row">
-		<%- include('leftpanel_block') %>
-			<div class="col-8">
-				<% if (locals.routes && routes.length) { %>
-					<!-- Page Modules inclusion -->
-					<% for (var elems in routes) {
+		<div class="col-8 mx-auto">
+			<% if (locals.routes && routes.length) { %>
+				<!-- Page Modules inclusion -->
+				<% for (var elems in routes) {
 					%>
-						<%- include(routes[elems]) %><%
+					<%- include(routes[elems]) %><%
 					}%>
-					<%
+				<%
 			} %>
-				</div>
 			</div>
 		</div>
+	</div>
