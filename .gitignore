@@ -1,6 +1,7 @@
 node_modules
 */node_modules
 coin_board/public/images/
+coin_board/settings.json
 DTAFOOD
 *~
 *.bak
