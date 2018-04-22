@@ -54,7 +54,7 @@ let param = {
     index:
     {
         app: settings.apptitle,
-        title: 'Coin_Board',
+        title: settings.apptitle,
         author: settings.appcopyrights,
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
