@@ -1,7 +1,15 @@
+<!-- bot box -->
+<div class="float-right popUp hidden" id="popup">
+	<div class="alert" id="ppContent"></div>
+</div>
 <!-- views/coreelems/footer.ejs -->
 <nav class="navbar fixed-bottom bg-primary">
-	<a class="text-center text-white" href="/">
+	<a class="text-center text-white mx-auto" href="/">
 		<%= author %></a>
+	<button type="button" class="btn btn-sm btn-light" title="Socket Feed :">
+		Notifications
+		<span class="badge badge-light" id="msgnb">0</span>
+	</button>
 </nav>
 <!-- Jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

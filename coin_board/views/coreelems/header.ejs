@@ -29,19 +29,27 @@
 				Register
 			</a>
 		<%}%>
-		<a class="nav-item top-nav-item navbar-text text-white" href="/assets/dashboard">
-			<span class="lnr lnr-rocket"></span>
-			Dashboard
-		</a>
+		<li class="nav-item top-nav-item navbar-text text-white dropdown" href="/assets/dashboard">
+			<a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="lnr lnr-rocket"></span>
+				Dashboard
+			</a>
+			<div class="dropdown-menu badge-primary" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" href="/assets/dashboard">Dashboard Index</a>
+				<a class="dropdown-item" href="/assets/infofeed">Info feed</a>
+				<a class="dropdown-item" href="/assets/api/param">Api params</a>
+			</div>
+		</li>
 		<a class="nav-item top-nav-item navbar-text text-white" href="/assets/infofeed">
 			<span class="lnr lnr-bullhorn"></span>
 			News Feeds
 		</a>
-		<a class="nav-item top-nav-item navbar-text text-white" href="https://github.com/MyAssetBoard/coinboard-webapp">
+		<a rel="noopener noreferrer" class="nav-item top-nav-item navbar-text text-white" target="_blank" href="https://github.com/MyAssetBoard/coinboard-webapp">
 			<span class="lnr lnr-code"></span>
 			Github
 		</a>
+		<a rel="noopener noreferrer" class="nav-item top-nav-item navbar-text text-white" target="_blank" href="https://myassetboard.github.io/coinboard-webapp/index.html">
+			<span class="lnr lnr-book"></span>
+			Doc
+		</a>
 		<div></nav>
-		<div class="float-right popUp hidden" id="popup">
-			<div class="alert" id="ppContent"></div>
-		</div>
