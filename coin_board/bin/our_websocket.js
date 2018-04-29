@@ -47,7 +47,7 @@ CbWebsocket.prototype.startmeup = function() {
     let _this = this;
     let log = 'WEBSOCKET - server is listening on :\n';
     log += 'addr: [' + this.addr + '], port ' + this.port;
-    process.env.NODE_ENV == 'development' ?
+    process.env.NODE_ENV === 'development' ?
         console.log(log) :
         log;
     _this.authentication();
@@ -61,7 +61,7 @@ CbWebsocket.prototype.startmeup = function() {
  */
 CbWebsocket.prototype.logger = function(d) {
     let log = 'add asset data get :\n' + JSON.stringify(d);
-    process.env.NODE_ENV == 'development' ? console.log(log) : log;
+    process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
 /** Log this user
@@ -72,7 +72,7 @@ CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
     let log = usrid.replace(/\/auth#/g, 'User : ');
     let conbr = this[roomname + 'co'];
     log += ' connected to [/' + roomname + '] route | Connected : ' + conbr;
-    process.env.NODE_ENV == 'development' ? console.log(log) : log;
+    process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
 /** @property {function} authentication auth socket room event handling */
@@ -111,7 +111,7 @@ CbWebsocket.prototype.register = function() {
         _this.io.of('/register').to(socket.id).emit('nm', comsg);
         socket.on('user signin', (inputdata) => {
             let log = 'received : \n' + JSON.stringify(inputdata);
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
             _this.auth.checkRegData(inputdata, socket, _this.io);
         });
         socket.on('disconnect', function() {
@@ -128,7 +128,7 @@ CbWebsocket.prototype.assetroom = function() {
     const assetroom = {
         logger: function(d) {
             let log = 'add asset data get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
         },
         handler: function(socket) {
             _this.assetco += 1;
@@ -162,7 +162,7 @@ CbWebsocket.prototype.apiparams = function() {
         _this.logthisguy('apiparam', socket.id);
         socket.on('update api creds', function(d) {
             let log = 'update creds get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
             _this.apiparam.checkApiParamsData(d, socket, _this.io);
         });
         socket.on('disconnect', function() {
