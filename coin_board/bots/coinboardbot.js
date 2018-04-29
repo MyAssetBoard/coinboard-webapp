@@ -34,7 +34,7 @@ class CbBot {
 
 /** Dummy logger helper function to print received cmd
  * @param {string} cmd new client assets data to be recorded
- * @param {Objet} usr user first_name , last_name and socket ID
+ * @param {Object} usr user first_name , last_name and socket ID
  */
 CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
@@ -56,16 +56,17 @@ CbBot.prototype.logthismsg = function() {
 
 /** Kind of switch statement for running known bot command's
  * @param {string} cmd The requested command [ /cmd + args ]
- * @param {Objet} ctx The telegraf object containing methods and user chat
+ * @param {Object} ctx The telegraf object containing methods and user chat
  * @param {Object} who The object containing all user data from db
  */
 CbBot.prototype.runcommands = function(cmd, ctx, who) {
     let _this = this;
     let exec = 0;
     for (let el in this.cmds) {
-        if (this.cmds[el] && cmd.search(this.cmds[el].id) != -1) {
+        if (this.cmds.hasOwnProperty(el) &&
+            cmd.search(this.cmds[el].id) !== -1) {
             exec += 1;
-            let args = cmd.split(' ')[1] != undefined ? cmd.split(' ')[1] : '';
+            let args = cmd.split(' ')[1] !== undefined ? cmd.split(' ')[1] : '';
             _this.cmds[el].func(args, who, (d) => {
                 console.log(who);
                 ctx.reply(d);
