@@ -76,7 +76,7 @@ Auth.prototype.stripD = function(d, path) {
         'assets',
     ];
     for (let el in par) {
-        if (el == path) {
+        if (el === path) {
             for (let s in par[el]) {
                 if (d.hasOwnProperty(par[el][s])) {
                     let todel = par[el][s];
@@ -146,7 +146,7 @@ Auth.prototype.trimthisregfields = function(fields) {
     fields.ieth = _this.iscoinAddr(fields.ieth) ? fields.ieth : 'NONE';
     /** Final check !! */
     fields = fields.iname.length < 3 || fields.imail < 8 ?
-        undefined : fields.isocket.length < 10 || fields.icurr.length != 3 ?
+        undefined : fields.isocket.length < 10 || fields.icurr.length !== 3 ?
         undefined : fields;
     return fields;
 };
@@ -172,7 +172,7 @@ Auth.prototype.checkRegFields = function(d) {
 Auth.prototype.registerUsr = function(data) {
     return new Promise((resolve, reject) => {
         let chk = this.checkRegFields(data);
-        if (chk != undefined) {
+        if (chk !== undefined) {
             let nu = {
                 'username': chk.iname,
                 'useremail': chk.imail,
@@ -212,7 +212,7 @@ Auth.prototype.checkRegData = function(data, socket, io) {
                 return true;
             }).catch((rej, err) => {
                 let log = rej.message;
-                process.env.NODE_ENV == 'development' ? console.log(log) : log;
+                process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 let emsg = {
                     msg: rej.message,
                 };
@@ -239,7 +239,7 @@ Auth.prototype.checkcoData = function(data, socket, io) {
             let resp = {
                 _id: enc,
             };
-            process.env.NODE_ENV == 'development' ? console.log(resp) : resp;
+            process.env.NODE_ENV === 'development' ? console.log(resp) : resp;
             io.of('/auth').to(socket.id).emit('nm', resp);
             return true;
         }).catch(function(rej, err) {
@@ -284,13 +284,13 @@ Auth.prototype.userisAuth = function(eUid, page) {
 
 /** Check an encrypted Uid for validity
  * @param {string} eUid
- * @return {bool} true if true , false if false ;)
+ * @return {boolean} true if true , false if false ;)
  */
 Auth.prototype.isvaliduid = function(eUid) {
     let _this = this;
     eUid = _this.isEncoded(eUid) ? decodeURIComponent(eUid) : null;
     if (eUid != null) {
-        return test = _this.crypt.decryptuid(eUid) ? true : false;
+        return !!_this.crypt.decryptuid(eUid);
     } else {
         return false;
     }
