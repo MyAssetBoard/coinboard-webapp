@@ -43,7 +43,7 @@ class CbView {
 CbView.prototype.onError = function(error) {
     if (error.syscall !== 'listen') {
         let log = 'On error catch !';
-        process.env.NODE_ENV == 'development' ?
+        process.env.NODE_ENV === 'development' ?
             console.log(log) :
             log;
         throw error;
@@ -75,13 +75,13 @@ CbView.prototype.onError = function(error) {
 CbView.prototype.lightmyfire = function() {
     let _this = this;
     let log = 'WEB_VIEW - coin_board view micro service started';
-    process.env.NODE_ENV == 'development' ?
+    process.env.NODE_ENV === 'development' ?
         console.log(log) :
         log;
     this.server.listen(this.port, this.addr, function() {
         let log = 'WEB_VIEW - server is listening on :\n';
         log += 'addr: [' + _this.addr + '], port ' + _this.port;
-        process.env.NODE_ENV == 'development' ?
+        process.env.NODE_ENV === 'development' ?
             console.log(log) :
             log;
     });
