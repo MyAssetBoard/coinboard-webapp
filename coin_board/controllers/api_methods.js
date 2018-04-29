@@ -26,25 +26,27 @@ class Apis {
 
 /** Dummy helper function to fill new account model with user input
  * @param {Object} a new api account creds
- * @return {Objet} res see todo
+ * @return {Object} res see todo
  * @TODO document this model !
  */
 Apis.prototype.accmodel = function(a) {
-    return res = {
+    let res = {};
+    res = {
         'id': a.apiid,
         'key': a.inputid,
         'secret': a.inputpw,
     };
+    return res;
 };
 
 /** Dummy helper function tp check user submitted data for empty string :
  * @param {Object} a new api account creds to be checked
- * @return {bool} False if empty string found, true otherwise
+ * @return {boolean} False if empty string found, true otherwise
  * @TODO document this model !
  */
 Apis.prototype.checksub = function(a) {
     for (el in a) {
-        if (a[el].length == 0) {
+        if (a[el].length === 0) {
             return false;
         }
     }
@@ -63,7 +65,7 @@ Apis.prototype.trimnewaccount = function(data) {
     data.apitype = data.apitype.trim().replace(/[^0-9a-z]/gi, '');
     /** Api key must be alphanum */
     data.inputid = data.inputid.trim();
-    /** Api secret must be alphanum */
+    /** Api secret must be alphanumeric */
     data.inputpw = data.inputpw.trim().replace(/[^0-9a-z]/gi, '');
     data.uid = this.crypt.isEncoded(data.uid) ?
         decodeURIComponent(data.uid) :
@@ -105,8 +107,7 @@ Apis.prototype.addAccount = function(a) {
  */
 Apis.prototype.getAccounts = function(usr) {
     let _this = this;
-    usr ? usr :
-    {};
+    usr = usr ? usr : {};
     return new Promise((resolve, reject) => {
         _this.crud.finduser(usr, (res, err) => {
             if (res) {
@@ -128,9 +129,11 @@ Apis.prototype.getbankposition = function(key, usr) {
     let _this = this;
     let id = {};
     return new Promise((resolve, reject) => {
-        if (usr.apis.Bank) {
+        if (usr.apis.hasOwnProperty('Bank')) {
+            // noinspection JSUnresolvedVariable
             for (let el in usr.apis.Bank) {
-                if (usr.apis.Bank[el] && usr.apis.Bank[el].id == 'n26') {
+                if (usr.apis.Bank.hasOwnProperty(el) &&
+                        usr.apis.Bank[el].id === 'n26') {
                     id['usr'] = usr.apis.Bank[el].key;
                     id['pw'] = usr.apis.Bank[el].secret;
                     _this.n26.gettrstats(id, key).then((res) => {
@@ -148,14 +151,14 @@ Apis.prototype.getbankposition = function(key, usr) {
 
 /** check user supplied api account
  * @param {Object} data new client assets data to be recorded
- * @param {Objet} socket the socket object to get the receiver id
+ * @param {Object} socket the socket object to get the receiver id
  * @param {Object} io  the io object to send response
  * @return {bool} true if success false otherwise
  */
 Apis.prototype.checkApiParamsData = function(data, socket, io) {
     if (data['apiid'] && data['inputid'] &&
         data['inputpw'] && data['apitype'] && data['uid']) {
-        this.addAccount(data).then(function(res) {
+        this.addAccount(data).then(function() {
             let nm = {};
             nm.msg = data.apiid + ' account successfully added';
             io.of('/api/param').to(socket.id).emit('nm', nm);
