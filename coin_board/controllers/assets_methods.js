@@ -65,7 +65,7 @@ Assets.prototype.addAssets = function(a) {
 
 /** check user supplied assets
  * @param {Object} data new client assets data to be recorded
- * @param {Objet} socket the socket object to get the receiver id
+ * @param {Object} socket the socket object to get the receiver id
  * @param {Object} io  the io object to send response
  * @return {bool} true if success false otherwise
  */
