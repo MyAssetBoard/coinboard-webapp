@@ -15,6 +15,7 @@
 		"emailjs": "^2.0.0",
 		"express": "~4.16.3",
 		"express-session": "^1.15.6",
+		"gdax-trading-toolkit": "^0.3.1",
 		"morgan": "~1.9.0",
 		"mtproto-storage-fs": "^0.3.1",
 		"n26": "^1.5.3",
