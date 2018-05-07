@@ -31,12 +31,12 @@ const sess = {
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
         sameSite: true,
+        secure: true,
     },
     store: store,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
 };
-sess.cookie.secure = true;
 
 const Routes = require('../routes/routes');
 const httpopts = appconf.headeropts;
@@ -63,6 +63,9 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }));
 app.set('trust proxy', 1); // trust first proxy
+
+// Sessions rules !!!
+
 app.use(session(sess));
 
 app.use(
@@ -102,6 +105,20 @@ for (let el in Routes) {
     }
 }
 
+// GET for logout logout
+app.use('/logout', function(req, res, next) {
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function(err) {
+            if (err) {
+                return next(err);
+            } else {
+                return res.redirect('/');
+            }
+        });
+    }
+});
+
 /** catch 404 and forward to error handler below */
 app.use(function(req, res, next) {
     let err = new Error('Not Found');
@@ -128,6 +145,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     /** Check if method is GET or POST only */
     if (!allowedMethods.includes(req.method)) {
+        console.log(err.message);
         res.status(405).send('=> Not allowed ;)\n');
     } else {
         let errorp = require('../params/def_params');
