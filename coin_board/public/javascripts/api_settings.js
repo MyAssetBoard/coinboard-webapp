@@ -26,9 +26,7 @@ $(document).ready(function() {
             }
         }
         console.log(req);
-        if (!req.inputid.length || !req.inputpw.length) {
-            return;
-        } else {
+        if (req.inputid.length && req.inputpw.length) {
             let log = 'To send :\n[' + JSON.stringify(req) + ']';
             console.log(log);
             apiparamws.emit('update api creds', req);
