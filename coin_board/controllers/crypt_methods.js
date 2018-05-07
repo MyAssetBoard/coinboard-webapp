@@ -23,25 +23,23 @@ class Crypt {
 }
 
 /** Pretty much self explanatory, delete old generated key if any
- * @return {bool} true if something cleared false if not
+ * @return {boolean} true if something cleared false if not
  */
 Crypt.prototype.cleartmp = function() {
-    ROOT_APP_PATH = this.fs.realpathSync('.');
-    try {
-        this.fs.unlink('log.txt', (err) => {
-            if (err) {
-                throw err;
-            }
-            let log = 'Delete old cookie secret';
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
-        });
-    } catch (e) {
-        return false;
-    } finally {
-        return true;
-    }
+    let _this = this;
+    let rt = this.fs.stat('log.txt', function(err, stats) {
+        if (err) {
+            return false;
+        } else {
+            _this.fs.unlink('log.txt', function(err) {
+                if (err) {
+                    return false;
+                }
+                return true;
+            });
+        }
+    });
+    return rt;
 };
 
 /**
@@ -53,7 +51,7 @@ Crypt.prototype.readtmp = function() {
     buff = this.fs.readFileSync('log.txt', 'ascii');
     let log = 'Read cookie secret : [';
     log += buff.toString().trim() + ']';
-    process.env.NODE_ENV == 'infosec' ?
+    process.env.NODE_ENV === 'infosec' ?
         console.log(log) :
         log;
     return buff.toString();
@@ -61,7 +59,7 @@ Crypt.prototype.readtmp = function() {
 
 /**
  * Write res buffer to temp location (for now as './log.txt')
- * @param {string} res encryption secret
+ * @param {any} res encryption secret
  */
 Crypt.prototype.writetmp = function(res) {
     ROOT_APP_PATH = this.fs.realpathSync('.');
@@ -70,7 +68,7 @@ Crypt.prototype.writetmp = function(res) {
             return console.log(err);
         }
         let log = 'Write new cookie secret';
-        process.env.NODE_ENV == 'infosec' ?
+        process.env.NODE_ENV === 'infosec' ?
             console.log(log) :
             log;
     });
@@ -79,10 +77,9 @@ Crypt.prototype.writetmp = function(res) {
 /**
  * Extract 85 char buffer from host /dev/urandom thanks to
  * {@link Crypt#fs} imported module
- * @param {function} callback
- * @return {string} 22 bytes of 85 bytes random chars buffer
+ * @return {Promise<any>} 22 bytes of 85 bytes random chars buffer
  */
-Crypt.prototype.getRandom = function(callback) {
+Crypt.prototype.getRandom = function() {
     let _this = this;
     return new Promise((resolve, reject) => {
         _this.fs.open('/dev/urandom', 'r', function(status, fd) {
@@ -97,7 +94,6 @@ Crypt.prototype.getRandom = function(callback) {
                 randstr = randstr.length > 22 ?
                     randstr.substring(0, 22) :
                     randstr;
-                callback && callback(randstr);
                 resolve(randstr);
             });
         });
@@ -122,7 +118,7 @@ Crypt.prototype.dcryptParams = function(p) {
         let log = 'auth_methods.js|dcryptParams()\n';
         log += '====Plaintext if succeed [ ';
         log += plaintext + ' ]';
-        process.env.NODE_ENV == 'infosec' ?
+        process.env.NODE_ENV === 'infosec' ?
             console.log(log) :
             log;
     }
@@ -144,7 +140,7 @@ Crypt.prototype.encryptParams = function(p) {
     let log = 'auth_methods.js|encryptParams(p)\n';
     log += '=====> enc str if succeed [ ';
     log += enc + ' ]';
-    process.env.NODE_ENV == 'infosec' ?
+    process.env.NODE_ENV === 'infosec' ?
         console.log(log) :
         log;
     return enc;
@@ -152,13 +148,10 @@ Crypt.prototype.encryptParams = function(p) {
 
 /** Simple helper function around {@link Crypt#dcryptParams} method
  * @param {string} eUid the string to be checked
- * @return {bool} true if valid euid false otherwise
+ * @return {boolean} true if valid euid false otherwise
  */
 Crypt.prototype.isvaliduid = function(eUid) {
-    let test = this.dcryptParams(eUid);
-    return test ?
-        true :
-        false;
+    return !!this.dcryptParams(eUid);
 };
 
 /** Decrypt and AES encrypted user id with {@link Crypt#dcryptParams} method
@@ -167,8 +160,7 @@ Crypt.prototype.isvaliduid = function(eUid) {
  * @see Crypt#dcryptParams
  */
 Crypt.prototype.decryptuid = function(eUId) {
-    let ctext = this.dcryptParams(eUId);
-    return ctext;
+    return this.dcryptParams(eUId);
 };
 
 /** Aes encrypt a user id with {@link Crypt#encryptParams} method
@@ -177,8 +169,7 @@ Crypt.prototype.decryptuid = function(eUId) {
  * @see Crypt#encryptParams
  */
 Crypt.prototype.encryptuid = function(cUId) {
-    let etext = this.encryptParams(cUId);
-    return etext;
+    return this.encryptParams(cUId);
 };
 
 /**
@@ -190,22 +181,18 @@ Crypt.prototype.encryptuid = function(cUId) {
 Crypt.prototype.genrandomtocken = function() {
     let _this = this;
     _this.cleartmp();
-    _this.getRandom().then(function(res) {
-        if (res) {
-            _this.writetmp(res);
-            return res;
-        }
-    }).catch(function(rej, err) {
-        if (err || rej) {
-            throw err;
-        }
+    _this.getRandom().then((res) => {
+        _this.writetmp(res);
+        return res;
+    }).catch((rej, err) => {
+        throw err;
     });
 };
 
 /** Dummy helper function to properly check
  * if a param is an encodeURIComponent valid one
  * @param {string} str the string to be checked
- * @return {bool} true if encode , false if not
+ * @return {boolean} true if encode , false if not
  */
 Crypt.prototype.isEncoded = function(str) {
     try {
