@@ -34,17 +34,14 @@ iframe {
 
 .jumbotron {
 	background-color: transparent;
-	border-color: white;
-	border-style: solid;
-	border-width: thin;
+	border: thin solid white;
 	padding: 10px;
 }
 
 
 .popUp {
-	background-color: transparent !important;
-	padding: 5px 10px;
-	padding-top: 70px;
+	background-color: transparent;
+	padding: 70px 10px 5px;
 	position: fixed;
 	right: 0;
 	text-decoration-color: white;
@@ -52,9 +49,7 @@ iframe {
 }
 
 .infiList {
-	border-color: transparent;
-	border-style: solid;
-	border-width: large;
+	border: large solid transparent;
 	height: 250px;
 	overflow: scroll;
 }
@@ -65,9 +60,7 @@ iframe {
 
 .form-group {
 	background-color: white;
-	border-color: white;
-	border-style: solid;
-	border-width: thin;
+	border: thin solid white;
 	padding: 10px;
 }
 
