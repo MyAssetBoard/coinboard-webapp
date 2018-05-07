@@ -21,7 +21,7 @@ pipelines:
           - npm install -g yarn
           - npm install -g mocha
           - yarn install && cd coin_board && yarn install && cd ..
-          - pwd && ls -la && ./INIT_DEV.sh -lt
+          - cd .. && pwd && ls -la && ./INIT_DEV.sh -lt
           - mocha test/*/*.js --reporter mocha-junit-reporter --reporter-options mochaFile=./test-reports/junit.xml
         services:
           - mongo
