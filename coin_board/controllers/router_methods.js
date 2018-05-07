@@ -20,18 +20,17 @@ const path = require('path');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-const store = new MongoDBStore(
-{
-    uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
-    databaseName: 'session_test',
-    collection: 'testsess',
+const store = new MongoDBStore({
+    uri: 'mongodb://localhost:27017',
+    databaseName: 'test2',
+    collection: 'x_sessions',
 });
 /** Session storage config using mongodb store */
 const sess = {
     secret: 'keyboard cat',
-    cookie:
-    {
+    cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        sameSite: true,
     },
     store: store,
     resave: true,
@@ -60,16 +59,14 @@ app.use('/favicon.ico',
     express.static('images/favicon.ico', favOptions)
 );
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded(
-{
+app.use(bodyParser.urlencoded({
     extended: true,
 }));
 app.set('trust proxy', 1); // trust first proxy
 app.use(session(sess));
 
 app.use(
-    express.static(path.join(__dirname, '../public'),
-    {
+    express.static(path.join(__dirname, '../public'), {
         etag: false,
     })
 );
@@ -126,8 +123,7 @@ app.use(function(err, req, res, next) {
     res.locals.message = err.message;
     /* istanbul ignore next */
     res.locals.error = req.app.get('env') === 'development' ?
-        err :
-        {};
+        err : {};
     /** render the error page */
     res.status(err.status || 500);
     /** Check if method is GET or POST only */
