@@ -48,9 +48,7 @@ let log = 'app.js| http options\n';
 log += '==== opts = [ ';
 log += JSON.stringify(httpopts) + ' ]';
 /* istanbul ignore next */
-process.env.NODE_ENV == 'infosec' ?
-    console.log(log) :
-    log;
+process.env.NODE_ENV === 'infosec' ? console.log(log) : log;
 /** view engine path setup */
 app.set('views', path.join(__dirname, '../views'));
 /** view engine setup see [Ejs](ejs.co) */
@@ -85,21 +83,21 @@ let outputavert = 'NODE_ENV=production| (No more console.log output)';
 outputavert += ' (unless true)';
 
 /* istanbul ignore next */
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV === 'production') {
     console.log(outputavert);
 }
 
 /* istanbul ignore if */
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV === 'development') {
     let output = 'NODE_ENV=development| (Use Morgan for logging requests)';
     console.log(output);
     app.use(logger('dev'));
 }
 
 /** Main launcher for Express App */
-for (el in Routes) {
-    if (Routes[el]) {
-        if (el == 'index') {
+for (let el in Routes) {
+    if (Routes.hasOwnProperty(el)) {
+        if (el === 'index') {
             app.use('/', Routes[el]);
         } else {
             app.use('/' + el, Routes[el]);
@@ -157,8 +155,7 @@ function pollSecret() {
     const intergen = h * 60 * 60 * 1000;
     crypt.genrandomtocken();
     setInterval(crypt.genrandomtocken, intergen);
-};
-
+}
 pollSecret();
 module.exports = app;
 /** ### Coin_Board [Express](expressjs.com) app module
