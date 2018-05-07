@@ -8,8 +8,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"eslint": "^4.18.0",
-		"mongodb": "^3.0.6",
-		"pm2": "^2.9.1"
+		"mongodb": "^3.0.7",
+		"pm2": "^2.10.3"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",
@@ -18,10 +18,10 @@
 		"eslint-config-google": "^0.9.1",
 		"jsdoc": "^3.5.5",
 		"jsdoc-to-markdown": "^4.0.1",
-		"mocha": "^5.1.0",
+		"mocha": "^5.1.1",
 		"mocha-junit-reporter": "^1.17.0",
-		"nyc": "^11.4.1",
-		"sinon": "^4.4.2",
+		"nyc": "^11.7.1",
+		"sinon": "^5.0.4",
 		"sinon-chai": "^3.0.0",
 		"supertest": "^3.0.0"
 	}
