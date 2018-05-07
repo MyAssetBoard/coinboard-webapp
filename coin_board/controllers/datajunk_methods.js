@@ -1,8 +1,20 @@
 /**
- * @file {@link module:datajunk~DajaJunk} module class,
+ * @file {@link module:datajunk~DataJunk} module class,
  * our friendly scrapper / eater
  * @author Trevis Gulby
  */
+
+const djunk = require('./djunk/colors');
+
+const djunk0 = require('./djunk/reqmodels');
+
+const djunk01 = require('./djunk/eatdiner');
+
+const mongo_crud = require('./mongo_crud');
+
+const fs0 = require('fs');
+
+const https0 = require('https');
 
 /** Wow so much methods !
  * @class
@@ -11,18 +23,18 @@ class DataJunk {
     /** @constructor */
     constructor() {
         /** http module import for sources requests */
-        this.https = require('https');
+        this.https = https0;
         /** Fs dep import for writing feeds */
-        this.fs = require('fs');
+        this.fs = fs0;
         /** Home made {@link Crud} module import */
-        this.Crud = require('./mongo_crud');
+        this.Crud = mongo_crud;
         this.crud = new this.Crud('test2', 'DTAFOOD');
         /** {@link colors} options import */
-        this.colors = require('./djunk/colors');
+        this.colors = djunk;
         /** {@link reqmodels} models import */
-        this.reqmodels = require('./djunk/reqmodels');
+        this.reqmodels = djunk0;
         /** {@link eatdiner} import */
-        this.eatd = require('./djunk/eatdiner');
+        this.eatd = djunk01;
     }
 }
 
@@ -30,7 +42,7 @@ class DataJunk {
  * Parsing helper function
  * 1 - Tag subject from title
  * 2 - Tag bull type from description || title
- * 3 - Tage bear type from description || title
+ * 3 - Tag bear type from description || title
  * 4 - Return res and updates counters
  * @param {Object} col
  * @param {Object} dt
@@ -39,7 +51,7 @@ class DataJunk {
  */
 DataJunk.prototype.flags = function(col, dt, res, ts) {
     for (let c in col.sets) {
-        if (col.sets.a) {
+        if (col.sets.hasOwnProperty('a')) {
             for (let d in col.sets[c]) {
                 if (col.sets[c][d]) {
                     let obj = {
@@ -63,7 +75,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
 DataJunk.prototype.logeat = function() {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
-    process.env.NODE_ENV == 'development' ?
+    process.env.NODE_ENV === 'development' ?
         console.log(log) :
         log;
 };
@@ -105,7 +117,7 @@ DataJunk.prototype.gomine = function() {
     this.pukedata(
     {}).then((res) => {
         let test = _this.eat(res);
-        if (process.env.NODE_LOG == 'djunk') {
+        if (process.env.NODE_LOG === 'djunk') {
             console.log(test);
         }
     });
@@ -125,10 +137,10 @@ DataJunk.prototype.eat = function(dset) {
     let parseme = this.eatd.getparsed(dset, ts);
 
     for (let a in parseme) {
-        if (parseme[a]) {
+        if (parseme.hasOwnProperty(a)) {
             this.eatd.checkwhat(parseme, a);
             for (let b in this.colors) {
-                if (this.colors[b]) {
+                if (this.colors.hasOwnProperty(b)) {
                     this.eatd.checkstyle(b);
                     this.colors[b].id = b;
                     this.flags(this.colors[b], parseme[a], res, ts);
@@ -138,14 +150,14 @@ DataJunk.prototype.eat = function(dset) {
     }
     log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
     log += JSON.stringify(res);
-    process.env.NODE_LOG == 'djunk' ? console.log(log) : log;
+    process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
     return res = res.filter((elems) => {
-        return elems != undefined;
+        return elems !== undefined;
     });
 };
 
 /**
- * @param {string} where Object containing all source infos and parsing methods
+ * @param {Object} where Object containing all source infos and parsing methods
  * @param {function} callback to get the result
  */
 DataJunk.prototype.begdata = function(where, callback) {
@@ -182,15 +194,16 @@ DataJunk.prototype.begdata = function(where, callback) {
 DataJunk.prototype.wr = function(fn, d) {
     let _this = this;
     return new Promise((resolve, reject) => {
+        let ROOT_APP_PATH;
         ROOT_APP_PATH = _this.fs.realpathSync('.');
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
-                process.env.NODE_ENV == 'development' ? console.log(log) : log;
+                process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 reject(err);
             } else {
                 let log = 'Write news to DTAFOOD/news ';
-                process.env.NODE_ENV == 'development' ? console.log(log) : log;
+                process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 resolve(d);
             }
         });
@@ -231,7 +244,7 @@ DataJunk.prototype.dbthis = function(s, callback) {
         log += '[ ' + insert.feed && insert.feed[0] ?
             insert.feed[0].title :
             JSON.stringify(insert);
-        process.env.NODE_ENV == 'development' ?
+        process.env.NODE_ENV === 'development' ?
             console.log(log + ']\nResults :\n' + res.results) : log;
         if (err) {
             callback && callback(err);
@@ -248,8 +261,7 @@ DataJunk.prototype.digest = function(what) {
             let e = new Error('bad meal can\'t digest');
             reject(e);
         } else {
-            let writed = require('../.' + what.path);
-            what.d = writed;
+            what.d = require('../.' + what.path);
             _this.dbthis(what, function(res, err) {
                 if (res) {
                     return resolve(res);
@@ -264,10 +276,7 @@ DataJunk.prototype.digest = function(what) {
 DataJunk.prototype.pukedata = function(what) {
     let _this = this;
     return new Promise((resolve, reject) => {
-        what
-            ?
-            what :
-            {};
+        what = what ? what : {};
         _this.crud.find(what, function(res, err) {
             if (res && res[0] && res[0].feed) {
                 resolve(res);
@@ -278,10 +287,10 @@ DataJunk.prototype.pukedata = function(what) {
     });
 };
 
-if (process.env.LAUNCH_TASK == 'markme') {
+if (process.env.LAUNCH_TASK === 'markme') {
     let data = new DataJunk();
     data.gomine();
-} else if (process.env.LAUNCH_TASK == 'goeat') {
+} else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
     data.goeat(data.reqmodels);
 }
