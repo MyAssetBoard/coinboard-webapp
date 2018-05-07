@@ -1,19 +1,19 @@
-<% if (locals.data && data.apisv2 &&
-	Object.keys(data.apisv2).length) { %>
+<% if (locals.data) { %>
 	<%
-	for (var type in data.apisv2) { %>
+	for (var type in locals.data.Apis) { %>
 		<div class="card">
-			<div class="card-header text-center">
-				<h1><%= type %>
-				</h1>
+			<div class="card-header lg">
+				<h1 class="text-center"><%= type %></h1>
 			</div>
-		</div>
-		<%
-		for (var el in data.apisv2[type]) {%>
-			<%- include('api_list', {
-				data: data.apisv2[type][el]
-			});%><% }
-		%>
+			<%
+			for (var el in locals.data.Apis[type]) { %>
+				<%- include('api_list', {
+					id: locals.data.Apis[type][el].name,
+					key: locals.data.Apis[type][el].key,
+					secret: '******',
+				} ) %><%} %>
+				%>
+			</div>
 		<% } %>
 	<%
 }%>
@@ -30,32 +30,34 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="stype">Api type</label>
-						<select class="form-control" id="stype">
-							<option>Bank</option>
-							<option>Crypto</option>
-							<option>Markets</option>
-						</select>
+				<form action="/assets/addapis" method="post">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="stype">Api type</label>
+							<select name="apitype" class="form-control" id="stype">
+								<option>Bank</option>
+								<option>Crypto</option>
+								<option>Markets</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="sname">Name</label>
+							<input name="apiid" type="text" class="form-control" id="sname" rows="1"></input>
+						</div>
+						<div class="form-group">
+							<label for="skey">Key</label>
+							<input name="apikey" type="text" class="form-control" id="skey" rows="1"></input>
+						</div>
+						<div class="form-group">
+							<label for="ssec">Secret</label>
+							<input name="apisecret" type="password" class="form-control" id="ssec" rows="1"></input>
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="sname">Name</label>
-						<input type="text" class="form-control" id="sname" rows="1"></input>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary text-white">Save</button>
 					</div>
-					<div class="form-group">
-						<label for="skey">Key</label>
-						<input type="text" class="form-control" id="skey" rows="1"></input>
-					</div>
-					<div class="form-group">
-						<label for="ssec">Secret</label>
-						<input type="text" class="form-control" id="ssec" rows="1"></input>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button class="btn btn-primary text-white" id="addme">Save</button>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

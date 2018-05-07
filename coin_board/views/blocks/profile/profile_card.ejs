@@ -1,5 +1,5 @@
 <div class="container-full-bg" style="padding-bottom: 10px;">
-	<button type="button" class="btn btn-primary btn-lg btn-block text-center"><%=username%></button>
+	<button type="button" class="btn btn-primary btn-lg btn-block text-center"><%=data.username%></button>
 </div>
 <div class="card-columns">
 	<div class="card">
@@ -26,12 +26,12 @@
 	<div class="card">
 		<img class="card-img-top" src="./images/inco.png" alt="Card image cap">
 		<div class="card-body">
-			<h5 class="card-title text-center"><%= username %></h5>
-			<li class="card-text"><%= useremail %></li>
+			<h5 class="card-title text-center"><%= data.username %></h5>
+			<li class="card-text"><%= data.email %></li>
 			<li class="card-text">
 				<a href="<%= 'https://etherscan.io/address/' + ethaddr %>"><%= ethaddr %></a>
 			</li>
-			<li class="card-text"><%= usercurrency %></li>
+			<li class="card-text"><%= data.usercurrency %></li>
 			<p class="card-text">
 				<small class="text-muted">Last updated 3 mins ago</small>
 			</p>

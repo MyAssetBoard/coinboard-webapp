@@ -1,13 +1,15 @@
-<!-- login-form -->
+<!-- login-form with POST -->
 <div class="container-full-bg" id="divlog">
-	<input class="form-control text-center" type="text" style="font-family:Arial, FontAwesome" placeholder="&#xf21b; Login" readonly="readonly">
-	<div id="iname" class="form-group">
-		<input type="text" class="form-control" id="inputName" style="font-family: Arial, FontAwesome" placeholder="&#xf1fa; Enter name">
-	</div>
-	<div id="ipwd" class="form-group">
-		<input type="text" class="form-control" id="inputSocketid" style="font-family: Arial, FontAwesome" placeholder="&#xf070; Enter password">
-	</div>
-	<button class="btn btn-primary btn-lg btn-block" id="login">
-		LOGIN
-	</button>
+	<form action="/login" method="post">
+		<input class="form-control text-center" type="text" style="font-family:Arial, FontAwesome" placeholder="&#xf21b; Login" readonly="readonly">
+		<div id="iname" class="form-group">
+			<input name="logusername" type="text" class="form-control" id="inputName" style="font-family: Arial, FontAwesome" placeholder="&#xf1fa; Enter username">
+		</div>
+		<div id="ipwd" class="form-group">
+			<input name="logpassword" type="password" class="form-control" id="inputSocketid" style="font-family: Arial, FontAwesome" placeholder="&#xf070; Enter password">
+		</div>
+		<button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
+			LOGIN
+		</button>
+	</form>
 </div>
