@@ -55,4 +55,49 @@ router.get('/', function(req, res, next) {
     }
 });
 
+const User = require('../../Schemas/user');
+/**
+ * @param {string} path
+ * @param {function} callback
+ * @memberof Routes.page.signin
+ */
+router.post('/', function(req, res, next) {
+    if (req.body.password !== req.body.passwordConf) {
+        let err = new Error('Passwords do not match.');
+        err.status = 400;
+        console.log('password dont match');
+        res.send('passwords dont match');
+        return res.redirect('/signin');
+    }
+
+    if (req.body.email &&
+        req.body.username &&
+        req.body.usercurrency &&
+        req.body.password &&
+        req.body.passwordConf) {
+        let userData = {
+            email: req.body.email,
+            username: req.body.username,
+            usercurrency: req.body.usercurrency,
+            ethaddr: req.body.ethaddr ? req.body.ethaddr : 'NONE',
+            telegramid: req.body.telegramid ? req.body.telegramid : 'NONE',
+            password: req.body.password,
+        };
+
+        User.create(userData, (error, user) => {
+            if (error) {
+                return next(error);
+            } else {
+                req.session.userId = user._id;
+                return res.redirect(param.assets.tvurl + 'assets/dashboard');
+            }
+        });
+    } else {
+        let err = new Error('All fields required.');
+        err.status = 400;
+        console.log('err...');
+        return res.redirect('/signin');
+    }
+});
+
 module.exports = router;

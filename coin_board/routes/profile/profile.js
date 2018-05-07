@@ -17,16 +17,9 @@ const express = require('express');
  * @property {Object} router the express.Router object
  */
 const router = express.Router();
-/** The {@link module:auth~Auth} import
- * @memberof Routes.page.profile
- * @property {Object} Auth see Auth class
- */
-const Auth = require('../../controllers/auth_methods');
-/** The new auth object
- * @memberof Routes.page.profile
- * @property {Object} auth see {@link module:auth~Auth()} class
- */
-const auth = new Auth();
+
+const User = require('../../Schemas/user');
+
 /** @memberof Routes.page.profile */
 const param = require('../../params/def_params');
 
@@ -36,19 +29,22 @@ const param = require('../../params/def_params');
 router.get('/', function(req, res, next) {
     let chck = req.session;
 
-    if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        param.logco('PROFILE', chck);
-        auth.userisAuth(chck.uid, 'profile').then((userdata) => {
-            const dup = param.profile;
-            let log = 'profile| push user info in params \n[';
-            res.locals.data = userdata;
-            /* istanbul ignore next */
-            log += JSON.stringify(res.locals.data) + ']';
-            /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
-            res.render('page', dup);
-        }).catch((err) => {
-            next(err);
+    if (chck && chck.userId) {
+        User.findById(chck.userId).exec(function(error, user) {
+            param.logco('PROFILE', chck);
+            if (error) {
+                return next(error);
+            } else {
+                if (user === null) {
+                    let err = new Error('Not authorized! Go back!');
+                    err.status = 400;
+                    return next(err);
+                } else {
+                    dup = param.profile;
+                    res.locals.data = user;
+                    return res.render('page', dup);
+                }
+            }
         });
     } else {
         param.lognoco('PROFILE', chck);

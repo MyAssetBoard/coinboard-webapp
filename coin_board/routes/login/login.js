@@ -26,19 +26,19 @@ const Auth = require('../../controllers/auth_methods');
 /** @memberof Routes.page.login */
 const param = require('../../params/def_params');
 
-/**
- * @memberof Routes.page.login
- * @param {Object} req
- * @param {Object} res
- */
-function render403(req, res) {
-    'use strict';
-    let response = '\n\tTry this : ":(){ :|:& }:"\n';
-    response += '\t& go rtfm :)\n';
-    res.status(403).send(response);
-}
+// /**
+//  * @memberof Routes.page.login
+//  * @param {Object} req
+//  * @param {Object} res
+//  */
+// function render403(req, res) {
+//     'use strict';
+//     let response = '\n\tTry this : ":(){ :|:& }:"\n';
+//     response += '\t& go rtfm :)\n';
+//     res.status(403).send(response);
+// }
 
-router.post('/', render403);
+// router.post('/', render403);
 
 /**
  * Set cookie with uid value for authentification
@@ -118,6 +118,34 @@ router.get('/id/:uid', function(req, res, next) {
         let err = new Error('Bad request');
         err.status = 403;
         next(err);
+    }
+});
+
+/**
+ * @param {string} path
+ * @param {function} callback
+ * @memberof Routes.page.login
+ */
+router.post('/', function(req, res, next) {
+    const User = require('../../Schemas/user');
+
+    if (req.body.logusername && req.body.logpassword) {
+        User.authenticate(req.body.logusername, req.body.logpassword,
+            function(error, user) {
+                if (error || !user) {
+                    let err = new Error('Wrong username or password.');
+                    err.status = 401;
+                    return next(err);
+                } else {
+                    req.session.userId = user._id;
+                    return res.redirect(param.assets.tvurl +
+                        'assets/dashboard');
+                }
+            });
+    } else {
+        let err = new Error('All fields required.');
+        err.status = 400;
+        return next(err);
     }
 });
 
