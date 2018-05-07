@@ -17,11 +17,7 @@ const express = require('express');
  * @property {Object} router the express.Router object
  */
 const router = express.Router();
-/** The {@link module:auth~Auth} import
- * @memberof Routes.page.assets
- * @property {Object} Auth see Auth class
- */
-const Auth = require('../../controllers/auth_methods');
+
 /** @memberof Routes.page.assets */
 const param = require('../../params/def_params');
 /** This {@link page.assets} special router  import
@@ -29,11 +25,8 @@ const param = require('../../params/def_params');
  * @property {Object} roads see ..
  */
 const roads = require('./assets_roads');
-/** The new auth object
- * @memberof Routes.page.assets
- * @property {Object} auth see Auth() class
- */
-const auth = new Auth();
+
+const User = require('../../Schemas/user');
 
 
 /** Take the req original url and make it match with the right methods
@@ -85,37 +78,40 @@ function setpagecontent(req, pageparam, dbr) {
 router.get('/*', function(req, res, next) {
     let chck = req.session;
 
-    if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        param.logco('ASSETS', chck);
-        auth.userisAuth(chck.uid, 'assets').then((result) => {
-            let dup = param.assets;
-            res.locals.data = result;
-            setpagecontent(req.originalUrl, dup, res.locals.data).then((d) => {
-                if (d != 'nop') {
-                    if (d.feed && d.dm) {
-                        res.locals.news = d.feed;
-                        res.locals.dms = d.dm;
-                    }
-                    if (d.blocks) {
-                        res.locals.routes = d.blocks;
-                    }
-                    if (d.userapi) {
-                        res.locals.userapi = d.userapi;
-                    }
+    if (chck && chck.userId) {
+        User.findById(chck.userId).lean().exec((error, user) => {
+            if (error) {
+                return next(error);
+            } else {
+                if (user === null) {
+                    let err = new Error('Not authorized! Go back!');
+                    err.status = 400;
+                    return next(err);
                 } else {
-                    console.log('nop !??');
+                    param.logco('ASSETS', chck);
+                    dup = param.assets;
+                    res.locals.data = user;
+                    console.log(res.locals.data);
+                    setpagecontent(req.originalUrl, dup, res.locals.data)
+                        .then((d) => {
+                            if (d != 'nop') {
+                                if (d.feed && d.dm) {
+                                    res.locals.news = d.feed;
+                                    res.locals.dms = d.dm;
+                                }
+                                if (d.blocks) {
+                                    res.locals.routes = d.blocks;
+                                }
+                                if (d.userapi) {
+                                    res.locals.userapi = d.userapi;
+                                }
+                                return res.render('page', dup);
+                            } else {
+                                console.log('nop !??');
+                            }
+                        });
                 }
-                let log = 'myassets| push user info in params\n[';
-                /* istanbul ignore next */
-                log += JSON.stringify(res.locals.data) + ']';
-                /* istanbul ignore next */
-                process.env.NODE_ENV == 'development' ? console.log(log) : log;
-                res.render('page', dup);
-            }).catch(function(rej, err) {
-                next(err);
-            });
-        }).catch(function(rej, err) {
-            next(err);
+            }
         });
     } else {
         param.lognoco('ASSETS', chck);
@@ -125,4 +121,26 @@ router.get('/*', function(req, res, next) {
     }
 });
 
+router.post('/addapis', function(req, res, next) {
+    let dup = param.assets;
+    if (req.body.apitype && req.body.apiid &&
+        req.body.apikey && req.body.apisecret) {
+        User.addapi(req.session.userId, req.body.apitype,
+            req.body.apiid, req.body.apikey,
+            req.body.apisecret, (error, user) => {
+                if (user) {
+                    res.locals.data = user;
+                    return res.redirect('/assets/api/param');
+                } else if (error) {
+                    console.log(error);
+                    return res.render('page', dup);
+                }
+            });
+    } else {
+        param.logco('ASSETS', req.session);
+        /* istanbul ignore next */
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        res.render('page', param.assets);
+    }
+});
 module.exports = router;
