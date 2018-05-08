@@ -29,11 +29,11 @@ _____________________________________
 
 ## App directory structure :
 
-> All information's about how this app is organized /coded
+All information's about how this app is organized /coded
 
 ### coin_board/
 
-All application JavaScript source files
+> All application JavaScript source files
 
 * **coin_board/bin** : Contains the main services, **webview** with [Express](expressjs.com) and **websocket** with Socket.io
 
@@ -53,7 +53,7 @@ All application JavaScript source files
 
 ### conf/
 
-As its name suggest, lots of configuration  files, [PM2](http://pm2.keymetrics.io/) application runfile config, [JSDoc](http://usejsdoc.org/index.html) conf file and doc template or [Nginx](https://www.nginx.com/), mongoDB conf and torrc files for [Docker](https://www.docker.com) deployment.
+> As its name suggest, lots of configuration  files, [PM2](http://pm2.keymetrics.io/) application runfile config, [JSDoc](http://usejsdoc.org/index.html) conf file and doc template or [Nginx](https://www.nginx.com/), mongoDB conf and torrc files for [Docker](https://www.docker.com) deployment.
 
 *  **conf/jsdoctemplate/** Jsdoc coin_board documentation template 'pimp'
 
@@ -61,9 +61,9 @@ As its name suggest, lots of configuration  files, [PM2](http://pm2.keymetrics.i
 
 ### test/
 
-All [Mocha](https://mochajs.org/) for test structure and   [Chai](http://www.chaijs.com/) for assert unit testing filed.
+> All [Mocha](https://mochajs.org/) and [Chai](http://www.chaijs.com/) unit testing files.
 
-Note :  A low 45 % global code coverage but should be improved
+> Note :  A low 45 % global code coverage but should be improved
 
 - **test/fixtures/**: All fixtures
 
