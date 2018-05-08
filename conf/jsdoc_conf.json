@@ -19,6 +19,7 @@
                         "coin_board/controllers/APIS",
                         "coin_board/controllers/djunk",
                         "coin_board/params",
+			"coin_board/Schemas",
                         "coin_board/routes",
 			"coin_board/routes/assets",
 			"coin_board/routes/index",
