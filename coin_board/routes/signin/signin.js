@@ -17,18 +17,11 @@ const express = require('express');
  * @property {Object} router the express.Router object
  */
 const router = express.Router();
-/** The {@link module:auth~Auth} import
- * @memberof Routes.page.signin
- * @property {Object} Auth see Auth class
- */
-const Auth = require('../../controllers/auth_methods');
-/** The new auth object
- * @memberof Routes.page.signin
- * @property {Object} auth see {@link module:auth~Auth()} class
- */
-const auth = new Auth();
+
 /** @memberof Routes.page.signin */
 const param = require('../../params/def_params');
+/** User mongoose Schemas import */
+const User = require('../../Schemas/user');
 
 /** GET signin page
  * @memberof Routes.page.signin
@@ -36,18 +29,20 @@ const param = require('../../params/def_params');
 router.get('/', function(req, res, next) {
     let chck = req.session;
 
-    if (chck && chck.uid && auth.isvaliduid(chck.uid)) {
-        param.logco('SIGNIN', chck);
-        auth.userisAuth(chck.uid, 'profile').then((userdata) => {
-            const dup = param.signin;
-            let log = 'signin| push user info in params \n[';
-            res.locals.data = userdata;
-            log += JSON.stringify(res.locals.data) + ']';
-            /* istanbul ignore next */
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
-            res.render('page', dup);
-        }).catch((err) => {
-            next(err);
+    if (chck && chck.userId) {
+        User.findById(chck.userId).exec(function(error, user) {
+            if (error) {
+                console.log('errr ..' + error);
+                return res.redirect('/');
+            } else if (user === null) {
+                let err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                console.log('errr ..');
+                return res.redirect('/');
+            } else {
+                param.logco('SIGNIN', chck);
+                return res.redirect('/profile');
+            }
         });
     } else {
         param.lognoco('SIGNIN', chck);
@@ -55,7 +50,6 @@ router.get('/', function(req, res, next) {
     }
 });
 
-const User = require('../../Schemas/user');
 /**
  * @param {string} path
  * @param {function} callback

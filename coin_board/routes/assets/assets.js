@@ -26,6 +26,7 @@ const param = require('../../params/def_params');
  */
 const roads = require('./assets_roads');
 
+/** User mongoose schemas import */
 const User = require('../../Schemas/user');
 
 
@@ -102,9 +103,6 @@ router.get('/*', function(req, res, next) {
                                 if (d.blocks) {
                                     res.locals.routes = d.blocks;
                                 }
-                                if (d.userapi) {
-                                    res.locals.userapi = d.userapi;
-                                }
                                 return res.render('page', dup);
                             } else {
                                 console.log('nop !??');
@@ -143,4 +141,5 @@ router.post('/addapis', function(req, res, next) {
         res.render('page', param.assets);
     }
 });
+
 module.exports = router;
