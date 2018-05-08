@@ -13,6 +13,8 @@ _____________________________________
 
 [![NSP Status](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183/badge)](https://nodesecurity.io/orgs/myassetboard/projects/04879839-3267-4c02-be03-e8327234c183) [![codecov](https://codecov.io/gh/MyAssetBoard/coinboard-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/MyAssetBoard/coinboard-webapp)* [![Maintainability](https://api.codeclimate.com/v1/badges/9ac9afa71800cd011a6e/maintainability)](https://codeclimate.com/github/MyAssetBoard/coinboard-webapp/maintainability) [![Build Status](https://travis-ci.org/MyAssetBoard/coinboard-webapp.svg?branch=master)](https://travis-ci.org/MyAssetBoard/coinboard-webapp) [![Greenkeeper badge](https://badges.greenkeeper.io/MyAssetBoard/coinboard-webapp.svg)](https://greenkeeper.io/) [![Documentation Status](https://readthedocs.org/projects/coinboard-webapp/badge/?version=latest)](http://coinboard-webapp.readthedocs.io/en/latest/?badge=latest)
 
+*A low 47 % global code coverage but should be improved
+
 ## Features :
 
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
@@ -53,7 +55,7 @@ All information's about how this app is organized /coded
 
 ### conf/
 
-> As its name suggest, lots of configuration  files, [PM2](http://pm2.keymetrics.io/) application runfile config, [JSDoc](http://usejsdoc.org/index.html) conf file and doc template or [Nginx](https://www.nginx.com/), mongoDB conf and torrc files for [Docker](https://www.docker.com) deployment.
+> As its name suggest, lots of configuration  files like [PM2](http://pm2.keymetrics.io/) application runfile config, [JSDoc](http://usejsdoc.org/index.html) conf file and doc template or [Nginx](https://www.nginx.com/), mongoDB conf and torrc files for [Docker](https://www.docker.com) deployment.
 
 *  **conf/jsdoctemplate/** Jsdoc coin_board documentation template 'pimp'
 
@@ -62,8 +64,6 @@ All information's about how this app is organized /coded
 ### test/
 
 > All [Mocha](https://mochajs.org/) and [Chai](http://www.chaijs.com/) unit testing files.
-
-> Note :  A low 45 % global code coverage but should be improved
 
 - **test/fixtures/**: All fixtures
 
