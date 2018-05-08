@@ -25,7 +25,8 @@ function toFloat(a) {
     return parseFloat(a);
 }
 
-/** @constructor
+/** The saved user balances per asset object
+ * @constructor
  * @property {String} name the asset full name
  * @property {String} ticker the asset ticker/symbol
  * @property {Float} qtt the asset qtt
@@ -48,7 +49,7 @@ const AssetsSchema = new mongoose.Schema({
     },
 });
 
-/**
+/** The user api's model
  * @constructor
  * @property {String} name The new Api name like n26, coinbase ...
  * @property {String} key The user api key
@@ -70,7 +71,7 @@ const ApiSchema = new mongoose.Schema({
     },
 });
 
-/**
+/** A tipical coin_board user
  * @constructor
  * @property {String} email the user email
  * @property {String} username the user username
