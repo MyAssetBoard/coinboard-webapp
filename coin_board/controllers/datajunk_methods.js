@@ -10,7 +10,7 @@ const djunk0 = require('./djunk/reqmodels');
 
 const djunk01 = require('./djunk/eatdiner');
 
-const mongo_crud = require('./mongo_crud');
+const mongocrud = require('./mongo_crud');
 
 const fs0 = require('fs');
 
@@ -27,8 +27,8 @@ class DataJunk {
         /** Fs dep import for writing feeds */
         this.fs = fs0;
         /** Home made {@link Crud} module import */
-        this.Crud = mongo_crud;
-        this.crud = new this.Crud('test2', 'DTAFOOD');
+        this.Crud = mongocrud;
+        this.crud = new this.Crud('test3', 'DTAFOOD');
         /** {@link colors} options import */
         this.colors = djunk;
         /** {@link reqmodels} models import */
@@ -114,8 +114,7 @@ DataJunk.prototype.goeat = function(where) {
 /** Launch data mining aka {@link DataJunk#eat} function */
 DataJunk.prototype.gomine = function() {
     let _this = this;
-    this.pukedata(
-    {}).then((res) => {
+    this.pukedata({}).then((res) => {
         let test = _this.eat(res);
         if (process.env.NODE_LOG === 'djunk') {
             console.log(test);
@@ -194,7 +193,6 @@ DataJunk.prototype.begdata = function(where, callback) {
 DataJunk.prototype.wr = function(fn, d) {
     let _this = this;
     return new Promise((resolve, reject) => {
-        let ROOT_APP_PATH;
         ROOT_APP_PATH = _this.fs.realpathSync('.');
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
             if (err) {
