@@ -72,7 +72,7 @@ router.post('/', function(req, res, next) {
                 if (error || !user) {
                     let err = new Error('Wrong username or password.');
                     err.status = 401;
-                    return next(err);
+                    return res.redirect('/login'); ;
                 } else {
                     req.session.userId = user._id;
                     return res.redirect('/assets/dashboard');
