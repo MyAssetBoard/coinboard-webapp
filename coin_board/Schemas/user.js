@@ -242,7 +242,6 @@ UserSchema.statics.addasset = function(id,
                     console.log(error);
                     callback && callback(error);
                 } else {
-                    console.log(success);
                     callback && callback(null, success);
                 }
             });
