@@ -1,3 +1,10 @@
+/**
+ * @file Mongoose {@link User} Schema definitions
+ * @author based on whatever its take to suceed boilerplate by Trevis Gulby
+ */
+
+/** @module models */
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 mongoose.connect('mongodb://localhost:27017/test3');
@@ -12,12 +19,17 @@ function toLower(a) {
 
 /** Return float value for assets.qtt field
  * @param {String} a the string to be converted
- * @return {String} the a float value
+ * @return {Float} the a float value
  */
 function toFloat(a) {
     return parseFloat(a);
 }
 
+/** @constructor
+ * @property {String} name the asset full name
+ * @property {String} ticker the asset ticker/symbol
+ * @property {Float} qtt the asset qtt
+ */
 const AssetsSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -36,6 +48,12 @@ const AssetsSchema = new mongoose.Schema({
     },
 });
 
+/**
+ * @constructor
+ * @property {String} name The new Api name like n26, coinbase ...
+ * @property {String} key The user api key
+ * @property {String} secret The user api secret (hashed)
+ */
 const ApiSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -52,6 +70,18 @@ const ApiSchema = new mongoose.Schema({
     },
 });
 
+/**
+ * @constructor
+ * @property {String} email the user email
+ * @property {String} username the user username
+ * @property {String} usercurrency the user default fiat or crypto currency
+ * @property {String} ethaddr WIP around decentralisation and smart contracts
+ * @property {String} telegramid user telegram id for bot access when registered
+ * @property {String} password user password
+ * @property {Array} Apis see {@link module:models~ApiSchema}
+ * @property {Array} Assets see {@link module:models~AssetsSchema}
+ * @property {Object} Date the user creation timestamp
+ */
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -100,9 +130,13 @@ const UserSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
+
 /** Getters for schemas => tojson */
 UserSchema.set('toJSON', {getters: true, virtuals: false});
-/** hashing a password before saving it to the database */
+
+/** hashing a password before saving it to the database
+ *  @memberof module:models~UserSchema
+ */
 UserSchema.pre('save', function(next) {
     let user = this;
     bcrypt.hash(user.password, 10, function(err, hash) {
@@ -114,6 +148,7 @@ UserSchema.pre('save', function(next) {
         }
     });
 });
+
 /** Hash api secret too */
 ApiSchema.pre('save', function(next) {
     let api = this;
@@ -123,6 +158,12 @@ ApiSchema.pre('save', function(next) {
     });
 });
 
+/** Main authentication method for a User
+ * @param {String} username the user unique username
+ * @param {String} password the user password
+ * @param {function} callback to get the user data or error
+ * @memberof module:models~UserSchema
+ */
 UserSchema.statics.authenticate = function(username, password, callback) {
     User.findOne({username: username})
         .exec(function(err, user) {
@@ -143,6 +184,15 @@ UserSchema.statics.authenticate = function(username, password, callback) {
         });
 };
 
+/** Add a new Api object a User
+ * @param {String} id the User id from session
+ * @param {String} apitype from enum ['Bank', 'Crypto', 'Markets']
+ * @param {String} apiid the name of the new api service
+ * @param {String} apikey the new api service key
+ * @param {String} apisecret the new api service secret
+ * @param {function} callback to get the result data or error
+ * @memberof module:models~UserSchema
+ */
 UserSchema.statics.addapi = function(id,
     apitype, apiid, apikey, apisecret, callback) {
     let newapi = {
@@ -166,6 +216,15 @@ UserSchema.statics.addapi = function(id,
     });
 };
 
+/** Add a new Asset object to a User
+ * @param {String} id the User id from session
+ * @param {String} assettype from enum ['Bank', 'Crypto', 'Markets']
+ * @param {String} assetid the name of the new Asset
+ * @param {String} assetticker the ticker / symbol
+ * @param {String} assetqtt the qtt to parsed in float
+ * @param {function} callback to get the result data or error
+ * @memberof module:models~UserSchema
+ */
 UserSchema.statics.addasset = function(id,
     assettype, assetid, assetticker, assetqtt, callback) {
     let newasset = {

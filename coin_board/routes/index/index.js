@@ -27,6 +27,9 @@ const router = express.Router();
 /** @memberof Routes.page.index */
 const param = require('../../params/def_params');
 
+/** User mongoose model import
+ * @memberof Routes.page.index
+ */
 const User = require('../../Schemas/user');
 /** GET index page
  * @memberof Routes.page.index

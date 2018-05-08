@@ -26,7 +26,9 @@ const param = require('../../params/def_params');
  */
 const roads = require('./assets_roads');
 
-/** User mongoose schemas import */
+/** User mongoose schemas import
+ * @memberof Routes.page.assets
+ */
 const User = require('../../Schemas/user');
 
 

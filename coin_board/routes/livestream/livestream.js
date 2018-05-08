@@ -21,7 +21,9 @@ const router = express.Router();
 /** @memberof Routes.page.livestream */
 const param = require('../../params/def_params');
 
-/** User mongoose schemas import */
+/** User mongoose model import
+ * @memberof Routes.page.livestream
+ */
 const User = require('../../Schemas/user');
 
 /** GET livestream page

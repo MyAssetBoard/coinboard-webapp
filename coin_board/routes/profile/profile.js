@@ -18,6 +18,9 @@ const express = require('express');
  */
 const router = express.Router();
 
+/** User mongoose model import
+ * @memberof Routes.page.profile
+ */
 const User = require('../../Schemas/user');
 
 /** @memberof Routes.page.profile */

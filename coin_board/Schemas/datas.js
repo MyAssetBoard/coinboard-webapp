@@ -1,3 +1,8 @@
+/**
+ * @file Mongoose {@link Datas} Schema definitions
+ * @author based on whatever its take to suceed boilerplate by Trevis Gulby
+ */
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test3');
 
@@ -125,3 +130,6 @@ let Sources = mongoose.model('Sources', SourcesSchema);
 let Datas = mongoose.model('Datas', DatasSchemas);
 
 module.exports = Datas;
+module.exports = Infos;
+module.exports = Sources;
+module.exports = Prices;

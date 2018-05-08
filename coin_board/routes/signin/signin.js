@@ -20,7 +20,9 @@ const router = express.Router();
 
 /** @memberof Routes.page.signin */
 const param = require('../../params/def_params');
-/** User mongoose Schemas import */
+/** User mongoose model import
+ * @memberof Routes.page.signin
+ */
 const User = require('../../Schemas/user');
 
 /** GET signin page
