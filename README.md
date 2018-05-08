@@ -51,6 +51,8 @@ All information's about how this app is organized /coded
 
 * **coin_board/routes/**: Express Router overloads , kind off controllers :)
 
+* **coin_board/Schemas/**: [Mongoose](http://mongoosejs.com/docs/api.html) db schemas and models 
+
 * **coin_board/views/**: All the Eye-Candy, pinky piggy, fancy.. and boring stuff for app view (EJS style)
 
 ### conf/
