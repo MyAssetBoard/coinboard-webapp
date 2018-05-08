@@ -26,9 +26,8 @@ class CbBot {
         this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
         /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);
-        /** For checking if user is registered */
-        this.Crud = require('../controllers/mongo_crud');
-        this.crud = new this.Crud('test2', 'r_users');
+        /** To get authentication and user datas methods */
+        this.User = require('../Schemas/user');
     }
 }
 
@@ -88,15 +87,15 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
     let who = {};
     who['telegramid'] = user.id.toString();
-    this.crud.finduser(who, (res) => {
-        if (res && res.username) {
-            who['apis'] = res.apisv2 ? res.apisv2 : '';
-            return _this.runcommands(cmd, ctx, who);
-        } else {
-            ctx.reply('Sorry, you must be registered to use bot functions');
-            return;
-        }
-    });
+    this.User.findOne({telegramid: who.telegramid})
+        .exec((err, user) => {
+            if (user) {
+                return _this.runcommands(cmd, ctx, who);
+            } else {
+                ctx.reply('Sorry, you must be registered to use bot functions');
+                return;
+            }
+        });
 };
 
 /** Listen for '/[cmd]' style message to run
