@@ -63,11 +63,7 @@ const express = require('express');
  * @property {Object} router the express.Router object
  */
 const router = express.Router();
-/** The {@link module:auth~Auth} import
- * @memberof Routes.page.assets
- * @property {Object} Auth see Auth class
- */
-const Auth = require('../../controllers/auth_methods');
+
 /** @memberof Routes.page.assets */
 const param = require('../../params/def_params');
 /** This {@link page.assets} special router  import
@@ -75,11 +71,9 @@ const param = require('../../params/def_params');
  * @property {Object} roads see ..
  */
 const roads = require('./assets_roads');
-/** The new auth object
- * @memberof Routes.page.assets
- * @property {Object} auth see Auth() class
- */
-const auth = new Auth();
+
+/** User mongoose schemas import */
+const User = require('../../Schemas/user');
 
 
 /** Take the req original url and make it match with the right methods
@@ -131,40 +125,63 @@ function setpagecontent(req, pageparam, dbr) {
 router.get('/*', function(req, res, next) {
     let chck = req.session;
 
-    if (chck &amp;&amp; chck.uid &amp;&amp; auth.isvaliduid(chck.uid)) {
-        param.logco('ASSETS', chck);
-        auth.userisAuth(chck.uid, 'assets').then((result) => {
-            let dup = param.assets;
-            res.locals.data = result;
-            setpagecontent(req.originalUrl, dup, res.locals.data).then((d) => {
-                if (d != 'nop') {
-                    if (d.feed &amp;&amp; d.dm) {
-                        res.locals.news = d.feed;
-                        res.locals.dms = d.dm;
-                    }
-                    if (d.blocks) {
-                        res.locals.routes = d.blocks;
-                    }
-                    if (d.userapi) {
-                        res.locals.userapi = d.userapi;
-                    }
+    if (chck &amp;&amp; chck.userId) {
+        User.findById(chck.userId).lean().exec((error, user) => {
+            if (error) {
+                return next(error);
+            } else {
+                if (user === null) {
+                    let err = new Error('Not authorized! Go back!');
+                    err.status = 400;
+                    return next(err);
                 } else {
-                    console.log('nop !??');
+                    param.logco('ASSETS', chck);
+                    dup = param.assets;
+                    res.locals.data = user;
+                    console.log(res.locals.data);
+                    setpagecontent(req.originalUrl, dup, res.locals.data)
+                        .then((d) => {
+                            if (d != 'nop') {
+                                if (d.feed &amp;&amp; d.dm) {
+                                    res.locals.news = d.feed;
+                                    res.locals.dms = d.dm;
+                                }
+                                if (d.blocks) {
+                                    res.locals.routes = d.blocks;
+                                }
+                                return res.render('page', dup);
+                            } else {
+                                console.log('nop !??');
+                            }
+                        });
                 }
-                let log = 'myassets| push user info in params\n[';
-                /* istanbul ignore next */
-                log += JSON.stringify(res.locals.data) + ']';
-                /* istanbul ignore next */
-                process.env.NODE_ENV == 'development' ? console.log(log) : log;
-                res.render('page', dup);
-            }).catch(function(rej, err) {
-                next(err);
-            });
-        }).catch(function(rej, err) {
-            next(err);
+            }
         });
     } else {
         param.lognoco('ASSETS', chck);
+        /* istanbul ignore next */
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        res.render('page', param.assets);
+    }
+});
+
+router.post('/addapis', function(req, res, next) {
+    let dup = param.assets;
+    if (req.body.apitype &amp;&amp; req.body.apiid &amp;&amp;
+        req.body.apikey &amp;&amp; req.body.apisecret) {
+        User.addapi(req.session.userId, req.body.apitype,
+            req.body.apiid, req.body.apikey,
+            req.body.apisecret, (error, user) => {
+                if (user) {
+                    res.locals.data = user;
+                    return res.redirect('/assets/api/param');
+                } else if (error) {
+                    console.log(error);
+                    return res.render('page', dup);
+                }
+            });
+    } else {
+        param.logco('ASSETS', req.session);
         /* istanbul ignore next */
         process.env.NODE_ENV == 'development' ? console.log(log) : log;
         res.render('page', param.assets);
@@ -182,11 +199,11 @@ module.exports = router;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#User">User</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Fri Apr 20 2018 19:23:38 GMT+0200 (CEST)
+				Tue May 08 2018 10:47:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

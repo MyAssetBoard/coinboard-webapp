@@ -49,8 +49,6 @@
  * @author Trevis Gulby
  */
 
-const Apis = require('../../controllers/api_methods');
-const api = new Apis();
 const DataJunk = require('../../controllers/datajunk_methods');
 const data = new DataJunk();
 /** ### Parsing method module for {@link module:router~Routes.assets} elem
@@ -70,8 +68,7 @@ const data = new DataJunk();
  * @property {function} pricefeed.stripd the remove unusued userdata from page
  */
 const roads = {
-    dashboard:
-    {
+    dashboard: {
         path: '/assets/dashboard',
         getd: function(callback) {
             let xx = {
@@ -87,12 +84,10 @@ const roads = {
             }
         },
     },
-    infofeed:
-    {
+    infofeed: {
         path: '/assets/infofeed',
         getd: function(callback) {
-            data.pukedata(
-            {}).then(function(res) {
+            data.pukedata({}).then(function(res) {
                 let mine = data.eat(res);
                 let rt = {};
                 let fd = [];
@@ -118,8 +113,7 @@ const roads = {
             }
         },
     },
-    pricefeed:
-    {
+    pricefeed: {
         path: '/assets/pricefeed',
         getd: function(callback) {
             let xx = {
@@ -134,8 +128,7 @@ const roads = {
             }
         },
     },
-    trade:
-    {
+    trade: {
         path: '/assets/trade',
         getd: function(callback) {
             let xx = {
@@ -145,19 +138,14 @@ const roads = {
         },
         stripd: function(d) {},
     },
-    apiparams:
-    {
+    apiparams: {
         path: '/assets/api/param',
         getd: function(callback) {
-            api.getAccounts(
-            {}).then(function(res, err) {
-                let xx = {
-                    blocks: ['api_param'],
-                    scripts: ['/api_settings.js'],
-                    userapi: res,
-                };
-                callback &amp;&amp; callback(xx);
-            });
+            let xx = {
+                blocks: ['api_param'],
+                scripts: ['/api_settings.js'],
+            };
+            callback &amp;&amp; callback(xx);
         },
         stripd: function(d) {
             if (d.hasOwnProperty('assets')) {
@@ -166,8 +154,7 @@ const roads = {
             }
         },
     },
-    reportmonth:
-    {
+    reportmonth: {
         path: '/assets/trade/reports/currm',
         getd: function(callback) {
             let xx = {
@@ -176,8 +163,7 @@ const roads = {
             callback &amp;&amp; callback(xx);
         },
     },
-    reportthreemonths:
-    {
+    reportthreemonths: {
         path: '/assets/trade/reports/currquart',
         getd: function(callback) {
             let xx = {
@@ -186,8 +172,7 @@ const roads = {
             callback &amp;&amp; callback(xx);
         },
     },
-    crowddata:
-    {
+    crowddata: {
         path: '/assets/trade/reports/crowddata',
         getd: function(callback) {
             let xx = {
@@ -209,11 +194,11 @@ module.exports = roads;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#User">User</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Fri Apr 20 2018 19:23:38 GMT+0200 (CEST)
+				Tue May 08 2018 10:47:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

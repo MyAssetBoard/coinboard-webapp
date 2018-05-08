@@ -72,7 +72,7 @@ class Crud {
 
 /** Insert new data in existing collection
  * @param {string} coll the string with the collection name
- * @param {Objet} data the data to be inserted
+ * @param {Object} data the data to be inserted
  * @param {function} callback to get the response
  */
 Crud.prototype.insert = function(coll, data, callback) {
@@ -80,11 +80,11 @@ Crud.prototype.insert = function(coll, data, callback) {
     _this.MongoClient.connect(this.uri).then((db) => {
         const dbo = db.db(_this.dbName);
         let log = 'Insert| MONGO - Connected to ' + _this.dbName;
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
         dbo.collection(coll).insertOne(data).then((res) => {
             db.close();
             log = 'MONGO - Inserted :\n[' + JSON.stringify(data) + ']';
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
             return callback &amp;&amp; callback(res);
         }).catch((err) => {
             return callback &amp;&amp; callback(err);
@@ -94,9 +94,9 @@ Crud.prototype.insert = function(coll, data, callback) {
     });
 };
 
-/** Check if user exist based on provided data uid + psswd
- * or simply a telegramid
- * @param {Objet} c the data to be checked
+/** Check if user exist based on provided data uid + pasword
+ * or just a telegram id
+ * @param {Object} c the data to be checked
  * @param {function} callback to get the response
  */
 Crud.prototype.checkcred = function(c, callback) {
@@ -104,7 +104,7 @@ Crud.prototype.checkcred = function(c, callback) {
     if ((c.username &amp;&amp; c.socketid) || c.telegramid) {
         _this.MongoClient.connect(this.uri).then((db) => {
             let log = 'Checkcred| MONGO - Connected to ' + _this.dbName;
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
             console.log('checking ' + JSON.stringify(c));
             let dbo = db.db(_this.dbName);
             dbo.collection(_this.coll).findOne(c).then((res) => {
@@ -120,14 +120,14 @@ Crud.prototype.checkcred = function(c, callback) {
 };
 
 /** Check if user exist based on provided who object
- * @param {Objet} who the data to be checked
+ * @param {Object} who the data to be checked
  * @param {function} callback to get the response
  */
 Crud.prototype.finduser = function(who, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then((db) => {
         let log = 'Finduser| MONGO - Connected to ' + _this.dbName;
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
         let dbo = db.db(_this.dbName);
         dbo.collection(_this.coll).findOne(who).then((res) => {
             db.close();
@@ -141,7 +141,7 @@ Crud.prototype.finduser = function(who, callback) {
 };
 
 /** Make a db request with who param
- * @param {Objet} what the data to be checked
+ * @param {Object} what the data to be checked
  * @param {function} callback to get the response
  */
 Crud.prototype.find = function(what, callback) {
@@ -149,7 +149,7 @@ Crud.prototype.find = function(what, callback) {
     _this.MongoClient.connect(this.uri).then((db) => {
         let log = 'Find| MONGO - Connected to ' + _this.dbName;
         let dbo = db.db(_this.dbName);
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
         dbo.collection(_this.coll).find(what).toArray((err, doc) => {
             db.close();
             if (err) {
@@ -164,9 +164,9 @@ Crud.prototype.find = function(what, callback) {
 };
 
 /** Update a who user collection with what.data
- * @param {Objet} who the user to be updated
- * @param {Objet} what the fields to be updated
- * @param {Objet} data the new datas
+ * @param {Object} who the user to be updated
+ * @param {Object} what the fields to be updated
+ * @param {Object} data the new datas
  * @param {function} callback to get the response
  */
 Crud.prototype.update = function(who, what, data, callback) {
@@ -180,11 +180,11 @@ Crud.prototype.update = function(who, what, data, callback) {
         let fset = {};
         fset['$push'] = {};
         fset['$push'][what] = data;
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
         dbo.collection(_this.coll).update(fuid, fset).then((result) => {
             db.close();
             log = 'MONGO - Inserted :\n[' + JSON.stringify(data) + ']';
-            process.env.NODE_ENV == 'development' ? console.log(log) : log;
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
             return callback &amp;&amp; callback(result);
         }).catch((err) => {
             return callback &amp;&amp; callback(err);
@@ -208,11 +208,11 @@ module.exports = Crud;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#User">User</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Fri Apr 20 2018 19:23:38 GMT+0200 (CEST)
+				Tue May 08 2018 10:47:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

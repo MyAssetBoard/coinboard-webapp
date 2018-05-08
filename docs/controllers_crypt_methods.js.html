@@ -69,25 +69,23 @@ class Crypt {
 }
 
 /** Pretty much self explanatory, delete old generated key if any
- * @return {bool} true if something cleared false if not
+ * @return {boolean} true if something cleared false if not
  */
 Crypt.prototype.cleartmp = function() {
-    ROOT_APP_PATH = this.fs.realpathSync('.');
-    try {
-        this.fs.unlink('log.txt', (err) => {
-            if (err) {
-                throw err;
-            }
-            let log = 'Delete old cookie secret';
-            process.env.NODE_ENV == 'development' ?
-                console.log(log) :
-                log;
-        });
-    } catch (e) {
-        return false;
-    } finally {
-        return true;
-    }
+    let _this = this;
+    let rt = this.fs.stat('log.txt', function(err, stats) {
+        if (err) {
+            return false;
+        } else {
+            _this.fs.unlink('log.txt', function(err) {
+                if (err) {
+                    return false;
+                }
+                return true;
+            });
+        }
+    });
+    return rt;
 };
 
 /**
@@ -99,7 +97,7 @@ Crypt.prototype.readtmp = function() {
     buff = this.fs.readFileSync('log.txt', 'ascii');
     let log = 'Read cookie secret : [';
     log += buff.toString().trim() + ']';
-    process.env.NODE_ENV == 'infosec' ?
+    process.env.NODE_ENV === 'infosec' ?
         console.log(log) :
         log;
     return buff.toString();
@@ -107,7 +105,7 @@ Crypt.prototype.readtmp = function() {
 
 /**
  * Write res buffer to temp location (for now as './log.txt')
- * @param {string} res encryption secret
+ * @param {any} res encryption secret
  */
 Crypt.prototype.writetmp = function(res) {
     ROOT_APP_PATH = this.fs.realpathSync('.');
@@ -116,7 +114,7 @@ Crypt.prototype.writetmp = function(res) {
             return console.log(err);
         }
         let log = 'Write new cookie secret';
-        process.env.NODE_ENV == 'infosec' ?
+        process.env.NODE_ENV === 'infosec' ?
             console.log(log) :
             log;
     });
@@ -125,10 +123,9 @@ Crypt.prototype.writetmp = function(res) {
 /**
  * Extract 85 char buffer from host /dev/urandom thanks to
  * {@link Crypt#fs} imported module
- * @param {function} callback
- * @return {string} 22 bytes of 85 bytes random chars buffer
+ * @return {Promise&lt;any>} 22 bytes of 85 bytes random chars buffer
  */
-Crypt.prototype.getRandom = function(callback) {
+Crypt.prototype.getRandom = function() {
     let _this = this;
     return new Promise((resolve, reject) => {
         _this.fs.open('/dev/urandom', 'r', function(status, fd) {
@@ -143,7 +140,6 @@ Crypt.prototype.getRandom = function(callback) {
                 randstr = randstr.length > 22 ?
                     randstr.substring(0, 22) :
                     randstr;
-                callback &amp;&amp; callback(randstr);
                 resolve(randstr);
             });
         });
@@ -168,7 +164,7 @@ Crypt.prototype.dcryptParams = function(p) {
         let log = 'auth_methods.js|dcryptParams()\n';
         log += '====Plaintext if succeed [ ';
         log += plaintext + ' ]';
-        process.env.NODE_ENV == 'infosec' ?
+        process.env.NODE_ENV === 'infosec' ?
             console.log(log) :
             log;
     }
@@ -190,7 +186,7 @@ Crypt.prototype.encryptParams = function(p) {
     let log = 'auth_methods.js|encryptParams(p)\n';
     log += '=====> enc str if succeed [ ';
     log += enc + ' ]';
-    process.env.NODE_ENV == 'infosec' ?
+    process.env.NODE_ENV === 'infosec' ?
         console.log(log) :
         log;
     return enc;
@@ -198,13 +194,10 @@ Crypt.prototype.encryptParams = function(p) {
 
 /** Simple helper function around {@link Crypt#dcryptParams} method
  * @param {string} eUid the string to be checked
- * @return {bool} true if valid euid false otherwise
+ * @return {boolean} true if valid euid false otherwise
  */
 Crypt.prototype.isvaliduid = function(eUid) {
-    let test = this.dcryptParams(eUid);
-    return test ?
-        true :
-        false;
+    return !!this.dcryptParams(eUid);
 };
 
 /** Decrypt and AES encrypted user id with {@link Crypt#dcryptParams} method
@@ -213,8 +206,7 @@ Crypt.prototype.isvaliduid = function(eUid) {
  * @see Crypt#dcryptParams
  */
 Crypt.prototype.decryptuid = function(eUId) {
-    let ctext = this.dcryptParams(eUId);
-    return ctext;
+    return this.dcryptParams(eUId);
 };
 
 /** Aes encrypt a user id with {@link Crypt#encryptParams} method
@@ -223,8 +215,7 @@ Crypt.prototype.decryptuid = function(eUId) {
  * @see Crypt#encryptParams
  */
 Crypt.prototype.encryptuid = function(cUId) {
-    let etext = this.encryptParams(cUId);
-    return etext;
+    return this.encryptParams(cUId);
 };
 
 /**
@@ -236,22 +227,18 @@ Crypt.prototype.encryptuid = function(cUId) {
 Crypt.prototype.genrandomtocken = function() {
     let _this = this;
     _this.cleartmp();
-    _this.getRandom().then(function(res) {
-        if (res) {
-            _this.writetmp(res);
-            return res;
-        }
-    }).catch(function(rej, err) {
-        if (err || rej) {
-            throw err;
-        }
+    _this.getRandom().then((res) => {
+        _this.writetmp(res);
+        return res;
+    }).catch((rej, err) => {
+        throw err;
     });
 };
 
 /** Dummy helper function to properly check
  * if a param is an encodeURIComponent valid one
  * @param {string} str the string to be checked
- * @return {bool} true if encode , false if not
+ * @return {boolean} true if encode , false if not
  */
 Crypt.prototype.isEncoded = function(str) {
     try {
@@ -278,11 +265,11 @@ module.exports = Crypt;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api.html">api</a></li><li><a href="module-auth.html">auth</a></li><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li><li><a href="module-UserAssets.html">UserAssets</a></li></ul><h3>Classes</h3><ul><li><a href="module-api-Apis.html">api~Apis</a></li><li><a href="module-auth-Auth.html">auth~Auth</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="module-UserAssets-Assets.html">UserAssets~Assets</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#User">User</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Fri Apr 20 2018 19:23:38 GMT+0200 (CEST)
+				Tue May 08 2018 10:47:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();
