@@ -144,4 +144,27 @@ router.post('/addapis', function(req, res, next) {
     }
 });
 
+router.post('/addasset', function(req, res, next) {
+    let dup = param.assets;
+    if (req.body.assettype && req.body.assetid &&
+        req.body.assetticker && req.body.assetqtt) {
+        User.addasset(req.session.userId, req.body.assettype,
+            req.body.assetid, req.body.assetticker,
+            req.body.assetqtt, (error, user) => {
+                if (user) {
+                    res.locals.data = user;
+                    return res.redirect('/assets/dashboard');
+                } else if (error) {
+                    console.log(error);
+                    return res.render('page', dup);
+                }
+            });
+    } else {
+        param.logco('ASSETS', req.session);
+        /* istanbul ignore next */
+        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        res.render('page', param.assets);
+    }
+});
+
 module.exports = router;
