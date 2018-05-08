@@ -5,9 +5,6 @@
  * @license MIT
  */
 
-const Apis = require('../../controllers/api_methods');
-const apis = new Apis();
-
 /** The Telegram bot /mibank command object
  * @namespace
  * @memberof module:cbbot~telegrambot
@@ -18,9 +15,7 @@ const apis = new Apis();
 const mibank = {
     id: '/mibank',
     func: function(args, usr, callback) {
-        apis.getbankposition(args, usr).then((res) => {
-            return callback && callback(res);
-        });
+        return callback && callback('yolo');
     },
 };
 

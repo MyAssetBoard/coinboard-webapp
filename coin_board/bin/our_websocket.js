@@ -18,19 +18,9 @@ class CbWebsocket {
         this.conf = new this.AppConfig();
         this.server = this.https.createServer(this.conf.httpsc());
         this.server.listen(this.port);
-        this.io = require('socket.io')(this.server,
-        {
+        this.io = require('socket.io')(this.server, {
             cookie: false,
         });
-        /** Asset module dep import */
-        this.Asset = require('../controllers/assets_methods');
-        this.asset = new this.Asset();
-        /** Auth module dep import */
-        this.Auth = require('../controllers/auth_methods');
-        this.auth = new this.Auth();
-        /** {@link userapis} import */
-        this.Apis = require('../controllers/api_methods');
-        this.apiparam = new this.Apis();
         /** NUMBER of current sessions on auth room */
         this.authco = 0;
         /** NUMBER of current sessions on register room */
@@ -90,7 +80,7 @@ CbWebsocket.prototype.authentication = function() {
         };
         _this.io.of('/auth').to(socket.id).emit('nm', comsg);
         socket.on('user login', (data) => {
-            _this.auth.checkcoData(data, socket, _this.io);
+
         });
         socket.on('disconnect', function() {
             _this.authco -= 1;
@@ -112,7 +102,6 @@ CbWebsocket.prototype.register = function() {
         socket.on('user signin', (inputdata) => {
             let log = 'received : \n' + JSON.stringify(inputdata);
             process.env.NODE_ENV === 'development' ? console.log(log) : log;
-            _this.auth.checkRegData(inputdata, socket, _this.io);
         });
         socket.on('disconnect', function() {
             _this.regco -= 1;
@@ -135,7 +124,6 @@ CbWebsocket.prototype.assetroom = function() {
             _this.logthisguy('asset', socket.id);
             socket.on('add asset', function(d) {
                 _this.logger(d);
-                _this.asset.checkAssetData(d, socket, _this.io);
             });
             socket.on('disconnect', function() {
                 _this.assetco -= 1;
@@ -148,9 +136,9 @@ CbWebsocket.prototype.assetroom = function() {
 /** @property {function} assetmanagmnt assets socket room event handling */
 CbWebsocket.prototype.assetmanagmnt = function() {
     let _this = this;
-    let ass = _this.assetroom();
+    let room = _this.assetroom();
     _this.io.of('/assets').on('connection', (socket) => {
-        ass.handler(socket);
+        room.handler(socket);
     });
 };
 
@@ -163,7 +151,6 @@ CbWebsocket.prototype.apiparams = function() {
         socket.on('update api creds', function(d) {
             let log = 'update creds get :\n' + JSON.stringify(d);
             process.env.NODE_ENV === 'development' ? console.log(log) : log;
-            _this.apiparam.checkApiParamsData(d, socket, _this.io);
         });
         socket.on('disconnect', function() {
             _this.apiparamco -= 1;
