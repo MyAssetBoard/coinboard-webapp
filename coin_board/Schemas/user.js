@@ -1,6 +1,40 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test3');
 const bcrypt = require('bcrypt');
+mongoose.connect('mongodb://localhost:27017/test3');
+
+/** Return lowercase for email fields
+ * @param {String} a the string to be converted
+ * @return {String} the a param in lowercase
+ */
+function toLower(a) {
+    return a.toLowerCase();
+}
+
+/** Return float value for assets.qtt field
+ * @param {String} a the string to be converted
+ * @return {String} the a float value
+ */
+function toFloat(a) {
+    return parseFloat(a);
+}
+
+const AssetsSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    ticker: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    qtt: {
+        type: Number,
+        required: true,
+        set: toFloat,
+    },
+});
 
 const ApiSchema = new mongoose.Schema({
     name: {
@@ -14,6 +48,7 @@ const ApiSchema = new mongoose.Schema({
     secret: {
         type: String,
         required: true,
+        trim: true,
     },
 });
 
@@ -23,6 +58,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true,
+        set: toLower,
     },
     username: {
         type: String,
@@ -54,6 +90,15 @@ const UserSchema = new mongoose.Schema({
         Crypto: [ApiSchema],
         Markets: [ApiSchema],
     },
+    Assets: {
+        Bank: [AssetsSchema],
+        Crypto: [AssetsSchema],
+        Markets: [AssetsSchema],
+    },
+    Date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 /** Getters for schemas => tojson */
 UserSchema.set('toJSON', {getters: true, virtuals: false});
@@ -65,10 +110,7 @@ UserSchema.pre('save', function(next) {
             return next(err);
         } else {
             user.password = hash;
-            bcrypt.hash(user.telegramid, 10, function(err, hash) {
-                user.telegramid = hash;
-                next();
-            });
+            return next();
         }
     });
 });
@@ -124,17 +166,31 @@ UserSchema.statics.addapi = function(id,
     });
 };
 
-UserSchema.statics.getappis = function(id, callback) {
-    User.findOne({_id: id}, (error, user) => {
-        if (user.Apis.length()) {
-            return callback && callback(user.Apis);
-        } else {
-            return callback && callback(error ? error : user ? user : error);
-        }
+UserSchema.statics.addasset = function(id,
+    assettype, assetid, assetticker, assetqtt, callback) {
+    let newasset = {
+        name: assetid,
+        ticker: assetticker,
+        qtt: assetqtt,
+    };
+    Assets.create(newasset, (error, asset) => {
+        let elemtype = {};
+        elemtype['Assets.' + assettype] = asset;
+        User.findOneAndUpdate({_id: id}, {$push: elemtype},
+            (error, success) => {
+                if (error) {
+                    console.log(error);
+                    callback && callback(error);
+                } else {
+                    console.log(success);
+                    callback && callback(null, success);
+                }
+            });
     });
 };
 
-let Apis = mongoose.model('Apis', ApiSchema);
+let Assets = mongoose.model('Assets', AssetsSchema);
 let User = mongoose.model('User', UserSchema);
+let Apis = mongoose.model('Apis', ApiSchema);
 
 module.exports = User;
