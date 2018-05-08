@@ -1,74 +1,74 @@
-<div class="card">
-	<div class="card-header" id="headingOne">
-		<h5 class="mb-0">
-			<button class="btn btn-info btn-lg btn-block">
-				Crypto
-			</button>
-		</h5>
-	</div>
-</div>
-<div id="view" class="card">
-	<div class="card-header" id="headingOne">
-		<h5 class="mb-0">
-			<button class="btn btn-secondary btn-lg btn-block dropdown-toggle" data-toggle="collapse" data-target="#collapseOne">
-				[<i class="lnr lnr-chart-bars"></i>] View
-			</button>
-		</h5>
-	</div>
-	<div id="collapseOne" class="card-body collapse showme">
-		<% if (locals.data && data.assets && Object.keys(data.assets).length) {%>
-			<div class="infiList">
-				<div class="btn-group btn-group-lg" style="display: inline-block;">
-					<%for(var elems in data.assets){%>
-						<%- include('asset_list', {
-						data: locals.data.assets[elems],
-						id: elems
-					}); %><%} %>
-					</div>
-				</div>
-				<input class="" id="searchme" type="text" placeholder="&#xf00e Search for Asset" style="font-family:Arial, FontAwesome"></input>
-			<%
-		}%>
-			<% if (!locals.data) {%>
-				<p class="text-center">
-					Please
-					<a href="/login">LOGIN</a>
-					to view your assets</p>
-			<%}%>
-		</div>
-	</div>
-	<div id="add" class="card">
-		<div class="card-header" id="headingTwo">
-			<h5 class="mb-0">
-				<button class="btn btn-secondary btn-lg btn-block dropdown-toggle" data-toggle="collapse" data-target="#collapseTwo">
-					[<i class="lnr lnr-cloud-sync"></i>] Add
-				</button>
-			</h5>
-		</div>
-		<div id="collapseTwo" class="card-body collapse showme">
-			<select type="select" id="ticker" class="form-control">
-				<% if (locals.symb && Object.keys(symb).length) {%>
-					<% for (var elems in symb){ %>
-						<option label="<%=symb[elems]%>">
-							<%- elems %>
-							</option>
-						<%} %>
-					<%}%>
-				</select>
-				<input id="qtt" type="number" step="0.000000001" min="0" class="form-control" placeholder="enter amount">
-				<div class="card-body">
-					<button id="addme" class="btn btn-lg btn-block btn-info">
-						OK
-					</button>
-				</div>
-			</div>
-		</div>
+<% if (locals.data && locals.data.Apis) { %>
+	<%
+	for (var type in locals.data.Assets) { %>
 		<div class="card">
-			<div class="card-header" id="headingOne">
-				<h5 class="mb-0">
-					<button class="btn btn-info btn-lg btn-block">
-						Banks €/$/£ ...
+			<div class="card-header">
+				<h1 class="text-center"><%= type %></h1>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Ticker</th>
+						<th scope="col">Qtt</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+			for (var el in locals.data.Assets[type]) { %>
+						<%- include('asset_list', {
+					id: locals.data.Assets[type][el].name,
+					ticker: locals.data.Assets[type][el].ticker,
+					qtt: locals.data.Assets[type][el].qtt,
+				} ) %><%} %>
+						%>
+					</tbody>
+				</table>
+			</div>
+		<% } %>
+	<%
+}%>
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addapimod">
+		Add account
+	</button>
+	<div class="modal fade" id="addapimod" tabindex="-1" role="dialog" aria-labelledby="addme" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addme">Add api account
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
 					</button>
-				</h5>
+				</div>
+				<form action="/assets/addasset" method="post">
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="stype">Asset type</label>
+							<select name="assettype" class="form-control" id="stype">
+								<option>Bank</option>
+								<option>Crypto</option>
+								<option>Markets</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="sname">Asset name</label>
+							<input name="assetid" type="text" class="form-control" id="sname" rows="1"></input>
+						</div>
+						<div class="form-group">
+							<label for="skey">Asset ticker</label>
+							<input name="assetticker" type="text" class="form-control" id="skey" rows="1"></input>
+						</div>
+						<div class="form-group">
+							<label for="ssec">Amount</label>
+							<input name="assetqtt" step="0.001" type="number" class="form-control" id="sqtt" rows="1"></input>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary text-white">Save</button>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
