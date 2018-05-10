@@ -1,74 +1,75 @@
-<% if (locals.data && locals.data.Apis) { %>
+<% if (locals.data && locals.data.Assets) { %>
 	<%
 	for (var type in locals.data.Assets) { %>
 		<div class="card">
-			<div class="card-header">
-				<h1 class="text-center"><%= type %></h1>
-			</div>
+			<h5 class="card-header"><%= type %></h5>
 			<table class="table">
 				<thead>
 					<tr>
 						<th scope="col">Name</th>
 						<th scope="col">Ticker</th>
 						<th scope="col">Qtt</th>
+						<th sope="col">Value</th>
 					</tr>
 				</thead>
 				<tbody>
 					<%
 			for (var el in locals.data.Assets[type]) { %>
-						<%- include('asset_list', {
-					id: locals.data.Assets[type][el].name,
-					ticker: locals.data.Assets[type][el].ticker,
-					qtt: locals.data.Assets[type][el].qtt,
-				} ) %><%} %>
-						%>
-					</tbody>
-				</table>
-			</div>
-		<% } %>
-	<%
+						<tr>
+							<td><%= locals.data.Assets[type][el].name %></td>
+							<td><%= locals.data.Assets[type][el].ticker %></td>
+							<td><%= locals.data.Assets[type][el].qtt %></td>
+							<td><%= 'xx ' + locals.data.usercurrency %></td>
+						</tr>
+					<%} %>
+				</tbody>
+			</table>
+		</div>
+		%>
+	<% } %>
+<%
 }%>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addapimod">
-		Add account
-	</button>
-	<div class="modal fade" id="addapimod" tabindex="-1" role="dialog" aria-labelledby="addme" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addme">Add api account
-					</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form action="/assets/addasset" method="post">
-					<div class="modal-body">
-						<div class="form-group">
-							<label for="stype">Asset type</label>
-							<select name="assettype" class="form-control" id="stype">
-								<option>Bank</option>
-								<option>Crypto</option>
-								<option>Markets</option>
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="sname">Asset name</label>
-							<input name="assetid" type="text" class="form-control" id="sname" rows="1"></input>
-						</div>
-						<div class="form-group">
-							<label for="skey">Asset ticker</label>
-							<input name="assetticker" type="text" class="form-control" id="skey" rows="1"></input>
-						</div>
-						<div class="form-group">
-							<label for="ssec">Amount</label>
-							<input name="assetqtt" step="0.001" type="number" class="form-control" id="sqtt" rows="1"></input>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary text-white">Save</button>
-					</div>
-				</form>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addapimod">
+	Add account
+</button>
+<div class="modal fade" id="addapimod" tabindex="-1" role="dialog" aria-labelledby="addme" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addme">Add api account
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
+			<form action="/assets/addasset" method="post">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="stype">Asset type</label>
+						<select name="assettype" class="form-control" id="stype">
+							<option>Bank</option>
+							<option>Crypto</option>
+							<option>Markets</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="sname">Asset name</label>
+						<input name="assetid" type="text" class="form-control" id="sname" rows="1"></input>
+					</div>
+					<div class="form-group">
+						<label for="skey">Asset ticker</label>
+						<input name="assetticker" type="text" class="form-control" id="skey" rows="1"></input>
+					</div>
+					<div class="form-group">
+						<label for="ssec">Amount</label>
+						<input name="assetqtt" step="0.001" type="number" class="form-control" id="sqtt" rows="1"></input>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary text-white">Save</button>
+				</div>
+			</form>
 		</div>
 	</div>
+</div>
