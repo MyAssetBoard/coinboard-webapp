@@ -5,7 +5,7 @@ node_js:
 before_install:
   - pip install --user codecov
 after_success:
-  - cd AngularCoinBoard && codecov
+  - cd AngularCoinBoard && ng test && codecov
 install:
   - yarn install && cd coin_board && yarn install && cd ..
   - cd AngularCoinBoard && yarn install && cd ..
