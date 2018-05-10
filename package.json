@@ -2,7 +2,11 @@
 	"name": "coin_board",
 	"version": "0.0.1Beta",
 	"description": "Crypto assets management board",
-	"main": "./INIT_DEV -t",
+	"main": "./INIT_DEV.sh -rl",
+	"scripts": {
+		"start": "./INIT_DEV.sh development",
+		"test": "./INIT_DEV.sh -lt"
+	},
 	"repository": "https://github.com/MyAssetBoard/coinboard-webapp",
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
 	"license": "MIT",
