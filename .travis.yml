@@ -2,7 +2,12 @@ language: node_js
 sudo: false
 node_js:
   - "8.11.1"
+before_install:
+  - pip install --user codecov
+after_success:
+  - cd AngularCoinBoard && codecov
 install:
   - yarn install && cd coin_board && yarn install && cd ..
+  - cd AngularCoinBoard && yarn install && cd ..
 script:
   - ./INIT_DEV.sh -lt
