@@ -11,5 +11,3 @@ after_success:
 install:
   - yarn install && cd coin_board && yarn install && cd ..
   - cd AngularCoinBoard && yarn install && cd ..
-script:
-  - ./INIT_DEV.sh -lt
