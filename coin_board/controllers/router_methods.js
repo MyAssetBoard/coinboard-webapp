@@ -19,6 +19,9 @@ const path = require('path');
 /** [Morgan](https://github.com/expressjs/morgan) logger */
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+/** GraphQl server */
+const graphql = require('express-graphql');
+const schema = require('../Schemas/graph_user');
 
 const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017',
@@ -118,6 +121,19 @@ app.use('/logout', function(req, res, next) {
         });
     }
 });
+
+/** GraphQl API */
+/** parse POST /graphql/ body as text */
+app.use(bodyParser.text({type: 'application/graphql'}));
+/** express route setup */
+app.use(
+    '/api/*',
+    graphql({
+        schema: schema,
+        graphiql: true,
+    })
+);
+
 
 /** catch 404 and forward to error handler below */
 app.use(function(req, res, next) {
