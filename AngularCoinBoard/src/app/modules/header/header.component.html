@@ -1,0 +1,6 @@
+<nav class="navbar fixed-top bg-primary">
+	<div *ngFor="let page of pages"> <a href="{{page.path}}">
+			<span class="lnr text-white {{page.icon}}">{{page.name}}
+			</span>
+		</a> </div>
+</nav>
