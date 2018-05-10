@@ -11,4 +11,3 @@ install:
   - cd AngularCoinBoard && yarn install && cd ..
 after_success:
   - cd AngularCoinBoard && ng test --code-coverage
-  - codecov
