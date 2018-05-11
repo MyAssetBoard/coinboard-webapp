@@ -80,7 +80,9 @@ CbView.prototype.lightmyfire = function() {
         log;
     this.server.listen(this.port, this.addr, function() {
         let log = 'WEB_VIEW - server is listening on :\n';
-        log += 'addr: [' + _this.addr + '], port ' + _this.port;
+        console.log(_this.server.address());
+        log += 'addr: [' + _this.server.address().address +
+            '], port ' + _this.port;
         process.env.NODE_ENV === 'development' ?
             console.log(log) :
             log;
