@@ -94,9 +94,15 @@ let addUser = (obj, args, context, info) => {
     };
 };
 
+let getUser = (obj, args, context, info) => {
+    return {
+        name: args.name,
+    };
+};
+
 let resolvers = {
     Query: {
-        users: helloworld,
+        users: getUser,
     },
     Mutation: {
         addUser: addUser,
