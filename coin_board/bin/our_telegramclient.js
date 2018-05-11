@@ -11,15 +11,14 @@
  */
 
 /** Private credentials json format import */
-const creds = require('../../creds');
+const creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
+    require('../../dev_creds');
 /** Telegram client main component import */
-const
-{
+const {
     MTProto
 } = require('telegram-mtproto')
 /** @TODO -> add mongo connector */
-const
-{
+const {
     Storage
 } = require('mtproto-storage-fs')
 const readline = require('readline')
@@ -51,8 +50,7 @@ const server = {
     dev: false
 }
 
-const client = MTProto(
-{
+const client = MTProto({
     server,
     api,
     app
@@ -61,18 +59,14 @@ const client = MTProto(
 /** This function will stop execution of the program until you enter the code
  * that is sent via SMS or Telegram.
  */
-const askForCode = () =>
-{
-    return new Promise((resolve) =>
-    {
-        const rl = readline.createInterface(
-        {
+const askForCode = () => {
+    return new Promise((resolve) => {
+        const rl = readline.createInterface({
             input: process.stdin,
             output: process.stdout
         })
 
-        rl.question('Please enter passcode for ' + phone.num + ':\n', (num) =>
-        {
+        rl.question('Please enter passcode for ' + phone.num + ':\n', (num) => {
             rl.close()
             resolve(num)
         })
@@ -83,13 +77,10 @@ const askForCode = () =>
  * directly in the command line. If you entered the correct code, you will be
  * logged in and the credentials are saved.
  */
-const login = async (client, phone) =>
-{
-    const
-    {
+const login = async (client, phone) => {
+    const {
         phone_code_hash
-    } = await client('auth.sendCode',
-    {
+    } = await client('auth.sendCode', {
         phone_number: phone.num,
         current_number: false,
         api_id: config.api_id,
@@ -99,11 +90,9 @@ const login = async (client, phone) =>
     const phone_code = await askForCode()
     console.log(`Your code: ${phone_code}`)
 
-    const
-    {
+    const {
         user
-    } = await client('auth.signIn',
-    {
+    } = await client('auth.signIn', {
         phone_number: phone.num,
         phone_code_hash: phone_code_hash,
         phone_code: phone_code
@@ -112,10 +101,8 @@ const login = async (client, phone) =>
     console.log('signed as ', user)
 }
 
-const getDialogs = async () =>
-{
-    const dialogs = await client('messages.getDialogs',
-    {
+const getDialogs = async () => {
+    const dialogs = await client('messages.getDialogs', {
         limit: 100,
     })
     console.log('dialogs', dialogs)
@@ -124,19 +111,15 @@ const getDialogs = async () =>
 /** First check if we are already signed in (if credentials are stored).
  * If we are logged in, execution continues, otherwise the login process begins.
  */
-(async function ()
-{
-    if(!(await app.storage.get('signedin')))
-    {
+(async function () {
+    if (!(await app.storage.get('signedin'))) {
         console.log('not signed in')
 
         await login(client, phone).catch(console.error)
 
         console.log('signed in successfully')
         app.storage.set('signedin', true)
-    }
-    else
-    {
+    } else {
         console.log('already signed in')
     }
     getDialogs()
