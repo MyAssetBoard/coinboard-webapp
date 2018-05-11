@@ -69,13 +69,13 @@ function nodesetup ()
 	Enter the install command for your favorite apt-get method :
 	"
 	read -r aptget && sudo "$aptget" "nodejs" "npm"  && sudo npm  install -g yarn && \
-	yarn install && cd "coin_board" && yarn install &&
+	yarn install && cd "coin_board" && yarn install && mkdir tmpdata log &&
 	echo "
 	Et ...
 
 	Voila!
 
-	Tips : Please run this app with ./INIT_DEV.sh -t
+	Tips : Please run this app with ./INIT_DEV.sh -rl development local
 	"
 }
 
