@@ -22,7 +22,8 @@ class CbBot {
         /** Commands array */
         this.cmds = [this.rfrsh, this.digst, this.showf, this.mibank];
         /** Import BOT_TOKEN from creds json file */
-        this.creds = require('../../creds');
+        this.creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
+            require('../../dev_creds');
         this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
         /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);

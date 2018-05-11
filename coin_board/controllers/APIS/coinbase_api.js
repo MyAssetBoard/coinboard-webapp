@@ -12,7 +12,8 @@ class CoinbaseApi {
     constructor() {
         /** See [here](https://developers.coinbase.com) for doc */
         this.Client = require('coinbase').Client;
-        this.creds = require('../../../creds');
+        this.creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
+            require('../../dev_creds');
         this.Param = {};
         this.Param.apikey = this.creds.CoinbaseApi.key;
         this.Param.apiSecret = this.creds.CoinbaseApi.secret;

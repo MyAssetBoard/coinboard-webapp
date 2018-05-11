@@ -1,6 +1,7 @@
 const factpath = 'gdax-trading-toolkit/build/src/factories/';
 const gdaxfactpath = factpath + 'gdaxFactories';
-const creds = require('../../creds');
+const creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
+    require('../../dev_creds');
 
 /** WIP class for gdax trading */
 class JohnBot {
