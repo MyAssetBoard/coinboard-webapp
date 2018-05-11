@@ -1,15 +1,24 @@
 <!-- login-form with POST -->
-<div class="container-full-bg" id="divlog">
-	<form action="/login" method="post">
-		<input class="form-control text-center" type="text" style="font-family:Arial, FontAwesome" placeholder="&#xf21b; Login" readonly="readonly">
-		<div id="iname" class="form-group">
-			<input name="logusername" type="text" class="form-control" id="inputName" style="font-family: Arial, FontAwesome" placeholder="&#xf1fa; Enter username">
-		</div>
-		<div id="ipwd" class="form-group">
-			<input name="logpassword" type="password" class="form-control" id="inputSocketid" style="font-family: Arial, FontAwesome" placeholder="&#xf070; Enter password">
-		</div>
-		<button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
-			LOGIN
-		</button>
-	</form>
+<div class="container-full-bg" id="divlog" style="border: black solid 2px;">
+	<div class="card w-100 p-3">
+		<form action="/login" method="post">
+			<div class="card-header" style="border: black solid 2px;">
+				<h4 class="text-primary text-center">
+					<span class="lnr lnr-lock"></span>LOGIN</h4>
+			</div>
+			<div class="form-group" style="border: black solid 2px;">
+				<div id="iname" class="form-group">
+					<input name="logusername" type="text" class="form-control text-info" id="inputName" placeholder="@ Username">
+				</div>
+				<div id="ipwd" class="form-group">
+					<input name="logpassword" type="password" class="form-control text-info" id="inputSocketid" placeholder="XX Password">
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary" id="submit">
+						OK
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
