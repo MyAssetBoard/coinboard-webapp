@@ -11,8 +11,11 @@
 class AppConfig {
     /** @constructor */
     constructor() {
+        let _this = this;
         /** os dep to get network interface */
         this.os = require('os');
+        /** Dns ones idem */
+        this.dns = require('dns');
         /** network interface import */
         this.ni = this.os.networkInterfaces();
         /** fs module import */
@@ -20,14 +23,19 @@ class AppConfig {
         /** what ip should i get ?
          * @TODO : Add new methods to better select listening interface
          */
-        this.myip = this.ni.wlan0[0].address;
+        this.hostname = 'localhost';
+        this.myip = function() {
+            this.dns.lookup(_this.hostname, (err, res) => {
+                return res;
+            });
+        };
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().view() : 'https://' + this.myip + ':3000/',
+                this.gettorhostnames().view() : 'https://' + this.myip() + ':3000/',
             /** final app socket url for reference in template */
             appsurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().socks() : 'https://' + this.myip + ':3001/',
+                this.gettorhostnames().socks() : 'https://' + this.myip() + ':3001/',
         };
     }
 }
