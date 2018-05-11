@@ -1,29 +1,33 @@
 {
-        "CoinbaseApi": {
+        "CoinbaseApi":
+        {
                 "key": "",
                 "secret": "",
-		"NOTES": "To get an account see [coinbase](https://coinbase.com/settings/api)",
+                "NOTES": "To get an account see [coinbase](https://coinbase.com/settings/api)"
+
         },
-        "TelegramBot": {
-		"NOTES": "This is CoinBoardDev_bot, the dev usage bot see @BotFather",
-                "BOT_TOKEN": "449115521:AAERUYDfUslijPf_21aiPA_lqdIyeNSko0M"
+        "TelegramBot":
+        {
+          "BOT_TOKEN": "449115521:AAERUYDfUslijPf_21aiPA_lqdIyeNSko0M",
+	  "NOTES": "This is CoinBoardDev_bot, the dev usage bot see @BotFather"
         },
-        "TelegramClient": {
-                "API_ID": 0000,
+        "TelegramClient":
+        {
+                "API_ID": 0,
                 "API_HASH": "",
-		"PHONE_NBR": "",
-                "MtprotoCli": {
+                "PHONE_NBR": "",
+                "MtprotoCli":
+                {
                         "Test": "",
                         "Prod": ""
-
                 },
-		"NOTES": "See [telegram-mtproto](https://github.com/zerobias/telegram-mtproto) github",
+                "NOTES": "See [telegram-mtproto](https://github.com/zerobias/telegram-mtproto) github"
         },
-	"GDAXAPI": {
+        "GDAXAPI": {
 		"GDAX_KEY": "",
 		"GDAX_SECRET": "",
 		"GDAX_PASSPHRASE": "",
 		"perm": "",
-		"NOTES": "See GDAX trading toolkit (google it)",
+		"NOTES": "See GDAX trading toolkit (google it)"
 	}
 }
