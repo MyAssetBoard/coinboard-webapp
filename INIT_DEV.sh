@@ -24,6 +24,9 @@ export WVSERV="webview.service"
 export WSSERV="websocket.service"
 export CBSERV="CoinBoardBot.service"
 
+export SHOW="./node_modules/pm2/bin/pm2 start conf/webfront.pm2conf.json --only webview.service"
+export LOG="./node_modules/pm2/bin/pm2 logs"
+
 #External ressources
 export TICKERURL="https://raw.githubusercontent.com/crypti/cryptocurrencies/master/"
 export TICKER="cryptocurrencies.json"
@@ -132,12 +135,6 @@ function app_startDev ()
 	"$PM2" start "$APPCONF" --only "$CBSERV"  --update-env;
 }
 
-function app_startProd ()
-{
-	export NODE_ENV="production"
-	exec "$PM2" "$APPBIN"
-}
-
 function reset_db ()
 {
 	rm -rf tmpdata && mkdir tmpdata
@@ -225,8 +222,13 @@ do
 		exit 0
 		;;
 
+		'n-l')
+		$LOG
+		exit 0;
+		;;
+
 		'n-s')
-		app_startProd
+		$SHOW
 		exit 0
 		;;
 
