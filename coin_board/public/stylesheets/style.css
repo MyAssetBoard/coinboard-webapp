@@ -49,7 +49,9 @@ iframe {
 }
 
 .infiList {
-	border: large solid transparent;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 2;
 	height: 250px;
 	overflow: scroll;
 }
@@ -66,18 +68,4 @@ iframe {
 
 .container-full-bg {
 	padding: 2px;
-}
-
-.btn-space {
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-top: 5px;
-}
-
-.BUY {
-	color: green;
-}
-
-.SELL {
-	color: red;
 }
