@@ -11,5 +11,5 @@ install:
   - cd AngularCoinBoard && yarn install && cd ..
 after_success:
   - set errexit
-  - cd AngularCoinBoard && ng test --code-coverage && exit 0
+  - cd AngularCoinBoard && travis_wait ng test --code-coverage
   - echo oktestdone
