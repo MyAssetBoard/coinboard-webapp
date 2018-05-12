@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.assets
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** @memberof Routes.page.assets */
 const param = require('../../params/def_params');
@@ -46,7 +46,7 @@ function setpagecontent(req, pageparam, dbr) {
         let res = {};
         for (let paths in roads) {
             if (roads.hasOwnProperty(paths) &&
-                roads[paths].path == req) {
+                req.match(roads[paths].path)) {
                 if (roads[paths].getd) {
                     res.getcontent = roads[paths].getd;
                 }
@@ -94,7 +94,6 @@ router.get('/*', function(req, res, next) {
                     param.logco('ASSETS', chck);
                     dup = param.assets;
                     res.locals.data = user;
-                    console.log(res.locals.data);
                     setpagecontent(req.originalUrl, dup, res.locals.data)
                         .then((d) => {
                             if (d != 'nop') {
@@ -105,10 +104,8 @@ router.get('/*', function(req, res, next) {
                                 if (d.blocks) {
                                     res.locals.routes = d.blocks;
                                 }
-                                return res.render('page', dup);
-                            } else {
-                                console.log('nop !??');
                             }
+                            return res.render('page', dup);
                         });
                 }
             }
