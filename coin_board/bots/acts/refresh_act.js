@@ -5,8 +5,7 @@
  * @license MIT
  */
 
-const
-{
+const {
     spawn,
 } = require('child_process');
 /** The Telegram bot /refresh command object
@@ -18,7 +17,6 @@ const
 const refresh = {
     id: '/refresh',
     func: function(args, usr, callback) {
-        process.env['NODE_ENV'] = 'development';
         process.env['NODE_LOG'] = 'djunk';
         process.env['LAUNCH_TASK'] = 'goeat';
         const fp = 'coin_board/controllers/datajunk_methods.js';

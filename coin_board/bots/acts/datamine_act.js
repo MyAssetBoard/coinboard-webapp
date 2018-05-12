@@ -5,22 +5,20 @@
  * @license MIT
  */
 
-const
-{
+const {
     spawn,
 } = require('child_process');
 /** The Telegram bot /digest command object
  * @namespace
  * @memberof module:cbbot~telegrambot
  * @property {string} id telegram bot style command, '/ + cmd'
- * @property {function} func the actual command, here lanch data analyse task
+ * @property {function} func the actual command, launch data analyse task
  */
 const digest = {
     id: '/digest',
     func: function(args, usr, callback) {
-        process.env['NODE_ENV'] = 'a';
-        process.env['NODE_LOG'] = 'a';
-        process.env['LAUNCH_TASK'] = 'markme';
+        process.env['NODE_LOG'] = 'djunk';
+        process.env['LAUNCH_TASK'] = 'gomine';
         const fp = 'coin_board/controllers/datajunk_methods.js';
         const exe = spawn('node', [fp]);
         exe.stdout.on('data', (data) => {
