@@ -40,7 +40,7 @@ CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
     log += '[' + usr.fname + ' ' + usr.lname + ']';
     log += ' ID: ' + usr.id;
-    console.log(log);
+    process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
 /** Logging helper function to print all messages sent to bot */
@@ -48,9 +48,9 @@ CbBot.prototype.logthismsg = function() {
     let _this = this;
     _this.bot.on('message', (ctx) => {
         let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
-        console.log('COINBOARD_BOT: Received msg :');
-        console.log('from [' + usr + ']');
-        console.log(ctx.message.text);
+        let log = 'COINBOARD_BOT: (Received msg :\nfrom [' + usr + '])\n';
+        log += ctx.message.text;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
     });
 };
 
@@ -68,7 +68,6 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
             exec += 1;
             let args = cmd.split(' ')[1] !== undefined ? cmd.split(' ')[1] : '';
             _this.cmds[el].func(args, who, (d) => {
-                console.log(who);
                 ctx.reply(d);
             });
         }
@@ -88,9 +87,12 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
     let who = {};
     who['telegramid'] = user.id.toString();
-    this.User.findOne({telegramid: who.telegramid})
+    this.User.findOne(who)
         .exec((err, user) => {
             if (user) {
+                let log = 'User [' + user.username + ']';
+                log += ' connected to Botchannel';
+                process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 return _this.runcommands(cmd, ctx, who);
             } else {
                 ctx.reply('Sorry, you must be registered to use bot functions');
@@ -101,6 +103,8 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
 
 /** Listen for '/[cmd]' style message to run
  * bot functions for registered users
+ * @note simple wrapper around bot.hears()
+ * telegraf method ;)
  */
 CbBot.prototype.getcommands = function() {
     let _this = this;
@@ -121,7 +125,7 @@ CbBot.prototype.getcommands = function() {
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
  *  @property {function} bot.hello if hello cmd answer with Welcome message
- *  @property {function} bot.hears other way to get a repli from bot
+ *  @property {function} bot.hears other way to get a reply from bot
  */
 CbBot.prototype.turnmeon = function() {
     let _this = this;
