@@ -121,7 +121,8 @@ router.get('/*', function(req, res, next) {
 router.post('/addapis', function(req, res, next) {
     let dup = param.assets;
     if (req.body.apitype && req.body.apiid &&
-        req.body.apikey && req.body.apisecret) {
+        req.body.apikey && req.body.apisecret &&
+        req.session && req.session.userId) {
         User.addapi(req.session.userId, req.body.apitype,
             req.body.apiid, req.body.apikey,
             req.body.apisecret, (error, user) => {
@@ -144,7 +145,8 @@ router.post('/addapis', function(req, res, next) {
 router.post('/addasset', function(req, res, next) {
     let dup = param.assets;
     if (req.body.assettype && req.body.assetid &&
-        req.body.assetticker && req.body.assetqtt) {
+        req.body.assetticker && req.body.assetqtt &&
+        req.session && req.session.userId) {
         User.addasset(req.session.userId, req.body.assettype,
             req.body.assetid, req.body.assetticker,
             req.body.assetqtt, (error, user) => {
