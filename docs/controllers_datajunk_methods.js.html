@@ -50,17 +50,23 @@
  * @author Trevis Gulby
  */
 
-const djunk = require('./djunk/colors');
+/** Dependencies import */
 
-const djunk0 = require('./djunk/reqmodels');
+const djunk = require('./djunk/colors');
 
 const djunk01 = require('./djunk/eatdiner');
 
+/** @NOTE : deprecated / see Mongoose models */
 const mongocrud = require('./mongo_crud');
+
+/** @NOTE : new mongoose method dep */
+// const Datas = require('../Schemas/datas');
+const Scrapper = require('../Schemas/scrapper');
 
 const fs0 = require('fs');
 
 const https0 = require('https');
+/** */
 
 /** Wow so much methods !
  * @class
@@ -78,7 +84,7 @@ class DataJunk {
         /** {@link colors} options import */
         this.colors = djunk;
         /** {@link reqmodels} models import */
-        this.reqmodels = djunk0;
+        this.MOQREQUEST = require('./djunk/reqmodels');
         /** {@link eatdiner} import */
         this.eatd = djunk01;
     }
@@ -121,7 +127,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
 DataJunk.prototype.logeat = function() {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
-    process.env.NODE_ENV === 'development' ?
+    process.env.NODE_LOG === 'djunk' ?
         console.log(log) :
         log;
 };
@@ -132,28 +138,21 @@ DataJunk.prototype.logeat = function() {
  */
 DataJunk.prototype.goeat = function(where) {
     let _this = this;
-    for (let x in where) {
-        if (where[x]) {
-            let xx = where[x];
-            _this.goshopping(xx).then((res) => {
-                if (res) {
-                    let d = {
-                        id: xx.id,
-                        path: xx.fname,
-                        url: xx.url,
-                    };
-                    _this.digest(d).then((res) => {
-                        if (res) {
-                            _this.logeat();
-                        }
-                    }).catch((rej, err) => {
-                        throw err;
-                    });
-                }
-            }).catch((rej, err) => {
-                throw err;
-            });
-        }
+    if (where.req) {
+        _this.goshopping(where.toJSON()).then((res) => {
+            if (res) {
+                // _this.digest(d).then((res) => {
+                //     if (res) {
+                //         _this.logeat();
+                //     }
+                // }).catch((rej, err) => {
+                //     throw err;
+                // });
+                console.log(res);
+            }
+        }).catch((rej, err) => {
+            throw err;
+        });
     }
 };
 
@@ -180,7 +179,6 @@ DataJunk.prototype.eat = function(dset) {
     };
     let res = [];
     let parseme = this.eatd.getparsed(dset, ts);
-
     for (let a in parseme) {
         if (parseme.hasOwnProperty(a)) {
             this.eatd.checkwhat(parseme, a);
@@ -194,7 +192,6 @@ DataJunk.prototype.eat = function(dset) {
         }
     }
     log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
-    log += JSON.stringify(res);
     process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
     return res = res.filter((elems) => {
         return elems !== undefined;
@@ -206,18 +203,23 @@ DataJunk.prototype.eat = function(dset) {
  * @param {function} callback to get the result
  */
 DataJunk.prototype.begdata = function(where, callback) {
+    console.log(where.req);
     let req = this.https.get(where.req, function(res) {
         let bodyChunks = [];
         res.on('data', (chunk) => {
             bodyChunks.push(chunk);
         }).on('end', () => {
             let body = Buffer.concat(bodyChunks);
-            /** Careful with non-JSON responses !! */
+            /** @todo Careful with non-JSON responses !! */
             let ifjson = JSON.parse(body);
             let clean = [];
             if (ifjson.query &amp;&amp; ifjson.query.results) {
                 let r = ifjson.query.results;
-                clean = where.get(r, clean);
+                for (el in r.item) {
+                    if (r.item[el]) {
+                        clean[el] = r.item[el];
+                    }
+                }
             } else {
                 clean = ifjson;
             }
@@ -243,11 +245,11 @@ DataJunk.prototype.wr = function(fn, d) {
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
-                process.env.NODE_ENV === 'development' ? console.log(log) : log;
+                process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
                 reject(err);
             } else {
                 let log = 'Write news to DTAFOOD/news ';
-                process.env.NODE_ENV === 'development' ? console.log(log) : log;
+                process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
                 resolve(d);
             }
         });
@@ -265,12 +267,13 @@ DataJunk.prototype.goshopping = function(where) {
     return new Promise((resolve, reject) => {
         _this.begdata(where, (res, err) => {
             if (res) {
-                _this.wr(where.fname, res).then((r) => {
-                    resolve(r);
-                    return r;
-                }).catch((rej, err) => {
-                    reject(err);
-                });
+                console.log(res);
+                // _this.wr(where.fname, res).then((r) => {
+                //     resolve(r);
+                //     return r;
+                // }).catch((rej, err) => {
+                //     reject(err);
+                // });
             } else if (!res || err) {
                 reject(err);
             }
@@ -278,24 +281,31 @@ DataJunk.prototype.goshopping = function(where) {
     });
 };
 
+/** @todo To be refactored with Mongoose Models
+ * @param {Object} s the datas to be inserted
+ * @param {String} s.id the source name
+ * @param {String} s.url the source url
+ * @param {String} s.d the source 'd'atas
+ * @param {function} callback the callback function to get responses
+ */
 DataJunk.prototype.dbthis = function(s, callback) {
     let insert = {};
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    this.crud.insert('DTAFOOD', insert, (res, err) => {
-        let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-        log += '[ ' + insert.feed &amp;&amp; insert.feed[0] ?
-            insert.feed[0].title :
-            JSON.stringify(insert);
-        process.env.NODE_ENV === 'development' ?
-            console.log(log + ']\nResults :\n' + res.results) : log;
-        if (err) {
-            callback &amp;&amp; callback(err);
-        } else {
-            callback &amp;&amp; callback(res);
-        }
-    });
+    // this.crud.insert('DTAFOOD', insert, (res, err) => {
+    //     let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
+    //     log += '[ ' + insert.feed &amp;&amp; insert.feed[0] ?
+    //         insert.feed[0].title :
+    //         JSON.stringify(insert);
+    //     process.env.NODE_ENV === 'development' ?
+    //         console.log(log + ']\nResults :\n' + res.results) : log;
+    //     if (err) {
+    //         return callback &amp;&amp; callback(err);
+    //     }
+    //     return callback &amp;&amp; callback(res);
+    // });
+    console.log(insert);
 };
 
 DataJunk.prototype.digest = function(what) {
@@ -331,12 +341,16 @@ DataJunk.prototype.pukedata = function(what) {
     });
 };
 
-if (process.env.LAUNCH_TASK === 'markme') {
+if (process.env.LAUNCH_TASK === 'gomine') {
     let data = new DataJunk();
     data.gomine();
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
-    data.goeat(data.reqmodels);
+    let scrappername = 'BobyScrapper';
+    Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
+        let where = scrapper.Sources.Crypto.infos[0];
+        data.goeat(where);
+    });
 }
 
 module.exports = DataJunk;
@@ -354,11 +368,11 @@ module.exports = DataJunk;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Thu May 10 2018 11:24:55 GMT+0200 (CEST)
+				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

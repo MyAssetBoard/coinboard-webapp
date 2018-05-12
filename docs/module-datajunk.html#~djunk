@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>
-			Module: cbbot
+			Namespace: djunk
 		</title>
 		<script src="scripts/prettify/prettify.js">
 		</script>
@@ -34,7 +34,7 @@
 		<div id="main">
 			<h1 class="page-title">
 				<a href="https://github.com/MyAssetBoard/coinboard-webapp/">
-					Module: cbbot</a> documentation
+					Namespace: djunk</a> documentation
 			</h1>
 			<div id="content">
 				
@@ -46,8 +46,8 @@
 
 <header>
     
-        
-            
+        <h2>
+            <span class="ancestors"><a href="module-datajunk.html">datajunk</a>~</span>djunk</h2>
         
     
 </header>
@@ -56,24 +56,8 @@
     <div class="container-overview">
     
         
-            <div class="description"><p><a href="https://telegram.org">Telegram</a> bot for coin_board</p></div>
-        
 
         
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <dl class="details">
@@ -105,39 +89,16 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bots_coinboardbot.js.html">bots/coinboardbot.js</a>, <a href="bots_coinboardbot.js.html#line153">line 153</a>
+        <a href="controllers_datajunk_methods.js.html">controllers/datajunk_methods.js</a>, <a href="controllers_datajunk_methods.js.html#line314">line 314</a>
     </li></ul></dd>
     
 
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>CbBot</li>
-        </ul>
-    </dd>
-    
 
     
 </dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         
@@ -149,13 +110,6 @@
     
 
     
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-cbbot-CbBot.html">CbBot</a></dt>
-            <dd></dd>
-        </dl>
-    
 
     
 
@@ -165,77 +119,17 @@
         <h3 class="subsection-title">Namespaces</h3>
 
         <dl>
-            <dt><a href="module-cbbot-telegrambot.html">telegrambot</a></dt>
+            <dt><a href="module-datajunk-djunk.colors.html">colors</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-datajunk-djunk.eatdiner.html">eatdiner</a></dt>
+            <dd></dd>
+        
+            <dt><a href="module-datajunk-djunk.MOQREQUEST.html">MOQREQUEST</a></dt>
             <dd></dd>
         </dl>
     
 
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="~mibot"><span class="type-signature">(inner, constant) </span>mibot<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Launching bot !!</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bots_coinboardbot.js.html">bots/coinboardbot.js</a>, <a href="bots_coinboardbot.js.html#line151">line 151</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
     
 
     

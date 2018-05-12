@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>
-			Module: cbbot
+			Source: Schemas/graph_user.js
 		</title>
 		<script src="scripts/prettify/prettify.js">
 		</script>
@@ -34,218 +34,157 @@
 		<div id="main">
 			<h1 class="page-title">
 				<a href="https://github.com/MyAssetBoard/coinboard-webapp/">
-					Module: cbbot</a> documentation
+					Source: Schemas/graph_user.js</a> documentation
 			</h1>
 			<div id="content">
 				
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description"><p><a href="https://telegram.org">Telegram</a> bot for coin_board</p></div>
-        
-
-        
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bots_coinboardbot.js.html">bots/coinboardbot.js</a>, <a href="bots_coinboardbot.js.html#line153">line 153</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li>CbBot</li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-cbbot-CbBot.html">CbBot</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Namespaces</h3>
-
-        <dl>
-            <dt><a href="module-cbbot-telegrambot.html">telegrambot</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="~mibot"><span class="type-signature">(inner, constant) </span>mibot<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Launching bot !!</p>
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bots_coinboardbot.js.html">bots/coinboardbot.js</a>, <a href="bots_coinboardbot.js.html#line151">line 151</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file GraphQl setters/ getter and db class definitions, {@link GraphUser}
+ * @author based on whatever its take to suceed boilerplate by Trevis Gulby
+ */
+
+const graphql = require('graphql');
+
+/** Still WIP work, this const will be replace by mongodb results
+ * when @GraphQlAPI will be working
+ */
+const MOCKAPIS = [{
+        name: 'n26',
+        key: 'thisithekey',
+        secret: 'thisisthesecret',
+    },
+    {
+        name: 'etoro',
+        key: 'thisithekey',
+        secret: 'thisisthesecret',
+    },
+];
+
+const MOCKASSET = [{
+    name: 'Euro',
+    ticker: 'EUR',
+    qtt: 33.33,
+}, {
+    name: 'Ethereum',
+    ticker: 'ETH',
+    qtt: 42.42,
+}];
+
+const MOCKUSERS = [{
+        email: 'foobi@foobar.dev',
+        username: 'foobar',
+        usercurrency: 'EUR',
+        ethaddr: 'NONE',
+        telegramid: '12345',
+        password: 'toto',
+        Apis: MOCKAPIS,
+        Assets: MOCKASSET,
+    },
+    {
+        email: 'foobar@foobi.dev',
+        username: 'foobi',
+        usercurrency: 'EUR',
+        ethaddr: 'NONE',
+        telegramid: '12345',
+        password: 'tutu',
+        Apis: MOCKAPIS,
+        Assets: MOCKASSET,
+    },
+];
+
+const MockApisType = new graphql.GraphQLObjectType({
+    name: 'userapis',
+    fields: function() {
+        return {
+            name: {
+                type: graphql.GraphQLString,
+            },
+            key: {
+                type: graphql.GraphQLString,
+            },
+            secret: {
+                type: graphql.GraphQLString,
+            },
+        };
+    },
+});
+
+const MockAssetType = new graphql.GraphQLObjectType({
+    name: 'userasset',
+    fields: function() {
+        return {
+            name: {
+                type: graphql.GraphQLString,
+            },
+            ticker: {
+                type: graphql.GraphQLString,
+            },
+            qtt: {
+                type: graphql.GraphQLString,
+            },
+        };
+    },
+});
+
+const MockUserType = new graphql.GraphQLObjectType({
+    name: 'users',
+    fields: function() {
+        return {
+            username: {
+                type: graphql.GraphQLString,
+            },
+            email: {
+                type: graphql.GraphQLString,
+            },
+            usercurrency: {
+                type: graphql.GraphQLString,
+            },
+            ethaddr: {
+                type: graphql.GraphQLString,
+            },
+            telegramid: {
+                type: graphql.GraphQLString,
+            },
+            password: {
+                type: graphql.GraphQLString,
+            },
+            Apis: {
+                type: MockApisType,
+            },
+            Assets: {
+                type: MockAssetType,
+            },
+        };
+    },
+});
+
+const UserQueryType = new graphql.GraphQLObjectType({
+    name: 'Query',
+    fields: () => {
+        return {
+            users: {
+                type: new graphql.GraphQLList(MockUserType),
+                resolve: () => {
+                    // INsert Mongoose results
+                    return MOCKUSERS;
+                },
+            },
+        };
+    },
+});
+
+module.exports = new graphql.GraphQLSchema({
+    query: UserQueryType,
+});
+</code></pre>
+        </article>
+    </section>
 
 
 
