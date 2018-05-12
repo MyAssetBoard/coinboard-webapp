@@ -90,8 +90,8 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     this.User.findOne(who)
         .exec((err, user) => {
             if (user) {
-                let log = 'User [' + user.username + ']';
-                log += ' connected to Botchannel';
+                let log = 'COINBOARD_BOT: User [' + user.username + ']';
+                log += ' send this command';
                 process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 return _this.runcommands(cmd, ctx, who);
             } else {
