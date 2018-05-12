@@ -15,6 +15,7 @@ const mongocrud = require('./mongo_crud');
 
 /** @NOTE : new mongoose method dep */
 // const Datas = require('../Schemas/datas');
+const Scrapper = require('../Schemas/scrapper');
 
 const fs0 = require('fs');
 
@@ -91,28 +92,21 @@ DataJunk.prototype.logeat = function() {
  */
 DataJunk.prototype.goeat = function(where) {
     let _this = this;
-    for (let x in where) {
-        if (where[x]) {
-            let xx = where[x];
-            _this.goshopping(xx).then((res) => {
-                if (res) {
-                    let d = {
-                        id: xx.id,
-                        path: xx.fname,
-                        url: xx.url,
-                    };
-                    _this.digest(d).then((res) => {
-                        if (res) {
-                            _this.logeat();
-                        }
-                    }).catch((rej, err) => {
-                        throw err;
-                    });
-                }
-            }).catch((rej, err) => {
-                throw err;
-            });
-        }
+    if (where.req) {
+        _this.goshopping(where.toJSON()).then((res) => {
+            if (res) {
+                // _this.digest(d).then((res) => {
+                //     if (res) {
+                //         _this.logeat();
+                //     }
+                // }).catch((rej, err) => {
+                //     throw err;
+                // });
+                console.log(res);
+            }
+        }).catch((rej, err) => {
+            throw err;
+        });
     }
 };
 
@@ -139,7 +133,6 @@ DataJunk.prototype.eat = function(dset) {
     };
     let res = [];
     let parseme = this.eatd.getparsed(dset, ts);
-
     for (let a in parseme) {
         if (parseme.hasOwnProperty(a)) {
             this.eatd.checkwhat(parseme, a);
@@ -164,18 +157,23 @@ DataJunk.prototype.eat = function(dset) {
  * @param {function} callback to get the result
  */
 DataJunk.prototype.begdata = function(where, callback) {
+    console.log(where.req);
     let req = this.https.get(where.req, function(res) {
         let bodyChunks = [];
         res.on('data', (chunk) => {
             bodyChunks.push(chunk);
         }).on('end', () => {
             let body = Buffer.concat(bodyChunks);
-            /** Careful with non-JSON responses !! */
+            /** @todo Careful with non-JSON responses !! */
             let ifjson = JSON.parse(body);
             let clean = [];
             if (ifjson.query && ifjson.query.results) {
                 let r = ifjson.query.results;
-                clean = where.get(r, clean);
+                for (el in r.item) {
+                    if (r.item[el]) {
+                        clean[el] = r.item[el];
+                    }
+                }
             } else {
                 clean = ifjson;
             }
@@ -223,12 +221,13 @@ DataJunk.prototype.goshopping = function(where) {
     return new Promise((resolve, reject) => {
         _this.begdata(where, (res, err) => {
             if (res) {
-                _this.wr(where.fname, res).then((r) => {
-                    resolve(r);
-                    return r;
-                }).catch((rej, err) => {
-                    reject(err);
-                });
+                console.log(res);
+                // _this.wr(where.fname, res).then((r) => {
+                //     resolve(r);
+                //     return r;
+                // }).catch((rej, err) => {
+                //     reject(err);
+                // });
             } else if (!res || err) {
                 reject(err);
             }
@@ -301,7 +300,11 @@ if (process.env.LAUNCH_TASK === 'gomine') {
     data.gomine();
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
-    data.goeat(data.MOQREQUEST);
+    let scrappername = 'BobyScrapper';
+    Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
+        let where = scrapper.Sources.Crypto.infos[0];
+        data.goeat(where);
+    });
 }
 
 module.exports = DataJunk;
