@@ -47,13 +47,11 @@ tmpst += date.getMinutes() < 10 ?
  * @property {function} crnews.clean remove lots of unwanted elements
  * @property {function} crnews.get return a clean array
  */
-const reqmodels = {
-    ctaf:
-    {
+const MOQREQUEST = {
+    ctaf: {
         id: 'n.ctaf',
         url: 'https://cointelegraph.com/rss',
-        req:
-        {
+        req: {
             host: 'query.yahooapis.com',
             path: ctafjson,
         },
@@ -78,12 +76,10 @@ const reqmodels = {
             return clean;
         },
     },
-    crnews:
-    {
+    crnews: {
         id: 'n.crnews',
         url: 'https://cryptocurrencynews.com/feed/',
-        req:
-        {
+        req: {
             host: 'query.yahooapis.com',
             path: cryptonewsjson,
         },
@@ -110,12 +106,10 @@ const reqmodels = {
             return clean;
         },
     },
-    crcomp:
-    {
+    crcomp: {
         id: 'p.crccomp',
         url: 'https://min-api.cryptocompare.com',
-        req:
-        {
+        req: {
             host: 'min-api.cryptocompare.com',
             path: '/data/price?fsym=BTC&tsyms=USD,JPY,EUR',
         },
@@ -126,4 +120,4 @@ const reqmodels = {
     },
 };
 
-module.exports = reqmodels;
+module.exports = MOQREQUEST;
