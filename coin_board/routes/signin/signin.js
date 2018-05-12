@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.signin
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** @memberof Routes.page.signin */
 const param = require('../../params/def_params');
@@ -34,12 +34,12 @@ router.get('/', function(req, res, next) {
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function(error, user) {
             if (error) {
-                console.log('errr ..' + error);
+                console.log(error);
                 return res.redirect('/');
             } else if (user === null) {
                 let err = new Error('Not authorized! Go back!');
                 err.status = 400;
-                console.log('errr ..');
+                console.log(err);
                 return res.redirect('/');
             } else {
                 param.logco('SIGNIN', chck);
@@ -59,10 +59,9 @@ router.get('/', function(req, res, next) {
  */
 router.post('/', function(req, res, next) {
     if (req.body.password !== req.body.passwordConf) {
-        let err = new Error('Passwords do not match.');
+        let err = new Error('Password\'s dont match.');
         err.status = 400;
-        console.log('password dont match');
-        res.send('passwords dont match');
+        console.log(err);
         return res.redirect('/signin');
     }
 
@@ -93,7 +92,7 @@ router.post('/', function(req, res, next) {
     } else {
         let err = new Error('All fields required.');
         err.status = 400;
-        console.log('err...');
+        console.log(err);
         return res.redirect('/signin');
     }
 });
