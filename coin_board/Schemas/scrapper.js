@@ -6,10 +6,12 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test3');
 
-
-/** The request model
+/** The request model (to get rss feeds)
  * @constructor
- * @property
+ * @memberof module:models~
+ * @property {String} host in fact its for now the yahoo api for rss to json
+ * @property {String} path the path like /param=tto&otherparam=tonton
+ * @property {Number} __v the mongoose version system
  */
 const RequestSchemas = new mongoose.Schema({
     host: {
@@ -22,8 +24,39 @@ const RequestSchemas = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    __v: {
+        type: Number,
+        select: false,
+    },
+    _id: false,
 });
 
+/** The parsing model (to remove html markup and other garbage from feeds)
+ * @constructor
+ * @memberof module:models~
+ * @property {String} regex the user submited regex for cleaning content
+ */
+const ParsingSchemas = new mongoose.Schema({
+    regex: {
+        type: String,
+        required: true,
+    },
+    __v: {
+        type: Number,
+        select: false,
+    },
+    _id: false,
+});
+
+/** The scrapper sources schemas
+ * @constructor
+ * @memberof module:models~
+ * @property {String} name the name of the feed like cointelegraph, cryptonews..
+ * @property {String} url the feed url (must be linked with req.path)
+ * @property {Object} req the req model to call rss > json yahoo api
+ * @property {Object} parse the regex for cleaning feed
+ * @property {Number} __v the mongoose version system
+ */
 const SourcesSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -37,9 +70,22 @@ const SourcesSchema = new mongoose.Schema({
     },
     req: {
         type: RequestSchemas,
+        required: true,
+    },
+    parse: {
+        type: ParsingSchemas,
+        required: false,
+    },
+    __v: {
+        type: Number,
+        select: false,
     },
 });
-/** A req source schemas */
+
+/** The Scrapper schemas
+ * @constructor
+ * @memberof module:models~
+ */
 const ScrapperSchemas = new mongoose.Schema({
     name: {
         type: String,
@@ -66,45 +112,60 @@ const ScrapperSchemas = new mongoose.Schema({
     },
 });
 
+/** Add a new Source object to a Scrapper
+ * @param {Object} uinput the user inputs and param see below
+ * @param {String} uinput.scrapperid the user scrapper to update
+ * @param {String} uinput.sourcegenre from enum ['Bank', 'Crypto', 'Markets']
+ * @param {String} uinput.sourcetype the source type (is feed, price or other ?)
+ * @param {String} uinput.sourcename the source name
+ * @param {String} uinput.sourceurl the source url
+ * @param {String} uinput.sourcereqhost the source https base req host
+ * @param {String} uinput.sourcereqpath the source https base req path
+ * @param {function} callback to get the result data or error
+ * @todo format insertion format before calling this function
+ * @memberof module:models~ScrapperSchemas
+ */
 ScrapperSchemas.statics.addsource = (uinput, callback) => {
-    let newreq = {};
-    let newsource = {};
-    newreq['host'] = uinput.sourcereqhost;
-    newreq['path'] = uinput.sourcereqpath;
-    newsource['name'] = uinput.sourcename;
-    newsource['url'] = uinput.sourceurl;
-    console.log(newreq);
-    Requests.create(newreq, (error, request) => {
-        newsource['req'] = request;
-        console.log('new request');
-        console.log(request);
+    let Sources = mongoose.model('Sources', SourcesSchema);
+    let whatsource = 'Sources.' + uinput.sourcegenre + '.' + uinput.sourcetype;
+    let newsource = {
+        name: uinput.sourcename,
+        url: uinput.sourceurl,
+        req: {
+            host: uinput.sourcereqhost,
+            path: uinput.sourcereqpath,
+        },
+        parse: {
+            regex: uinput.sourceregex,
+        },
+    };
+    Sources.create(newsource, (error, source) => {
+        let elemtype = {};
+        elemtype[whatsource] = source;
         if (error) throw error;
-        Sources.create(newsource, (error, source) => {
-            let elemtype = {};
-            let pos = 'Sources.' + uinput.sourcegenre + '.' + uinput.sourcetype;
-            elemtype[pos] = source;
-            console.log('newsource');
-            console.log(source);
-            if (error) throw error;
-            Scrapper.findOneAndUpdate({
-                    _id: uinput.scrapperid,
-                }, {
-                    $push: elemtype,
-                },
-                (error, success) => {
-                    if (error) {
-                        console.log(error);
-                        callback && callback(error);
-                    } else {
-                        callback && callback(null, success);
-                    }
-                });
-        });
+        Scrapper.findOneAndUpdate({
+                _id: uinput.scrapperid,
+            }, {
+                $push: elemtype,
+            },
+            (error, success) => {
+                if (error) {
+                    console.log(error);
+                    callback && callback(error);
+                } else {
+                    callback && callback(null, success);
+                }
+            });
     });
 };
 
-let Sources = mongoose.model('Sources', SourcesSchema);
-let Requests = mongoose.model('Requests', RequestSchemas);
+/** Getters for schemas => tojson */
+ScrapperSchemas.set('toJSON', {getters: true, virtuals: false});
+/** Getters for schemas => tojson */
+SourcesSchema.set('toJSON', {getters: true, virtuals: false});
+/** Getters for schemas => tojson */
+RequestSchemas.set('toJSON', {getters: true, virtuals: false});
+
 let Scrapper = mongoose.model('Scrapper', ScrapperSchemas);
 
 module.exports = Scrapper;
