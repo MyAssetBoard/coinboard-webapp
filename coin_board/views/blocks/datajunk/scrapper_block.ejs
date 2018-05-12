@@ -1,0 +1,67 @@
+<div class="card">
+	<div class="card-header">
+		<h1>New Scrapper Object</h1>
+	</div>
+	<form action="/datajunk/newscrapper" method="post">
+		<div class="card-body">
+			<div class="form-group">
+				<label for="sname">Scrapper name</label>
+				<input name="name" type="text" class="form-control" id="sname" rows="1"></input>
+			</div>
+		</div>
+		<div class="card-footer">
+			<button type="submit" class="btn btn-primary text-white">Save</button>
+		</div>
+	</form>
+</div>
+<div class="card">
+	<div class="card-header">
+		<h1>New Source Object</h1>
+	</div>
+	<div class="card-body">
+		<form action="/datajunk/scrapper/newsource" method="post">
+			<div class="form-group">
+				<label for="scname">Scrapper name</label>
+				<% if (locals.data) {%>
+					<input name="name" class="form-control text-black" type="text" value="<%= locals.data.name%>" readonly="readonly">
+				<%} else {%>
+					<div class="alert-danger text-center">Please create a scrapper first
+					</div>
+				<%}%>
+			</div>
+			<div class="form-group">
+				<label for="stype">Source genre</label>
+				<select name="sourcegenre" class="form-control" id="stype">
+					<option>Bank</option>
+					<option>Crypto</option>
+					<option>Markets</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="stype">Source type</label>
+				<select name="sourcetype" class="form-control" id="stype">
+					<option>infos</option>
+					<option>prices</option>
+					<option>other</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="sname">Source name</label>
+				<input name="sourcename" id="sname" type="text" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="surl">Source url</label>
+				<input name="sourceurl" id="surl" type="text" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="shost">Source request host</label>
+				<input name="sourcereqhost" id="shost" type="text" class="form-control"></input>
+			</div>
+			<div class="form-group">
+				<label for="spath">Source request path</label>
+				<input name="sourcereqpath" id="spath" type="text" class="form-control"></input>
+			</div>
+			<button type="submit" class="btn btn-primary text-white">Save</button>
+		</form>
+	</div>
+</div>
