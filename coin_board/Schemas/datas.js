@@ -59,7 +59,7 @@ const InfosSchema = new mongoose.Schema({
  * @property {String} tags a string of tag separed by ';' symbol
  * @property {Object} Date the Price gathering date or if histo, the timestamp
  */
-const PricesSchema = new mongoose.Schemas({
+const PricesSchema = new mongoose.Schema({
     fsym: {
         type: String,
         required: true,
@@ -95,7 +95,7 @@ const PricesSchema = new mongoose.Schemas({
  * @property {Array} Coef.min the 0 min value and the error message
  * @property {Array} Coef.max the 10 max value and the error message
  */
-const TrendSchema = new mongoose.Schemas({
+const TrendSchema = new mongoose.Schema({
     Type: {
         type: String,
         enum: ['bullish', 'bearish'],
@@ -115,7 +115,7 @@ const TrendSchema = new mongoose.Schemas({
  * @property {String} url the 'to scrap' url
  * @property {function} url.set the setter for url (WIP)
  */
-const SourcesSchema = new mongoose.Schemas({
+const SourcesSchema = new mongoose.Schema({
     url: {
         type: String,
         unique: true,
@@ -152,7 +152,7 @@ const SourcesSchema = new mongoose.Schemas({
  * @property {Array} Sources.Crypto the crypto sources
  * @property {Array} Sources.Markets the stock Markets sources
  */
-const DatasSchema = new mongoose.Schemas({
+const DatasSchema = new mongoose.Schema({
     Infos: {
         Bank: [InfosSchema],
         Crypto: [InfosSchema],
@@ -182,12 +182,51 @@ InfosSchema.pre('save', function(next) {
     next();
 });
 
+DatasSchema.statics.addinfos = function(datasubject, dataarray, callback) {
+    Infos.create(dataarray, (error, info) => {
+        if (error) {
+            throw error;
+        } else {
+            return info;
+        }
+    });
+};
+
+DatasSchema.statics.addprices = function(datasubject, dataarray, callback) {
+    Prices.create(dataarray, (error, price) => {
+        if (error) {
+            throw error;
+        } else {
+            return price;
+        }
+    });
+};
+
+DatasSchema.statics.addsources = function(datasubject, dataarray, callback) {
+    Sources.create(dataarray, (error, source) => {
+        if (error) {
+            throw error;
+        } else {
+            return source;
+        }
+    });
+};
+
+DatasSchema.statics.addtrends = function(datasubject, dataarray, callback) {
+    Trends.create(dataarray, (error, trend) => {
+        if (error) {
+            throw error;
+        } else {
+            return trend;
+        }
+    });
+};
+
+
 let Prices = mongoose.model('Prices', PricesSchema);
 let Infos = mongoose.model('Infos', InfosSchema);
 let Sources = mongoose.model('Sources', SourcesSchema);
+let Trends = mongoose.model('Trends', TrendSchema);
 let Datas = mongoose.model('Datas', DatasSchema);
 
 module.exports = Datas;
-module.exports = Infos;
-module.exports = Sources;
-module.exports = Prices;
