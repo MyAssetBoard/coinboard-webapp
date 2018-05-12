@@ -19,6 +19,8 @@ Routes.signin = require('./signin/signin');
 Routes.profile = require('./profile/profile');
 /** @property {Object} livestream page router overloads import */
 Routes.livestream = require('./livestream/livestream');
+/** @property {Object} datajunk page router submodule */
+Routes.datajunk = require('./datajunk/datajunk');
 
 module.exports = Routes;
 /** ### Contains all this webapp pages
