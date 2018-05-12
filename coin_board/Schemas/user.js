@@ -231,8 +231,8 @@ UserSchema.statics.addapi = function(id,
  * @param {function} callback to get the result data or error
  * @memberof module:models~UserSchema
  */
-UserSchema.statics.addasset = function(id,
-    assettype, assetid, assetticker, assetqtt, callback) {
+UserSchema.statics.addasset = (id, assettype, assetid,
+    assetticker, assetqtt, callback) => {
     let newasset = {
         name: assetid,
         ticker: assetticker,
