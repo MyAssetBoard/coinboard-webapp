@@ -68,7 +68,9 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
             exec += 1;
             let args = cmd.split(' ')[1] !== undefined ? cmd.split(' ')[1] : '';
             _this.cmds[el].func(args, who, (d) => {
-                ctx.reply(d);
+                if (d.length < 30) {
+                    ctx.reply(d);
+                }
             });
         }
     }
