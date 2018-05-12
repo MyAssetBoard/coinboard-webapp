@@ -22,7 +22,7 @@ const express = require('express');
  * @memberof Routes.page.index
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** @memberof Routes.page.index */
 const param = require('../../params/def_params');

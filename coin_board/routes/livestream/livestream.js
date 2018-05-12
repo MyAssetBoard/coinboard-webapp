@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.livestream
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** @memberof Routes.page.livestream */
 const param = require('../../params/def_params');
