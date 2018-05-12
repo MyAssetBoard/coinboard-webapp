@@ -5,8 +5,7 @@
  * @license MIT
  */
 
-const
-{
+const {
     spawn,
 } = require('child_process');
 /** The Telegram bot /tree command object
@@ -31,9 +30,10 @@ const showfiles = {
             callback && callback(resp);
         });
 
-        ls.on('close', (code) => {
-            let log = 'child process exited with code ' + code;
-            console.log(log);
+        ls.on('close', (rt) => {
+            let log = 'COINBOARD_BOT: "$ tree" child process exit with code [';
+            log += rt + ']';
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
         });
     },
 };
