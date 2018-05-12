@@ -110,11 +110,17 @@ const UserSchema = new mongoose.Schema({
     },
     telegramid: {
         type: String,
+        unique: true,
         required: false,
     },
     password: {
         type: String,
         required: true,
+    },
+    scrapperid: {
+        type: String,
+        required: false,
+        default: 'notset',
     },
     Apis: {
         Bank: [ApiSchema],
