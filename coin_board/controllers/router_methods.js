@@ -28,6 +28,7 @@ const store = new MongoDBStore({
     databaseName: 'test2',
     collection: 'x_sessions',
 });
+
 /** Session storage config using mongodb store */
 const sess = {
     secret: 'keyboard cat',
@@ -44,31 +45,37 @@ const sess = {
 const Routes = require('../routes/routes');
 const httpopts = appconf.headeropts;
 const favOptions = appconf.favopts;
+
 /** Yes this is an express app */
 let app = express();
+
+/** A bit of log */
 let log = 'app.js| http options\n';
 log += '==== opts = [ ';
 log += JSON.stringify(httpopts) + ' ]';
 /* istanbul ignore next */
 process.env.NODE_ENV === 'infosec' ? console.log(log) : log;
-/** view engine path setup */
-app.set('views', path.join(__dirname, '../views'));
+
 /** view engine setup see [Ejs](ejs.co) */
 app.set('view engine', 'ejs');
+/** view engine path setup */
+app.set('views', path.join(__dirname, '../views'));
 /** Global app setup */
 app.disable('x-powered-by');
 app.disable('view cache');
 app.use('/favicon.ico',
     express.static('images/favicon.ico', favOptions)
 );
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true,
+    extended: false,
 }));
-app.set('trust proxy', 1); // trust first proxy
 
-// Sessions rules !!!
+/** trust first proxy */
+app.set('trust proxy', 1);
 
+/** Session rules */
 app.use(session(sess));
 
 app.use(
@@ -103,7 +110,8 @@ for (let el in Routes) {
         if (el === 'index') {
             app.use('/', Routes[el]);
         } else {
-            app.use('/' + el, Routes[el]);
+            let pp = '/' + el;
+            app.use(pp.toString(), Routes[el]);
         }
     }
 }
@@ -122,18 +130,56 @@ app.use('/logout', function(req, res, next) {
     }
 });
 
+// ####################################### */
 /** GraphQl API */
 /** parse POST /graphql/ body as text */
 app.use(bodyParser.text({type: 'application/graphql'}));
-/** express route setup */
-app.use(
+/** express route POST setup */
+const User = require('../Schemas/user');
+const param = require('../params/def_params');
+app.use('/api/*', (req, res, next) => {
+    let chck = req.session;
+
+    if (chck && chck.userId) {
+        User.findById(chck.userId).exec(function(error, user) {
+            if (error) {
+                console.log('errr ..' + error);
+                return res.redirect('/login');
+            } else if (user === null) {
+                let err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                console.log('errr ..');
+                return res.redirect('/login');
+            } else {
+                param.logco('INDEX', chck);
+                dup = param.index;
+                res.locals.data = user;
+                return next();
+            }
+        });
+    } else {
+        param.lognoco('INDEX', chck);
+        return res.redirect('/login');
+    }
+});
+
+app.post(
+    '/api/*',
+    graphql((request) => ({
+        schema: schema,
+        rootValue: request.body,
+        graphiql: false,
+    }))
+);
+/** express route GET (/api/renderGraphiQL) setup */
+app.get(
     '/api/*',
     graphql({
         schema: schema,
         graphiql: true,
     })
 );
-
+// #####################################################""
 
 /** catch 404 and forward to error handler below */
 app.use(function(req, res, next) {
@@ -184,7 +230,10 @@ function pollSecret() {
     const h = 2;
     const intergen = h * 60 * 60 * 1000;
     crypt.genrandomtocken();
-    setInterval(crypt.genrandomtocken, intergen);
+    setInterval(
+        () => {
+            crypt.genrandomtocken();
+        }, intergen);
 }
 pollSecret();
 module.exports = app;
