@@ -1,115 +1,138 @@
 /**
- * @file Mongoose {@link User} Schema definitions
+ * @file GraphQl setters/ getter and db class definitions, {@link GraphUser}
  * @author based on whatever its take to suceed boilerplate by Trevis Gulby
  */
 
-/** @module models */
-let makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
+const graphql = require('graphql');
 
-/** The saved user balances per asset object
- * @constructor
- * @property {String} name the asset full name
- * @property {String} ticker the asset ticker/symbol
- * @property {Float} qtt the asset qtt
+/** Still WIP work, this const will be replace by mongodb results
+ * when @GraphQlAPI will be working
  */
-const AssetsSchema = `
-    type Asset {
-        name: String!
-        ticker: String!
-        qtt: Number!
-    }
-`;
-
-/** The user api's model
- * @constructor
- * @property {String} name The new Api name like n26, coinbase ...
- * @property {String} key The user api key
- * @property {String} secret The user api secret (hashed)
- */
-const ApiSchema = `
-type Api {
-        name: String!
-        key: String!
-        secret: String!
-}
-type Apiinput {
-        name: String!
-        key: String!
-        secret: String!
-}
-type Query {
-        apis(limit: Int): [Api]
-        apis(name: String!): Api
-}
-
-type Mutation {
-        addapis(api: Apiinput!): Api
-}
-`;
-/** A tipical coin_board user
- * @constructor
- * @property {String} email the user email
- * @property {String} username the user username
- * @property {String} usercurrency the user default fiat or crypto currency
- * @property {String} ethaddr WIP around decentralisation and smart contracts
- * @property {String} telegramid user telegram id for bot access when registered
- * @property {String} password user password
- * @property {Array} Apis see {@link module:models~ApiSchema}
- * @property {Array} Assets see {@link module:models~AssetsSchema}
- * @property {Object} Date the user creation timestamp
- */
-const UserSchema = `
-type User {
-        id: String!
-        email: String
-        username: String!
-        usercurrency: String
-        ethaddr: String
-        telegramid: String
-        password: String!
-}
-
-type Userinput {
-        email: String
-        username: String!
-        usercurrency: String
-        ethaddr: String
-        telegramid: String
-        password: String!
-}
-
-type Query {
-       users(limit: Int): [User]
-       user(name: String!): User
-}
-
-type Mutation {
-       addUser(user: Userinput!): User
-}
-`;
-
-let addUser = (obj, args, context, info) => {
-    return {
-        id: args.id,
-    };
-};
-
-let getUser = (obj, args, context, info) => {
-    return {
-        name: args.name,
-    };
-};
-
-let resolvers = {
-    Query: {
-        users: getUser,
+const MOCKAPIS = [{
+        name: 'n26',
+        key: 'thisithekey',
+        secret: 'thisisthesecret',
     },
-    Mutation: {
-        addUser: addUser,
+    {
+        name: 'etoro',
+        key: 'thisithekey',
+        secret: 'thisisthesecret',
     },
-};
+];
 
-module.exports = makeExecutableSchema({
-    typeDefs: UserSchema,
-    resolvers: resolvers,
+const MOCKASSET = [{
+    name: 'Euro',
+    ticker: 'EUR',
+    qtt: 33.33,
+}, {
+    name: 'Ethereum',
+    ticker: 'ETH',
+    qtt: 42.42,
+}];
+
+const MOCKUSERS = [{
+        email: 'foobi@foobar.dev',
+        username: 'foobar',
+        usercurrency: 'EUR',
+        ethaddr: 'NONE',
+        telegramid: '12345',
+        password: 'toto',
+        Apis: MOCKAPIS,
+        Assets: MOCKASSET,
+    },
+    {
+        email: 'foobar@foobi.dev',
+        username: 'foobi',
+        usercurrency: 'EUR',
+        ethaddr: 'NONE',
+        telegramid: '12345',
+        password: 'tutu',
+        Apis: MOCKAPIS,
+        Assets: MOCKASSET,
+    },
+];
+
+const MockApisType = new graphql.GraphQLObjectType({
+    name: 'userapis',
+    fields: function() {
+        return {
+            name: {
+                type: graphql.GraphQLString,
+            },
+            key: {
+                type: graphql.GraphQLString,
+            },
+            secret: {
+                type: graphql.GraphQLString,
+            },
+        };
+    },
+});
+
+const MockAssetType = new graphql.GraphQLObjectType({
+    name: 'userasset',
+    fields: function() {
+        return {
+            name: {
+                type: graphql.GraphQLString,
+            },
+            ticker: {
+                type: graphql.GraphQLString,
+            },
+            qtt: {
+                type: graphql.GraphQLString,
+            },
+        };
+    },
+});
+
+const MockUserType = new graphql.GraphQLObjectType({
+    name: 'users',
+    fields: function() {
+        return {
+            username: {
+                type: graphql.GraphQLString,
+            },
+            email: {
+                type: graphql.GraphQLString,
+            },
+            usercurrency: {
+                type: graphql.GraphQLString,
+            },
+            ethaddr: {
+                type: graphql.GraphQLString,
+            },
+            telegramid: {
+                type: graphql.GraphQLString,
+            },
+            password: {
+                type: graphql.GraphQLString,
+            },
+            Apis: {
+                type: MockApisType,
+            },
+            Assets: {
+                type: MockAssetType,
+            },
+        };
+    },
+});
+
+const UserQueryType = new graphql.GraphQLObjectType({
+    name: 'Query',
+    fields: () => {
+        return {
+            users: {
+                type: new graphql.GraphQLList(MockUserType),
+                resolve: () => {
+                    // INsert Mongoose results
+                    return MOCKUSERS;
+                },
+            },
+        };
+    },
+});
+
+module.exports = new graphql.GraphQLSchema({
+    query: UserQueryType,
 });
