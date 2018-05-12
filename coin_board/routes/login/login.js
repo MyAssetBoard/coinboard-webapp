@@ -17,7 +17,7 @@ const express = require('express');
  * @property {Object} router the express.Router object
  */
 
-const router = express.Router();
+const router = new express.Router();
 /** The {@link module:auth~Auth} import
  * @memberof Routes.page.login
  * @property {Object} Auth see Auth class
@@ -36,7 +36,7 @@ const User = require('../../Schemas/user');
  * @param {Object} next
  * @memberof Routes.page.login
  */
-router.get('/', function(req, res, next) {
+router.get('*', function(req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
@@ -65,7 +65,7 @@ router.get('/', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.login
  */
-router.post('/', function(req, res, next) {
+router.post('/*', function(req, res, next) {
     if (req.body.logusername && req.body.logpassword) {
         User.authenticate(req.body.logusername, req.body.logpassword,
             function(error, user) {
@@ -75,7 +75,15 @@ router.post('/', function(req, res, next) {
                     return res.redirect('/login');
                 } else {
                     req.session.userId = user._id;
-                    return res.redirect('/assets/dashboard');
+                    /** Browser user agent so browser response */
+                    if (req.headers['user-agent'] &&
+                        req.headers['user-agent'].length > 5) {
+                        return res.redirect('/assets/dashboard');
+                    } else {
+                        /** Bot / ET / curl / wget / whatever code request */
+                        let jsonresp = {token: req.session.userId};
+                        return res.send(JSON.stringify(jsonresp));
+                    }
                 }
             });
     } else {
