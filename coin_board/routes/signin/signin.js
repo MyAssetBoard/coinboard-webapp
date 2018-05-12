@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.signin
  * @property {Object} router the express.Router object
  */
-const router = new express.Router();
+const router = express.Router();
 
 /** @memberof Routes.page.signin */
 const param = require('../../params/def_params');
@@ -85,7 +85,9 @@ router.post('/', function(req, res, next) {
                 return next(error);
             } else {
                 req.session.userId = user._id;
-                return res.redirect(param.assets.tvurl + 'assets/dashboard');
+                return process.env.SERV_ENV === 'onion' ?
+                    res.redirect(param.assets.tvurl + 'assets/dashboard') :
+                    res.redirect('/assets/dashboard');
             }
         });
     } else {
