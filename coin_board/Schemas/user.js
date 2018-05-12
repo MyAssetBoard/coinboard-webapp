@@ -84,18 +84,18 @@ const ApiSchema = new mongoose.Schema({
  * @property {Object} Date the user creation timestamp
  */
 const UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+    },
     email: {
         type: String,
         unique: true,
         required: true,
         trim: true,
         set: toLower,
-    },
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        trim: true,
     },
     usercurrency: {
         type: String,
@@ -151,7 +151,7 @@ UserSchema.pre('save', function(next) {
 });
 
 /** Hash api secret too */
-ApiSchema.pre('save', function(next) {
+ApiSchema.pre('save', (next) => {
     let api = this;
     bcrypt.hash(api.secret, 10, function(err, hash) {
         api.secret = hash;
@@ -210,7 +210,6 @@ UserSchema.statics.addapi = function(id,
                     console.log(error);
                     callback && callback(error);
                 } else {
-                    console.log(success);
                     callback && callback(null, success);
                 }
             });
@@ -248,8 +247,8 @@ UserSchema.statics.addasset = function(id,
     });
 };
 
+let Apis = mongoose.model('Apis', ApiSchema);
 let Assets = mongoose.model('Assets', AssetsSchema);
 let User = mongoose.model('User', UserSchema);
-let Apis = mongoose.model('Apis', ApiSchema);
 
 module.exports = User;
