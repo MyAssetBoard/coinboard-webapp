@@ -8,15 +8,13 @@
 
 const djunk = require('./djunk/colors');
 
-const djunk0 = require('./djunk/reqmodels');
-
 const djunk01 = require('./djunk/eatdiner');
 
 /** @NOTE : deprecated / see Mongoose models */
 const mongocrud = require('./mongo_crud');
 
 /** @NOTE : new mongoose method dep */
-const Datas = require('../Schemas/datas');
+// const Datas = require('../Schemas/datas');
 
 const fs0 = require('fs');
 
@@ -39,7 +37,7 @@ class DataJunk {
         /** {@link colors} options import */
         this.colors = djunk;
         /** {@link reqmodels} models import */
-        this.reqmodels = djunk0;
+        this.MOQREQUEST = require('./djunk/reqmodels');
         /** {@link eatdiner} import */
         this.eatd = djunk01;
     }
@@ -82,7 +80,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
 DataJunk.prototype.logeat = function() {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
-    process.env.NODE_ENV === 'development' ?
+    process.env.NODE_LOG === 'djunk' ?
         console.log(log) :
         log;
 };
@@ -155,7 +153,6 @@ DataJunk.prototype.eat = function(dset) {
         }
     }
     log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
-    log += JSON.stringify(res);
     process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
     return res = res.filter((elems) => {
         return elems !== undefined;
@@ -204,11 +201,11 @@ DataJunk.prototype.wr = function(fn, d) {
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
-                process.env.NODE_ENV === 'development' ? console.log(log) : log;
+                process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
                 reject(err);
             } else {
                 let log = 'Write news to DTAFOOD/news ';
-                process.env.NODE_ENV === 'development' ? console.log(log) : log;
+                process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
                 resolve(d);
             }
         });
@@ -251,18 +248,19 @@ DataJunk.prototype.dbthis = function(s, callback) {
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    this.crud.insert('DTAFOOD', insert, (res, err) => {
-        let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-        log += '[ ' + insert.feed && insert.feed[0] ?
-            insert.feed[0].title :
-            JSON.stringify(insert);
-        process.env.NODE_ENV === 'development' ?
-            console.log(log + ']\nResults :\n' + res.results) : log;
-        if (err) {
-            return callback && callback(err);
-        }
-        return callback && callback(res);
-    });
+    // this.crud.insert('DTAFOOD', insert, (res, err) => {
+    //     let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
+    //     log += '[ ' + insert.feed && insert.feed[0] ?
+    //         insert.feed[0].title :
+    //         JSON.stringify(insert);
+    //     process.env.NODE_ENV === 'development' ?
+    //         console.log(log + ']\nResults :\n' + res.results) : log;
+    //     if (err) {
+    //         return callback && callback(err);
+    //     }
+    //     return callback && callback(res);
+    // });
+    console.log(insert);
 };
 
 DataJunk.prototype.digest = function(what) {
@@ -298,12 +296,12 @@ DataJunk.prototype.pukedata = function(what) {
     });
 };
 
-if (process.env.LAUNCH_TASK === 'markme') {
+if (process.env.LAUNCH_TASK === 'gomine') {
     let data = new DataJunk();
     data.gomine();
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
-    data.goeat(data.reqmodels);
+    data.goeat(data.MOQREQUEST);
 }
 
 module.exports = DataJunk;
