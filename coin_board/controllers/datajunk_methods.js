@@ -4,17 +4,24 @@
  * @author Trevis Gulby
  */
 
+/** Dependencies import */
+
 const djunk = require('./djunk/colors');
 
 const djunk0 = require('./djunk/reqmodels');
 
 const djunk01 = require('./djunk/eatdiner');
 
+/** @NOTE : deprecated / see Mongoose models */
 const mongocrud = require('./mongo_crud');
+
+/** @NOTE : new mongoose method dep */
+const Datas = require('../Schemas/datas');
 
 const fs0 = require('fs');
 
 const https0 = require('https');
+/** */
 
 /** Wow so much methods !
  * @class
@@ -232,6 +239,13 @@ DataJunk.prototype.goshopping = function(where) {
     });
 };
 
+/** @todo To be refactored with Mongoose Models
+ * @param {Object} s the datas to be inserted
+ * @param {String} s.id the source name
+ * @param {String} s.url the source url
+ * @param {String} s.d the source 'd'atas
+ * @param {function} callback the callback function to get responses
+ */
 DataJunk.prototype.dbthis = function(s, callback) {
     let insert = {};
     insert.srcname = s.id;
@@ -245,10 +259,9 @@ DataJunk.prototype.dbthis = function(s, callback) {
         process.env.NODE_ENV === 'development' ?
             console.log(log + ']\nResults :\n' + res.results) : log;
         if (err) {
-            callback && callback(err);
-        } else {
-            callback && callback(res);
+            return callback && callback(err);
         }
+        return callback && callback(res);
     });
 };
 
