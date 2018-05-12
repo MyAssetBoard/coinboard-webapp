@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.signin
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** @memberof Routes.page.signin */
 const param = require('../../params/def_params');

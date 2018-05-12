@@ -16,7 +16,7 @@ const express = require('express');
  * @memberof Routes.page.profile
  * @property {Object} router the express.Router object
  */
-const router = express.Router();
+const router = new express.Router();
 
 /** User mongoose model import
  * @memberof Routes.page.profile
