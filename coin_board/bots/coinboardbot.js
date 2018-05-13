@@ -28,7 +28,7 @@ class CbBot {
         /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);
         /** To get authentication and user datas methods */
-        this.User = require('../Schemas/user');
+        this.User = require('../schemas/user');
     }
 }
 
