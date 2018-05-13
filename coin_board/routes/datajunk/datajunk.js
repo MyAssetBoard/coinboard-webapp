@@ -24,11 +24,11 @@ const param = require('../../params/def_params');
 /** User mongoose model import for authentication
  * @memberof Routes.page.signin
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 /** Scrapper mongoose model import
  * @memberof Routes.page.datajunk
  */
-const Scrapper = require('../../Schemas/scrapper');
+const Scrapper = require('../../schemas/scrapper');
 
 /** GET signin page
  * @memberof Routes.page.signin
@@ -38,7 +38,6 @@ router.get('/', function(req, res, next) {
 
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function(error, user) {
-            param.logco('DATAJUNK', chck);
             if (error) {
                 console.log('errr ..' + error);
                 return res.redirect('/');
@@ -55,12 +54,13 @@ router.get('/', function(req, res, next) {
                             return res.redirect('/datajunk');
                         }
                         param.logco('DATAJUNK', chck);
-                        res.locals.data = {};
-                        res.locals.data = scrapper;
-                        console.log(res.locals.data);
+                        res.locals.data = user.toJSON();
+                        res.locals.scrapper = scrapper.toJSON();
                         return res.render('page', param.datajunk);
                     });
             } else {
+                param.logco('DATAJUNK', chck);
+                res.locals.data = user.toJSON();
                 return res.render('page', param.datajunk);
             }
         });
