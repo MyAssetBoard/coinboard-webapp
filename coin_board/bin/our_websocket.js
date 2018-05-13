@@ -19,15 +19,6 @@ class CbWebsocket {
         /** Creds import */
         this.AppConfig = require('../controllers/config_methods');
         this.conf = new this.AppConfig();
-        this.server = this.https.createServer(this.conf.httpsc(), this.app);
-        this.server.listen(this.port, () => {
-            let log = 'WEBSOCKET - server is listening on :\n';
-            log += 'addr: [' + _this.conf.myip + '], port ' + _this.port;
-            process.env.NODE_ENV === 'development' ? console.log(log) : log;
-        });
-        const server = this.server;
-        this.Ws = require('ws'); ;
-        this.wss = new this.Ws.Server({server});
         /** NUMBER of current sessions on scrapper room */
         this.scrapperco = 0;
     }
@@ -35,10 +26,22 @@ class CbWebsocket {
 
 /** Main launcher method
  * @TODO rewrite deprec socket.io to ws method's
- * @return {function} this.scrapper
  */
 CbWebsocket.prototype.startmeup = function() {
-    return this.scrapper();
+    let log = 'WEBSOCKET - server is listening on :\n';
+    log += 'addr: [' + this.conf.myip + '], port ' + this.port;
+
+    process.env.NODE_ENV === 'development' ? console.log(log) : log;
+    this.server = this.https.createServer(this.conf.httpsc(),
+        (req, res) => {
+            let resp = {error: '**Try with websocket**'};
+            res.writeHead(200);
+            res.end(JSON.stringify(resp));
+        }).listen(this.port);
+    let server = this.server;
+    this.Ws = require('ws'); ;
+    this.wss = new this.Ws.Server({server});
+    this.scrapper();
 };
 
 /** Log this user
