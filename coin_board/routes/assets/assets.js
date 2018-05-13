@@ -29,7 +29,7 @@ const roads = require('./assets_roads');
 /** User mongoose schemas import
  * @memberof Routes.page.assets
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 
 /** Take the req original url and make it match with the right methods

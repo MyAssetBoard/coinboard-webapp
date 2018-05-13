@@ -28,7 +28,7 @@ const param = require('../../params/def_params');
 /** User mongoose model import
  * @memberof Routes.page.login
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 /**
  * @param {Object} req

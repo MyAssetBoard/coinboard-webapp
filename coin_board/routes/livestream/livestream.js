@@ -24,7 +24,7 @@ const param = require('../../params/def_params');
 /** User mongoose model import
  * @memberof Routes.page.livestream
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 /** GET livestream page
  * @memberof Routes.page.livestream
