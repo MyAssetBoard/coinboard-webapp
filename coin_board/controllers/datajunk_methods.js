@@ -14,8 +14,8 @@ const djunk01 = require('./djunk/eatdiner');
 const mongocrud = require('./mongo_crud');
 
 /** @NOTE : new mongoose method dep */
-// const Datas = require('../Schemas/datas');
-const Scrapper = require('../Schemas/scrapper');
+// const Datas = require('../schemas/datas');
+const Scrapper = require('../schemas/scrapper');
 
 const fs0 = require('fs');
 
@@ -86,30 +86,6 @@ DataJunk.prototype.logeat = function() {
         log;
 };
 
-/**
- * Launch data crawl for all sources in {@link DataJunk#reqmodels}
- * @param {Object} where source id, url, param etc
- */
-DataJunk.prototype.goeat = function(where) {
-    let _this = this;
-    if (where.req) {
-        _this.goshopping(where.toJSON()).then((res) => {
-            if (res) {
-                // _this.digest(d).then((res) => {
-                //     if (res) {
-                //         _this.logeat();
-                //     }
-                // }).catch((rej, err) => {
-                //     throw err;
-                // });
-                console.log(res);
-            }
-        }).catch((rej, err) => {
-            throw err;
-        });
-    }
-};
-
 /** Launch data mining aka {@link DataJunk#eat} function */
 DataJunk.prototype.gomine = function() {
     let _this = this;
@@ -153,40 +129,6 @@ DataJunk.prototype.eat = function(dset) {
 };
 
 /**
- * @param {Object} where Object containing all source infos and parsing methods
- * @param {function} callback to get the result
- */
-DataJunk.prototype.begdata = function(where, callback) {
-    console.log(where.req);
-    let req = this.https.get(where.req, function(res) {
-        let bodyChunks = [];
-        res.on('data', (chunk) => {
-            bodyChunks.push(chunk);
-        }).on('end', () => {
-            let body = Buffer.concat(bodyChunks);
-            /** @todo Careful with non-JSON responses !! */
-            let ifjson = JSON.parse(body);
-            let clean = [];
-            if (ifjson.query && ifjson.query.results) {
-                let r = ifjson.query.results;
-                for (el in r.item) {
-                    if (r.item[el]) {
-                        clean[el] = r.item[el];
-                    }
-                }
-            } else {
-                clean = ifjson;
-            }
-            callback && callback(clean);
-        });
-    });
-    req.on('error', function(e) {
-        console.log('DataJunk -ERROR: ' + e.message);
-        callback && callback(e);
-    });
-};
-
-/**
  * Wr aka write file, write gathered json inside DTAFOOD directory
  * @param {string} fn file name
  * @param {Object} d data to write json fmt
@@ -211,23 +153,59 @@ DataJunk.prototype.wr = function(fn, d) {
 };
 
 /**
+ * @param {Object} where Object containing all source infos and parsing methods
+ * @param {function} callback to get the result
+ */
+DataJunk.prototype.begdata = function(where, callback) {
+    console.log(where.req);
+    let req = this.https.get(where.req, function(res) {
+        let bodyChunks = [];
+        res.on('data', (chunk) => {
+            bodyChunks.push(chunk);
+        }).on('end', () => {
+            let body = Buffer.concat(bodyChunks);
+            /** @todo Careful with non-JSON responses !! */
+            let ifjson = JSON.parse(body);
+            let clean = [];
+            if (ifjson.query && ifjson.query.results) {
+                clean = ifjson.query.results;
+            } else {
+                clean = body;
+            }
+            return callback && callback(clean);
+        });
+    });
+    req.on('error', function(e) {
+        console.log('DataJunk -ERROR: ' + e.message);
+        return callback && callback(e);
+    });
+};
+
+/**
+ * Dummy regex clean and  string
+ * @param  {String} mess
+ * @return {String} p
+ */
+
+/**
  * {@link DataJunk#begdata}, then {@link DataJunk#wr} and finally
  * return promise
- * @param {Object} where see {@link DataJunk#reqmodels}
+ * @param {Object} where see {@link module:models~RequestSchemas}
  * @return {Promise}
  */
 DataJunk.prototype.goshopping = function(where) {
     let _this = this;
+    let Parseur = require('../schemas/scrapper').Parseur;
     return new Promise((resolve, reject) => {
-        _this.begdata(where, (res, err) => {
-            if (res) {
-                console.log(res);
-                // _this.wr(where.fname, res).then((r) => {
-                //     resolve(r);
-                //     return r;
-                // }).catch((rej, err) => {
-                //     reject(err);
-                // });
+        _this.begdata(where.toJSON(), (res, err) => {
+            if (res && res.item) {
+                for (el in res.item) {
+                    if (res.item[el].description) {
+                        res.item[el].description =
+                            Parseur.getptag(res.item[el].description);
+                    }
+                }
+                resolve(res);
             } else if (!res || err) {
                 reject(err);
             }
@@ -247,19 +225,18 @@ DataJunk.prototype.dbthis = function(s, callback) {
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    // this.crud.insert('DTAFOOD', insert, (res, err) => {
-    //     let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-    //     log += '[ ' + insert.feed && insert.feed[0] ?
-    //         insert.feed[0].title :
-    //         JSON.stringify(insert);
-    //     process.env.NODE_ENV === 'development' ?
-    //         console.log(log + ']\nResults :\n' + res.results) : log;
-    //     if (err) {
-    //         return callback && callback(err);
-    //     }
-    //     return callback && callback(res);
-    // });
-    console.log(insert);
+    this.crud.insert('DTAFOOD', insert, (res, err) => {
+        let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
+        log += '[ ' + insert.feed && insert.feed[0] ?
+            insert.feed[0].title :
+            JSON.stringify(insert);
+        process.env.NODE_ENV === 'development' ?
+            console.log(log + ']\nResults :\n' + res.results) : log;
+        if (err) {
+            return callback && callback(err);
+        }
+        return callback && callback(res);
+    });
 };
 
 DataJunk.prototype.digest = function(what) {
@@ -302,8 +279,21 @@ if (process.env.LAUNCH_TASK === 'gomine') {
     let data = new DataJunk();
     let scrappername = 'BobyScrapper';
     Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
+        /** @todo to be loopified */
         let where = scrapper.Sources.Crypto.infos[0];
-        data.goeat(where);
+        data.goshopping(where).then((resolve, reject) => {
+            if (reject) {
+                console.log(reject);
+            }
+            // data.wr(where.fname, res).then((r) => {
+            //     resolve(r);
+            //     return r;
+            // }).catch((rej, err) => {
+            //     reject(err);
+            // });
+            console.log(resolve);
+            return (resolve);
+        });
     });
 }
 
