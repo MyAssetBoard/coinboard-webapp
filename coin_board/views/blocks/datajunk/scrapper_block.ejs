@@ -22,8 +22,8 @@
 		<form action="/datajunk/scrapper/newsource" method="post">
 			<div class="form-group">
 				<label for="scname">Scrapper name</label>
-				<% if (locals.data) {%>
-					<input name="name" class="form-control text-black" type="text" value="<%= locals.data.name%>" readonly="readonly">
+				<% if (locals.scrapper) {%>
+					<input name="name" class="form-control text-black" type="text" value="<%= locals.scrapper.name%>" readonly="readonly">
 				<%} else {%>
 					<div class="alert-danger text-center">Please create a scrapper first
 					</div>

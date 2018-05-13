@@ -1,0 +1,95 @@
+<div class="card mb-3">
+	<div class="card-header text-center">
+		<h2>My scrapper</h2>
+	</div>
+	<div class="row">
+		<div class="card-body">
+			<%if (scrapper && locals.scrapper.Sources) {%>
+				<h3>
+					<b>
+						<u><%= locals.scrapper.name %></u>
+					</b>
+				</h3>
+				<% for (el in locals.scrapper.Sources) {%>
+					<div class="col-sm-6">
+						<div class="card mb-1">
+							<div class="card-header">
+								<b><%= el %></b>
+							</div>
+							<div class="card-body">
+								<%for (srctype in locals.scrapper.Sources[el]) {%>
+									<li><%= srctype %>
+										<%if (locals.scrapper.Sources[el][srctype].length) {%>
+											<button type="button" class="btn btn-sm btn-primary ml-3" data-toggle="modal" data-target="#yolo" title="source">show source</button>
+											<div class="modal fade" id="yolo" tabindex="-1" role="dialog" aria-labelledby="source info" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<%= JSON.stringify(locals.scrapper.Sources[el][srctype])%>
+													</div>
+												</div>
+											<%}%>
+										</li>
+									<%}%>
+								</div>
+							</div>
+						</div>
+					<%}%>
+				<%} %>
+			</div>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-primary text-white">Ok</button>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-5">
+			<div class="card mb-3">
+				<div class="card-header text-center">
+					<h2>Tasks</h2>
+				</div>
+				<div class="card-body text-center">
+					<div class="btn-group" role="group" aria-label="Basic example">
+						<button id="scrape" type="button" class="btn btn-secondary mr-2" data-toggle="collapse" href="#fii" role="button" aria-expanded="false" aria-controls="fii">SCRAPE</button>
+						<button id="eat" type="button" class="btn btn-secondary mr-2" data-toggle="collapse" href="#fii" role="button" aria-expanded="false" aria-controls="fii">EAT</button>
+						<button id="read" type="button" class="btn btn-secondary" data-toggle="collapse" href="#fuu" role="button" aria-expanded="false" aria-controls="fii">READ</button>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button id="abort" type="submit" class="btn btn-danger text-white">Abort</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-5">
+			<div class="card">
+				<div class="card-header text-center">
+					<h2>Runner logs</h2>
+				</div>
+				<div class="card-body">
+					<div class="collapse mt-2" id="fii">
+						<div class="card card-body" style="overflow: scroll">
+							waiting for logs ..
+						</div>
+					</div>
+				</div>
+				<div class="card-footer"></div>
+			</div>
+		</div>
+		<div class="col-sm-5">
+			<div class="card">
+				<div class="card-header text-center">
+					<h2>Results</h2>
+				</div>
+				<div class="card-body">
+					<div class="collapse mt-2" id="fuu">
+						<div class="card card-body" style="overflow: scroll">
+							waiting for results ..
+						</div>
+					</div>
+				</div>
+				<div class="card-footer">
+					<button type="submit" class="btn btn-primary text-white">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
