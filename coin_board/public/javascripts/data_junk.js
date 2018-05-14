@@ -16,8 +16,14 @@ $(document).ready(function() {
         scrapper.send('ok');
     });
     scrapper.addEventListener('message', (event) => {
-        console.log(event.data);
-        utils.fillPopup({ok: event.data});
+        let logs = JSON.parse(event.data);
+        if (logs.foo) {
+            utils.fillPopup(logs);
+        } else if (logs.files) {
+            utils.fillLogs(logs, '#filescontent');
+        } else {
+            utils.fillLogs(logs, '#slogcontent');
+        }
     });
     scrapper.addEventListener('em', (event) => {
         printError(event.data);
