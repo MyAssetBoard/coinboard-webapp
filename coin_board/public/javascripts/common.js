@@ -43,5 +43,17 @@ Commons.prototype.fillPopup = function(data) {
     $('#msgnb').html(_this.msgcnt.toString());
     setTimeout(() => {
         $('#popup').fadeToggle('fast');
-    }, 2500);
+    }, 4500);
+};
+
+/** DOM manip for user reading of websocket feed
+ * @param {Object} data new received data
+ * @param {String} select the log type selector
+ */
+Commons.prototype.fillLogs = function(data, select) {
+    let _this = this;
+
+    $(select.toString()).append('<li>' + JSON.stringify(data) + '</li>');
+    _this.msgcnt += 1;
+    $('#msgnb').html(_this.msgcnt.toString());
 };
