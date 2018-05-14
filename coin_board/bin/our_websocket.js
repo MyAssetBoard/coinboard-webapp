@@ -11,7 +11,6 @@
 class CbWebsocket {
     /** @constructor */
     constructor() {
-        let _this = this;
         this.https = require('https');
         this.uuid = require('uuid/v1');
         this.user = '';
@@ -34,8 +33,11 @@ CbWebsocket.prototype.startmeup = function() {
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
     this.server = this.https.createServer(this.conf.httpsc(),
         (req, res) => {
-            let resp = {error: '**Try with websocket**'};
-            res.writeHead(200);
+            let resp = {
+                status: 101,
+                error: '**Websocket connection only**',
+            };
+            res.writeHead(404);
             res.end(JSON.stringify(resp));
         }).listen(this.port);
     let server = this.server;
@@ -54,6 +56,31 @@ CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
+/**
+ * Run command on format CMD [args]
+ * @param {String} msg the received command
+ * @param {Object} ws the websocket client object
+ */
+CbWebsocket.prototype.runme = (msg, ws) => {
+    let scrape = require('../bots/acts/refresh_act');
+    let showres = require('../bots/acts/showfiles_act');
+    let args = msg.split(' ')[1] !== undefined ? msg.split(' ')[1] : '';
+    switch (msg) {
+    case 'SCRAPE':
+        scrape.func(args, {}, (res) => {
+            ws.send(JSON.stringify(res));
+        });
+    case 'READ':
+        showres.func(args, {}, (res) => {
+            let resp = {files: res};
+            ws.send(JSON.stringify(resp));
+        });
+    default:
+        console.log('received: %s', msg);
+        break;
+    }
+};
+
 /** @property {function} scrapper socket room event handling */
 CbWebsocket.prototype.scrapper = function() {
     let _this = this;
@@ -63,10 +90,9 @@ CbWebsocket.prototype.scrapper = function() {
         _this.user = _this.uuid();
         _this.logthisguy('all', _this.user);
         ws.on('message', function incoming(message) {
-            console.log('received: %s', message);
-            ws.send('ok :[' + message + ']');
+            _this.runme(message, ws);
         });
-        ws.send('something');
+        ws.send(JSON.stringify({foo: 'something'}));
         ws.on('close', function close() {
             _this.scrapperco -= 1;
             _this.logthisguy('all', _this.user);
