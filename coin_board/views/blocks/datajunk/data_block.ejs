@@ -37,7 +37,8 @@
 				<%} %>
 			</div>
 			<div class="card-footer">
-				<button type="submit" class="btn btn-primary text-white">Ok</button>
+				<button type="submit" class="btn btn-primary text-white">Add source</button>
+				<button type="submit" class="btn btn-primary text-white">Do other thing</button>
 			</div>
 		</div>
 	</div>
@@ -50,7 +51,7 @@
 				<div class="card-body text-center">
 					<div class="btn-group" role="group" aria-label="Basic example">
 						<button id="scrape" type="button" class="btn btn-secondary mr-2" data-toggle="collapse" href="#fii" role="button" aria-expanded="false" aria-controls="fii">SCRAPE</button>
-						<button id="eat" type="button" class="btn btn-secondary mr-2" data-toggle="collapse" href="#fii" role="button" aria-expanded="false" aria-controls="fii">EAT</button>
+						<button id="eat" type="button" class="btn btn-secondary mr-2" data-toggle="collapse" href="#fee" role="button" aria-expanded="false" aria-controls="fii">EAT</button>
 						<button id="read" type="button" class="btn btn-secondary" data-toggle="collapse" href="#fuu" role="button" aria-expanded="false" aria-controls="fii">READ</button>
 					</div>
 				</div>
@@ -60,35 +61,50 @@
 			</div>
 		</div>
 		<div class="col-sm-5">
-			<div class="card">
+			<div class="card mb-3">
 				<div class="card-header text-center">
-					<h2>Runner logs</h2>
+					<h2>Scrapper logs</h2>
 				</div>
 				<div class="card-body">
 					<div class="collapse mt-2" id="fii">
-						<div class="card card-body" style="overflow: scroll">
-							waiting for logs ..
+						<div class="card card-body infiList">
+							<div id="slogcontent"></div>
 						</div>
 					</div>
 				</div>
-				<div class="card-footer"></div>
+				<div class="card-footer text-center"><%= Date.now()%></div>
 			</div>
 		</div>
 		<div class="col-sm-5">
 			<div class="card">
 				<div class="card-header text-center">
-					<h2>Results</h2>
+					<h2>Files results</h2>
 				</div>
 				<div class="card-body">
 					<div class="collapse mt-2" id="fuu">
-						<div class="card card-body" style="overflow: scroll">
-							waiting for results ..
+						<div class="card card-body infiList">
+							<div id="filescontent"></div>
 						</div>
 					</div>
 				</div>
 				<div class="card-footer">
 					<button type="submit" class="btn btn-primary text-white">Ok</button>
 				</div>
+			</div>
+		</div>
+		<div class="col-sm-5">
+			<div class="card">
+				<div class="card-header text-center">
+					<h2>Parseur logs</h2>
+				</div>
+				<div class="card-body">
+					<div class="collapse mt-2" id="fee">
+						<div class="card card-body infiList">
+							<div id="plogcontent"></div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center"><%= Date.now()%></div>
 			</div>
 		</div>
 	</div>
