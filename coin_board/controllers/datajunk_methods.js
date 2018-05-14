@@ -86,17 +86,6 @@ DataJunk.prototype.logeat = function() {
         log;
 };
 
-/** Launch data mining aka {@link DataJunk#eat} function */
-DataJunk.prototype.gomine = function() {
-    let _this = this;
-    this.pukedata({}).then((res) => {
-        let test = _this.eat(res);
-        if (process.env.NODE_LOG === 'djunk') {
-            console.log(test);
-        }
-    });
-};
-
 /**
  * Operations Pour tout les elements dans parseme (obj: )
  * @param {Object} dset results from feeds array in db
@@ -258,41 +247,103 @@ DataJunk.prototype.digest = function(what) {
     });
 };
 
-DataJunk.prototype.pukedata = function(what) {
+/**
+ * Put .json file in directory and format them to feed db according
+ * to {@link #models~data} schemas
+ * @param {String} datadir the json datas directory
+ * @return {function} Promise resolve reject nothing fancy
+ */
+DataJunk.prototype.getfiles = function(datadir) {
     let _this = this;
-    return new Promise((resolve, reject) => {
-        what = what ? what : {};
-        _this.crud.find(what, function(res, err) {
-            if (res && res[0] && res[0].feed) {
-                resolve(res);
-            } else if (err) {
-                reject(err);
-            }
-        });
+    return new Promise(function(resolve, reject) {
+        console.log(datadir);
+        ROOT_APP_PATH = _this.fs.realpathSync('.');
+        if (_this.fs.existsSync(datadir) === true) {
+            _this.fs.readdir(datadir, function(err, list) {
+                if (err) {
+                    throw (err);
+                }
+                let regex = new RegExp('.*.json');
+                let clean = [];
+                list.forEach(function(item) {
+                    if (regex.test(item)) {
+                        item = item.replace(/^/, datadir);
+                        clean.push(item);
+                    }
+                });
+                resolve(clean);
+            });
+        } else {
+            throw new Error('No such file or directory');
+        }
     });
 };
 
+/**
+ * @param {Object} item
+ * @param {string} item.
+ */
+/**
+ * Put gathered file to db
+ * @param {Array} files
+ * @return {Promise}
+ */
+DataJunk.prototype.pushtodb = function(files) {
+    return new Promise(function(resolve, reject) {
+        let data = require('../schemas/datas');
+        let feed = require(files[0]);
+        resolve(feed.item[0].title);
+
+        // data.create({}, (error, res) => {
+        //     resolve(res._id);
+        // });
+    });
+};
+/** @todo to be loopified for every source in all types
+ * and also make a real ipc protocol instead of dirty pipes on standard
+ * output :p
+ */
 if (process.env.LAUNCH_TASK === 'gomine') {
     let data = new DataJunk();
-    data.gomine();
+    data.getfiles('../../DTAFOOD/infos/').then((resolve) => {
+        console.log('Files ::');
+        console.log(resolve);
+        data.pushtodb(resolve).then((results) => {
+            console.log(results);
+            process.exit(0);
+        }).catch((reject) => {
+            if (reject) {
+                throw reject;
+            }
+        });
+    }).catch((reject) => {
+        console.log(reject);
+        process.exit(1);
+    });
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
     let scrappername = 'BobyScrapper';
     Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
-        /** @todo to be loopified */
         let where = scrapper.Sources.Crypto.infos[0];
         data.goshopping(where).then((resolve, reject) => {
             if (reject) {
                 console.log(reject);
+            } else if (resolve) {
+                console.log(resolve);
+                let path = 'DTAFOOD/infos/';
+                let fname = path + where.name + '-' + Date.now() + '.json';
+                console.log('{fname: "' + fname + '"}\n');
+                data.wr(fname.toString(), resolve).then((r) => {
+                    console.log(r);
+                    process.exit(0);
+                }).catch((reject, error) => {
+                    console.log(error);
+                    process.exit(1);
+                });
             }
-            // data.wr(where.fname, res).then((r) => {
-            //     resolve(r);
-            //     return r;
-            // }).catch((rej, err) => {
-            //     reject(err);
-            // });
-            console.log(resolve);
-            return (resolve);
+        }).catch((reject, err) => {
+            console.log(err);
+            process.exit(1);
         });
     });
 }
