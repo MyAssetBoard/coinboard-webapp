@@ -198,7 +198,7 @@ ScrapperSchemas.statics.addsource = (uinput, callback) => {
  */
 ParsingSchemas.statics.getptag = (mess) => {
     let clean = mess.match(/<p>(.*?)<\/p>/g);
-    clean = clean === undefined || !clean.length < 3 ?
+    clean = !clean ?
         'PARSING-ERROR: No <p> tag(s) found' :
         clean.toString().replace(/<\/?p>/g, '');
     return clean;
