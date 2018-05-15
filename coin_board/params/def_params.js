@@ -75,24 +75,6 @@ let param = {
             jumbo: 'blocks/all/my_jumbotron',
         },
     },
-    livestream: {
-        app: settings.apptitle,
-        title: 'Live trading charts',
-        author: settings.appcopyrights,
-        tsurl: confell.runningaddrs.appsurl,
-        tvurl: confell.runningaddrs.appvurl,
-        page: 'livestream',
-        scripts: {
-            socket: cdns.socket,
-            commons: '/common.js',
-            trade: '/tradestream.js',
-        },
-        blocks: {
-            jumbo: 'blocks/all/my_jumbotron',
-            ticker: 'blocks/index/ticker_panel',
-            livestream: 'blocks/index/tradestream',
-        },
-    },
     login: {
         app: settings.apptitle,
         title: 'Login',
