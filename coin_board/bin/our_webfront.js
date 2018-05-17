@@ -22,9 +22,9 @@ class CbView {
         this.conf = new this.AppConfig();
         /** Get port from environment and store in Express. */
         this.port = process.env.PORT || '3000';
-        this.app.set('port', this.port);
+        this.app.set('port', _this.port);
         /** Create HTTPS server.*/
-        this.server = this.https.createServer(this.conf.httpsc(), this.app);
+        this.server = this.https.createServer(_this.conf.httpsc(), _this.app);
         /** Event listener for HTTP server */
         this.onListening = function() {
             let addr = _this.server.address();
@@ -78,7 +78,7 @@ CbView.prototype.lightmyfire = function() {
     process.env.NODE_ENV === 'development' ?
         console.log(log) :
         log;
-    this.server.listen(this.port, this.addr, function() {
+    this.server.listen(_this.port, _this.addr, function() {
         let log = 'WEB_VIEW - server is listening on :\n';
         console.log(_this.server.address());
         log += 'addr: [' + _this.server.address().address +

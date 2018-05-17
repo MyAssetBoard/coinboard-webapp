@@ -105,7 +105,7 @@ const InfosSchema = new mongoose.Schema({
  * @property {String} tags a string of tag separed by ';' symbol
  * @property {Object} Date the Price gathering date or if histo, the timestamp
  */
-const PricesSchema = new mongoose.Schemas({
+const PricesSchema = new mongoose.Schema({
     fsym: {
         type: String,
         required: true,
@@ -141,7 +141,7 @@ const PricesSchema = new mongoose.Schemas({
  * @property {Array} Coef.min the 0 min value and the error message
  * @property {Array} Coef.max the 10 max value and the error message
  */
-const TrendSchema = new mongoose.Schemas({
+const TrendSchema = new mongoose.Schema({
     Type: {
         type: String,
         enum: ['bullish', 'bearish'],
@@ -161,7 +161,7 @@ const TrendSchema = new mongoose.Schemas({
  * @property {String} url the 'to scrap' url
  * @property {function} url.set the setter for url (WIP)
  */
-const SourcesSchema = new mongoose.Schemas({
+const SourcesSchema = new mongoose.Schema({
     url: {
         type: String,
         unique: true,
@@ -198,7 +198,7 @@ const SourcesSchema = new mongoose.Schemas({
  * @property {Array} Sources.Crypto the crypto sources
  * @property {Array} Sources.Markets the stock Markets sources
  */
-const DatasSchema = new mongoose.Schemas({
+const DatasSchema = new mongoose.Schema({
     Infos: {
         Bank: [InfosSchema],
         Crypto: [InfosSchema],
@@ -228,15 +228,54 @@ InfosSchema.pre('save', function(next) {
     next();
 });
 
+DatasSchema.statics.addinfos = function(datasubject, dataarray, callback) {
+    Infos.create(dataarray, (error, info) => {
+        if (error) {
+            throw error;
+        } else {
+            return info;
+        }
+    });
+};
+
+DatasSchema.statics.addprices = function(datasubject, dataarray, callback) {
+    Prices.create(dataarray, (error, price) => {
+        if (error) {
+            throw error;
+        } else {
+            return price;
+        }
+    });
+};
+
+DatasSchema.statics.addsources = function(datasubject, dataarray, callback) {
+    Sources.create(dataarray, (error, source) => {
+        if (error) {
+            throw error;
+        } else {
+            return source;
+        }
+    });
+};
+
+DatasSchema.statics.addtrends = function(datasubject, dataarray, callback) {
+    Trends.create(dataarray, (error, trend) => {
+        if (error) {
+            throw error;
+        } else {
+            return trend;
+        }
+    });
+};
+
+
 let Prices = mongoose.model('Prices', PricesSchema);
 let Infos = mongoose.model('Infos', InfosSchema);
 let Sources = mongoose.model('Sources', SourcesSchema);
+let Trends = mongoose.model('Trends', TrendSchema);
 let Datas = mongoose.model('Datas', DatasSchema);
 
 module.exports = Datas;
-module.exports = Infos;
-module.exports = Sources;
-module.exports = Prices;
 </code></pre>
         </article>
     </section>
@@ -247,11 +286,11 @@ module.exports = Prices;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Thu May 10 2018 11:24:55 GMT+0200 (CEST)
+				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

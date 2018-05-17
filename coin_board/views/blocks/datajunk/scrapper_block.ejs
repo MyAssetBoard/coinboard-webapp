@@ -1,6 +1,6 @@
-<div class="card">
+<div class="card mb-2">
 	<div class="card-header">
-		<h1>New Scrapper Object</h1>
+		<h1>New Scrapper</h1>
 	</div>
 	<form action="/datajunk/newscrapper" method="post">
 		<div class="card-body">
@@ -16,14 +16,14 @@
 </div>
 <div class="card">
 	<div class="card-header">
-		<h1>New Source Object</h1>
+		<h1>New Source for Scrapper</h1>
 	</div>
 	<div class="card-body">
 		<form action="/datajunk/scrapper/newsource" method="post">
 			<div class="form-group">
 				<label for="scname">Scrapper name</label>
-				<% if (locals.data) {%>
-					<input name="name" class="form-control text-black" type="text" value="<%= locals.data.name%>" readonly="readonly">
+				<% if (locals.scrapper) {%>
+					<input name="name" class="form-control text-black" type="text" value="<%= locals.scrapper.name%>" readonly="readonly">
 				<%} else {%>
 					<div class="alert-danger text-center">Please create a scrapper first
 					</div>
@@ -61,7 +61,9 @@
 				<label for="spath">Source request path</label>
 				<input name="sourcereqpath" id="spath" type="text" class="form-control"></input>
 			</div>
-			<button type="submit" class="btn btn-primary text-white">Save</button>
+			<div class="card-footer">
+				<button type="submit" class="btn btn-primary text-white">Save</button>
+			</div>
 		</form>
 	</div>
 </div>

@@ -21,7 +21,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 /** GraphQl server */
 const graphql = require('express-graphql');
-const schema = require('../Schemas/graph_user');
+const schema = require('../schemas/graph_user');
 
 const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017',
@@ -135,7 +135,7 @@ app.use('/logout', function(req, res, next) {
 /** parse POST /graphql/ body as text */
 app.use(bodyParser.text({type: 'application/graphql'}));
 /** express route POST setup */
-const User = require('../Schemas/user');
+const User = require('../schemas/user');
 const param = require('../params/def_params');
 app.use('/api/*', (req, res, next) => {
     let chck = req.session;

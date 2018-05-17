@@ -21,7 +21,7 @@ const router = new express.Router();
 /** User mongoose model import
  * @memberof Routes.page.profile
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 /** @memberof Routes.page.profile */
 const param = require('../../params/def_params');

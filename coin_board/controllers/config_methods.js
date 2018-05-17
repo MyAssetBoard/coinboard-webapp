@@ -23,19 +23,14 @@ class AppConfig {
         /** what ip should i get ?
          * @TODO : Add new methods to better select listening interface
          */
-        this.hostname = 'localhost';
-        this.myip = function() {
-            this.dns.lookup(_this.hostname, (err, res) => {
-                return res;
-            });
-        };
+        this.myip = '127.0.0.1';
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().view() : 'https://' + this.myip() + ':3000/',
+                this.gettorhostnames().view() : 'https://' + _this.myip + ':3000/',
             /** final app socket url for reference in template */
             appsurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().socks() : 'https://' + this.myip() + ':3001/',
+                this.gettorhostnames().socks() : 'wss://' + _this.myip + ':3001',
         };
     }
 }
@@ -90,8 +85,8 @@ AppConfig.prototype.favopts = {
 AppConfig.prototype.httpsc = function() {
     let _this = this;
     let httpsc = {};
-    httpsc.key = _this.fs.readFileSync('coin_board/params/localhost.key');
-    httpsc.cert = _this.fs.readFileSync('coin_board/params/localhost.cert');
+    httpsc.key = _this.fs.readFileSync('coin_board/params/server.key');
+    httpsc.cert = _this.fs.readFileSync('coin_board/params/server.pem');
     httpsc.requestCert = false;
     httpsc.rejectUnauthorized = false;
     return httpsc;

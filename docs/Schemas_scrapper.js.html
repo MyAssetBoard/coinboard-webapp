@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Source: Schemas/scrapper.js
+		</title>
+		<script src="scripts/prettify/prettify.js">
+		</script>
+		<script src="scripts/prettify/lang-css.js">
+		</script>
+		<!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+		<link
+		        rel='shortcut icon'
+		        type='image/x-icon'
+		        href='./favicon.ico'
+		/>
+		<link
+		        type="text/css"
+		        rel="stylesheet"
+		        href="styles/prettify-tomorrow.css"
+		>
+			<link
+			        type="text/css"
+			        rel="stylesheet"
+			        href="styles/jsdoc-default.css"
+			>
+	</head>
+
+	<body>
+		<div id="main">
+			<h1 class="page-title">
+				<a href="https://github.com/MyAssetBoard/coinboard-webapp/">
+					Source: Schemas/scrapper.js</a> documentation
+			</h1>
+			<div id="content">
+				
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Mongoose {@link scrapper} Schema definitions
+ * @author based on whatever its take to suceed boilerplate by Trevis Gulby
+ */
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/test3');
+
+/** The request model (to get rss feeds)
+ * @constructor
+ * @memberof module:models~
+ * @property {String} host in fact its for now the yahoo api for rss to json
+ * @property {String} path the path like /param=tto&amp;otherparam=tonton
+ * @property {Number} __v the mongoose version system
+ */
+const RequestSchemas = new mongoose.Schema({
+    host: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    path: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    __v: {
+        type: Number,
+        select: false,
+    },
+    _id: false,
+});
+
+/** The parsing model (to remove html markup and other garbage from feeds)
+ * @constructor
+ * @memberof module:models~
+ * @property {String} regex the user submited regex for cleaning content
+ */
+const ParsingSchemas = new mongoose.Schema({
+    regex: {
+        type: String,
+        required: true,
+    },
+    __v: {
+        type: Number,
+        select: false,
+    },
+    _id: false,
+});
+
+/** The scrapper sources schemas
+ * @constructor
+ * @memberof module:models~
+ * @property {String} name the name of the feed like cointelegraph, cryptonews..
+ * @property {String} url the feed url (must be linked with req.path)
+ * @property {Object} req the req model to call rss > json yahoo api
+ * @property {Object} parse the regex for cleaning feed
+ * @property {Number} __v the mongoose version system
+ */
+const SourcesSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    url: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    req: {
+        type: RequestSchemas,
+        required: true,
+    },
+    parse: {
+        type: ParsingSchemas,
+        required: false,
+    },
+    __v: {
+        type: Number,
+        select: false,
+    },
+});
+
+/** The Scrapper schemas
+ * @constructor
+ * @memberof module:models~
+ */
+const ScrapperSchemas = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    Sources: {
+        Bank: {
+            infos: [SourcesSchema],
+            prices: [SourcesSchema],
+        },
+        Crypto: {
+            infos: [SourcesSchema],
+            prices: [SourcesSchema],
+        },
+        Markets: {
+            infos: [SourcesSchema],
+            prices: [SourcesSchema],
+        },
+    },
+    Date: {
+        type: Date,
+        default: Date.now,
+    },
+});
+
+/** Add a new Source object to a Scrapper
+ * @param {Object} uinput the user inputs and param see below
+ * @param {String} uinput.scrapperid the user scrapper to update
+ * @param {String} uinput.sourcegenre from enum ['Bank', 'Crypto', 'Markets']
+ * @param {String} uinput.sourcetype the source type (is feed, price or other ?)
+ * @param {String} uinput.sourcename the source name
+ * @param {String} uinput.sourceurl the source url
+ * @param {String} uinput.sourcereqhost the source https base req host
+ * @param {String} uinput.sourcereqpath the source https base req path
+ * @param {function} callback to get the result data or error
+ * @todo format insertion format before calling this function
+ * @memberof module:models~ScrapperSchemas
+ */
+ScrapperSchemas.statics.addsource = (uinput, callback) => {
+    let Sources = mongoose.model('Sources', SourcesSchema);
+    let whatsource = 'Sources.' + uinput.sourcegenre + '.' + uinput.sourcetype;
+    let newsource = {
+        name: uinput.sourcename,
+        url: uinput.sourceurl,
+        req: {
+            host: uinput.sourcereqhost,
+            path: uinput.sourcereqpath,
+        },
+        parse: {
+            regex: uinput.sourceregex,
+        },
+    };
+    Sources.create(newsource, (error, source) => {
+        let elemtype = {};
+        elemtype[whatsource] = source;
+        if (error) throw error;
+        Scrapper.findOneAndUpdate({
+                _id: uinput.scrapperid,
+            }, {
+                $push: elemtype,
+            },
+            (error, success) => {
+                if (error) {
+                    console.log(error);
+                    callback &amp;&amp; callback(error);
+                } else {
+                    callback &amp;&amp; callback(null, success);
+                }
+            });
+    });
+};
+
+/** Getters for schemas => tojson */
+ScrapperSchemas.set('toJSON', {getters: true, virtuals: false});
+/** Getters for schemas => tojson */
+SourcesSchema.set('toJSON', {getters: true, virtuals: false});
+/** Getters for schemas => tojson */
+RequestSchemas.set('toJSON', {getters: true, virtuals: false});
+
+let Scrapper = mongoose.model('Scrapper', ScrapperSchemas);
+
+module.exports = Scrapper;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+			</div>
+		</div>
+		<nav>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
+		</nav> <br class="clear">
+		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+			 on
+				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
+					 for CoinBoard</footer>
+		<script>
+prettyPrint();
+		</script>
+		<script src="scripts/linenumber.js">
+		</script>
+	</body>
+
+</html>

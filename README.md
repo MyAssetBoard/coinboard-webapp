@@ -15,7 +15,7 @@ _____________________________________
 
 *A low 47 % global code coverage but should be improved
 
-## Features :
+## Features (Wip, already dev or future improvements) :
 
 > - **Add, track, buy and sell** all kind of assets (fiat, crypto, options..) **from one platform**
 
@@ -23,7 +23,7 @@ _____________________________________
 
 > - **Tor** [hidden service](https://www.torproject.org/) docker deployment for easy access everywhere, improved security and reliability
 
-> - **MongoDB dbms** with [mongodb-native](http://mongodb.github.io/node-mongodb-native/3.0/reference/main/) driver module
+> - **MongoDB dbms** with [Mongoose](http://mongoosejs.com/docs/api.html)  version 5 finely tuned db models
 
 > - A gorgeous and up to date [**documentation**](https://myassetboard.github.io/coinboard-webapp/index.html) gracefully hosted by @github
 
@@ -37,23 +37,21 @@ All information's about how this app is organized /coded
 
 > All application JavaScript source files
 
-* **coin_board/bin** : Contains the main services, **webview** with [Express](expressjs.com) and **websocket** with Socket.io
+* **coin_board/bin** : Contains the main services:  **webview** with [Express](expressjs.com) & [Ejs](http://ejs.co/), **websocket** with Socket.io
 
 * **coin_board/bot/**: Dedicated to the CoinBoardBot [Telegram](https://telegram.org/) bot functionalities
 
 * **coin_board/controllers/**: Various JavaScript modules / classes for crud, crypto, user management etc
 
-* **coin_board/models/**: Deprecated ... Used to store mongodb models but finally unused
-
 * **coin_board/params/**: [Ejs](http://ejs.co/) template rendering parameter for each route page
 
 * **coin_board/public/**: The static assets directory including client side JavaScript files
 
-* **coin_board/routes/**: Express Router overloads , kind off controllers :)
+* **coin_board/routes/**: Express Router overloads sub-modules
 
-* **coin_board/Schemas/**: [Mongoose](http://mongoosejs.com/docs/api.html) db schemas and models
+* **coin_board/Schemas/**: The hot [Mongoose](http://mongoosejs.com/docs/api.html) db schemas and models
 
-* **coin_board/views/**: All the Eye-Candy, pinky piggy, fancy.. and boring stuff for app view (EJS style)
+* **coin_board/views/**: All the Eye-Candy, pinky, piggy, fancy stuff for app view (EJS style)
 
 > Note : *see new Angular components development in AngularCoinBoard/ directory*
 
@@ -81,3 +79,7 @@ All information's about how this app is organized /coded
 
  - [x] Finish this task
  - [ ] * Add some more tests ..
+
+## Hot news :
+
+- GrapQhiql view on /apis/renderGraphiQL !!

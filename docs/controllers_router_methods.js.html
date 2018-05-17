@@ -65,12 +65,16 @@ const path = require('path');
 /** [Morgan](https://github.com/expressjs/morgan) logger */
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+/** GraphQl server */
+const graphql = require('express-graphql');
+const schema = require('../Schemas/graph_user');
 
 const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017',
     databaseName: 'test2',
     collection: 'x_sessions',
 });
+
 /** Session storage config using mongodb store */
 const sess = {
     secret: 'keyboard cat',
@@ -87,31 +91,37 @@ const sess = {
 const Routes = require('../routes/routes');
 const httpopts = appconf.headeropts;
 const favOptions = appconf.favopts;
+
 /** Yes this is an express app */
 let app = express();
+
+/** A bit of log */
 let log = 'app.js| http options\n';
 log += '==== opts = [ ';
 log += JSON.stringify(httpopts) + ' ]';
 /* istanbul ignore next */
 process.env.NODE_ENV === 'infosec' ? console.log(log) : log;
-/** view engine path setup */
-app.set('views', path.join(__dirname, '../views'));
+
 /** view engine setup see [Ejs](ejs.co) */
 app.set('view engine', 'ejs');
+/** view engine path setup */
+app.set('views', path.join(__dirname, '../views'));
 /** Global app setup */
 app.disable('x-powered-by');
 app.disable('view cache');
 app.use('/favicon.ico',
     express.static('images/favicon.ico', favOptions)
 );
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true,
+    extended: false,
 }));
-app.set('trust proxy', 1); // trust first proxy
 
-// Sessions rules !!!
+/** trust first proxy */
+app.set('trust proxy', 1);
 
+/** Session rules */
 app.use(session(sess));
 
 app.use(
@@ -146,7 +156,8 @@ for (let el in Routes) {
         if (el === 'index') {
             app.use('/', Routes[el]);
         } else {
-            app.use('/' + el, Routes[el]);
+            let pp = '/' + el;
+            app.use(pp.toString(), Routes[el]);
         }
     }
 }
@@ -164,6 +175,57 @@ app.use('/logout', function(req, res, next) {
         });
     }
 });
+
+// ####################################### */
+/** GraphQl API */
+/** parse POST /graphql/ body as text */
+app.use(bodyParser.text({type: 'application/graphql'}));
+/** express route POST setup */
+const User = require('../Schemas/user');
+const param = require('../params/def_params');
+app.use('/api/*', (req, res, next) => {
+    let chck = req.session;
+
+    if (chck &amp;&amp; chck.userId) {
+        User.findById(chck.userId).exec(function(error, user) {
+            if (error) {
+                console.log('errr ..' + error);
+                return res.redirect('/login');
+            } else if (user === null) {
+                let err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                console.log('errr ..');
+                return res.redirect('/login');
+            } else {
+                param.logco('INDEX', chck);
+                dup = param.index;
+                res.locals.data = user;
+                return next();
+            }
+        });
+    } else {
+        param.lognoco('INDEX', chck);
+        return res.redirect('/login');
+    }
+});
+
+app.post(
+    '/api/*',
+    graphql((request) => ({
+        schema: schema,
+        rootValue: request.body,
+        graphiql: false,
+    }))
+);
+/** express route GET (/api/renderGraphiQL) setup */
+app.get(
+    '/api/*',
+    graphql({
+        schema: schema,
+        graphiql: true,
+    })
+);
+// #####################################################""
 
 /** catch 404 and forward to error handler below */
 app.use(function(req, res, next) {
@@ -214,7 +276,10 @@ function pollSecret() {
     const h = 2;
     const intergen = h * 60 * 60 * 1000;
     crypt.genrandomtocken();
-    setInterval(crypt.genrandomtocken, intergen);
+    setInterval(
+        () => {
+            crypt.genrandomtocken();
+        }, intergen);
 }
 pollSecret();
 module.exports = app;
@@ -231,11 +296,11 @@ module.exports = app;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Thu May 10 2018 11:24:55 GMT+0200 (CEST)
+				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();
