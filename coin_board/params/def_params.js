@@ -71,6 +71,9 @@ let param = {
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'index',
+        scripts: {
+            commons: '/common.js',
+        },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',
         },
@@ -83,8 +86,6 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'login',
         scripts: {
-            socketio: cdns.socket,
-            cryptojs: cdns.cryptojs,
             commons: '/common.js',
         },
         blocks: {
@@ -112,8 +113,6 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'signin',
         scripts: {
-            socketio: cdns.socket,
-            web3cdn: cdns.web3,
             commons: '/common.js',
         },
         blocks: {
