@@ -23,6 +23,7 @@
 		"morgan": "~1.9.0",
 		"mtproto-storage-fs": "^0.3.1",
 		"n26": "^1.5.3",
+		"natural": "^0.6.0",
 		"oauth": "^0.9.15",
 		"telegraf": "^3.21.0",
 		"telegram-mtproto": "^1.0.5",
