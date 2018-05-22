@@ -2,9 +2,7 @@
 	<%
 	for (var type in locals.data.Apis) { %>
 		<div class="card">
-			<div class="card-header lg">
-				<h1 class="text-center"><%= type %></h1>
-			</div>
+			<h5 class="card-header text-center"><%= type %></h5>
 			<%
 			for (var el in locals.data.Apis[type]) { %>
 				<%- include('api_list', {
