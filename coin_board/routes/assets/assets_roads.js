@@ -27,7 +27,6 @@ const roads = {
         getd: function(callback) {
             let xx = {
                 blocks: ['cb_db'],
-                scripts: ['/assets_management.js'],
             };
             callback && callback(xx);
         },
