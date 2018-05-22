@@ -267,14 +267,12 @@ DataJunk.prototype.getfiles = function(datadir) {
 DataJunk.prototype.pushtodb = function(files) {
     return new Promise(function(resolve, reject) {
         // let datamodel = require('../schemas/datas');
-        let taglist = [
-            'bitcoin',
-            'ethereum',
-            'btc',
-            'eth',
-            'dapp',
-            'regulation',
-        ];
+        let natural = require('natural');
+        let classifier = new natural.BayesClassifier();
+        let trainy = {
+            match: ['launch of', 'airdrop', 'regulation', 'legal framework'],
+            type: ['buy', 'get', 'buy', 'buy'],
+        };
         let newinfos = [];
         let datas = [];
         let elem = 0;
@@ -292,19 +290,18 @@ DataJunk.prototype.pushtodb = function(files) {
             };
             newinfos.push(inf);
         });
+        for (el in trainy.match) {
+            if (typeof trainy.match[el] === 'string') {
+                classifier.addDocument(trainy.match[el],
+                    trainy.type[el]);
+            }
+        }
+        classifier.train();
         newinfos.forEach((item) => {
-            taglist.forEach((el) => {
-                console.log(el);
-                if (item.content.match(el)) {
-                    item.tags += el + ',';
-                }
-            });
+            console.log(item.title);
+            console.log(classifier.getClassifications(item.title));
         });
-        console.log('all items :');
-        resolve(newinfos);
-        // data.create({}, (error, res) => {
-        //     resolve(res._id);
-        // });
+        resolve('end');
     });
 };
 /** @todo to be loopified for every source in all types
