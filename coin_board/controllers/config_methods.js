@@ -12,10 +12,12 @@ class AppConfig {
     /** @constructor */
     constructor() {
         let _this = this;
+        /** Https server key filepath */
+        this.srvkey = 'coin_board/params/server.key';
+        /** Https server cert filepath */
+        this.srvcert = 'coin_board/params/server.pem';
         /** os dep to get network interface */
         this.os = require('os');
-        /** Dns ones idem */
-        this.dns = require('dns');
         /** network interface import */
         this.ni = this.os.networkInterfaces();
         /** fs module import */
@@ -85,8 +87,8 @@ AppConfig.prototype.favopts = {
 AppConfig.prototype.httpsc = function() {
     let _this = this;
     let httpsc = {};
-    httpsc.key = _this.fs.readFileSync('coin_board/params/server.key');
-    httpsc.cert = _this.fs.readFileSync('coin_board/params/server.pem');
+    httpsc.key = _this.fs.readFileSync(_this.srvkey);
+    httpsc.cert = _this.fs.readFileSync(_this.srvcert);
     httpsc.requestCert = false;
     httpsc.rejectUnauthorized = false;
     return httpsc;
