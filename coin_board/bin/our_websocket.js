@@ -34,7 +34,7 @@ CbWebsocket.prototype.startmeup = function() {
     this.server = this.https.createServer(this.conf.httpsc(),
         (req, res) => {
             let resp = {
-                status: 101,
+                status: 404,
                 error: '**Websocket connection only**',
             };
             res.writeHead(404);
