@@ -2,7 +2,7 @@
 	"name": "coin_board",
 	"version": "0.0.1Beta",
 	"description": "Crypto assets management board",
-	"main": "./INIT_DEV.sh -rl",
+	"main": "./INIT_DEV.sh -staging development local",
 	"scripts": {
 		"start": "./INIT_DEV.sh -staging development local",
 		"test": "echo maybelater"
@@ -28,6 +28,7 @@
 		"nyc": "^11.7.1",
 		"sinon": "^5.0.4",
 		"sinon-chai": "^3.0.0",
-		"supertest": "^3.0.0"
+		"supertest": "^3.0.0",
+		"yarn": "^1.7.0"
 	}
 }
