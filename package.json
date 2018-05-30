@@ -4,7 +4,7 @@
 	"description": "Crypto assets management board",
 	"main": "./INIT_DEV.sh -rl",
 	"scripts": {
-		"start": "./INIT_DEV.sh development",
+		"start": "./INIT_DEV.sh -rl development",
 		"test": "echo maybelater"
 	},
 	"repository": "https://github.com/MyAssetBoard/coinboard-webapp",
