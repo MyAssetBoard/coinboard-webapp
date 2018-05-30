@@ -146,6 +146,7 @@ function app_startStaging ()
 	pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
 	pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
 	pm2 start "$APPCONF" --only "$CBSERV"  --update-env;
+	pm2 logs
 }
 
 function reset_db ()
