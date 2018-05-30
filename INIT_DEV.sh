@@ -137,15 +137,15 @@ function app_startDev ()
 
 function app_startStaging ()
 {
-	npm install npm@latest -g && npm install -g yarn
+	curl -o- -L https://yarnpkg.com/install.sh | bash
 	yarn install && cd coin_board && yarn install && cd ..
 	export NODE_ENV="$1"
 	export SERV_ENV="$2"
 	#Init random key gen for uid
 	echo 'RANDOM' > log.txt;
-	"$PM2" start "$APPCONF" --only "$WSSERV"  --update-env;
-	"$PM2" start "$APPCONF" --only "$WVSERV"  --update-env;
-	"$PM2" start "$APPCONF" --only "$CBSERV"  --update-env;
+	pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
+	pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
+	pm2 start "$APPCONF" --only "$CBSERV"  --update-env;
 }
 
 function reset_db ()
