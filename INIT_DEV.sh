@@ -137,6 +137,8 @@ function app_startDev ()
 
 function app_startStaging ()
 {
+	npm install npm@latest -g && npm install -g yarn
+	yarn install && cd coin_board && yarn install && cd ..
 	export NODE_ENV="$1"
 	export SERV_ENV="$2"
 	#Init random key gen for uid
@@ -274,7 +276,7 @@ do
 		exit 0
 		;;
 
-		'n-hs')
+		'n-staging')
 		app_startStaging "$2" "$3"
 		exit 0
 		;;
