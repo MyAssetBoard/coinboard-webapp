@@ -137,8 +137,6 @@ function app_startDev ()
 
 function app_startStaging ()
 {
-	curl -o- -L https://yarnpkg.com/install.sh | bash
-	yarn install && cd coin_board && yarn install && cd ..
 	export NODE_ENV="$1"
 	export SERV_ENV="$2"
 	#Init random key gen for uid
