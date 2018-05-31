@@ -143,7 +143,7 @@ function app_startStaging ()
 	echo 'RANDOM' > log.txt;
 	pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
 	pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
-	pm2 start "$APPCONF" --only "$CBSERV"  --update-env;
+	#pm2 start "$APPCONF" --only "$CBSERV"  --update-env;
 	pm2 logs
 }
 
