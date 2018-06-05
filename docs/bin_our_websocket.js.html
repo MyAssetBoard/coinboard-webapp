@@ -56,150 +56,92 @@
  */
 class CbWebsocket {
     /** @constructor */
-    constructor() {
-        this.port = process.env.WSPORT || '3001';
+    constructor () {
         this.https = require('https');
+        this.uuid = require('uuid/v1');
+        this.user = '';
+        this.port = 3001;
         /** Creds import */
         this.AppConfig = require('../controllers/config_methods');
         this.conf = new this.AppConfig();
-        this.server = this.https.createServer(this.conf.httpsc());
-        this.server.listen(this.port);
-        this.io = require('socket.io')(this.server, {
-            cookie: false,
-        });
-        /** NUMBER of current sessions on auth room */
-        this.authco = 0;
-        /** NUMBER of current sessions on register room */
-        this.regco = 0;
-        /** NUMBER of current sessions on assets room */
-        this.assetco = 0;
-        /** NUMBER of current sessions on api/param room */
-        this.apiparamco = 0;
+        /** NUMBER of current sessions on scrapper room */
+        this.scrapperco = 0;
     }
 }
 
-/** Main launcher method */
-CbWebsocket.prototype.startmeup = function() {
-    let _this = this;
-    let log = 'WEBSOCKET - server is listening on :\n';
-    log += 'addr: [' + this.addr + '], port ' + this.port;
-    process.env.NODE_ENV === 'development' ?
-        console.log(log) :
-        log;
-    _this.authentication();
-    _this.register();
-    _this.assetmanagmnt();
-    _this.apiparams();
-};
-
-/** Log received data
- *@param {Object} d data to logg
+/** Main launcher method
+ * @TODO rewrite deprec socket.io to ws method's
  */
-CbWebsocket.prototype.logger = function(d) {
-    let log = 'add asset data get :\n' + JSON.stringify(d);
+CbWebsocket.prototype.startmeup = function () {
+    let log = 'WEBSOCKET - server is listening on :\n';
+    log += 'addr: [' + this.conf.myip + '], port ' + this.port;
+
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
+    this.server = this.https.createServer(this.conf.httpsc(),
+        (req, res) => {
+            let resp = {
+                status: 404,
+                error: '**Websocket connection only**',
+            };
+            res.writeHead(404);
+            res.end(JSON.stringify(resp));
+        }).listen(this.port);
+    let server = this.server;
+    this.Ws = require('ws'); ;
+    this.wss = new this.Ws.Server({server});
+    this.scrapper();
 };
 
 /** Log this user
  * @param {string} roomname
  * @param {string} usrid
  */
-CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
-    let log = usrid.replace(/\/auth#/g, 'User : ');
-    let conbr = this[roomname + 'co'];
-    log += ' connected to [/' + roomname + '] route | Connected : ' + conbr;
+CbWebsocket.prototype.logthisguy = function (roomname, usrid) {
+    let log = usrid + ' connected to [/' + roomname + '] route |';
+    log += ' Connected : ' + this.scrapperco;
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
-/** @property {function} authentication auth socket room event handling */
-CbWebsocket.prototype.authentication = function() {
-    let _this = this;
-    _this.io.of('/auth').on('connection', function(socket) {
-        _this.authco += 1;
-        _this.logthisguy('auth', socket.id);
-        let usrtmp = 'welcome ' + socket.id.replace(/\/auth#/g, 'user ');
-        let scktid = socket.id.replace(/\/auth#/g, '');
-        let comsg = {
-            'msg': usrtmp,
-            'scktid': scktid,
-            'tot': _this.authco,
-        };
-        _this.io.of('/auth').to(socket.id).emit('nm', comsg);
-        socket.on('user login', (data) => {
-
-        });
-        socket.on('disconnect', function() {
-            _this.authco -= 1;
-        });
-    });
-};
-
-/** @property {function} register register socket room event handling */
-CbWebsocket.prototype.register = function() {
-    let _this = this;
-    _this.io.of('/register').on('connection', function(socket) {
-        _this.regco += 1;
-        _this.logthisguy('reg', socket.id);
-        let scktid = socket.id.replace(/\/register#/g, '');
-        let comsg = {
-            'scktid': scktid,
-        };
-        _this.io.of('/register').to(socket.id).emit('nm', comsg);
-        socket.on('user signin', (inputdata) => {
-            let log = 'received : \n' + JSON.stringify(inputdata);
-            process.env.NODE_ENV === 'development' ? console.log(log) : log;
-        });
-        socket.on('disconnect', function() {
-            _this.regco -= 1;
-        });
-    });
-};
-
-/** @property {function} assetroom add assets to user collection
- * @return {Object} assetroom with logger and handler functions inside
+/**
+ * Run command on format CMD [args]
+ * @param {String} msg the received command
+ * @param {Object} ws the websocket client object
  */
-CbWebsocket.prototype.assetroom = function() {
-    let _this = this;
-    const assetroom = {
-        logger: function(d) {
-            let log = 'add asset data get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV === 'development' ? console.log(log) : log;
-        },
-        handler: function(socket) {
-            _this.assetco += 1;
-            _this.logthisguy('asset', socket.id);
-            socket.on('add asset', function(d) {
-                _this.logger(d);
-            });
-            socket.on('disconnect', function() {
-                _this.assetco -= 1;
-            });
-        },
-    };
-    return assetroom;
-};
-
-/** @property {function} assetmanagmnt assets socket room event handling */
-CbWebsocket.prototype.assetmanagmnt = function() {
-    let _this = this;
-    let room = _this.assetroom();
-    _this.io.of('/assets').on('connection', (socket) => {
-        room.handler(socket);
-    });
-};
-
-/** @property {function} apiparams assets socket room event handling */
-CbWebsocket.prototype.apiparams = function() {
-    let _this = this;
-    _this.io.of('/api/param').on('connection', function(socket) {
-        _this.apiparamco += 1;
-        _this.logthisguy('apiparam', socket.id);
-        socket.on('update api creds', function(d) {
-            let log = 'update creds get :\n' + JSON.stringify(d);
-            process.env.NODE_ENV === 'development' ? console.log(log) : log;
+CbWebsocket.prototype.runme = (msg, ws) => {
+    let scrape = require('../bots/acts/refresh_act');
+    let showres = require('../bots/acts/showfiles_act');
+    let args = msg.split(' ')[1] !== undefined ? msg.split(' ')[1] : '';
+    switch (msg) {
+    case 'SCRAPE':
+        scrape.func(args, {}, (res) => {
+            ws.send(JSON.stringify(res));
         });
-        socket.on('disconnect', function() {
-            _this.apiparamco -= 1;
+    case 'READ':
+        showres.func(args, {}, (res) => {
+            let resp = {files: res};
+            ws.send(JSON.stringify(resp));
+        });
+    default:
+        console.log('received: %s', msg);
+        break;
+    }
+};
+
+/** @property {function} scrapper socket room event handling */
+CbWebsocket.prototype.scrapper = function () {
+    let _this = this;
+
+    _this.wss.on('connection', function connection (ws) {
+        _this.scrapperco += 1;
+        _this.user = _this.uuid();
+        _this.logthisguy('all', _this.user);
+        ws.on('message', function incoming (message) {
+            _this.runme(message, ws);
+        });
+        ws.send(JSON.stringify({foo: 'something'}));
+        ws.on('close', function close () {
+            _this.scrapperco -= 1;
+            _this.logthisguy('all', _this.user);
         });
     });
 };
@@ -220,11 +162,11 @@ miwebsocket.startmeup();
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.datajunk.html">Routes.page.datajunk</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
+				Tue Jun 05 2018 14:07:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

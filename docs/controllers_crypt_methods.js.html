@@ -54,7 +54,7 @@
  */
 class Crypt {
     /** @constructor */
-    constructor() {
+    constructor () {
         /**
          * [CryptoJS](https://github.com/brix/crypto-js) module import
          * for AES usage
@@ -71,13 +71,13 @@ class Crypt {
 /** Pretty much self explanatory, delete old generated key if any
  * @return {boolean} true if something cleared false if not
  */
-Crypt.prototype.cleartmp = function() {
+Crypt.prototype.cleartmp = function () {
     let _this = this;
-    let rt = this.fs.stat('log.txt', function(err, stats) {
+    let rt = this.fs.stat('log.txt', function (err, stats) {
         if (err) {
             return false;
         } else {
-            _this.fs.unlink('log.txt', function(err) {
+            _this.fs.unlink('log.txt', function (err) {
                 if (err) {
                     return false;
                 }
@@ -92,7 +92,7 @@ Crypt.prototype.cleartmp = function() {
  * Read ./log.txt for new random key
  * @return {string} the readed buffer, 22 bytes long
  */
-Crypt.prototype.readtmp = function() {
+Crypt.prototype.readtmp = function () {
     let buff = new Buffer(22);
     buff = this.fs.readFileSync('log.txt', 'ascii');
     let log = 'Read cookie secret : [';
@@ -107,9 +107,9 @@ Crypt.prototype.readtmp = function() {
  * Write res buffer to temp location (for now as './log.txt')
  * @param {any} res encryption secret
  */
-Crypt.prototype.writetmp = function(res) {
+Crypt.prototype.writetmp = function (res) {
     ROOT_APP_PATH = this.fs.realpathSync('.');
-    this.fs.writeFile('log.txt', res + '\n', function(err) {
+    this.fs.writeFile('log.txt', res + '\n', function (err) {
         if (err) {
             return console.log(err);
         }
@@ -125,16 +125,16 @@ Crypt.prototype.writetmp = function(res) {
  * {@link Crypt#fs} imported module
  * @return {Promise&lt;any>} 22 bytes of 85 bytes random chars buffer
  */
-Crypt.prototype.getRandom = function() {
+Crypt.prototype.getRandom = function () {
     let _this = this;
     return new Promise((resolve, reject) => {
-        _this.fs.open('/dev/urandom', 'r', function(status, fd) {
+        _this.fs.open('/dev/urandom', 'r', function (status, fd) {
             if (status) {
                 console.log(status.message);
                 reject(new Error('file reading failed'));
             }
             let buff = new Buffer(85);
-            _this.fs.read(fd, buff, 0, 85, 0, function(err, res) {
+            _this.fs.read(fd, buff, 0, 85, 0, function (err, res) {
                 let randstr = buff.toString('ascii', 0, res);
                 randstr = randstr.replace(/\W/g, '');
                 randstr = randstr.length > 22 ?
@@ -151,7 +151,7 @@ Crypt.prototype.getRandom = function() {
  * @param {string} p the string to be decrypted
  * @return {string} the decrypted p param as a cleartext string
  */
-Crypt.prototype.dcryptParams = function(p) {
+Crypt.prototype.dcryptParams = function (p) {
     let plaintext = null;
     if (p) {
         let enckey = this.readtmp();
@@ -178,7 +178,7 @@ Crypt.prototype.dcryptParams = function(p) {
  * @param {string} p the string to be encrypt (the user db uuid mostly)
  * @return {string} the encrypted string
  */
-Crypt.prototype.encryptParams = function(p) {
+Crypt.prototype.encryptParams = function (p) {
     let enckey = this.readtmp();
     let toenc = p._id.toString();
     let citxt = this.CryptoJS.AES.encrypt(toenc, enckey);
@@ -196,7 +196,7 @@ Crypt.prototype.encryptParams = function(p) {
  * @param {string} eUid the string to be checked
  * @return {boolean} true if valid euid false otherwise
  */
-Crypt.prototype.isvaliduid = function(eUid) {
+Crypt.prototype.isvaliduid = function (eUid) {
     return !!this.dcryptParams(eUid);
 };
 
@@ -205,7 +205,7 @@ Crypt.prototype.isvaliduid = function(eUid) {
  * @return {string} the decrypted user id
  * @see Crypt#dcryptParams
  */
-Crypt.prototype.decryptuid = function(eUId) {
+Crypt.prototype.decryptuid = function (eUId) {
     return this.dcryptParams(eUId);
 };
 
@@ -214,7 +214,7 @@ Crypt.prototype.decryptuid = function(eUId) {
  * @return {string} the encrypted user id
  * @see Crypt#encryptParams
  */
-Crypt.prototype.encryptuid = function(cUId) {
+Crypt.prototype.encryptuid = function (cUId) {
     return this.encryptParams(cUId);
 };
 
@@ -224,7 +224,7 @@ Crypt.prototype.encryptuid = function(cUId) {
  * and finally write as 'log.txt' file in current directory thanks to
  * {@link Crypt#writetmp}
  */
-Crypt.prototype.genrandomtocken = function() {
+Crypt.prototype.genrandomtocken = function () {
     let _this = this;
     _this.cleartmp();
     _this.getRandom().then((res) => {
@@ -240,7 +240,7 @@ Crypt.prototype.genrandomtocken = function() {
  * @param {string} str the string to be checked
  * @return {boolean} true if encode , false if not
  */
-Crypt.prototype.isEncoded = function(str) {
+Crypt.prototype.isEncoded = function (str) {
     try {
         decodeURIComponent(str);
     } catch (e) {
@@ -265,11 +265,11 @@ module.exports = Crypt;
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.datajunk.html">Routes.page.datajunk</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
+				Tue Jun 05 2018 14:07:49 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();
