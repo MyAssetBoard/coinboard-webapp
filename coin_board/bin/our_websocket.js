@@ -18,7 +18,7 @@ class CbWebsocket {
         }
         this.uuid = require('uuid/v1');
         this.user = '';
-        this.port = 3001;
+        this.port = process.env.PORT || '3001';
         /** Creds import */
         this.AppConfig = require('../controllers/config_methods');
         this.conf = new this.AppConfig();

@@ -142,10 +142,10 @@ function app_startStaging ()
 	#Init random key gen for uid
 	echo 'RANDOM' > log.txt;
 	if [[ "$APP" == "view" ]];
-		then pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
+		then pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
 	fi
 	if [[ "$APP" == "ws" ]];
-		then pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
+		then pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
 	fi
 	pm2 logs
 }
