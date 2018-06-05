@@ -18,23 +18,26 @@ const refresh = {
     id: '/refresh',
     func: function (args, usr, callback) {
         process.env['NODE_LOG'] = 'djunk';
-        process.env['SCRAPPERID'] = args.trim();
+        process.env['SCRAPPERID'] = args.toString();
         process.env['LAUNCH_TASK'] = 'goeat';
         const fp = 'coin_board/controllers/datajunk_methods.js';
-        const exe = spawn('node', [fp]);
+        const cmd = 'node';
+        const exe = spawn(cmd, [fp]);
         exe.stdout.on('data', (data) => {
-            let r = data.toString();
-            callback && callback(r);
+            resp = data.toString();
+            callback && callback(resp);
         });
 
         exe.stderr.on('data', (data) => {
-            let r = data.toString();
-            callback && callback(r);
+            resp = data.toString();
+            callback && callback(resp);
         });
 
         exe.on('close', (code) => {
-            r = 'Child process exited with code [' + code + ']';
-            callback && callback(r);
+            let log = 'Refresh: "$ ' + cmd;
+            log += '" child process exited with code [' + rt + ']';
+            process.env.NODE_ENV === 'development' ? console.log(log) : log;
+            callback && callback(log);
         });
     },
 };
