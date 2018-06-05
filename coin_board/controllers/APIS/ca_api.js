@@ -12,7 +12,7 @@
  */
 class CreditagricoleApi {
     /** @constructor */
-    constructor() {}
+    constructor () {}
 }
 
 module.exports = CreditagricoleApi;

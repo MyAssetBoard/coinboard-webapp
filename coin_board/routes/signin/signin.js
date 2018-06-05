@@ -28,11 +28,11 @@ const User = require('../../schemas/user');
 /** GET signin page
  * @memberof Routes.page.signin
  */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log(error);
                 return res.redirect('/');
@@ -57,7 +57,7 @@ router.get('/', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.signin
  */
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
     if (req.body.password !== req.body.passwordConf) {
         let err = new Error('Password\'s dont match.');
         err.status = 400;

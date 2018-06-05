@@ -33,11 +33,11 @@ const Scrapper = require('../../schemas/scrapper');
 /** GET signin page
  * @memberof Routes.page.signin
  */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log('errr ..' + error);
                 return res.redirect('/');
@@ -75,7 +75,7 @@ router.get('/', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.datajunk
  */
-router.post('/newscrapper', function(req, res, next) {
+router.post('/newscrapper', function (req, res, next) {
     let chck = req.session;
     if (!req.body.name || !req.body.name.length ||
         !(chck && chck.userId)) {
@@ -109,7 +109,7 @@ router.post('/newscrapper', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.datajunk
  */
-router.post('/scrapper/newsource', function(req, res, next) {
+router.post('/scrapper/newsource', function (req, res, next) {
     param.logco('post scrapper newsource', req.session.userId);
     if (!req.body.name || !req.body.name.length ||
         !req.body.sourcegenre || !req.body.sourcetype ||

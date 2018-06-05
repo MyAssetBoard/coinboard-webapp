@@ -14,7 +14,7 @@
  */
 const mibank = {
     id: '/mibank',
-    func: function(args, usr, callback) {
+    func: function (args, usr, callback) {
         return callback && callback('yolo');
     },
 };

@@ -17,7 +17,7 @@ const eatdiner = {
      * @param {object} obj the parsed object composed of ...
      * @param {number} a the parent process parser order
      */
-    checkwhat: function(obj, a) {
+    checkwhat: function (obj, a) {
         let what = obj[a].toLowerCase();
         let log = 'Elem n°: [' + a;
         log += '], content: [' + what + ']';
@@ -26,7 +26,7 @@ const eatdiner = {
         }
     },
     /** @param {string} b the parent process parser type  */
-    checkstyle: function(b) {
+    checkstyle: function (b) {
         let log = 'Testing [' + b + '] type';
         if (process.env.NODE_LOG == 'djunk') {
             console.log(log);
@@ -36,7 +36,7 @@ const eatdiner = {
      * @param {number} wrd the word in {@link colors} array's
      * @param {string} str the string to parse
      */
-    checkwrd: function(wrd, str) {
+    checkwrd: function (wrd, str) {
         let log = 'Is there any [' + wrd + '] ?';
         log += str.match(wrd) ?
             ' YES' :
@@ -45,7 +45,7 @@ const eatdiner = {
             console.log(log);
         }
     },
-    getres: function(obj, ts) {
+    getres: function (obj, ts) {
         let res = {};
         res['title'] = obj.wh;
         res['subject'] = obj.tg;
@@ -59,7 +59,7 @@ const eatdiner = {
             return res;
         }
     },
-    getparsed: function(dset, ts) {
+    getparsed: function (dset, ts) {
         let rt = [];
         for (let el in dset) {
             if (dset[el]) {

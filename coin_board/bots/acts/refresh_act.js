@@ -16,7 +16,7 @@ const {
  */
 const refresh = {
     id: '/refresh',
-    func: function(args, usr, callback) {
+    func: function (args, usr, callback) {
         process.env['NODE_LOG'] = 'djunk';
         process.env['LAUNCH_TASK'] = 'goeat';
         const fp = 'coin_board/controllers/datajunk_methods.js';

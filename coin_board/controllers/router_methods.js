@@ -22,10 +22,11 @@ const bodyParser = require('body-parser');
 /** GraphQl server */
 const graphql = require('express-graphql');
 const schema = require('../schemas/graph_user');
+let mongoaddr = 'mongodb://localhost:27017/test3';
+mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
 
 const store = new MongoDBStore({
-    uri: 'mongodb://localhost:27017',
-    databaseName: 'test2',
+    uri: mongoaddr,
     collection: 'x_sessions',
 });
 
@@ -117,10 +118,10 @@ for (let el in Routes) {
 }
 
 // GET for logout logout
-app.use('/logout', function(req, res, next) {
+app.use('/logout', function (req, res, next) {
     if (req.session) {
         // delete session object
-        req.session.destroy(function(err) {
+        req.session.destroy(function (err) {
             if (err) {
                 return next(err);
             } else {
@@ -141,7 +142,7 @@ app.use('/api/*', (req, res, next) => {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log('errr ..' + error);
                 return res.redirect('/login');
@@ -182,13 +183,13 @@ app.get(
 // #####################################################""
 
 /** catch 404 and forward to error handler below */
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     let err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     /** Allowed methods settings */
     let allowedMethods = ['GET'];
     /** append header param to response */
@@ -221,7 +222,7 @@ app.use(function(err, req, res, next) {
 
 
 /** Refresh AES encrypt key every 2 hour */
-function pollSecret() {
+function pollSecret () {
     /** {@link module:crypt} import for
      * {@link module:crypt~Crypt#genrandomtocken} method routine
      */

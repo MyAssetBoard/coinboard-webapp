@@ -10,12 +10,14 @@
  */
 class AppConfig {
     /** @constructor */
-    constructor() {
+    constructor () {
         let _this = this;
+        /** Https server key filepath */
+        this.srvkey = 'coin_board/params/server.key';
+        /** Https server cert filepath */
+        this.srvcert = 'coin_board/params/server.pem';
         /** os dep to get network interface */
         this.os = require('os');
-        /** Dns ones idem */
-        this.dns = require('dns');
         /** network interface import */
         this.ni = this.os.networkInterfaces();
         /** fs module import */
@@ -38,10 +40,10 @@ class AppConfig {
 /** check tor hostname if onion service set
  * @return {Object} rt
  */
-AppConfig.prototype.gettorhostnames = function() {
+AppConfig.prototype.gettorhostnames = function () {
     let _this = this;
     let rt = {
-        view: function() {
+        view: function () {
             let buff = new Buffer(22);
             let fn = '/var/lib/tor/hidnview/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
@@ -49,7 +51,7 @@ AppConfig.prototype.gettorhostnames = function() {
             ret += '/';
             return ret;
         },
-        socks: function() {
+        socks: function () {
             let buff = new Buffer(22);
             let fn = '/var/lib/tor/hidnws/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
@@ -82,11 +84,11 @@ AppConfig.prototype.favopts = {
 /** Https parameter key + cert (self signed)
  * @return {Object} httpsc
  */
-AppConfig.prototype.httpsc = function() {
+AppConfig.prototype.httpsc = function () {
     let _this = this;
     let httpsc = {};
-    httpsc.key = _this.fs.readFileSync('coin_board/params/server.key');
-    httpsc.cert = _this.fs.readFileSync('coin_board/params/server.pem');
+    httpsc.key = _this.fs.readFileSync(_this.srvkey);
+    httpsc.cert = _this.fs.readFileSync(_this.srvcert);
     httpsc.requestCert = false;
     httpsc.rejectUnauthorized = false;
     return httpsc;

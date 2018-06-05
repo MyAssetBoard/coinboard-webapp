@@ -16,7 +16,7 @@ const {
  */
 const digest = {
     id: '/digest',
-    func: function(args, usr, callback) {
+    func: function (args, usr, callback) {
         process.env['NODE_LOG'] = 'djunk';
         process.env['LAUNCH_TASK'] = 'gomine';
         const fp = 'coin_board/controllers/datajunk_methods.js';

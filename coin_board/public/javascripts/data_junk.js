@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     const url = $('#cbws').text().trim();
     const scrapper = new WebSocket(url);
     const utils = new Commons();
@@ -9,10 +9,10 @@ $(document).ready(function() {
         '#abort',
     ];
     let select = acts.join(',');
-    $(select).click(function() {
+    $(select).click(function () {
         scrapper.send($(this).html());
     });
-    scrapper.addEventListener('open', function(event) {
+    scrapper.addEventListener('open', function (event) {
         scrapper.send('ok');
     });
     scrapper.addEventListener('message', (event) => {
