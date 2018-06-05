@@ -60,6 +60,8 @@ router.get('/', function (req, res, next) {
                     });
             } else {
                 param.logco('DATAJUNK', chck);
+                param.datajunk.blocks.centerblock =
+                    'blocks/datajunk/scrapper_block';
                 res.locals.data = user.toJSON();
                 return res.render('page', param.datajunk);
             }
