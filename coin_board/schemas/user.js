@@ -7,14 +7,16 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-mongoose.connect('mongodb://localhost:27017/test3');
+let mongoaddr = 'mongodb://localhost:27017/test3';
+mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
+mongoose.connect(mongoaddr.toString());
 
 /** Return lowercase for email fields
  * @param {String} a the string to be converted
  * @return {String} the a param in lowercase
  */
 function toLower(a) {
-    return a.toLowerCase();
+	return a.toLowerCase();
 }
 
 /** Return float value for assets.qtt field
@@ -22,7 +24,7 @@ function toLower(a) {
  * @return {Float} the a float value
  */
 function toFloat(a) {
-    return parseFloat(a);
+	return parseFloat(a);
 }
 
 /** The saved user balances per asset object
@@ -32,21 +34,21 @@ function toFloat(a) {
  * @property {Float} qtt the asset qtt
  */
 const AssetsSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    ticker: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    qtt: {
-        type: Number,
-        required: true,
-        set: toFloat,
-    },
+	name: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	ticker: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	qtt: {
+		type: Number,
+		required: true,
+		set: toFloat,
+	},
 });
 
 /** The user api's model
@@ -56,19 +58,19 @@ const AssetsSchema = new mongoose.Schema({
  * @property {String} secret The user api secret (hashed)
  */
 const ApiSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    key: {
-        type: String,
-        required: true,
-    },
-    secret: {
-        type: String,
-        required: true,
-        trim: true,
-    },
+	name: {
+		type: String,
+		required: true,
+	},
+	key: {
+		type: String,
+		required: true,
+	},
+	secret: {
+		type: String,
+		required: true,
+		trim: true,
+	},
 });
 
 /** A tipical coin_board user
@@ -84,58 +86,58 @@ const ApiSchema = new mongoose.Schema({
  * @property {Object} Date the user creation timestamp
  */
 const UserSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        trim: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-        trim: true,
-        set: toLower,
-    },
-    usercurrency: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    ethaddr: {
-        type: String,
-        unique: false,
-        required: false,
-        trim: false,
-    },
-    telegramid: {
-        type: String,
-        unique: true,
-        required: false,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    scrapperid: {
-        type: String,
-        required: false,
-        default: 'notset',
-    },
-    Apis: {
-        Bank: [ApiSchema],
-        Crypto: [ApiSchema],
-        Markets: [ApiSchema],
-    },
-    Assets: {
-        Bank: [AssetsSchema],
-        Crypto: [AssetsSchema],
-        Markets: [AssetsSchema],
-    },
-    Date: {
-        type: Date,
-        default: Date.now,
-    },
+	username: {
+		type: String,
+		unique: true,
+		required: true,
+		trim: true,
+	},
+	email: {
+		type: String,
+		unique: true,
+		required: true,
+		trim: true,
+		set: toLower,
+	},
+	usercurrency: {
+		type: String,
+		required: true,
+		trim: true,
+	},
+	ethaddr: {
+		type: String,
+		unique: false,
+		required: false,
+		trim: false,
+	},
+	telegramid: {
+		type: String,
+		unique: true,
+		required: false,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
+	scrapperid: {
+		type: String,
+		required: false,
+		default: 'notset',
+	},
+	Apis: {
+		Bank: [ApiSchema],
+		Crypto: [ApiSchema],
+		Markets: [ApiSchema],
+	},
+	Assets: {
+		Bank: [AssetsSchema],
+		Crypto: [AssetsSchema],
+		Markets: [AssetsSchema],
+	},
+	Date: {
+		type: Date,
+		default: Date.now,
+	},
 });
 
 /** Getters for schemas => tojson */
@@ -145,24 +147,24 @@ UserSchema.set('toJSON', {getters: true, virtuals: false});
  *  @memberof module:models~UserSchema
  */
 UserSchema.pre('save', function(next) {
-    let user = this;
-    bcrypt.hash(user.password, 10, function(err, hash) {
-        if (err) {
-            return next(err);
-        } else {
-            user.password = hash;
-            return next();
-        }
-    });
+	let user = this;
+	bcrypt.hash(user.password, 10, function(err, hash) {
+		if (err) {
+			return next(err);
+		} else {
+			user.password = hash;
+			return next();
+		}
+	});
 });
 
 /** Hash api secret too */
 ApiSchema.pre('save', (next) => {
-    let api = this;
-    bcrypt.hash(api.secret, 10, function(err, hash) {
-        api.secret = hash;
-        next();
-    });
+	let api = this;
+	bcrypt.hash(api.secret, 10, function(err, hash) {
+		api.secret = hash;
+		next();
+	});
 });
 
 /** Main authentication method for a User
@@ -172,23 +174,23 @@ ApiSchema.pre('save', (next) => {
  * @memberof module:models~UserSchema
  */
 UserSchema.statics.authenticate = function(username, password, callback) {
-    User.findOne({username: username})
-        .exec(function(err, user) {
-            if (err) {
-                return callback(err);
-            } else if (!user) {
-                let err = new Error('User not found.');
-                err.status = 401;
-                return callback(err);
-            }
-            bcrypt.compare(password, user.password, function(err, result) {
-                if (result === true) {
-                    return callback(null, user);
-                } else {
-                    return callback();
-                }
-            });
-        });
+	User.findOne({username: username})
+		.exec(function(err, user) {
+			if (err) {
+				return callback(err);
+			} else if (!user) {
+				let err = new Error('User not found.');
+				err.status = 401;
+				return callback(err);
+			}
+			bcrypt.compare(password, user.password, function(err, result) {
+				if (result === true) {
+					return callback(null, user);
+				} else {
+					return callback();
+				}
+			});
+		});
 };
 
 /** Add a new Api object a User
@@ -201,25 +203,25 @@ UserSchema.statics.authenticate = function(username, password, callback) {
  * @memberof module:models~UserSchema
  */
 UserSchema.statics.addapi = function(id,
-    apitype, apiid, apikey, apisecret, callback) {
-    let newapi = {
-        name: apiid,
-        key: apikey,
-        secret: apisecret,
-    };
-    Apis.create(newapi, (error, api) => {
-        let elemtype = {};
-        elemtype['Apis.' + apitype] = api;
-        User.findOneAndUpdate({_id: id}, {$push: elemtype},
-            (error, success) => {
-                if (error) {
-                    console.log(error);
-                    callback && callback(error);
-                } else {
-                    callback && callback(null, success);
-                }
-            });
-    });
+	apitype, apiid, apikey, apisecret, callback) {
+	let newapi = {
+		name: apiid,
+		key: apikey,
+		secret: apisecret,
+	};
+	Apis.create(newapi, (error, api) => {
+		let elemtype = {};
+		elemtype['Apis.' + apitype] = api;
+		User.findOneAndUpdate({_id: id}, {$push: elemtype},
+			(error, success) => {
+				if (error) {
+					console.log(error);
+					callback && callback(error);
+				} else {
+					callback && callback(null, success);
+				}
+			});
+	});
 };
 
 /** Add a new Asset object to a User
@@ -232,25 +234,25 @@ UserSchema.statics.addapi = function(id,
  * @memberof module:models~UserSchema
  */
 UserSchema.statics.addasset = (id, assettype, assetid,
-    assetticker, assetqtt, callback) => {
-    let newasset = {
-        name: assetid,
-        ticker: assetticker,
-        qtt: assetqtt,
-    };
-    Assets.create(newasset, (error, asset) => {
-        let elemtype = {};
-        elemtype['Assets.' + assettype] = asset;
-        User.findOneAndUpdate({_id: id}, {$push: elemtype},
-            (error, success) => {
-                if (error) {
-                    console.log(error);
-                    callback && callback(error);
-                } else {
-                    callback && callback(null, success);
-                }
-            });
-    });
+	assetticker, assetqtt, callback) => {
+	let newasset = {
+		name: assetid,
+		ticker: assetticker,
+		qtt: assetqtt,
+	};
+	Assets.create(newasset, (error, asset) => {
+		let elemtype = {};
+		elemtype['Assets.' + assettype] = asset;
+		User.findOneAndUpdate({_id: id}, {$push: elemtype},
+			(error, success) => {
+				if (error) {
+					console.log(error);
+					callback && callback(error);
+				} else {
+					callback && callback(null, success);
+				}
+			});
+	});
 };
 
 let Apis = mongoose.model('Apis', ApiSchema);

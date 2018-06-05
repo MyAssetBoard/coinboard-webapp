@@ -228,25 +228,6 @@ DataJunk.prototype.dbthis = function(s, callback) {
     });
 };
 
-DataJunk.prototype.digest = function(what) {
-    let _this = this;
-    return new Promise((resolve, reject) => {
-        if (!(what && what.id && what.path)) {
-            let e = new Error('bad meal can\'t digest');
-            reject(e);
-        } else {
-            what.d = require('../.' + what.path);
-            _this.dbthis(what, function(res, err) {
-                if (res) {
-                    return resolve(res);
-                } else if (err) {
-                    return reject(err);
-                }
-            });
-        }
-    });
-};
-
 /**
  * Put .json file in directory and format them to feed db according
  * to {@link #models~data} schemas
@@ -256,7 +237,6 @@ DataJunk.prototype.digest = function(what) {
 DataJunk.prototype.getfiles = function(datadir) {
     let _this = this;
     return new Promise(function(resolve, reject) {
-        console.log(datadir);
         ROOT_APP_PATH = _this.fs.realpathSync('.');
         if (_this.fs.existsSync(datadir) === true) {
             _this.fs.readdir(datadir, function(err, list) {
@@ -280,23 +260,48 @@ DataJunk.prototype.getfiles = function(datadir) {
 };
 
 /**
- * @param {Object} item
- * @param {string} item.
- */
-/**
  * Put gathered file to db
  * @param {Array} files
  * @return {Promise}
  */
 DataJunk.prototype.pushtodb = function(files) {
     return new Promise(function(resolve, reject) {
-        let data = require('../schemas/datas');
-        let feed = require(files[0]);
-        resolve(feed.item[0].title);
+        // let datamodel = require('../schemas/datas');
+        let natural = require('natural');
+        let classifier = new natural.BayesClassifier();
+        let trainy = {
+            match: ['launch of', 'airdrop', 'regulation', 'legal framework'],
+            type: ['buy', 'get', 'buy', 'buy'],
+        };
+        let newinfos = [];
+        let datas = [];
+        let elem = 0;
 
-        // data.create({}, (error, res) => {
-        //     resolve(res._id);
-        // });
+        files.forEach((el) => {
+            datas[elem++] = require(el);
+        });
+        console.log(elem + ' elems in source dir');
+        datas[0].item.forEach((item) => {
+            let inf = {
+                url: item.link,
+                title: item.title,
+                content: item.description.toLowerCase(),
+                tags: '',
+            };
+            newinfos.push(inf);
+        });
+        for (el in trainy.match) {
+            if (typeof trainy.match[el] === 'string') {
+                classifier.addDocument(trainy.match[el],
+                    trainy.type[el]);
+            }
+        }
+        classifier.train();
+        newinfos.forEach((item) => {
+            console.log(item.title);
+            console.log(classifier.getClassifications(item.title));
+        });
+        resolve('end');
     });
 };
 /** @todo to be loopified for every source in all types
@@ -331,7 +336,9 @@ if (process.env.LAUNCH_TASK === 'gomine') {
             } else if (resolve) {
                 console.log(resolve);
                 let path = 'DTAFOOD/infos/';
-                let fname = path + where.name + '-' + Date.now() + '.json';
+                let timestamp = new Date();
+                let fname = path + where.name + '-' + timestamp.toISOString();
+                fname += '.json';
                 console.log('{fname: "' + fname + '"}\n');
                 data.wr(fname.toString(), resolve).then((r) => {
                     console.log(r);

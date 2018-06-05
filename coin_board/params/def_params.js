@@ -71,26 +71,11 @@ let param = {
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'index',
-        blocks: {
-            jumbo: 'blocks/all/my_jumbotron',
-        },
-    },
-    livestream: {
-        app: settings.apptitle,
-        title: 'Live trading charts',
-        author: settings.appcopyrights,
-        tsurl: confell.runningaddrs.appsurl,
-        tvurl: confell.runningaddrs.appvurl,
-        page: 'livestream',
         scripts: {
-            socket: cdns.socket,
             commons: '/common.js',
-            trade: '/tradestream.js',
         },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',
-            ticker: 'blocks/index/ticker_panel',
-            livestream: 'blocks/index/tradestream',
         },
     },
     login: {
@@ -101,8 +86,6 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'login',
         scripts: {
-            socketio: cdns.socket,
-            cryptojs: cdns.cryptojs,
             commons: '/common.js',
         },
         blocks: {
@@ -130,8 +113,6 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'signin',
         scripts: {
-            socketio: cdns.socket,
-            web3cdn: cdns.web3,
             commons: '/common.js',
         },
         blocks: {

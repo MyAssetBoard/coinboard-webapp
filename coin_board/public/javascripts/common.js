@@ -52,8 +52,9 @@ Commons.prototype.fillPopup = function(data) {
  */
 Commons.prototype.fillLogs = function(data, select) {
     let _this = this;
+    let ct = '<li>' + JSON.stringify(data, null, 4) + '</li>';
 
-    $(select.toString()).append('<li>' + JSON.stringify(data) + '</li>');
+    $(select.toString()).append(ct);
     _this.msgcnt += 1;
     $('#msgnb').html(_this.msgcnt.toString());
 };
