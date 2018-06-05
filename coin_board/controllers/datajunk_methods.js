@@ -259,51 +259,7 @@ DataJunk.prototype.getfiles = function(datadir) {
     });
 };
 
-/**
- * Put gathered file to db
- * @param {Array} files
- * @return {Promise}
- */
-DataJunk.prototype.pushtodb = function(files) {
-    return new Promise(function(resolve, reject) {
-        // let datamodel = require('../schemas/datas');
-        let natural = require('natural');
-        let classifier = new natural.BayesClassifier();
-        let trainy = {
-            match: ['launch of', 'airdrop', 'regulation', 'legal framework'],
-            type: ['buy', 'get', 'buy', 'buy'],
-        };
-        let newinfos = [];
-        let datas = [];
-        let elem = 0;
 
-        files.forEach((el) => {
-            datas[elem++] = require(el);
-        });
-        console.log(elem + ' elems in source dir');
-        datas[0].item.forEach((item) => {
-            let inf = {
-                url: item.link,
-                title: item.title,
-                content: item.description.toLowerCase(),
-                tags: '',
-            };
-            newinfos.push(inf);
-        });
-        for (el in trainy.match) {
-            if (typeof trainy.match[el] === 'string') {
-                classifier.addDocument(trainy.match[el],
-                    trainy.type[el]);
-            }
-        }
-        classifier.train();
-        newinfos.forEach((item) => {
-            console.log(item.title);
-            console.log(classifier.getClassifications(item.title));
-        });
-        resolve('end');
-    });
-};
 /** @todo to be loopified for every source in all types
  * and also make a real ipc protocol instead of dirty pipes on standard
  * output :p
@@ -313,14 +269,6 @@ if (process.env.LAUNCH_TASK === 'gomine') {
     data.getfiles('../../DTAFOOD/infos/').then((resolve) => {
         console.log('Files ::');
         console.log(resolve);
-        data.pushtodb(resolve).then((results) => {
-            console.log(results);
-            process.exit(0);
-        }).catch((reject) => {
-            if (reject) {
-                throw reject;
-            }
-        });
     }).catch((reject) => {
         console.log(reject);
         process.exit(1);
