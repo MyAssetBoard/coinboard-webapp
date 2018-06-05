@@ -82,4 +82,6 @@ All information's about how this app is organized /coded
 
 ## Hot news :
 
-- GrapQhiql view on /apis/renderGraphiQL !!
+- Great news folks !!! This->app is not deployed as 'staging' test version on Heroku servers !!
+
+- Please find a live example of this app @ [coin-board.herokuapp.com](https://coin-board.herokuapp.com/)  :) 
