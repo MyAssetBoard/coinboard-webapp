@@ -10,7 +10,7 @@ $(document).ready(function () {
     ];
     let select = acts.join(',');
     $(select).click(function () {
-        scrapper.send($(this).html());
+        scrapper.send($(this).html() + ' ' + $('scraprname').html());
     });
     scrapper.addEventListener('open', function (event) {
         scrapper.send('ok');
