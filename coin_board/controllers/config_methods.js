@@ -28,7 +28,7 @@ class AppConfig {
         this.vaddr = process.env.HEROKU === 'ok' ?
             'https://coin-board.herokuapp.com' : 'https://localhost/3001';
         this.saddr = process.env.HEROKU === 'ok' ?
-            'ws://coin-boardws.herokuapp.com' : 'wss://localhost/3001';
+            'wss://coin-boardws.herokuapp.com' : 'wss://localhost/3001';
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV === 'onion' ?
