@@ -11,22 +11,22 @@
         "source": {
                 "include": [
                         "coin_board/",
-			"coin_board/README.md",
+                        "coin_board/README.md",
                         "coin_board/bin",
-                        "coin_board/controllers",
                         "coin_board/bots",
-			"coin_board/bots/acts",
+                        "coin_board/bots/acts",
+                        "coin_board/controllers",
                         "coin_board/controllers/APIS",
                         "coin_board/controllers/djunk",
                         "coin_board/params",
-			"coin_board/Schemas",
                         "coin_board/routes",
-			"coin_board/routes/assets",
-			"coin_board/routes/index",
-			"coin_board/routes/livestream",
-			"coin_board/routes/login",
-			"coin_board/routes/profile",
-			"coin_board/routes/signin"
+                        "coin_board/routes/assets",
+                        "coin_board/routes/datajunk",
+                        "coin_board/routes/index",
+                        "coin_board/routes/login",
+                        "coin_board/routes/profile",
+                        "coin_board/routes/signin",
+                        "coin_board/schemas"
                 ],
                 "includePattern": ".+\\.js(doc|.md)?$",
                 "excludePattern": "(^|\\/|\\\\)_"
@@ -40,7 +40,7 @@
                 "monospaceLinks": false,
                 "default": {
                         "outputSourceFiles": true,
-			"useLongnameInNav": true
+                        "useLongnameInNav": true
                 }
         }
 }

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>
-			Source: routes/login/login.js
+			Namespace: datajunk
 		</title>
 		<script src="scripts/prettify/prettify.js">
 		</script>
@@ -34,115 +34,281 @@
 		<div id="main">
 			<h1 class="page-title">
 				<a href="https://github.com/MyAssetBoard/coinboard-webapp/">
-					Source: routes/login/login.js</a> documentation
+					Namespace: datajunk</a> documentation
 			</h1>
 			<div id="content">
 				
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file Login page main route controller
- * @author based on express boilerplate and edited by Trevis Gulby
- */
+        <h2>
+            <span class="ancestors"><a href="Routes.html">Routes</a><a href="Routes.page.html">.page</a>.</span>datajunk</h2>
+        
+    
+</header>
 
-/**  ### {@link login} page router overload definitions
- * @namespace login
- * @memberof Routes.page
- */
-/** The Express module import
- * @memberof Routes.page.login
- * @property {Object} express the express object
- */
-const express = require('express');
-/** The Express router module import
- * @memberof Routes.page.login
- * @property {Object} router the express.Router object
- */
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><h3><code>datajunk</code> page router overload definitions</h3></div>
+        
 
-const router = new express.Router();
-/** The {@link module:auth~Auth} import
- * @memberof Routes.page.login
- * @property {Object} Auth see Auth class
- */
+        
 
-/** @memberof Routes.page.login */
-const param = require('../../params/def_params');
-/** User mongoose model import
- * @memberof Routes.page.login
- */
-const User = require('../../schemas/user');
 
-/**
- * @param {Object} req
- * @param {Object} res
- * @param {Object} next
- * @memberof Routes.page.login
- */
-router.get('*', function (req, res, next) {
-    let chck = req.session;
+<dl class="details">
 
-    if (chck &amp;&amp; chck.userId) {
-        User.findById(chck.userId).exec(function (error, user) {
-            if (error) {
-                console.log('errr ..' + error);
-                return res.render('page', param.login);
-            } else if (user === null) {
-                let err = new Error('Not authorized! Go back!');
-                err.status = 400;
-                console.log('errr ..');
-                return res.render('page', param.login);
-            } else {
-                param.logco('LOGIN', chck);
-                return res.redirect('/profile');
-            }
-        });
-    } else {
-        param.lognoco('LOGIN', chck);
-        res.render('page', param.login);
-    }
-});
+    
 
-/**
- * @param {string} path
- * @param {function} callback
- * @memberof Routes.page.login
- */
-router.post('/*', function (req, res, next) {
-    if (req.body.logusername &amp;&amp; req.body.logpassword) {
-        User.authenticate(req.body.logusername, req.body.logpassword,
-            function (error, user) {
-                if (error || !user) {
-                    let err = new Error('Wrong username or password.');
-                    err.status = 401;
-                    return res.redirect('/login');
-                } else {
-                    req.session.userId = user._id;
-                    /** Browser user agent so browser response */
-                    if (req.headers['user-agent'] &amp;&amp;
-                        req.headers['user-agent'].length > 5) {
-                        return res.redirect('/assets/dashboard');
-                    } else {
-                        /** Bot / ET / curl / wget / whatever code request */
-                        let jsonresp = {token: req.session.userId};
-                        return res.send(JSON.stringify(jsonresp));
-                    }
-                }
-            });
-    } else {
-        let err = new Error('All fields required.');
-        err.status = 400;
-        return next(err);
-    }
-});
+    
 
-module.exports = router;
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_datajunk_datajunk.js.html">routes/datajunk/datajunk.js</a>, <a href="routes_datajunk_datajunk.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".express"><span class="type-signature">(static, constant) </span>express<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>The Express module import</p>
+</div>
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>express</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the express object</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_datajunk_datajunk.js.html">routes/datajunk/datajunk.js</a>, <a href="routes_datajunk_datajunk.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id=".Scrapper"><span class="type-signature">(static, constant) </span>Scrapper<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Scrapper mongoose model import</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routes_datajunk_datajunk.js.html">routes/datajunk/datajunk.js</a>, <a href="routes_datajunk_datajunk.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
