@@ -37,7 +37,9 @@
 				<%} %>
 			</div>
 			<div class="card-footer">
-				<button type="submit" class="btn btn-primary text-white">Add source</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addsourcemod">
+					Add source
+				</button>
 				<button type="submit" class="btn btn-primary text-white">Do other thing</button>
 			</div>
 		</div>
@@ -106,6 +108,72 @@
 				</div>
 				<div class="card-footer text-center"><%= Date.now()%></div>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="addsourcemod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add scrapper source
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form action="/datajunk/scrapper/newsource" method="post">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="scname">Scrapper name</label>
+						<% if (locals.scrapper) {%>
+							<input name="name" class="form-control text-black" type="text" value="<%= locals.scrapper.name%>" readonly="readonly">
+						<%} else {%>
+							<div class="alert-danger text-center">Please create a scrapper first
+							</div>
+						<%}%>
+					</div>
+					<div class="form-group">
+						<label for="stype">Source genre</label>
+						<select name="sourcegenre" class="form-control" id="stype">
+							<option>Bank</option>
+							<option>Crypto</option>
+							<option>Markets</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="stype">Source type</label>
+						<select name="sourcetype" class="form-control" id="stype">
+							<option>infos</option>
+							<option>prices</option>
+							<option>other</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="sname">Source name</label>
+						<input name="sourcename" id="sname" type="text" class="form-control"></input>
+					</div>
+					<div class="form-group">
+						<label for="surl">Source url</label>
+						<input name="sourceurl" id="surl" type="text" class="form-control"></input>
+					</div>
+					<div class="form-group">
+						<label for="shost">Source request host</label>
+						<input name="sourcereqhost" id="shost" type="text" class="form-control"></input>
+					</div>
+					<div class="form-group">
+						<label for="spath">Source request path</label>
+						<input name="sourcereqpath" id="spath" type="text" class="form-control"></input>
+					</div>
+					<div class="form-group">
+						<label for="sregx">Source regex</label>
+						<input name="sourceregex" id="sregx" type="text" class="form-control"></input>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary text-white">Save</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

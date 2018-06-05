@@ -132,6 +132,7 @@ router.post('/scrapper/newsource', function (req, res, next) {
                     sourceurl: req.body.sourceurl,
                     sourcereqhost: req.body.sourcereqhost,
                     sourcereqpath: req.body.sourcereqpath,
+                    sourceregex: req.body.sourceregex,
                 };
                 Scrapper.addsource(newsource, (error, scrapper) => {
                     console.log(scrapper);
