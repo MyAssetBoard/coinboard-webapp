@@ -7,7 +7,7 @@
 /** @class */
 class CbBot {
     /** @constructor */
-    constructor() {
+    constructor () {
         /** Import [telegraf](https://github.com/telegraf/telegraf)
          * module for easy bot management */
         this.Telegraf = require('telegraf');
@@ -36,7 +36,7 @@ class CbBot {
  * @param {string} cmd new client assets data to be recorded
  * @param {Object} usr user first_name , last_name and socket ID
  */
-CbBot.prototype.logthiscmd = function(cmd, usr) {
+CbBot.prototype.logthiscmd = function (cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
     log += '[' + usr.fname + ' ' + usr.lname + ']';
     log += ' ID: ' + usr.id;
@@ -44,7 +44,7 @@ CbBot.prototype.logthiscmd = function(cmd, usr) {
 };
 
 /** Logging helper function to print all messages sent to bot */
-CbBot.prototype.logthismsg = function() {
+CbBot.prototype.logthismsg = function () {
     let _this = this;
     _this.bot.on('message', (ctx) => {
         let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
@@ -59,7 +59,7 @@ CbBot.prototype.logthismsg = function() {
  * @param {Object} ctx The telegraf object containing methods and user chat
  * @param {Object} who The object containing all user data from db
  */
-CbBot.prototype.runcommands = function(cmd, ctx, who) {
+CbBot.prototype.runcommands = function (cmd, ctx, who) {
     let _this = this;
     let exec = 0;
     for (let el in this.cmds) {
@@ -85,7 +85,7 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
  * @param {Objet} user An object containing first and last names and TelegramID
  * @param {Object} ctx The telegraf object containing methods and user chat
  */
-CbBot.prototype.authme = function(cmd, user, ctx) {
+CbBot.prototype.authme = function (cmd, user, ctx) {
     let _this = this;
     let who = {};
     who['telegramid'] = user.id.toString();
@@ -108,7 +108,7 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
  * @note simple wrapper around bot.hears()
  * telegraf method ;)
  */
-CbBot.prototype.getcommands = function() {
+CbBot.prototype.getcommands = function () {
     let _this = this;
     /** Main bot listening command 'getter' function */
     _this.bot.hears(/\/(.+)/, (ctx) => {
@@ -129,7 +129,7 @@ CbBot.prototype.getcommands = function() {
  *  @property {function} bot.hello if hello cmd answer with Welcome message
  *  @property {function} bot.hears other way to get a reply from bot
  */
-CbBot.prototype.turnmeon = function() {
+CbBot.prototype.turnmeon = function () {
     let _this = this;
     _this.bot.start((ctx) => {
         console.log('started:', ctx.from.id);

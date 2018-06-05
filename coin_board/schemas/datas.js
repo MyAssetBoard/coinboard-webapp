@@ -19,36 +19,36 @@ mongoose.connect(mongoaddr.toString());
  * @property {Object} Date the Info gathering date
  */
 const InfosSchema = new mongoose.Schema({
-	url: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: true,
-		set: function(a) {
-			return a.toLowerCase();
-		},
-	},
-	title: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: true,
-	},
-	content: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: false,
-	},
-	tags: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	Date: {
-		type: Date,
-		default: Date.now,
-	},
+    url: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        set: function (a) {
+            return a.toLowerCase();
+        },
+    },
+    title: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+    },
+    content: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: false,
+    },
+    tags: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    Date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 /** Clean ordering , easy math !
@@ -62,29 +62,24 @@ const InfosSchema = new mongoose.Schema({
  * @property {Object} Date the Price gathering date or if histo, the timestamp
  */
 const PricesSchema = new mongoose.Schema({
-	fsym: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	tsym: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	type: {
-		type: String,
-		enum: [
-			'histoday',
-			'histohour',
-			'histominute',
-			'dayAvg',
-		],
-	},
-	Date: {
-		type: Date,
-		default: Date.now,
-	},
+    fsym: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    tsym: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    type: {
+        type: String,
+        enum: ['histoday', 'histohour', 'histominute', 'dayAvg'],
+    },
+    Date: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 /** A way to data mining !
@@ -98,17 +93,17 @@ const PricesSchema = new mongoose.Schema({
  * @property {Array} Coef.max the 10 max value and the error message
  */
 const TrendSchema = new mongoose.Schema({
-	Type: {
-		type: String,
-		enum: ['bullish', 'bearish'],
-		required: true,
-	},
-	Coef: {
-		type: Number,
-		min: [0, 'Coef: Value not in [0-10] range'],
-		max: [10, 'Coef: Value not in [0-10] range'],
-		required: true,
-	},
+    Type: {
+        type: String,
+        enum: ['bullish', 'bearish'],
+        required: true,
+    },
+    Coef: {
+        type: Number,
+        min: [0, 'Coef: Value not in [0-10] range'],
+        max: [10, 'Coef: Value not in [0-10] range'],
+        required: true,
+    },
 });
 
 /** The gathering sources models, regexes for parsing etc
@@ -118,15 +113,15 @@ const TrendSchema = new mongoose.Schema({
  * @property {function} url.set the setter for url (WIP)
  */
 const SourcesSchema = new mongoose.Schema({
-	url: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: true,
-		set: (a) => {
-			return a.toLowerCase();
-		},
-	},
+    url: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true,
+        set: (a) => {
+            return a.toLowerCase();
+        },
+    },
 });
 
 /** Yeah I know this now seems more logical
@@ -155,73 +150,73 @@ const SourcesSchema = new mongoose.Schema({
  * @property {Array} Sources.Markets the stock Markets sources
  */
 const DatasSchema = new mongoose.Schema({
-	Infos: {
-		Bank: [InfosSchema],
-		Crypto: [InfosSchema],
-		Markets: [InfosSchema],
-	},
-	Prices: {
-		Bank: [PricesSchema],
-		Crypto: [PricesSchema],
-		Markets: [PricesSchema],
-	},
-	Trends: {
-		Bank: [TrendSchema],
-		Crypto: [TrendSchema],
-		Markets: [TrendSchema],
-	},
-	Sources: {
-		Bank: [SourcesSchema],
-		Crypto: [SourcesSchema],
-		Markets: [SourcesSchema],
-	},
+    Infos: {
+        Bank: [InfosSchema],
+        Crypto: [InfosSchema],
+        Markets: [InfosSchema],
+    },
+    Prices: {
+        Bank: [PricesSchema],
+        Crypto: [PricesSchema],
+        Markets: [PricesSchema],
+    },
+    Trends: {
+        Bank: [TrendSchema],
+        Crypto: [TrendSchema],
+        Markets: [TrendSchema],
+    },
+    Sources: {
+        Bank: [SourcesSchema],
+        Crypto: [SourcesSchema],
+        Markets: [SourcesSchema],
+    },
 });
 
 /** Getters for schemas => tojson */
 InfosSchema.set('toJSON', {getters: true, virtuals: false});
 /** hashing a password before saving it to the database */
-InfosSchema.pre('save', function(next) {
-	next();
+InfosSchema.pre('save', function (next) {
+    next();
 });
 
-DatasSchema.statics.addinfos = function(datasubject, dataarray, callback) {
-	Infos.create(dataarray, (error, info) => {
-		if (error) {
-			throw error;
-		} else {
-			return info;
-		}
-	});
+DatasSchema.statics.addinfos = function (datasubject, dataarray, callback) {
+    Infos.create(dataarray, (error, info) => {
+        if (error) {
+            throw error;
+        } else {
+            return info;
+        }
+    });
 };
 
-DatasSchema.statics.addprices = function(datasubject, dataarray, callback) {
-	Prices.create(dataarray, (error, price) => {
-		if (error) {
-			throw error;
-		} else {
-			return price;
-		}
-	});
+DatasSchema.statics.addprices = function (datasubject, dataarray, callback) {
+    Prices.create(dataarray, (error, price) => {
+        if (error) {
+            throw error;
+        } else {
+            return price;
+        }
+    });
 };
 
-DatasSchema.statics.addsources = function(datasubject, dataarray, callback) {
-	Sources.create(dataarray, (error, source) => {
-		if (error) {
-			throw error;
-		} else {
-			return source;
-		}
-	});
+DatasSchema.statics.addsources = function (datasubject, dataarray, callback) {
+    Sources.create(dataarray, (error, source) => {
+        if (error) {
+            throw error;
+        } else {
+            return source;
+        }
+    });
 };
 
-DatasSchema.statics.addtrends = function(datasubject, dataarray, callback) {
-	Trends.create(dataarray, (error, trend) => {
-		if (error) {
-			throw error;
-		} else {
-			return trend;
-		}
-	});
+DatasSchema.statics.addtrends = function (datasubject, dataarray, callback) {
+    Trends.create(dataarray, (error, trend) => {
+        if (error) {
+            throw error;
+        } else {
+            return trend;
+        }
+    });
 };
 
 

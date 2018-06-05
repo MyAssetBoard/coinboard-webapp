@@ -24,13 +24,13 @@ const data = new DataJunk();
 const roads = {
     dashboard: {
         path: '/assets/dashboard',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_db'],
             };
             callback && callback(xx);
         },
-        stripd: function(d) {
+        stripd: function (d) {
             if (d.hasOwnProperty('apisv2')) {
                 let todel = 'apisv2';
                 delete d[todel];
@@ -39,8 +39,8 @@ const roads = {
     },
     infofeed: {
         path: '/assets/infofeed',
-        getd: function(callback) {
-            data.pukedata({}).then(function(res) {
+        getd: function (callback) {
+            data.pukedata({}).then(function (res) {
                 let mine = data.eat(res);
                 let rt = {};
                 let fd = [];
@@ -55,7 +55,7 @@ const roads = {
                 callback && callback(rt);
             });
         },
-        stripd: function(d) {
+        stripd: function (d) {
             if (d.hasOwnProperty('apisv2')) {
                 let todel = 'apisv2';
                 delete d[todel];
@@ -68,13 +68,13 @@ const roads = {
     },
     pricefeed: {
         path: '/assets/pricefeed',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_pfeed'],
             };
             callback && callback(xx);
         },
-        stripd: function(d) {
+        stripd: function (d) {
             if (d.hasOwnProperty('apisv2')) {
                 let todel = 'apisv2';
                 delete d[todel];
@@ -83,24 +83,24 @@ const roads = {
     },
     trade: {
         path: '/assets/trade',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_pfeed'],
             };
             callback && callback(xx);
         },
-        stripd: function(d) {},
+        stripd: function (d) {},
     },
     apiparams: {
         path: '/assets/api/param',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['api_param'],
                 scripts: ['/api_settings.js'],
             };
             callback && callback(xx);
         },
-        stripd: function(d) {
+        stripd: function (d) {
             if (d.hasOwnProperty('assets')) {
                 let todel = 'assets';
                 delete d[todel];
@@ -109,7 +109,7 @@ const roads = {
     },
     reportmonth: {
         path: '/assets/trade/reports/currm',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_pfeed'],
             };
@@ -118,7 +118,7 @@ const roads = {
     },
     reportthreemonths: {
         path: '/assets/trade/reports/currquart',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_pfeed'],
             };
@@ -127,7 +127,7 @@ const roads = {
     },
     crowddata: {
         path: '/assets/trade/reports/crowddata',
-        getd: function(callback) {
+        getd: function (callback) {
             let xx = {
                 blocks: ['cb_pfeed'],
             };

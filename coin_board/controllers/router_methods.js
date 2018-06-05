@@ -26,21 +26,21 @@ let mongoaddr = 'mongodb://localhost:27017/test3';
 mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
 
 const store = new MongoDBStore({
-	uri: mongoaddr,
-	collection: 'x_sessions',
+    uri: mongoaddr,
+    collection: 'x_sessions',
 });
 
 /** Session storage config using mongodb store */
 const sess = {
-	secret: 'keyboard cat',
-	cookie: {
-		maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
-		sameSite: true,
-		secure: true,
-	},
-	store: store,
-	resave: true,
-	saveUninitialized: false,
+    secret: 'keyboard cat',
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+        sameSite: true,
+        secure: true,
+    },
+    store: store,
+    resave: true,
+    saveUninitialized: false,
 };
 
 const Routes = require('../routes/routes');
@@ -65,12 +65,12 @@ app.set('views', path.join(__dirname, '../views'));
 app.disable('x-powered-by');
 app.disable('view cache');
 app.use('/favicon.ico',
-	express.static('images/favicon.ico', favOptions)
+    express.static('images/favicon.ico', favOptions)
 );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-	extended: false,
+    extended: false,
 }));
 
 /** trust first proxy */
@@ -80,13 +80,13 @@ app.set('trust proxy', 1);
 app.use(session(sess));
 
 app.use(
-	express.static(path.join(__dirname, '../public'), {
-		etag: false,
-	})
+    express.static(path.join(__dirname, '../public'), {
+        etag: false,
+    })
 );
 app.use(
-	express.static(path.join(__dirname, '../public/javascripts'),
-		favOptions)
+    express.static(path.join(__dirname, '../public/javascripts'),
+        favOptions)
 );
 
 /** Remove console log in production mode */
@@ -95,40 +95,40 @@ outputavert += ' (unless true)';
 
 /* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
-	console.log(outputavert);
+    console.log(outputavert);
 }
 
 /* istanbul ignore if */
 if (process.env.NODE_ENV === 'development') {
-	let output = 'NODE_ENV=development| (Use Morgan for logging requests)';
-	console.log(output);
-	app.use(logger('dev'));
+    let output = 'NODE_ENV=development| (Use Morgan for logging requests)';
+    console.log(output);
+    app.use(logger('dev'));
 }
 
 /** Main launcher for Express App */
 for (let el in Routes) {
-	if (Routes.hasOwnProperty(el)) {
-		if (el === 'index') {
-			app.use('/', Routes[el]);
-		} else {
-			let pp = '/' + el;
-			app.use(pp.toString(), Routes[el]);
-		}
-	}
+    if (Routes.hasOwnProperty(el)) {
+        if (el === 'index') {
+            app.use('/', Routes[el]);
+        } else {
+            let pp = '/' + el;
+            app.use(pp.toString(), Routes[el]);
+        }
+    }
 }
 
 // GET for logout logout
-app.use('/logout', function(req, res, next) {
-	if (req.session) {
-		// delete session object
-		req.session.destroy(function(err) {
-			if (err) {
-				return next(err);
-			} else {
-				return res.redirect('/');
-			}
-		});
-	}
+app.use('/logout', function (req, res, next) {
+    if (req.session) {
+        // delete session object
+        req.session.destroy(function (err) {
+            if (err) {
+                return next(err);
+            } else {
+                return res.redirect('/');
+            }
+        });
+    }
 });
 
 // ####################################### */
@@ -139,102 +139,102 @@ app.use(bodyParser.text({type: 'application/graphql'}));
 const User = require('../schemas/user');
 const param = require('../params/def_params');
 app.use('/api/*', (req, res, next) => {
-	let chck = req.session;
+    let chck = req.session;
 
-	if (chck && chck.userId) {
-		User.findById(chck.userId).exec(function(error, user) {
-			if (error) {
-				console.log('errr ..' + error);
-				return res.redirect('/login');
-			} else if (user === null) {
-				let err = new Error('Not authorized! Go back!');
-				err.status = 400;
-				console.log('errr ..');
-				return res.redirect('/login');
-			} else {
-				param.logco('INDEX', chck);
-				dup = param.index;
-				res.locals.data = user;
-				return next();
-			}
-		});
-	} else {
-		param.lognoco('INDEX', chck);
-		return res.redirect('/login');
-	}
+    if (chck && chck.userId) {
+        User.findById(chck.userId).exec(function (error, user) {
+            if (error) {
+                console.log('errr ..' + error);
+                return res.redirect('/login');
+            } else if (user === null) {
+                let err = new Error('Not authorized! Go back!');
+                err.status = 400;
+                console.log('errr ..');
+                return res.redirect('/login');
+            } else {
+                param.logco('INDEX', chck);
+                dup = param.index;
+                res.locals.data = user;
+                return next();
+            }
+        });
+    } else {
+        param.lognoco('INDEX', chck);
+        return res.redirect('/login');
+    }
 });
 
 app.post(
-	'/api/*',
-	graphql((request) => ({
-		schema: schema,
-		rootValue: request.body,
-		graphiql: false,
-	}))
+    '/api/*',
+    graphql((request) => ({
+        schema: schema,
+        rootValue: request.body,
+        graphiql: false,
+    }))
 );
 /** express route GET (/api/renderGraphiQL) setup */
 app.get(
-	'/api/*',
-	graphql({
-		schema: schema,
-		graphiql: true,
-	})
+    '/api/*',
+    graphql({
+        schema: schema,
+        graphiql: true,
+    })
 );
 // #####################################################""
 
 /** catch 404 and forward to error handler below */
-app.use(function(req, res, next) {
-	let err = new Error('Not Found');
-	err.status = 404;
-	next(err);
+app.use(function (req, res, next) {
+    let err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
-app.use(function(err, req, res, next) {
-	/** Allowed methods settings */
-	let allowedMethods = ['GET'];
-	/** append header param to response */
-	for (let k in httpopts) {
-		/* istanbul ignore next */
-		if (httpopts.hasOwnProperty(k)) {
-			res.append(k, httpopts[k]);
-		}
-	}
-	/** set locals, only providing error in development */
-	res.locals.message = err.message;
-	/* istanbul ignore next */
-	res.locals.error = req.app.get('env') === 'development' ?
-		err : {};
-	/** render the error page */
-	res.status(err.status || 500);
-	/** Check if method is GET or POST only */
-	if (!allowedMethods.includes(req.method)) {
-		console.log(err.message);
-		res.status(405).send('=> Not allowed ;)\n');
-	} else {
-		let errorp = require('../params/def_params');
-		res.render('page', errorp.error);
-	}
-	/* istanbul ignore next */
-	if (next) {
-		next = {};
-	}
+app.use(function (err, req, res, next) {
+    /** Allowed methods settings */
+    let allowedMethods = ['GET'];
+    /** append header param to response */
+    for (let k in httpopts) {
+        /* istanbul ignore next */
+        if (httpopts.hasOwnProperty(k)) {
+            res.append(k, httpopts[k]);
+        }
+    }
+    /** set locals, only providing error in development */
+    res.locals.message = err.message;
+    /* istanbul ignore next */
+    res.locals.error = req.app.get('env') === 'development' ?
+        err : {};
+    /** render the error page */
+    res.status(err.status || 500);
+    /** Check if method is GET or POST only */
+    if (!allowedMethods.includes(req.method)) {
+        console.log(err.message);
+        res.status(405).send('=> Not allowed ;)\n');
+    } else {
+        let errorp = require('../params/def_params');
+        res.render('page', errorp.error);
+    }
+    /* istanbul ignore next */
+    if (next) {
+        next = {};
+    }
 });
 
 
 /** Refresh AES encrypt key every 2 hour */
-function pollSecret() {
-	/** {@link module:crypt} import for
-	 * {@link module:crypt~Crypt#genrandomtocken} method routine
-	 */
-	const Crypt = require('./crypt_methods');
-	const crypt = new Crypt();
-	const h = 2;
-	const intergen = h * 60 * 60 * 1000;
-	crypt.genrandomtocken();
-	setInterval(
-		() => {
-			crypt.genrandomtocken();
-		}, intergen);
+function pollSecret () {
+    /** {@link module:crypt} import for
+     * {@link module:crypt~Crypt#genrandomtocken} method routine
+     */
+    const Crypt = require('./crypt_methods');
+    const crypt = new Crypt();
+    const h = 2;
+    const intergen = h * 60 * 60 * 1000;
+    crypt.genrandomtocken();
+    setInterval(
+        () => {
+            crypt.genrandomtocken();
+        }, intergen);
 }
 pollSecret();
 module.exports = app;

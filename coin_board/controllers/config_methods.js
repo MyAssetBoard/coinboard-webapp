@@ -10,7 +10,7 @@
  */
 class AppConfig {
     /** @constructor */
-    constructor() {
+    constructor () {
         let _this = this;
         /** Https server key filepath */
         this.srvkey = 'coin_board/params/server.key';
@@ -40,10 +40,10 @@ class AppConfig {
 /** check tor hostname if onion service set
  * @return {Object} rt
  */
-AppConfig.prototype.gettorhostnames = function() {
+AppConfig.prototype.gettorhostnames = function () {
     let _this = this;
     let rt = {
-        view: function() {
+        view: function () {
             let buff = new Buffer(22);
             let fn = '/var/lib/tor/hidnview/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
@@ -51,7 +51,7 @@ AppConfig.prototype.gettorhostnames = function() {
             ret += '/';
             return ret;
         },
-        socks: function() {
+        socks: function () {
             let buff = new Buffer(22);
             let fn = '/var/lib/tor/hidnws/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
@@ -84,7 +84,7 @@ AppConfig.prototype.favopts = {
 /** Https parameter key + cert (self signed)
  * @return {Object} httpsc
  */
-AppConfig.prototype.httpsc = function() {
+AppConfig.prototype.httpsc = function () {
     let _this = this;
     let httpsc = {};
     httpsc.key = _this.fs.readFileSync(_this.srvkey);

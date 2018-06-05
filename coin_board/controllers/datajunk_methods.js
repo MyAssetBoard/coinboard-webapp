@@ -27,7 +27,7 @@ const https0 = require('https');
  */
 class DataJunk {
     /** @constructor */
-    constructor() {
+    constructor () {
         /** http module import for sources requests */
         this.https = https0;
         /** Fs dep import for writing feeds */
@@ -55,7 +55,7 @@ class DataJunk {
  * @param {Object} res
  * @param {Object} ts
  */
-DataJunk.prototype.flags = function(col, dt, res, ts) {
+DataJunk.prototype.flags = function (col, dt, res, ts) {
     for (let c in col.sets) {
         if (col.sets.hasOwnProperty('a')) {
             for (let d in col.sets[c]) {
@@ -78,7 +78,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
 };
 
 /** Dummy helper for logging progress */
-DataJunk.prototype.logeat = function() {
+DataJunk.prototype.logeat = function () {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
     process.env.NODE_LOG === 'djunk' ?
@@ -91,7 +91,7 @@ DataJunk.prototype.logeat = function() {
  * @param {Object} dset results from feeds array in db
  * @return {Object} res parsed and colored data feed
  */
-DataJunk.prototype.eat = function(dset) {
+DataJunk.prototype.eat = function (dset) {
     let ts = {
         nb: 0,
         val: 0,
@@ -123,11 +123,11 @@ DataJunk.prototype.eat = function(dset) {
  * @param {Object} d data to write json fmt
  * @return {Promise} d corresponding to writed data
  */
-DataJunk.prototype.wr = function(fn, d) {
+DataJunk.prototype.wr = function (fn, d) {
     let _this = this;
     return new Promise((resolve, reject) => {
         ROOT_APP_PATH = _this.fs.realpathSync('.');
-        _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
+        _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function (err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
                 process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
@@ -145,9 +145,9 @@ DataJunk.prototype.wr = function(fn, d) {
  * @param {Object} where Object containing all source infos and parsing methods
  * @param {function} callback to get the result
  */
-DataJunk.prototype.begdata = function(where, callback) {
+DataJunk.prototype.begdata = function (where, callback) {
     console.log(where.req);
-    let req = this.https.get(where.req, function(res) {
+    let req = this.https.get(where.req, function (res) {
         let bodyChunks = [];
         res.on('data', (chunk) => {
             bodyChunks.push(chunk);
@@ -164,7 +164,7 @@ DataJunk.prototype.begdata = function(where, callback) {
             return callback && callback(clean);
         });
     });
-    req.on('error', function(e) {
+    req.on('error', function (e) {
         console.log('DataJunk -ERROR: ' + e.message);
         return callback && callback(e);
     });
@@ -182,7 +182,7 @@ DataJunk.prototype.begdata = function(where, callback) {
  * @param {Object} where see {@link module:models~RequestSchemas}
  * @return {Promise}
  */
-DataJunk.prototype.goshopping = function(where) {
+DataJunk.prototype.goshopping = function (where) {
     let _this = this;
     let Parseur = require('../schemas/scrapper').Parseur;
     return new Promise((resolve, reject) => {
@@ -209,7 +209,7 @@ DataJunk.prototype.goshopping = function(where) {
  * @param {String} s.d the source 'd'atas
  * @param {function} callback the callback function to get responses
  */
-DataJunk.prototype.dbthis = function(s, callback) {
+DataJunk.prototype.dbthis = function (s, callback) {
     let insert = {};
     insert.srcname = s.id;
     insert.srcurl = s.url;
@@ -234,18 +234,18 @@ DataJunk.prototype.dbthis = function(s, callback) {
  * @param {String} datadir the json datas directory
  * @return {function} Promise resolve reject nothing fancy
  */
-DataJunk.prototype.getfiles = function(datadir) {
+DataJunk.prototype.getfiles = function (datadir) {
     let _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         ROOT_APP_PATH = _this.fs.realpathSync('.');
         if (_this.fs.existsSync(datadir) === true) {
-            _this.fs.readdir(datadir, function(err, list) {
+            _this.fs.readdir(datadir, function (err, list) {
                 if (err) {
                     throw (err);
                 }
                 let regex = new RegExp('.*.json');
                 let clean = [];
-                list.forEach(function(item) {
+                list.forEach(function (item) {
                     if (regex.test(item)) {
                         item = item.replace(/^/, datadir);
                         clean.push(item);

@@ -10,7 +10,7 @@
  */
 class CbWebsocket {
     /** @constructor */
-    constructor() {
+    constructor () {
         this.https = require('https');
         this.uuid = require('uuid/v1');
         this.user = '';
@@ -26,7 +26,7 @@ class CbWebsocket {
 /** Main launcher method
  * @TODO rewrite deprec socket.io to ws method's
  */
-CbWebsocket.prototype.startmeup = function() {
+CbWebsocket.prototype.startmeup = function () {
     let log = 'WEBSOCKET - server is listening on :\n';
     log += 'addr: [' + this.conf.myip + '], port ' + this.port;
 
@@ -50,7 +50,7 @@ CbWebsocket.prototype.startmeup = function() {
  * @param {string} roomname
  * @param {string} usrid
  */
-CbWebsocket.prototype.logthisguy = function(roomname, usrid) {
+CbWebsocket.prototype.logthisguy = function (roomname, usrid) {
     let log = usrid + ' connected to [/' + roomname + '] route |';
     log += ' Connected : ' + this.scrapperco;
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
@@ -82,18 +82,18 @@ CbWebsocket.prototype.runme = (msg, ws) => {
 };
 
 /** @property {function} scrapper socket room event handling */
-CbWebsocket.prototype.scrapper = function() {
+CbWebsocket.prototype.scrapper = function () {
     let _this = this;
 
-    _this.wss.on('connection', function connection(ws) {
+    _this.wss.on('connection', function connection (ws) {
         _this.scrapperco += 1;
         _this.user = _this.uuid();
         _this.logthisguy('all', _this.user);
-        ws.on('message', function incoming(message) {
+        ws.on('message', function incoming (message) {
             _this.runme(message, ws);
         });
         ws.send(JSON.stringify({foo: 'something'}));
-        ws.on('close', function close() {
+        ws.on('close', function close () {
             _this.scrapperco -= 1;
             _this.logthisguy('all', _this.user);
         });

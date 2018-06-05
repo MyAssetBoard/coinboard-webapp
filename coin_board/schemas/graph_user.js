@@ -54,7 +54,7 @@ const MOCKUSERS = [{
 
 const MockApisType = new graphql.GraphQLObjectType({
     name: 'userapis',
-    fields: function() {
+    fields: function () {
         return {
             name: {
                 type: graphql.GraphQLString,
@@ -71,7 +71,7 @@ const MockApisType = new graphql.GraphQLObjectType({
 
 const MockAssetType = new graphql.GraphQLObjectType({
     name: 'userasset',
-    fields: function() {
+    fields: function () {
         return {
             name: {
                 type: graphql.GraphQLString,
@@ -88,7 +88,7 @@ const MockAssetType = new graphql.GraphQLObjectType({
 
 const MockUserType = new graphql.GraphQLObjectType({
     name: 'users',
-    fields: function() {
+    fields: function () {
         return {
             username: {
                 type: graphql.GraphQLString,
