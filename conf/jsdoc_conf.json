@@ -3,6 +3,7 @@
                 "template": "./conf/jsdoctemplate",
                 "encoding": "utf8",
                 "destination": "./docs/",
+                "tutorials": "./tutorials",
                 "recurse": false
         },
         "tags": {
