@@ -3,7 +3,7 @@
 /**
  * @param {function} callback
  */
-function getWeb3(callback) {
+function getWeb3 (callback) {
     if (typeof window.web3 === 'undefined') {
         /** no web3, use fallback */
         console.error('Please use a web3 browser');
@@ -22,8 +22,11 @@ function getWeb3(callback) {
     }
 }
 
-/** yolo */
-function printnetworkname(err, netId) {
+/**
+ * @param {string} err
+ * @param {string} netId
+ */
+function printnetworkname (err, netId) {
     switch (netId) {
     case '1':
         console.log(' > This is mainnet');
@@ -46,14 +49,14 @@ function printnetworkname(err, netId) {
 }
 
 /** @param {Object} web3 */
-function startApp(web3) {
+function startApp (web3) {
     let yolo = web3.currentProvider;
     console.log('== Connected to Metamask ==');
     web3.version.getNetwork(printnetworkname(err, netId));
     $('#InputEthaddr').val(yolo);
 }
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     /** Load WEB3 */
     getWeb3(startApp);
 });

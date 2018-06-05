@@ -4,7 +4,9 @@
  */
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test3');
+let mongoaddr = 'mongodb://localhost:27017/test3';
+mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
+mongoose.connect(mongoaddr.toString());
 
 /** Base 'crawling feeds' organisation
  * @constructor
@@ -22,7 +24,7 @@ const InfosSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true,
-        set: function(a) {
+        set: function (a) {
             return a.toLowerCase();
         },
     },
@@ -72,12 +74,7 @@ const PricesSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: [
-            'histoday',
-            'histohour',
-            'histominute',
-            'dayAvg',
-        ],
+        enum: ['histoday', 'histohour', 'histominute', 'dayAvg'],
     },
     Date: {
         type: Date,
@@ -178,11 +175,11 @@ const DatasSchema = new mongoose.Schema({
 /** Getters for schemas => tojson */
 InfosSchema.set('toJSON', {getters: true, virtuals: false});
 /** hashing a password before saving it to the database */
-InfosSchema.pre('save', function(next) {
+InfosSchema.pre('save', function (next) {
     next();
 });
 
-DatasSchema.statics.addinfos = function(datasubject, dataarray, callback) {
+DatasSchema.statics.addinfos = function (datasubject, dataarray, callback) {
     Infos.create(dataarray, (error, info) => {
         if (error) {
             throw error;
@@ -192,7 +189,7 @@ DatasSchema.statics.addinfos = function(datasubject, dataarray, callback) {
     });
 };
 
-DatasSchema.statics.addprices = function(datasubject, dataarray, callback) {
+DatasSchema.statics.addprices = function (datasubject, dataarray, callback) {
     Prices.create(dataarray, (error, price) => {
         if (error) {
             throw error;
@@ -202,7 +199,7 @@ DatasSchema.statics.addprices = function(datasubject, dataarray, callback) {
     });
 };
 
-DatasSchema.statics.addsources = function(datasubject, dataarray, callback) {
+DatasSchema.statics.addsources = function (datasubject, dataarray, callback) {
     Sources.create(dataarray, (error, source) => {
         if (error) {
             throw error;
@@ -212,7 +209,7 @@ DatasSchema.statics.addsources = function(datasubject, dataarray, callback) {
     });
 };
 
-DatasSchema.statics.addtrends = function(datasubject, dataarray, callback) {
+DatasSchema.statics.addtrends = function (datasubject, dataarray, callback) {
     Trends.create(dataarray, (error, trend) => {
         if (error) {
             throw error;

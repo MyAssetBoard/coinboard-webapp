@@ -2,9 +2,10 @@
 	"name": "coin_board",
 	"version": "0.0.1Beta",
 	"description": "Crypto assets management board",
-	"main": "./INIT_DEV.sh -rl",
+	"main": "./INIT_DEV.sh -staging development local",
 	"scripts": {
-		"start": "./INIT_DEV.sh development",
+		"preinstall": "cd coin_board && npm install",
+		"start": "./INIT_DEV.sh -staging development local",
 		"test": "echo maybelater"
 	},
 	"repository": "https://github.com/MyAssetBoard/coinboard-webapp",
@@ -12,8 +13,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"eslint": "^4.18.0",
-		"mongodb": "^3.0.7",
-		"pm2": "^2.10.3"
+		"mongodb": "^3.0.10",
+		"pm2": "^2.10.4"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",
@@ -23,11 +24,12 @@
 		"eslint-config-google": "^0.9.1",
 		"jsdoc": "^3.5.5",
 		"jsdoc-to-markdown": "^4.0.1",
-		"mocha": "^5.1.1",
+		"mocha": "^5.2.0",
 		"mocha-junit-reporter": "^1.17.0",
-		"nyc": "^11.7.1",
-		"sinon": "^5.0.4",
-		"sinon-chai": "^3.0.0",
-		"supertest": "^3.0.0"
+		"nyc": "^12.0.2",
+		"sinon": "^5.0.10",
+		"sinon-chai": "^3.1.0",
+		"supertest": "^3.1.0",
+		"yarn": "^1.7.0"
 	}
 }

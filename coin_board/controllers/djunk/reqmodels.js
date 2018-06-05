@@ -56,14 +56,14 @@ const MOQREQUEST = {
             path: ctafjson,
         },
         fname: './DTAFOOD/news/ctaf-' + tmpst,
-        clean: function(mess) {
+        clean: function (mess) {
             let clean = mess.match(/<p>(.*?)<\/p>/g);
             clean = !clean ?
                 'PARSING-ERROR' :
                 clean.toString().replace(/<\/?p>/g, '');
             return clean;
         },
-        get: function(r, clean) {
+        get: function (r, clean) {
             for (it in r.item) {
                 if (r.item[it]) {
                     let elem = r.item[it];
@@ -84,7 +84,7 @@ const MOQREQUEST = {
             path: cryptonewsjson,
         },
         fname: './DTAFOOD/news/crnews-' + tmpst,
-        clean: function(mess) {
+        clean: function (mess) {
             let rgx1 = /(<([^>]+)>)/ig;
             let rgx2 = /[`~@#%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi;
             let rt = mess.replace(rgx1, '');
@@ -94,7 +94,7 @@ const MOQREQUEST = {
                 rt.toString().split('Read The Full')[0];
             return rt;
         },
-        get: function(r, clean) {
+        get: function (r, clean) {
             for (it in r.item) {
                 if (r.item[it]) {
                     let elem = r.item[it];
@@ -114,7 +114,7 @@ const MOQREQUEST = {
             path: '/data/price?fsym=BTC&tsyms=USD,JPY,EUR',
         },
         fname: './DTAFOOD/prices/crcomp-btc.usd.jpy.eur-' + tmpst,
-        get: function(r, clean) {
+        get: function (r, clean) {
             return clean;
         },
     },

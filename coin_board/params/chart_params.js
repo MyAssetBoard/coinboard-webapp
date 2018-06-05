@@ -1,12 +1,12 @@
 /**
-* @file Chart canvas params
-* @author Trevis Gulby
-*/
+ * @file Chart canvas params
+ * @author Trevis Gulby
+ */
 
 const config = {
-        type: 'line',
-        data: {
-                labels: [
+    type: 'line',
+    data: {
+        labels: [
                         'January',
                         'February',
                         'March',
@@ -15,18 +15,18 @@ const config = {
                         'June',
                         'July',
                 ],
-                datasets: [
-                        {
-                                label: 'ETH',
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 0.2)',
-                                fill: false,
+        datasets: [
+            {
+                label: 'ETH',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 0.2)',
+                fill: false,
                         }, {
-                                label: 'EUR',
-                                fill: false,
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 0.2)',
-                                data: [
+                label: 'EUR',
+                fill: false,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 0.2)',
+                data: [
                                         18,
                                         33,
                                         22,
@@ -37,23 +37,23 @@ const config = {
                                 ],
                         },
                 ],
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'MinandMaxSettings',
         },
-        options: {
-                title: {
-                        display: true,
-                        text: 'MinandMaxSettings',
-                },
-                scales: {
-                        yAxes: [
-                                {
-                                        ticks: {
-                                                suggestedMin: 10,
-                                                suggestedMax: 50,
-                                        },
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        suggestedMin: 10,
+                        suggestedMax: 50,
+                    },
                                 },
                         ],
-                },
         },
+    },
 };
 
 module.exports = config;

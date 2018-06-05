@@ -4,7 +4,9 @@
  */
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test3');
+let mongoaddr = 'mongodb://localhost:27017/test3';
+mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
+mongoose.connect(mongoaddr.toString());
 
 /** The request model (to get rss feeds)
  * @constructor

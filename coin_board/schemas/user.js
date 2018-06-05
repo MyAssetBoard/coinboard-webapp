@@ -7,13 +7,15 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-mongoose.connect('mongodb://localhost:27017/test3');
+let mongoaddr = 'mongodb://localhost:27017/test3';
+mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
+mongoose.connect(mongoaddr.toString());
 
 /** Return lowercase for email fields
  * @param {String} a the string to be converted
  * @return {String} the a param in lowercase
  */
-function toLower(a) {
+function toLower (a) {
     return a.toLowerCase();
 }
 
@@ -21,7 +23,7 @@ function toLower(a) {
  * @param {String} a the string to be converted
  * @return {Float} the a float value
  */
-function toFloat(a) {
+function toFloat (a) {
     return parseFloat(a);
 }
 
@@ -144,9 +146,9 @@ UserSchema.set('toJSON', {getters: true, virtuals: false});
 /** hashing a password before saving it to the database
  *  @memberof module:models~UserSchema
  */
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
     let user = this;
-    bcrypt.hash(user.password, 10, function(err, hash) {
+    bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
             return next(err);
         } else {
@@ -159,7 +161,7 @@ UserSchema.pre('save', function(next) {
 /** Hash api secret too */
 ApiSchema.pre('save', (next) => {
     let api = this;
-    bcrypt.hash(api.secret, 10, function(err, hash) {
+    bcrypt.hash(api.secret, 10, function (err, hash) {
         api.secret = hash;
         next();
     });
@@ -171,9 +173,9 @@ ApiSchema.pre('save', (next) => {
  * @param {function} callback to get the user data or error
  * @memberof module:models~UserSchema
  */
-UserSchema.statics.authenticate = function(username, password, callback) {
+UserSchema.statics.authenticate = function (username, password, callback) {
     User.findOne({username: username})
-        .exec(function(err, user) {
+        .exec(function (err, user) {
             if (err) {
                 return callback(err);
             } else if (!user) {
@@ -181,7 +183,7 @@ UserSchema.statics.authenticate = function(username, password, callback) {
                 err.status = 401;
                 return callback(err);
             }
-            bcrypt.compare(password, user.password, function(err, result) {
+            bcrypt.compare(password, user.password, function (err, result) {
                 if (result === true) {
                     return callback(null, user);
                 } else {
@@ -200,7 +202,7 @@ UserSchema.statics.authenticate = function(username, password, callback) {
  * @param {function} callback to get the result data or error
  * @memberof module:models~UserSchema
  */
-UserSchema.statics.addapi = function(id,
+UserSchema.statics.addapi = function (id,
     apitype, apiid, apikey, apisecret, callback) {
     let newapi = {
         name: apiid,

@@ -10,7 +10,7 @@
  */
 class N26Api {
     /** @constructor */
-    constructor() {
+    constructor () {
         /** Perfect module for perfect usage
          * click [here](https://github.com/PierrickP/n26) for doc
          */
@@ -18,7 +18,7 @@ class N26Api {
     }
 }
 
-N26Api.prototype.getsums = function(tr, key) {
+N26Api.prototype.getsums = function (tr, key) {
     let sum = 0;
     let min = 0;
     let plus = 0;
@@ -46,13 +46,12 @@ N26Api.prototype.getsums = function(tr, key) {
  * @param {string} key the element to sum about
  * @return {Promise} res cred, deb and sum on string format if resolved
  */
-N26Api.prototype.gettrstats = function(id, key) {
+N26Api.prototype.gettrstats = function (id, key) {
     let _this = this;
     return new Promise((resolve, reject) => {
         const acc = new _this.N26(id.usr.toString(), id.pw.toString());
         acc.then((account) => {
-            account.transactions(
-            {
+            account.transactions({
                 text: key,
             }).then((tr) => {
                 resolve(_this.getsums(tr, key));

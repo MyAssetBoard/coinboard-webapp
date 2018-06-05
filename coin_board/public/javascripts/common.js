@@ -3,7 +3,7 @@
  */
 class Commons {
     /** @constructor */
-    constructor() {
+    constructor () {
         this.getCookie = (key) => {
             let value = '; ' + document.cookie;
             let parts = value.split('; ' + key + '=');
@@ -18,7 +18,7 @@ class Commons {
 /** DOM manip for user reading of websocket feed
  * @param {Object} data new received data
  */
-Commons.prototype.fillPopup = function(data) {
+Commons.prototype.fillPopup = function (data) {
     let _this = this;
     $('#ppContent').text('');
     $('#ppContent').removeClass('alert-danger');
@@ -50,10 +50,11 @@ Commons.prototype.fillPopup = function(data) {
  * @param {Object} data new received data
  * @param {String} select the log type selector
  */
-Commons.prototype.fillLogs = function(data, select) {
+Commons.prototype.fillLogs = function (data, select) {
     let _this = this;
+    let ct = '<li>' + JSON.stringify(data, null, 4) + '</li>';
 
-    $(select.toString()).append('<li>' + JSON.stringify(data) + '</li>');
+    $(select.toString()).append(ct);
     _this.msgcnt += 1;
     $('#msgnb').html(_this.msgcnt.toString());
 };
