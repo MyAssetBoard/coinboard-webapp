@@ -52,7 +52,7 @@ COPY */package.json /usr/src/app/coin_board/coin_board/
 RUN cd /usr/src/app/coin_board &&  yarn install && cd coin_board && yarn install
 COPY . ./usr/src/app/coin_board/
 #Conf options for to and nginx
-COPY   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf/
+COPY   conf/onion/onion.nginx.conf /etc/nginx/nginx.conf
 COPY   conf/onion/*.onion.nginx /etc/nginx/sites-enabled/
 COPY   conf/onion/torrc /etc/tor/torrc
 
