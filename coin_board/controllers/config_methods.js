@@ -25,14 +25,17 @@ class AppConfig {
         /** what ip should i get ?
          * @TODO : Add new methods to better select listening interface
          */
-        this.myip = '127.0.0.1';
+        this.vaddr = process.env.HEROKU === 'ok' ?
+            'https://coin-board.herokuapp.com' : 'https://localhost/3001';
+        this.saddr = process.env.HEROKU === 'ok' ?
+            'ws://coin-boardws.herokuapp.com' : 'wss://localhost/3001';
         this.runningaddrs = {
             /** final app view url for reference in template */
             appvurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().view() : 'https://' + _this.myip + ':3000/',
+                this.gettorhostnames().view() : _this.vaddr,
             /** final app socket url for reference in template */
             appsurl: process.env.SERV_ENV === 'onion' ?
-                this.gettorhostnames().socks() : 'wss://' + _this.myip + ':3001',
+                this.gettorhostnames().socks() : _this.saddr,
         };
     }
 }

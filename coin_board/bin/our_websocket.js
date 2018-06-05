@@ -11,7 +11,11 @@
 class CbWebsocket {
     /** @constructor */
     constructor () {
-        this.https = require('https');
+        if (process.env.HEROKU === 'ok') {
+            this.http = require('http');
+        } else {
+            this.https = require('https');
+        }
         this.uuid = require('uuid/v1');
         this.user = '';
         this.port = 3001;
@@ -29,17 +33,29 @@ class CbWebsocket {
 CbWebsocket.prototype.startmeup = function () {
     let log = 'WEBSOCKET - server is listening on :\n';
     log += 'addr: [' + this.conf.myip + '], port ' + this.port;
+    let _this = this;
 
     process.env.NODE_ENV === 'development' ? console.log(log) : log;
-    this.server = this.https.createServer(this.conf.httpsc(),
-        (req, res) => {
+    if (process.env.HEROKU === 'ok') {
+        this.server = this.http.createServer((req, res) => {
             let resp = {
                 status: 404,
                 error: '**Websocket connection only**',
             };
             res.writeHead(404);
             res.end(JSON.stringify(resp));
-        }).listen(this.port);
+        }).listen(_this.port);
+    } else {
+        this.server = this.https.createServer(_this.conf.httpsc(),
+            (req, res) => {
+                let resp = {
+                    status: 404,
+                    error: '**Websocket connection only**',
+                };
+                res.writeHead(404);
+                res.end(JSON.stringify(resp));
+            }).listen(_this.port);
+    }
     let server = this.server;
     this.Ws = require('ws'); ;
     this.wss = new this.Ws.Server({server});
