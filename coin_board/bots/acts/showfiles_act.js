@@ -17,8 +17,8 @@ const {
 const showfiles = {
     id: '/tree',
     func: function (args, usr, callback) {
-        const fp = './DTAFOOD/';
-        const cmd = 'tree';
+        const fp = process.env.HEROKU == 'ok' ? '-R DTAFOOD' : './DTAFOOD/';
+        const cmd = process.env.HEROKU == 'ok' ? 'ls' : 'tree';
         const tree = spawn(cmd, [fp]);
         tree.stdout.on('data', (data) => {
             resp = data.toString();

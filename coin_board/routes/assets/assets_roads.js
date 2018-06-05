@@ -96,7 +96,6 @@ const roads = {
         getd: function (callback) {
             let xx = {
                 blocks: ['api_param'],
-                scripts: ['/api_settings.js'],
             };
             callback && callback(xx);
         },

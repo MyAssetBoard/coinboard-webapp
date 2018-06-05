@@ -275,7 +275,7 @@ if (process.env.LAUNCH_TASK === 'gomine') {
     });
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
-    let scrappername = 'BobyScrapper';
+    let scrappername = process.env.SCRAPPERID;
     Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
         let where = scrapper.Sources.Crypto.infos[0];
         data.goshopping(where).then((resolve, reject) => {
