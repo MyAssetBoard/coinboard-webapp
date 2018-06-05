@@ -17,10 +17,8 @@
  * @property {function} bear.check try to parse content for known word in sets
  */
 const colors = {
-    bull:
-    {
-        sets:
-        {
+    bull: {
+        sets: {
             a: [
                 'amazing',
                 'exceptionnal',
@@ -43,7 +41,7 @@ const colors = {
                 'investing',
             ],
         },
-        check: function(el) {
+        check: function (el) {
             let str = el.wh;
             let flag = el.wr;
             let tag = [
@@ -69,20 +67,18 @@ const colors = {
                 true :
                 false;
         },
-        res: function(el) {
+        res: function (el) {
             for (let x in this.bull.sets) {
                 if (this.bull.sets[x]) {
                     for (let y in this.bull.sets.x) {
-                        if (el.match(this.bull.sets.x.y)) {}
+                        if (el.match(this.bull.sets.x[y])) {}
                     }
                 }
             }
         },
     },
-    bear:
-    {
-        sets:
-        {
+    bear: {
+        sets: {
             a: [
                 'hack',
                 'crash',
@@ -104,7 +100,7 @@ const colors = {
                 'uncertainty',
             ],
         },
-        check: function(el) {
+        check: function (el) {
             let str = el.wh;
             let flag = el.wr;
             let tag = [

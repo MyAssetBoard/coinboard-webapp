@@ -30,15 +30,15 @@ const param = require('../../params/def_params');
 /** User mongoose model import
  * @memberof Routes.page.index
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 /** GET index page
  * @memberof Routes.page.index
  */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log('errr ..' + error);
                 return res.render('page', param.index);

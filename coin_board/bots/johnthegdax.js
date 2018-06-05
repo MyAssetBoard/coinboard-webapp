@@ -6,13 +6,13 @@ const creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
 /** WIP class for gdax trading */
 class JohnBot {
     /** @constructor */
-    constructor() {
+    constructor () {
         this.fact = require(gdaxfactpath);
         this.gdax = new this.fact.DefaultAPI(null);
     }
 }
 
-JohnBot.prototype.midmarketprice = function() {
+JohnBot.prototype.midmarketprice = function () {
     let _this = this;
     process.env.GDAX_KEY = process.env.GDAX_KEY ?
         process.env.GDAX_KEY : creds.GDAXAPI.GDAX_KEY;
@@ -27,7 +27,7 @@ JohnBot.prototype.midmarketprice = function() {
     });
 };
 
-JohnBot.prototype.myaccount = function() {
+JohnBot.prototype.myaccount = function () {
     let _this = this;
     process.env.GDAX_KEY = process.env.GDAX_KEY ?
         process.env.GDAX_KEY : creds.GDAXAPI.GDAX_KEY;

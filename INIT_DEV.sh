@@ -135,6 +135,18 @@ function app_startDev ()
 	"$PM2" start "$APPCONF" --only "$CBSERV"  --update-env;
 }
 
+function app_startStaging ()
+{
+	export NODE_ENV="$1"
+	export SERV_ENV="$2"
+	#Init random key gen for uid
+	echo 'RANDOM' > log.txt;
+	pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
+	pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
+	#pm2 start "$APPCONF" --only "$CBSERV"  --update-env;
+	pm2 logs
+}
+
 function reset_db ()
 {
 	rm -rf tmpdata && mkdir tmpdata
@@ -260,6 +272,11 @@ do
 
 		'n-lt')
 		app_tests
+		exit 0
+		;;
+
+		'n-staging')
+		app_startStaging "$2" "$3"
 		exit 0
 		;;
 

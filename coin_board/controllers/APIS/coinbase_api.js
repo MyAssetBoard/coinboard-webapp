@@ -9,7 +9,7 @@
  */
 class CoinbaseApi {
     /** @constructor */
-    constructor() {
+    constructor () {
         /** See [here](https://developers.coinbase.com) for doc */
         this.Client = require('coinbase').Client;
         this.creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
@@ -21,8 +21,8 @@ class CoinbaseApi {
     }
 }
 
-CoinbaseApi.prototype.cbgetaccount = function() {
-    this.client.getAccount(accid, function(err, accounts) {
+CoinbaseApi.prototype.cbgetaccount = function () {
+    this.client.getAccount(accid, function (err, accounts) {
         console.log(accounts);
     });
 };

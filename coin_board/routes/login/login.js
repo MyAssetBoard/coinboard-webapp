@@ -28,7 +28,7 @@ const param = require('../../params/def_params');
 /** User mongoose model import
  * @memberof Routes.page.login
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 /**
  * @param {Object} req
@@ -36,11 +36,11 @@ const User = require('../../Schemas/user');
  * @param {Object} next
  * @memberof Routes.page.login
  */
-router.get('*', function(req, res, next) {
+router.get('*', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log('errr ..' + error);
                 return res.render('page', param.login);
@@ -65,10 +65,10 @@ router.get('*', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.login
  */
-router.post('/*', function(req, res, next) {
+router.post('/*', function (req, res, next) {
     if (req.body.logusername && req.body.logpassword) {
         User.authenticate(req.body.logusername, req.body.logpassword,
-            function(error, user) {
+            function (error, user) {
                 if (error || !user) {
                     let err = new Error('Wrong username or password.');
                     err.status = 401;

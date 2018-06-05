@@ -19,12 +19,12 @@ let cdns = {
 };
 
 let param = {
-    logco: function(pagename, chck) {
+    logco: function (pagename, chck) {
         log = '/' + pagename + '-route : Auth user, cookies below\n[';
         log += JSON.stringify(chck) + ']';
         process.env.NODE_ENV === 'development' ? console.log(log) : log;
     },
-    lognoco: function(pagename, chck) {
+    lognoco: function (pagename, chck) {
         log = '/' + pagename + '-route : NonAuth user, cookies below\n[';
         log += JSON.stringify(chck) + ']';
         process.env.NODE_ENV === 'development' ? console.log(log) : log;
@@ -37,11 +37,13 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'datajunk',
         scripts: {
+            socketio: cdns.socket,
             commons: '/common.js',
+            datafood: '/data_junk.js',
         },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',
-            centerblock: 'blocks/datajunk/scrapper_block',
+            centerblock: 'blocks/datajunk/data_block',
         },
     },
     assets: {
@@ -69,26 +71,11 @@ let param = {
         tsurl: confell.runningaddrs.appsurl,
         tvurl: confell.runningaddrs.appvurl,
         page: 'index',
-        blocks: {
-            jumbo: 'blocks/all/my_jumbotron',
-        },
-    },
-    livestream: {
-        app: settings.apptitle,
-        title: 'Live trading charts',
-        author: settings.appcopyrights,
-        tsurl: confell.runningaddrs.appsurl,
-        tvurl: confell.runningaddrs.appvurl,
-        page: 'livestream',
         scripts: {
-            socket: cdns.socket,
             commons: '/common.js',
-            trade: '/tradestream.js',
         },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',
-            ticker: 'blocks/index/ticker_panel',
-            livestream: 'blocks/index/tradestream',
         },
     },
     login: {
@@ -99,10 +86,7 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'login',
         scripts: {
-            socketio: cdns.socket,
-            cryptojs: cdns.cryptojs,
             commons: '/common.js',
-            mysocket: '/auth_socket.js',
         },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',
@@ -129,11 +113,7 @@ let param = {
         tvurl: confell.runningaddrs.appvurl,
         page: 'signin',
         scripts: {
-            socketio: cdns.socket,
-            web3cdn: cdns.web3,
             commons: '/common.js',
-            myweb3: '/web3_checkaddress.js',
-            mysocket: '/signin_socket.js',
         },
         blocks: {
             jumbo: 'blocks/all/my_jumbotron',

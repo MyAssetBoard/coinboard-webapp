@@ -29,7 +29,7 @@ const roads = require('./assets_roads');
 /** User mongoose schemas import
  * @memberof Routes.page.assets
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 
 /** Take the req original url and make it match with the right methods
@@ -41,7 +41,7 @@ const User = require('../../Schemas/user');
  * @property {Object} res used to carry the roads component methods and vars
  * @return {Promise} the requested page /content or 'nope' string if any
  */
-function setpagecontent(req, pageparam, dbr) {
+function setpagecontent (req, pageparam, dbr) {
     return new Promise((resolve, reject) => {
         let res = {};
         for (let paths in roads) {
@@ -57,7 +57,7 @@ function setpagecontent(req, pageparam, dbr) {
             }
         }
         if (res.getcontent) {
-            res.getcontent(function(rt) {
+            res.getcontent(function (rt) {
                 if (rt && rt.blocks) {
                     if (rt.scripts) {
                         pageparam.scripts['foo'] = rt.scripts[0];
@@ -78,7 +78,7 @@ function setpagecontent(req, pageparam, dbr) {
  * @memberof Routes.page.assets
  * @param {Object} req the request starting with ADDR/assets/
  */
-router.get('/*', function(req, res, next) {
+router.get('/*', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
@@ -118,7 +118,7 @@ router.get('/*', function(req, res, next) {
     }
 });
 
-router.post('/addapis', function(req, res, next) {
+router.post('/addapis', function (req, res, next) {
     let dup = param.assets;
     if (req.body.apitype && req.body.apiid &&
         req.body.apikey && req.body.apisecret &&
@@ -142,7 +142,7 @@ router.post('/addapis', function(req, res, next) {
     }
 });
 
-router.post('/addasset', function(req, res, next) {
+router.post('/addasset', function (req, res, next) {
     let dup = param.assets;
     if (req.body.assettype && req.body.assetid &&
         req.body.assetticker && req.body.assetqtt &&

@@ -24,21 +24,20 @@ const param = require('../../params/def_params');
 /** User mongoose model import for authentication
  * @memberof Routes.page.signin
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 /** Scrapper mongoose model import
  * @memberof Routes.page.datajunk
  */
-const Scrapper = require('../../Schemas/scrapper');
+const Scrapper = require('../../schemas/scrapper');
 
 /** GET signin page
  * @memberof Routes.page.signin
  */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
-            param.logco('DATAJUNK', chck);
+        User.findById(chck.userId).exec(function (error, user) {
             if (error) {
                 console.log('errr ..' + error);
                 return res.redirect('/');
@@ -55,12 +54,13 @@ router.get('/', function(req, res, next) {
                             return res.redirect('/datajunk');
                         }
                         param.logco('DATAJUNK', chck);
-                        res.locals.data = {};
-                        res.locals.data = scrapper;
-                        console.log(res.locals.data);
+                        res.locals.data = user.toJSON();
+                        res.locals.scrapper = scrapper.toJSON();
                         return res.render('page', param.datajunk);
                     });
             } else {
+                param.logco('DATAJUNK', chck);
+                res.locals.data = user.toJSON();
                 return res.render('page', param.datajunk);
             }
         });
@@ -75,7 +75,7 @@ router.get('/', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.datajunk
  */
-router.post('/newscrapper', function(req, res, next) {
+router.post('/newscrapper', function (req, res, next) {
     let chck = req.session;
     if (!req.body.name || !req.body.name.length ||
         !(chck && chck.userId)) {
@@ -109,7 +109,7 @@ router.post('/newscrapper', function(req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.datajunk
  */
-router.post('/scrapper/newsource', function(req, res, next) {
+router.post('/scrapper/newsource', function (req, res, next) {
     param.logco('post scrapper newsource', req.session.userId);
     if (!req.body.name || !req.body.name.length ||
         !req.body.sourcegenre || !req.body.sourcetype ||

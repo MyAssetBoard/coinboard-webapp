@@ -12,7 +12,7 @@ class Crud {
      * @param {string} coll Name of the db collection to create / update,
      * r_users by default
      */
-    constructor(dbName, coll) {
+    constructor (dbName, coll) {
         this.dbName = dbName ? dbName : 'test2';
         this.coll = coll ? coll : 'r_users';
         /** Mongodb client object import */
@@ -20,7 +20,8 @@ class Crud {
         /** Mongodb object id object import */
         this.ObjectId = require('mongodb').ObjectID;
         /** Mongodb local install uri */
-        this.uri = 'mongodb://localhost:27017/';
+        this.uri = 'mongodb://localhost:27017/test3';
+        this.uri = process.env.MONGO ? process.env.MONGO : this.uri;
     }
 }
 
@@ -29,7 +30,7 @@ class Crud {
  * @param {Object} data the data to be inserted
  * @param {function} callback to get the response
  */
-Crud.prototype.insert = function(coll, data, callback) {
+Crud.prototype.insert = function (coll, data, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then((db) => {
         const dbo = db.db(_this.dbName);
@@ -43,7 +44,7 @@ Crud.prototype.insert = function(coll, data, callback) {
         }).catch((err) => {
             return callback && callback(err);
         });
-    }).catch(function(err) {
+    }).catch(function (err) {
         return callback && callback(err);
     });
 };
@@ -53,7 +54,7 @@ Crud.prototype.insert = function(coll, data, callback) {
  * @param {Object} c the data to be checked
  * @param {function} callback to get the response
  */
-Crud.prototype.checkcred = function(c, callback) {
+Crud.prototype.checkcred = function (c, callback) {
     let _this = this;
     if ((c.username && c.socketid) || c.telegramid) {
         _this.MongoClient.connect(this.uri).then((db) => {
@@ -77,7 +78,7 @@ Crud.prototype.checkcred = function(c, callback) {
  * @param {Object} who the data to be checked
  * @param {function} callback to get the response
  */
-Crud.prototype.finduser = function(who, callback) {
+Crud.prototype.finduser = function (who, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then((db) => {
         let log = 'Finduser| MONGO - Connected to ' + _this.dbName;
@@ -98,7 +99,7 @@ Crud.prototype.finduser = function(who, callback) {
  * @param {Object} what the data to be checked
  * @param {function} callback to get the response
  */
-Crud.prototype.find = function(what, callback) {
+Crud.prototype.find = function (what, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then((db) => {
         let log = 'Find| MONGO - Connected to ' + _this.dbName;
@@ -123,7 +124,7 @@ Crud.prototype.find = function(what, callback) {
  * @param {Object} data the new datas
  * @param {function} callback to get the response
  */
-Crud.prototype.update = function(who, what, data, callback) {
+Crud.prototype.update = function (who, what, data, callback) {
     let _this = this;
     _this.MongoClient.connect(this.uri).then((db) => {
         let log = 'Update| MONGO - Connected to ' + _this.dbName;

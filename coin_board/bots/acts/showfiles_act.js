@@ -16,24 +16,26 @@ const {
  */
 const showfiles = {
     id: '/tree',
-    func: function(args, usr, callback) {
+    func: function (args, usr, callback) {
         const fp = './DTAFOOD/';
-        const ls = spawn('tree', [fp]);
-        ls.stdout.on('data', (data) => {
+        const cmd = 'tree';
+        const tree = spawn(cmd, [fp]);
+        tree.stdout.on('data', (data) => {
             resp = data.toString();
             callback && callback(resp);
         });
 
-        ls.stderr.on('data', (data) => {
+        tree.stderr.on('data', (data) => {
             resp = 'ERROR : \n';
             resp += data.toString();
             callback && callback(resp);
         });
 
-        ls.on('close', (rt) => {
-            let log = 'COINBOARD_BOT: "$ tree" child process exit with code [';
-            log += rt + ']';
+        tree.on('close', (rt) => {
+            let log = 'Showfiles: "$ ' + cmd;
+            log += '" child process exited with code [' + rt + ']';
             process.env.NODE_ENV === 'development' ? console.log(log) : log;
+            callback && callback(log);
         });
     },
 };

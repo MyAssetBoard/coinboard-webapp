@@ -68,7 +68,8 @@ class CbBot {
         /** Commands array */
         this.cmds = [this.rfrsh, this.digst, this.showf, this.mibank];
         /** Import BOT_TOKEN from creds json file */
-        this.creds = require('../../creds');
+        this.creds = process.env.RUN_MODE == 'priv' ? require('../../creds') :
+            require('../../dev_creds');
         this.bottoken = this.creds.TelegramBot.BOT_TOKEN;
         /** Bot startup with new {@link Telegraf} object */
         this.bot = new this.Telegraf(this.bottoken);
@@ -85,7 +86,7 @@ CbBot.prototype.logthiscmd = function(cmd, usr) {
     let log = 'COINBOARD_BOT: Received command [' + cmd + '] from ';
     log += '[' + usr.fname + ' ' + usr.lname + ']';
     log += ' ID: ' + usr.id;
-    console.log(log);
+    process.env.NODE_ENV === 'development' ? console.log(log) : log;
 };
 
 /** Logging helper function to print all messages sent to bot */
@@ -93,9 +94,9 @@ CbBot.prototype.logthismsg = function() {
     let _this = this;
     _this.bot.on('message', (ctx) => {
         let usr = ctx.from.first_name + ' ' + ctx.from.last_name;
-        console.log('COINBOARD_BOT: Received msg :');
-        console.log('from [' + usr + ']');
-        console.log(ctx.message.text);
+        let log = 'COINBOARD_BOT: (Received msg :\nfrom [' + usr + '])\n';
+        log += ctx.message.text;
+        process.env.NODE_ENV === 'development' ? console.log(log) : log;
     });
 };
 
@@ -113,8 +114,9 @@ CbBot.prototype.runcommands = function(cmd, ctx, who) {
             exec += 1;
             let args = cmd.split(' ')[1] !== undefined ? cmd.split(' ')[1] : '';
             _this.cmds[el].func(args, who, (d) => {
-                console.log(who);
-                ctx.reply(d);
+                if (d.length &lt; 30) {
+                    ctx.reply(d);
+                }
             });
         }
     }
@@ -133,9 +135,12 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
     let _this = this;
     let who = {};
     who['telegramid'] = user.id.toString();
-    this.User.findOne({telegramid: who.telegramid})
+    this.User.findOne(who)
         .exec((err, user) => {
             if (user) {
+                let log = 'COINBOARD_BOT: User [' + user.username + ']';
+                log += ' send this command';
+                process.env.NODE_ENV === 'development' ? console.log(log) : log;
                 return _this.runcommands(cmd, ctx, who);
             } else {
                 ctx.reply('Sorry, you must be registered to use bot functions');
@@ -146,6 +151,8 @@ CbBot.prototype.authme = function(cmd, user, ctx) {
 
 /** Listen for '/[cmd]' style message to run
  * bot functions for registered users
+ * @note simple wrapper around bot.hears()
+ * telegraf method ;)
  */
 CbBot.prototype.getcommands = function() {
     let _this = this;
@@ -166,7 +173,7 @@ CbBot.prototype.getcommands = function() {
 /** Main launcher method
  *  @property {function} bot.start answer Welcome when start
  *  @property {function} bot.hello if hello cmd answer with Welcome message
- *  @property {function} bot.hears other way to get a repli from bot
+ *  @property {function} bot.hears other way to get a reply from bot
  */
 CbBot.prototype.turnmeon = function() {
     let _this = this;
@@ -206,11 +213,11 @@ mibot.turnmeon();
 			</div>
 		</div>
 		<nav>
-			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk-djunk.html">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.reqmodels.html">datajunk~djunk.reqmodels</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul>
+			<h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cbbot.html">cbbot</a></li><li><a href="module-cbexpressapp.html">cbexpressapp</a></li><li><a href="module-cbtelegramchatclient.html">cbtelegramchatclient</a></li><li><a href="module-cbview.html">cbview</a></li><li><a href="module-cbwebsocket.html">cbwebsocket</a></li><li><a href="module-coinbaseapi.html">coinbaseapi</a></li><li><a href="module-config.html">config</a></li><li><a href="module-creditagricoleapi.html">creditagricoleapi</a></li><li><a href="module-crud.html">crud</a></li><li><a href="module-crypt.html">crypt</a></li><li><a href="module-datajunk.html">datajunk</a></li><li><a href="module-models.html">models</a></li><li><a href="module-n26api.html">n26api</a></li></ul><h3>Classes</h3><ul><li><a href="JohnBot.html">JohnBot</a></li><li><a href="module-cbbot-CbBot.html">cbbot~CbBot</a></li><li><a href="module-cbview-CbView.html">cbview~CbView</a></li><li><a href="module-cbwebsocket-CbWebsocket.html">cbwebsocket~CbWebsocket</a></li><li><a href="module-coinbaseapi-CoinbaseApi.html">coinbaseapi~CoinbaseApi</a></li><li><a href="module-config-AppConfig.html">config~AppConfig</a></li><li><a href="module-creditagricoleapi-CreditagricoleApi.html">creditagricoleapi~CreditagricoleApi</a></li><li><a href="module-crud-Crud.html">crud~Crud</a></li><li><a href="module-crypt-Crypt.html">crypt~Crypt</a></li><li><a href="module-datajunk-DataJunk.html">datajunk~DataJunk</a></li><li><a href="module-models-ApiSchema.html">models~ApiSchema</a></li><li><a href="module-models-AssetsSchema.html">models~AssetsSchema</a></li><li><a href="module-models-DatasSchema.html">models~DatasSchema</a></li><li><a href="module-models-InfosSchema.html">models~InfosSchema</a></li><li><a href="module-models-ParsingSchemas.html">models~ParsingSchemas</a></li><li><a href="module-models-PricesSchema.html">models~PricesSchema</a></li><li><a href="module-models-RequestSchemas.html">models~RequestSchemas</a></li><li><a href="module-models-ScrapperSchemas.html">models~ScrapperSchemas</a></li><li><a href="module-models-SourcesSchema.html">models~SourcesSchema</a></li><li><a href="module-models-TrendSchema.html">models~TrendSchema</a></li><li><a href="module-models-UserSchema.html">models~UserSchema</a></li><li><a href="module-n26api-N26Api.html">n26api~N26Api</a></li><li><a href="Routes.html">Routes</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-cbbot-telegrambot.html">cbbot~telegrambot</a></li><li><a href="module-cbbot-telegrambot.digest.html">cbbot~telegrambot.digest</a></li><li><a href="module-cbbot-telegrambot.mibank.html">cbbot~telegrambot.mibank</a></li><li><a href="module-cbbot-telegrambot.refresh.html">cbbot~telegrambot.refresh</a></li><li><a href="module-cbbot-telegrambot.showfiles.html">cbbot~telegrambot.showfiles</a></li><li><a href="module-datajunk.html#~djunk">datajunk~djunk</a></li><li><a href="module-datajunk-djunk.colors.html">datajunk~djunk.colors</a></li><li><a href="module-datajunk-djunk.eatdiner.html">datajunk~djunk.eatdiner</a></li><li><a href="module-datajunk-djunk.MOQREQUEST.html">datajunk~djunk.MOQREQUEST</a></li><li><a href="Routes.page.html">Routes.page</a></li><li><a href="Routes.page.assets.html">Routes.page.assets</a></li><li><a href="Routes.page.assets.html#.roads">Routes.page.assets.roads</a></li><li><a href="Routes.page.index.html">Routes.page.index</a></li><li><a href="Routes.page.livestream.html">Routes.page.livestream</a></li><li><a href="Routes.page.login.html">Routes.page.login</a></li><li><a href="Routes.page.profile.html">Routes.page.profile</a></li><li><a href="Routes.page.signin.html">Routes.page.signin</a></li></ul><h3>Global</h3><ul><li><a href="global.html#MOCKAPIS">MOCKAPIS</a></li></ul>
 		</nav> <br class="clear">
 		<footer> Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 			 on
-				Thu May 10 2018 11:24:55 GMT+0200 (CEST)
+				Sat May 12 2018 22:58:47 GMT+0200 (CEST)
 					 for CoinBoard</footer>
 		<script>
 prettyPrint();

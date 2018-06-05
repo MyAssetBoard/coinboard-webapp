@@ -21,7 +21,7 @@ const router = new express.Router();
 /** User mongoose model import
  * @memberof Routes.page.profile
  */
-const User = require('../../Schemas/user');
+const User = require('../../schemas/user');
 
 /** @memberof Routes.page.profile */
 const param = require('../../params/def_params');
@@ -29,11 +29,11 @@ const param = require('../../params/def_params');
 /** GET profile page
  * @memberof Routes.page.profile
  */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     let chck = req.session;
 
     if (chck && chck.userId) {
-        User.findById(chck.userId).exec(function(error, user) {
+        User.findById(chck.userId).exec(function (error, user) {
             param.logco('PROFILE', chck);
             if (error) {
                 return next(error);

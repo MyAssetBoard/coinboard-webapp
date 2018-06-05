@@ -14,7 +14,8 @@ const djunk01 = require('./djunk/eatdiner');
 const mongocrud = require('./mongo_crud');
 
 /** @NOTE : new mongoose method dep */
-// const Datas = require('../Schemas/datas');
+// const Datas = require('../schemas/datas');
+const Scrapper = require('../schemas/scrapper');
 
 const fs0 = require('fs');
 
@@ -26,7 +27,7 @@ const https0 = require('https');
  */
 class DataJunk {
     /** @constructor */
-    constructor() {
+    constructor () {
         /** http module import for sources requests */
         this.https = https0;
         /** Fs dep import for writing feeds */
@@ -54,7 +55,7 @@ class DataJunk {
  * @param {Object} res
  * @param {Object} ts
  */
-DataJunk.prototype.flags = function(col, dt, res, ts) {
+DataJunk.prototype.flags = function (col, dt, res, ts) {
     for (let c in col.sets) {
         if (col.sets.hasOwnProperty('a')) {
             for (let d in col.sets[c]) {
@@ -77,7 +78,7 @@ DataJunk.prototype.flags = function(col, dt, res, ts) {
 };
 
 /** Dummy helper for logging progress */
-DataJunk.prototype.logeat = function() {
+DataJunk.prototype.logeat = function () {
     let log = 'DATA_JUNK: New feed ';
     log += 'inserted in db';
     process.env.NODE_LOG === 'djunk' ?
@@ -86,60 +87,17 @@ DataJunk.prototype.logeat = function() {
 };
 
 /**
- * Launch data crawl for all sources in {@link DataJunk#reqmodels}
- * @param {Object} where source id, url, param etc
- */
-DataJunk.prototype.goeat = function(where) {
-    let _this = this;
-    for (let x in where) {
-        if (where[x]) {
-            let xx = where[x];
-            _this.goshopping(xx).then((res) => {
-                if (res) {
-                    let d = {
-                        id: xx.id,
-                        path: xx.fname,
-                        url: xx.url,
-                    };
-                    _this.digest(d).then((res) => {
-                        if (res) {
-                            _this.logeat();
-                        }
-                    }).catch((rej, err) => {
-                        throw err;
-                    });
-                }
-            }).catch((rej, err) => {
-                throw err;
-            });
-        }
-    }
-};
-
-/** Launch data mining aka {@link DataJunk#eat} function */
-DataJunk.prototype.gomine = function() {
-    let _this = this;
-    this.pukedata({}).then((res) => {
-        let test = _this.eat(res);
-        if (process.env.NODE_LOG === 'djunk') {
-            console.log(test);
-        }
-    });
-};
-
-/**
  * Operations Pour tout les elements dans parseme (obj: )
  * @param {Object} dset results from feeds array in db
  * @return {Object} res parsed and colored data feed
  */
-DataJunk.prototype.eat = function(dset) {
+DataJunk.prototype.eat = function (dset) {
     let ts = {
         nb: 0,
         val: 0,
     };
     let res = [];
     let parseme = this.eatd.getparsed(dset, ts);
-
     for (let a in parseme) {
         if (parseme.hasOwnProperty(a)) {
             this.eatd.checkwhat(parseme, a);
@@ -160,45 +118,16 @@ DataJunk.prototype.eat = function(dset) {
 };
 
 /**
- * @param {Object} where Object containing all source infos and parsing methods
- * @param {function} callback to get the result
- */
-DataJunk.prototype.begdata = function(where, callback) {
-    let req = this.https.get(where.req, function(res) {
-        let bodyChunks = [];
-        res.on('data', (chunk) => {
-            bodyChunks.push(chunk);
-        }).on('end', () => {
-            let body = Buffer.concat(bodyChunks);
-            /** Careful with non-JSON responses !! */
-            let ifjson = JSON.parse(body);
-            let clean = [];
-            if (ifjson.query && ifjson.query.results) {
-                let r = ifjson.query.results;
-                clean = where.get(r, clean);
-            } else {
-                clean = ifjson;
-            }
-            callback && callback(clean);
-        });
-    });
-    req.on('error', function(e) {
-        console.log('DataJunk -ERROR: ' + e.message);
-        callback && callback(e);
-    });
-};
-
-/**
  * Wr aka write file, write gathered json inside DTAFOOD directory
  * @param {string} fn file name
  * @param {Object} d data to write json fmt
  * @return {Promise} d corresponding to writed data
  */
-DataJunk.prototype.wr = function(fn, d) {
+DataJunk.prototype.wr = function (fn, d) {
     let _this = this;
     return new Promise((resolve, reject) => {
         ROOT_APP_PATH = _this.fs.realpathSync('.');
-        _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function(err) {
+        _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function (err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
                 process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
@@ -213,22 +142,59 @@ DataJunk.prototype.wr = function(fn, d) {
 };
 
 /**
+ * @param {Object} where Object containing all source infos and parsing methods
+ * @param {function} callback to get the result
+ */
+DataJunk.prototype.begdata = function (where, callback) {
+    console.log(where.req);
+    let req = this.https.get(where.req, function (res) {
+        let bodyChunks = [];
+        res.on('data', (chunk) => {
+            bodyChunks.push(chunk);
+        }).on('end', () => {
+            let body = Buffer.concat(bodyChunks);
+            /** @todo Careful with non-JSON responses !! */
+            let ifjson = JSON.parse(body);
+            let clean = [];
+            if (ifjson.query && ifjson.query.results) {
+                clean = ifjson.query.results;
+            } else {
+                clean = body;
+            }
+            return callback && callback(clean);
+        });
+    });
+    req.on('error', function (e) {
+        console.log('DataJunk -ERROR: ' + e.message);
+        return callback && callback(e);
+    });
+};
+
+/**
+ * Dummy regex clean and  string
+ * @param  {String} mess
+ * @return {String} p
+ */
+
+/**
  * {@link DataJunk#begdata}, then {@link DataJunk#wr} and finally
  * return promise
- * @param {Object} where see {@link DataJunk#reqmodels}
+ * @param {Object} where see {@link module:models~RequestSchemas}
  * @return {Promise}
  */
-DataJunk.prototype.goshopping = function(where) {
+DataJunk.prototype.goshopping = function (where) {
     let _this = this;
+    let Parseur = require('../schemas/scrapper').Parseur;
     return new Promise((resolve, reject) => {
-        _this.begdata(where, (res, err) => {
-            if (res) {
-                _this.wr(where.fname, res).then((r) => {
-                    resolve(r);
-                    return r;
-                }).catch((rej, err) => {
-                    reject(err);
-                });
+        _this.begdata(where.toJSON(), (res, err) => {
+            if (res && res.item) {
+                for (el in res.item) {
+                    if (res.item[el].description) {
+                        res.item[el].description =
+                            Parseur.getptag(res.item[el].description);
+                    }
+                }
+                resolve(res);
             } else if (!res || err) {
                 reject(err);
             }
@@ -243,65 +209,98 @@ DataJunk.prototype.goshopping = function(where) {
  * @param {String} s.d the source 'd'atas
  * @param {function} callback the callback function to get responses
  */
-DataJunk.prototype.dbthis = function(s, callback) {
+DataJunk.prototype.dbthis = function (s, callback) {
     let insert = {};
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    // this.crud.insert('DTAFOOD', insert, (res, err) => {
-    //     let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-    //     log += '[ ' + insert.feed && insert.feed[0] ?
-    //         insert.feed[0].title :
-    //         JSON.stringify(insert);
-    //     process.env.NODE_ENV === 'development' ?
-    //         console.log(log + ']\nResults :\n' + res.results) : log;
-    //     if (err) {
-    //         return callback && callback(err);
-    //     }
-    //     return callback && callback(res);
-    // });
-    console.log(insert);
+    this.crud.insert('DTAFOOD', insert, (res, err) => {
+        let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
+        log += '[ ' + insert.feed && insert.feed[0] ?
+            insert.feed[0].title :
+            JSON.stringify(insert);
+        process.env.NODE_ENV === 'development' ?
+            console.log(log + ']\nResults :\n' + res.results) : log;
+        if (err) {
+            return callback && callback(err);
+        }
+        return callback && callback(res);
+    });
 };
 
-DataJunk.prototype.digest = function(what) {
+/**
+ * Put .json file in directory and format them to feed db according
+ * to {@link #models~data} schemas
+ * @param {String} datadir the json datas directory
+ * @return {function} Promise resolve reject nothing fancy
+ */
+DataJunk.prototype.getfiles = function (datadir) {
     let _this = this;
-    return new Promise((resolve, reject) => {
-        if (!(what && what.id && what.path)) {
-            let e = new Error('bad meal can\'t digest');
-            reject(e);
-        } else {
-            what.d = require('../.' + what.path);
-            _this.dbthis(what, function(res, err) {
-                if (res) {
-                    return resolve(res);
-                } else if (err) {
-                    return reject(err);
+    return new Promise(function (resolve, reject) {
+        ROOT_APP_PATH = _this.fs.realpathSync('.');
+        if (_this.fs.existsSync(datadir) === true) {
+            _this.fs.readdir(datadir, function (err, list) {
+                if (err) {
+                    throw (err);
                 }
+                let regex = new RegExp('.*.json');
+                let clean = [];
+                list.forEach(function (item) {
+                    if (regex.test(item)) {
+                        item = item.replace(/^/, datadir);
+                        clean.push(item);
+                    }
+                });
+                resolve(clean);
             });
+        } else {
+            throw new Error('No such file or directory');
         }
     });
 };
 
-DataJunk.prototype.pukedata = function(what) {
-    let _this = this;
-    return new Promise((resolve, reject) => {
-        what = what ? what : {};
-        _this.crud.find(what, function(res, err) {
-            if (res && res[0] && res[0].feed) {
-                resolve(res);
-            } else if (err) {
-                reject(err);
-            }
-        });
-    });
-};
 
+/** @todo to be loopified for every source in all types
+ * and also make a real ipc protocol instead of dirty pipes on standard
+ * output :p
+ */
 if (process.env.LAUNCH_TASK === 'gomine') {
     let data = new DataJunk();
-    data.gomine();
+    data.getfiles('../../DTAFOOD/infos/').then((resolve) => {
+        console.log('Files ::');
+        console.log(resolve);
+    }).catch((reject) => {
+        console.log(reject);
+        process.exit(1);
+    });
 } else if (process.env.LAUNCH_TASK === 'goeat') {
     let data = new DataJunk();
-    data.goeat(data.MOQREQUEST);
+    let scrappername = 'BobyScrapper';
+    Scrapper.findOne({name: scrappername}).exec((error, scrapper) => {
+        let where = scrapper.Sources.Crypto.infos[0];
+        data.goshopping(where).then((resolve, reject) => {
+            if (reject) {
+                console.log(reject);
+            } else if (resolve) {
+                console.log(resolve);
+                let path = 'DTAFOOD/infos/';
+                let timestamp = new Date();
+                let fname = path + where.name + '-' + timestamp.toISOString();
+                fname += '.json';
+                console.log('{fname: "' + fname + '"}\n');
+                data.wr(fname.toString(), resolve).then((r) => {
+                    console.log(r);
+                    process.exit(0);
+                }).catch((reject, error) => {
+                    console.log(error);
+                    process.exit(1);
+                });
+            }
+        }).catch((reject, err) => {
+            console.log(err);
+            process.exit(1);
+        });
+    });
 }
 
 module.exports = DataJunk;

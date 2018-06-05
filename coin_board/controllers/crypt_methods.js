@@ -8,7 +8,7 @@
  */
 class Crypt {
     /** @constructor */
-    constructor() {
+    constructor () {
         /**
          * [CryptoJS](https://github.com/brix/crypto-js) module import
          * for AES usage
@@ -25,13 +25,13 @@ class Crypt {
 /** Pretty much self explanatory, delete old generated key if any
  * @return {boolean} true if something cleared false if not
  */
-Crypt.prototype.cleartmp = function() {
+Crypt.prototype.cleartmp = function () {
     let _this = this;
-    let rt = this.fs.stat('log.txt', function(err, stats) {
+    let rt = this.fs.stat('log.txt', function (err, stats) {
         if (err) {
             return false;
         } else {
-            _this.fs.unlink('log.txt', function(err) {
+            _this.fs.unlink('log.txt', function (err) {
                 if (err) {
                     return false;
                 }
@@ -46,7 +46,7 @@ Crypt.prototype.cleartmp = function() {
  * Read ./log.txt for new random key
  * @return {string} the readed buffer, 22 bytes long
  */
-Crypt.prototype.readtmp = function() {
+Crypt.prototype.readtmp = function () {
     let buff = new Buffer(22);
     buff = this.fs.readFileSync('log.txt', 'ascii');
     let log = 'Read cookie secret : [';
@@ -61,9 +61,9 @@ Crypt.prototype.readtmp = function() {
  * Write res buffer to temp location (for now as './log.txt')
  * @param {any} res encryption secret
  */
-Crypt.prototype.writetmp = function(res) {
+Crypt.prototype.writetmp = function (res) {
     ROOT_APP_PATH = this.fs.realpathSync('.');
-    this.fs.writeFile('log.txt', res + '\n', function(err) {
+    this.fs.writeFile('log.txt', res + '\n', function (err) {
         if (err) {
             return console.log(err);
         }
@@ -79,16 +79,16 @@ Crypt.prototype.writetmp = function(res) {
  * {@link Crypt#fs} imported module
  * @return {Promise<any>} 22 bytes of 85 bytes random chars buffer
  */
-Crypt.prototype.getRandom = function() {
+Crypt.prototype.getRandom = function () {
     let _this = this;
     return new Promise((resolve, reject) => {
-        _this.fs.open('/dev/urandom', 'r', function(status, fd) {
+        _this.fs.open('/dev/urandom', 'r', function (status, fd) {
             if (status) {
                 console.log(status.message);
                 reject(new Error('file reading failed'));
             }
             let buff = new Buffer(85);
-            _this.fs.read(fd, buff, 0, 85, 0, function(err, res) {
+            _this.fs.read(fd, buff, 0, 85, 0, function (err, res) {
                 let randstr = buff.toString('ascii', 0, res);
                 randstr = randstr.replace(/\W/g, '');
                 randstr = randstr.length > 22 ?
@@ -105,7 +105,7 @@ Crypt.prototype.getRandom = function() {
  * @param {string} p the string to be decrypted
  * @return {string} the decrypted p param as a cleartext string
  */
-Crypt.prototype.dcryptParams = function(p) {
+Crypt.prototype.dcryptParams = function (p) {
     let plaintext = null;
     if (p) {
         let enckey = this.readtmp();
@@ -132,7 +132,7 @@ Crypt.prototype.dcryptParams = function(p) {
  * @param {string} p the string to be encrypt (the user db uuid mostly)
  * @return {string} the encrypted string
  */
-Crypt.prototype.encryptParams = function(p) {
+Crypt.prototype.encryptParams = function (p) {
     let enckey = this.readtmp();
     let toenc = p._id.toString();
     let citxt = this.CryptoJS.AES.encrypt(toenc, enckey);
@@ -150,7 +150,7 @@ Crypt.prototype.encryptParams = function(p) {
  * @param {string} eUid the string to be checked
  * @return {boolean} true if valid euid false otherwise
  */
-Crypt.prototype.isvaliduid = function(eUid) {
+Crypt.prototype.isvaliduid = function (eUid) {
     return !!this.dcryptParams(eUid);
 };
 
@@ -159,7 +159,7 @@ Crypt.prototype.isvaliduid = function(eUid) {
  * @return {string} the decrypted user id
  * @see Crypt#dcryptParams
  */
-Crypt.prototype.decryptuid = function(eUId) {
+Crypt.prototype.decryptuid = function (eUId) {
     return this.dcryptParams(eUId);
 };
 
@@ -168,7 +168,7 @@ Crypt.prototype.decryptuid = function(eUId) {
  * @return {string} the encrypted user id
  * @see Crypt#encryptParams
  */
-Crypt.prototype.encryptuid = function(cUId) {
+Crypt.prototype.encryptuid = function (cUId) {
     return this.encryptParams(cUId);
 };
 
@@ -178,7 +178,7 @@ Crypt.prototype.encryptuid = function(cUId) {
  * and finally write as 'log.txt' file in current directory thanks to
  * {@link Crypt#writetmp}
  */
-Crypt.prototype.genrandomtocken = function() {
+Crypt.prototype.genrandomtocken = function () {
     let _this = this;
     _this.cleartmp();
     _this.getRandom().then((res) => {
@@ -194,7 +194,7 @@ Crypt.prototype.genrandomtocken = function() {
  * @param {string} str the string to be checked
  * @return {boolean} true if encode , false if not
  */
-Crypt.prototype.isEncoded = function(str) {
+Crypt.prototype.isEncoded = function (str) {
     try {
         decodeURIComponent(str);
     } catch (e) {
