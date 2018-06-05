@@ -35,7 +35,7 @@ const refresh = {
 
         exe.on('close', (code) => {
             let log = 'Refresh: "$ ' + cmd;
-            log += '" child process exited with code [' + rt + ']';
+            log += '" child process exited with code [' + code + ']';
             process.env.NODE_ENV === 'development' ? console.log(log) : log;
             callback && callback(log);
         });
