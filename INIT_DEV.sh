@@ -145,7 +145,9 @@ function app_startStaging ()
 		then pm2 start "$APPCONF" --only "$WVSERV"  --update-env;
 	fi
 	if [[ "$APP" == "ws" ]];
-		then pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
+		then
+			pm2 start "$APPCONF" --only "$WSSERV"  --update-env;
+			mkdir -p DTAFOOD/prices DTAFOOD/infos;
 	fi
 	pm2 logs
 }
