@@ -80,8 +80,9 @@ CbWebsocket.prototype.logthisguy = function (roomname, usrid) {
 CbWebsocket.prototype.runme = (msg, ws) => {
     let scrape = require('../bots/acts/refresh_act');
     let showres = require('../bots/acts/showfiles_act');
+    let cmd = msg.split(' ')[0].trim();
     let args = msg.split(' ')[1] !== undefined ? msg.split(' ')[1] : '';
-    switch (msg) {
+    switch (cmd) {
     case 'SCRAPE':
         scrape.func(args, {}, (res) => {
             ws.send(JSON.stringify(res));
