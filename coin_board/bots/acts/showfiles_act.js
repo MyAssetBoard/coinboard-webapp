@@ -16,7 +16,7 @@ const {
  */
 const showfiles = {
     id: '/tree',
-    func: function(args, usr, callback) {
+    func: function (args, usr, callback) {
         const fp = './DTAFOOD/';
         const cmd = 'tree';
         const tree = spawn(cmd, [fp]);
