@@ -58,7 +58,7 @@ const colors = {
                 'real-estate',
                 'intellectual property',
             ];
-            for (l in tag) {
+            for (let l in tag) {
                 if (tag[l] && str.match(tag[l])) {
                     el['tg'] += tag[l] + ',';
                 }
@@ -71,7 +71,9 @@ const colors = {
             for (let x in this.bull.sets) {
                 if (this.bull.sets[x]) {
                     for (let y in this.bull.sets.x) {
-                        if (el.match(this.bull.sets.x[y])) {}
+                        if (el.match(this.bull.sets.x[y])) {
+                            console.log(el + 'match ' + this.bull.sets.x[y]);
+                        }
                     }
                 }
             }
@@ -118,7 +120,7 @@ const colors = {
                 'real-estate',
                 'intellectual property',
             ];
-            for (l in tag) {
+            for (let l in tag) {
                 if (tag[l] && str.match(tag[l])) {
                     el['tg'] += tag[l] + ',';
                 }
