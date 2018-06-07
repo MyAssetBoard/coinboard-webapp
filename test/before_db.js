@@ -1,0 +1,2 @@
+use unittests
+db.dropDatabase()

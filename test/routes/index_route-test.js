@@ -3,34 +3,35 @@
  * @author base on Express app and edited by Trevis Gulby
  */
 
-let expect = require('chai').expect;
-let sinon = require('sinon');
-let request = require('supertest');
-let test_url = '/';
+/* eslint no-invalid-this: 0 */
 const app = require('../../coin_board/controllers/router_methods');
+const expect = require('chai').expect;
+const sinon = require('sinon');
+const request = require('supertest');
+const testurl = '/';
 
-describe('GET index', function() {
-    before(function() {
+describe('GET index', function () {
+    before(function () {
         return this.spy = sinon.spy(app, 'render');
     });
-    after(function() {
+    after(function () {
         return this.spy.restore();
     });
-    it('should exist', function() {
-        return request(app).get('/').expect(200);
+    it('should exist', function () {
+        return request(app).get(testurl).expect(200);
     });
-    return it('should render the "index" view', function() {
+    return it('should render the "index" view', function () {
         return expect(this.spy.getCall(0).args[0]).to.be.eql('page');
     });
 });
 
-describe('GET /unknow', function() {
-    it('it respond with 404', function(done) {
+describe('GET /unknow', function () {
+    it('it respond with 404', function (done) {
         request(app)
-            .get(test_url + 'noextsgsg')
+            .get(testurl + 'noextsgsg')
             .set('Accept', 'application/json')
             .expect(404)
-            .end(function(err) {
+            .end(function (err) {
                 if (err) return done(err);
                 done();
             });
