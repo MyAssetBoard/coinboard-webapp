@@ -10,9 +10,6 @@ const djunk = require('./djunk/colors');
 
 const djunk01 = require('./djunk/eatdiner');
 
-/** @NOTE : deprecated / see Mongoose models */
-const mongocrud = require('./mongo_crud');
-
 /** @NOTE : new mongoose method dep */
 // const Datas = require('../schemas/datas');
 const Scrapper = require('../schemas/scrapper');
@@ -32,9 +29,6 @@ class DataJunk {
         this.https = https0;
         /** Fs dep import for writing feeds */
         this.fs = fs0;
-        /** Home made {@link Crud} module import */
-        this.Crud = mongocrud;
-        this.crud = new this.Crud('test3', 'DTAFOOD');
         /** {@link colors} options import */
         this.colors = djunk;
         /** {@link reqmodels} models import */
@@ -208,24 +202,14 @@ DataJunk.prototype.goshopping = function (where) {
  * @param {String} s.url the source url
  * @param {String} s.d the source 'd'atas
  * @param {function} callback the callback function to get responses
+ * @return {function} callback
  */
 DataJunk.prototype.dbthis = function (s, callback) {
     let insert = {};
     insert.srcname = s.id;
     insert.srcurl = s.url;
     insert.feed = s.d;
-    this.crud.insert('DTAFOOD', insert, (res, err) => {
-        let log = 'DATA_JUNK | Done !\nInserted ' + insert.feed.length;
-        log += '[ ' + insert.feed && insert.feed[0] ?
-            insert.feed[0].title :
-            JSON.stringify(insert);
-        process.env.NODE_ENV === 'development' ?
-            console.log(log + ']\nResults :\n' + res.results) : log;
-        if (err) {
-            return callback && callback(err);
-        }
-        return callback && callback(res);
-    });
+    return callback && callback(insert);
 };
 
 /**
