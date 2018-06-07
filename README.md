@@ -22,7 +22,7 @@
 > -   **Tor** [hidden service](https://www.torproject.org/) docker deployment for easy access everywhere, improved security and reliability
 >
 >
-> -   **MongoDB dbms** with [Mongoose](http://mongoosejs.com/docs/api.html)  version 5 finely tuned db models
+> -   **MongoDB dbms** with [Mongoose](http://mongoosejs.com/docs/api.html) version 5.1 finely cooked db models
 >
 >
 > -   A gorgeous and up to date [**documentation**](https://myassetboard.github.io/coinboard-webapp/index.html) gracefully hosted by @github
@@ -38,7 +38,7 @@ All information's about how this app is organized /coded
 
 > All application JavaScript source files
 
--   **coin_board/bin** : Contains the main services:  **webview** with [Express](expressjs.com) & [Ejs](http://ejs.co/), **websocket** with Socket.io
+-   **coin_board/bin** : Contains the main services:  **webview** with [Express](expressjs.com) & [Ejs](http://ejs.co/), **websocket** with [Ws](https://github.com/websockets/ws) module
 
 -   **coin_board/bot/**: Dedicated to the CoinBoardBot [Telegram](https://telegram.org/) bot functionalities
 
@@ -52,15 +52,15 @@ All information's about how this app is organized /coded
 
 -   **coin_board/Schemas/**: The hot [Mongoose](http://mongoosejs.com/docs/api.html) db schemas and models
 
--   **coin_board/views/**: All the Eye-Candy, pinky, piggy, fancy stuff for app view (EJS style)
+-   **coin_board/views/**: All the Eye-Candy, pinky, piggy, fancy stuff for app view (EJS style)\*
 
-> Note : _see new Angular components development in AngularCoinBoard/ directory_
+\* Note : Replacement in progress with new Angular components in AngularCoinBoard/ directory
 
 ### conf/
 
 > As its name suggest, lots of configuration  files like [PM2](http://pm2.keymetrics.io/) application runfile config, [JSDoc](http://usejsdoc.org/index.html) conf file and doc template or [Nginx](https://www.nginx.com/), mongoDB conf and torrc files for [Docker](https://www.docker.com) deployment.
 
--   **conf/jsdoctemplate/** Jsdoc coin_board documentation template 'pimp'
+-   **conf/jsdoctemplate/** Jsdoc coin_board documentation custom template
 
 -   **conf/onion/**: Hidden service Docker deployment conf files
 
@@ -76,10 +76,7 @@ All information's about how this app is organized /coded
 
 -   **test/routes/**: Tests for router overloads functions
 
-## TODO
-
--   [x] Finish this task
--   [ ] -   Add some more tests ..
+-   **test/schemas/**: Tests for mongoose schemes
 
 ## Hot news :
 
