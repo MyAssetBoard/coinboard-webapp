@@ -24,12 +24,12 @@ const refresh = {
         const cmd = 'node';
         const exe = spawn(cmd, [fp]);
         exe.stdout.on('data', (data) => {
-            resp = data.toString();
+            let resp = data.toString();
             callback && callback(resp);
         });
 
         exe.stderr.on('data', (data) => {
-            resp = data.toString();
+            let resp = data.toString();
             callback && callback(resp);
         });
 

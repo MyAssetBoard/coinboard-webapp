@@ -27,7 +27,7 @@ N26Api.prototype.getsums = function (tr, key) {
         char: key + ' charges : ',
         tot: key + ' cost : ',
     };
-    for (el in tr) {
+    for (let el in tr) {
         if (tr[el].amount) {
             let y = tr[el].amount;
             min += y <= 0 ? y : 0;

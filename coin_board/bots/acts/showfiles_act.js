@@ -22,12 +22,12 @@ const showfiles = {
         const cmd = process.env.HEROKU == 'ok' ? 'ls' : 'tree';
         const tree = spawn(cmd, fp);
         tree.stdout.on('data', (data) => {
-            resp = data.toString();
+            let resp = data.toString();
             callback && callback(resp);
         });
 
         tree.stderr.on('data', (data) => {
-            resp = 'ERROR : \n';
+            let resp = 'ERROR : \n';
             resp += data.toString();
             callback && callback(resp);
         });
