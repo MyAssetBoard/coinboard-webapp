@@ -47,21 +47,20 @@ AppConfig.prototype.gettorhostnames = function () {
     let _this = this;
     let rt = {
         view: function () {
-            let buff = new Buffer(22);
             let fn = process.env.TEST === 'ok' ? 'testonion' :
                 '/var/lib/tor/hidnview/hostname';
-            buff = _this.fs.readFileSync(fn, 'ascii');
+            let buff = _this.fs.readFileSync(fn, 'ascii');
             let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
             ret += '/';
             return ret;
         },
         socks: function () {
-            let buff = new Buffer(22);
             let fn = process.env.TEST === 'ok' ? 'testonion' :
                 '/var/lib/tor/hidnws/hostname';
-            buff = _this.fs.readFileSync(fn, 'ascii');
+            let buff = _this.fs.readFileSync(fn, 'ascii');
             let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
-            return ret += ':124/';
+            ret += ':124/';
+            return ret;
         },
     };
     return rt;

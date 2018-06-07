@@ -106,9 +106,10 @@ DataJunk.prototype.eat = function (dset) {
     }
     log = '[[RESULTS:\t=> [' + res.length + '] result(s) found!]]\n';
     process.env.NODE_LOG === 'djunk' ? console.log(log) : log;
-    return res = res.filter((elems) => {
+    res = res.filter((elems) => {
         return elems !== undefined;
     });
+    return res;
 };
 
 /**
@@ -120,7 +121,6 @@ DataJunk.prototype.eat = function (dset) {
 DataJunk.prototype.wr = function (fn, d) {
     let _this = this;
     return new Promise((resolve, reject) => {
-        ROOT_APP_PATH = _this.fs.realpathSync('.');
         _this.fs.writeFile(fn, JSON.stringify(d) + '\n', function (err) {
             if (err) {
                 let log = 'DataJunk: Write datas error ' + err;
@@ -182,7 +182,7 @@ DataJunk.prototype.goshopping = function (where) {
     return new Promise((resolve, reject) => {
         _this.begdata(where.toJSON(), (res, err) => {
             if (res && res.item) {
-                for (el in res.item) {
+                for (let el in res.item) {
                     if (res.item[el].description) {
                         res.item[el].description =
                             Parseur.getptag(res.item[el].description);
@@ -221,7 +221,6 @@ DataJunk.prototype.dbthis = function (s, callback) {
 DataJunk.prototype.getfiles = function (datadir) {
     let _this = this;
     return new Promise(function (resolve, reject) {
-        ROOT_APP_PATH = _this.fs.realpathSync('.');
         if (_this.fs.existsSync(datadir) === true) {
             _this.fs.readdir(datadir, function (err, list) {
                 if (err) {
