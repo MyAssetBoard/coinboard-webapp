@@ -45,8 +45,7 @@ function setpagecontent (req, pageparam, dbr) {
     return new Promise((resolve, reject) => {
         let res = {};
         for (let paths in roads) {
-            if (roads.hasOwnProperty(paths) &&
-                req.match(roads[paths].path)) {
+            if (roads.hasOwnProperty(paths) && req.match(roads[paths].path)) {
                 if (roads[paths].getd) {
                     res.getcontent = roads[paths].getd;
                 }
@@ -112,20 +111,21 @@ router.get('/*', function (req, res, next) {
         });
     } else {
         param.lognoco('ASSETS', chck);
-        /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
         res.render('page', param.assets);
     }
 });
 
+/** POST /addapis.
+ * @memberof Routes.page.assets
+ * @param {Object} req the request starting with new apis datas
+ */
 router.post('/addapis', function (req, res, next) {
-    let dup = param.assets;
-    if (req.body.apitype && req.body.apiid &&
-        req.body.apikey && req.body.apisecret &&
-        req.session && req.session.userId) {
+    if (req.body.apitype && req.body.apiid && req.body.apikey &&
+        req.body.apisecret && req.session && req.session.userId) {
+        let dup = param.assets;
         User.addapi(req.session.userId, req.body.apitype,
-            req.body.apiid, req.body.apikey,
-            req.body.apisecret, (error, user) => {
+            req.body.apiid, req.body.apikey, req.body.apisecret,
+            (error, user) => {
                 if (user) {
                     res.locals.data = user;
                     return res.redirect('/assets/api/param');
@@ -135,21 +135,22 @@ router.post('/addapis', function (req, res, next) {
                 }
             });
     } else {
-        param.logco('ASSETS', req.session);
-        /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        param.lognoco('ASSETS', req.session);
         res.render('page', param.assets);
     }
 });
 
+/** POST /addasset.
+ * @memberof Routes.page.assets
+ * @param {Object} req the request starting with new assets datas
+ */
 router.post('/addasset', function (req, res, next) {
-    let dup = param.assets;
-    if (req.body.assettype && req.body.assetid &&
-        req.body.assetticker && req.body.assetqtt &&
-        req.session && req.session.userId) {
+    if (req.body.assettype && req.body.assetid && req.body.assetticker &&
+        req.body.assetqtt && req.session && req.session.userId) {
+        let dup = param.assets;
         User.addasset(req.session.userId, req.body.assettype,
-            req.body.assetid, req.body.assetticker,
-            req.body.assetqtt, (error, user) => {
+            req.body.assetid, req.body.assetticker, req.body.assetqtt,
+            (error, user) => {
                 if (user) {
                     res.locals.data = user;
                     return res.redirect('/assets/dashboard');
@@ -159,9 +160,7 @@ router.post('/addasset', function (req, res, next) {
                 }
             });
     } else {
-        param.logco('ASSETS', req.session);
-        /* istanbul ignore next */
-        process.env.NODE_ENV == 'development' ? console.log(log) : log;
+        param.lognoco('ASSETS', req.session);
         res.render('page', param.assets);
     }
 });
