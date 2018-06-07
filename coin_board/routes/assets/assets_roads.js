@@ -3,8 +3,6 @@
  * @author Trevis Gulby
  */
 
-const DataJunk = require('../../controllers/datajunk_methods');
-const data = new DataJunk();
 /** ### Parsing method module for {@link module:router~Routes.assets} elem
  * @namespace
  * @memberof Routes.page.assets
@@ -40,20 +38,9 @@ const roads = {
     infofeed: {
         path: '/assets/infofeed',
         getd: function (callback) {
-            data.pukedata({}).then(function (res) {
-                let mine = data.eat(res);
-                let rt = {};
-                let fd = [];
-                for (el in res) {
-                    if (res[el].feed) {
-                        fd = fd.concat(res[el].feed);
-                    }
-                }
-                rt['blocks'] = ['cb_ifeed', 'cb_dmfeed.ejs'];
-                rt['feed'] = fd;
-                rt['dm'] = mine;
-                callback && callback(rt);
-            });
+            let rt = {};
+            rt['blocks'] = ['cb_ifeed', 'cb_dmfeed'];
+            callback && callback(rt);
         },
         stripd: function (d) {
             if (d.hasOwnProperty('apisv2')) {
@@ -81,16 +68,6 @@ const roads = {
             }
         },
     },
-    trade: {
-        path: '/assets/trade',
-        getd: function (callback) {
-            let xx = {
-                blocks: ['cb_pfeed'],
-            };
-            callback && callback(xx);
-        },
-        stripd: function (d) {},
-    },
     apiparams: {
         path: '/assets/api/param',
         getd: function (callback) {
@@ -104,33 +81,6 @@ const roads = {
                 let todel = 'assets';
                 delete d[todel];
             }
-        },
-    },
-    reportmonth: {
-        path: '/assets/trade/reports/currm',
-        getd: function (callback) {
-            let xx = {
-                blocks: ['cb_pfeed'],
-            };
-            callback && callback(xx);
-        },
-    },
-    reportthreemonths: {
-        path: '/assets/trade/reports/currquart',
-        getd: function (callback) {
-            let xx = {
-                blocks: ['cb_pfeed'],
-            };
-            callback && callback(xx);
-        },
-    },
-    crowddata: {
-        path: '/assets/trade/reports/crowddata',
-        getd: function (callback) {
-            let xx = {
-                blocks: ['cb_pfeed'],
-            };
-            callback && callback(xx);
         },
     },
 };
