@@ -22,15 +22,17 @@ const bodyParser = require('body-parser');
 /** GraphQl server */
 const graphql = require('express-graphql');
 const schema = require('../schemas/graph_user');
-let mongoaddr = 'mongodb://localhost:27017/test3';
-mongoaddr = process.env.MONGO ? process.env.MONGO : mongoaddr;
+const mongoaddr = process.env.MONGO ? process.env.MONGO :
+    'mongodb://localhost:27017/test3';
 
 const store = new MongoDBStore({
     uri: mongoaddr,
     collection: 'x_sessions',
 });
 
-/** Session storage config using mongodb store */
+/** Session storage config using mongodb store
+ * @todo update this 'keyboard cat' credential
+ */
 const sess = {
     secret: 'keyboard cat',
     cookie: {
@@ -220,23 +222,6 @@ app.use(function (err, req, res, next) {
     }
 });
 
-
-/** Refresh AES encrypt key every 2 hour */
-function pollSecret () {
-    /** {@link module:crypt} import for
-     * {@link module:crypt~Crypt#genrandomtocken} method routine
-     */
-    const Crypt = require('./crypt_methods');
-    const crypt = new Crypt();
-    const h = 2;
-    const intergen = h * 60 * 60 * 1000;
-    crypt.genrandomtocken();
-    setInterval(
-        () => {
-            crypt.genrandomtocken();
-        }, intergen);
-}
-pollSecret();
 module.exports = app;
 /** ### Coin_Board [Express](expressjs.com) app module
  * @module cbexpressapp
