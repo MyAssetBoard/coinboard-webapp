@@ -9,5 +9,6 @@ install:
   - yarn install
   - cd AngularCoinBoard && yarn install && cd ..
   - mkdir -p log && touch log/mongodb.log
+  - mongod -f conf/mongodb.conf &
 after_success:
   - echo oktestdone
