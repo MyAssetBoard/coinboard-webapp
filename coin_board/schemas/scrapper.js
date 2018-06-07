@@ -70,30 +70,15 @@ const SourcesSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    url: {
-        type: String,
-        required: true,
-        trim: true,
-    },
     fname: {
         type: String,
         required: false,
         trim: true,
-        set: (fname) => {
-            let tmpst = (date.getDate() + 1) < 10 ?
-                '0' + (date.getDate() + 1) :
-                date.getDate() + 1;
-            tmpst += (date.getMonth() + 1) < 10 ?
-                '0' + (date.getMonth() + 1) :
-                date.getMonth() + 1;
-            tmpst += date.getFullYear();
-            tmpst += '_' + date.getHours() + '-';
-            tmpst += date.getMinutes() < 10 ?
-                '0' + date.getMinutes() + '.json' :
-                date.getMinutes() + '.json';
-            fname = 'yolo';
-            return fname += tmpst;
-        },
+    },
+    url: {
+        type: String,
+        required: true,
+        trim: true,
     },
     req: {
         type: RequestSchemas,
@@ -107,6 +92,28 @@ const SourcesSchema = new mongoose.Schema({
         type: Number,
         select: false,
     },
+});
+
+/** The SourcesSchema.fname custom setter
+ * @param {String} fname the fname to be timestamped
+ * @return {String} fname + timestamp + .json
+ */
+SourcesSchema.path('fname').set(function (fname) {
+    const date = new Date();
+    let tmpst = (date.getDate() + 1) < 10 ?
+        '0' + (date.getDate() + 1) :
+        date.getDate() + 1;
+    tmpst += (date.getMonth() + 1) < 10 ?
+        '0' + (date.getMonth() + 1) :
+        date.getMonth() + 1;
+    tmpst += date.getFullYear();
+    tmpst += '_' + date.getHours() + '-';
+    tmpst += date.getMinutes() < 10 ?
+        '0' + date.getMinutes() + '.json' :
+        date.getMinutes() + '.json';
+    fname = fname + tmpst;
+    /* eslint no-invalid-this: 0 */
+    return this.fname = fname;
 });
 
 /** The Scrapper schemas
@@ -215,6 +222,10 @@ RequestSchemas.set('toJSON', {getters: true, virtuals: false});
 
 let Scrapper = mongoose.model('Scrapper', ScrapperSchemas);
 let Parseur = mongoose.model('Parseur', ParsingSchemas);
+let Request = mongoose.model('Request', RequestSchemas);
+let Source = mongoose.model('Source', SourcesSchema);
 
 module.exports = Scrapper;
 module.exports.Parseur = Parseur;
+module.exports.Request = Request;
+module.exports.Source = Source;

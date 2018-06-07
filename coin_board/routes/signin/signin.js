@@ -33,13 +33,8 @@ router.get('/', function (req, res, next) {
 
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function (error, user) {
-            if (error) {
+            if (error || !user) {
                 console.log(error);
-                return res.redirect('/');
-            } else if (user === null) {
-                let err = new Error('Not authorized! Go back!');
-                err.status = 400;
-                console.log(err);
                 return res.redirect('/');
             } else {
                 param.logco('SIGNIN', chck);
@@ -57,31 +52,25 @@ router.get('/', function (req, res, next) {
  * @param {function} callback
  * @memberof Routes.page.signin
  */
-router.post('/', function (req, res, next) {
+router.post('/*', function (req, res, next) {
     if (req.body.password !== req.body.passwordConf) {
         let err = new Error('Password\'s dont match.');
         err.status = 400;
-        console.log(err);
         return res.redirect('/signin');
-    }
-
-    if (req.body.email &&
-        req.body.username &&
-        req.body.usercurrency &&
-        req.body.password &&
-        req.body.passwordConf) {
+    } else if (req.body.email && req.body.username && req.body.usercurrency &&
+        req.body.password && req.body.passwordConf) {
         let userData = {
             email: req.body.email,
             username: req.body.username,
             usercurrency: req.body.usercurrency,
-            ethaddr: req.body.ethaddr ? req.body.ethaddr : 'NONE',
-            telegramid: req.body.telegramid ? req.body.telegramid : 'NONE',
+            ethaddr: req.body.ethaddr,
+            telegramid: req.body.telegramid,
             password: req.body.password,
         };
 
         User.create(userData, (error, user) => {
             if (error) {
-                return next(error);
+                return res.redirect('/signin');
             } else {
                 req.session.userId = user._id;
                 return process.env.SERV_ENV === 'onion' ?
@@ -92,7 +81,6 @@ router.post('/', function (req, res, next) {
     } else {
         let err = new Error('All fields required.');
         err.status = 400;
-        console.log(err);
         return res.redirect('/signin');
     }
 });

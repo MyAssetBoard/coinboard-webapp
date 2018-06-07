@@ -42,12 +42,10 @@ router.get('*', function (req, res, next) {
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function (error, user) {
             if (error) {
-                console.log('errr ..' + error);
                 return res.render('page', param.login);
             } else if (user === null) {
                 let err = new Error('Not authorized! Go back!');
                 err.status = 400;
-                console.log('errr ..');
                 return res.render('page', param.login);
             } else {
                 param.logco('LOGIN', chck);
@@ -56,7 +54,7 @@ router.get('*', function (req, res, next) {
         });
     } else {
         param.lognoco('LOGIN', chck);
-        res.render('page', param.login);
+        return res.render('page', param.login);
     }
 });
 

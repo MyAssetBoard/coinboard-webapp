@@ -6,6 +6,10 @@
 const request = require('supertest');
 const app = require('../../coin_board/controllers/router_methods');
 let testurl = '/login';
+let mocklogin = {
+    logusername: 'fakeme',
+    logpassword: 'fakepass',
+};
 
 describe('Simple GET /login on app', function () {
     it('it respond with json', function (done) {
@@ -18,11 +22,11 @@ describe('Simple GET /login on app', function () {
                 done();
             });
     });
-    it('it respond with 404', function (done) {
+    it('it respond with 200', function (done) {
         request(app)
             .get(testurl + '/foobar')
             .set('Accept', 'application/json')
-            .expect(404)
+            .expect(200)
             .end(function (err) {
                 if (err) return done(err);
                 done();
@@ -31,22 +35,12 @@ describe('Simple GET /login on app', function () {
 });
 
 describe('Simple POST /login on app with fake param', function () {
-    it('respond 405', function (done) {
+    it('respond 302', function (done) {
         request(app)
             .post(testurl)
             .set('Content-type', 'application/json')
-            .send('{"email":"foobar@bizz.com"}')
-            .expect(405)
-            .end(function (err) {
-                if (err) return done(err);
-                done();
-            });
-    });
-    it('respond with 404', function (done) {
-        request(app)
-            .get('/noexist')
-            .set('Accept', 'application/json')
-            .expect(404)
+            .send(mocklogin)
+            .expect(302)
             .end(function (err) {
                 if (err) return done(err);
                 done();

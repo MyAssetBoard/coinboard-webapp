@@ -147,6 +147,7 @@ UserSchema.set('toJSON', {getters: true, virtuals: false});
  *  @memberof module:models~UserSchema
  */
 UserSchema.pre('save', function (next) {
+    /* eslint no-invalid-this: 0 */
     let user = this;
     bcrypt.hash(user.password, 10, function (err, hash) {
         if (err) {
@@ -215,7 +216,6 @@ UserSchema.statics.addapi = function (id,
         User.findOneAndUpdate({_id: id}, {$push: elemtype},
             (error, success) => {
                 if (error) {
-                    console.log(error);
                     callback && callback(error);
                 } else {
                     callback && callback(null, success);
@@ -246,7 +246,6 @@ UserSchema.statics.addasset = (id, assettype, assetid,
         User.findOneAndUpdate({_id: id}, {$push: elemtype},
             (error, success) => {
                 if (error) {
-                    console.log(error);
                     callback && callback(error);
                 } else {
                     callback && callback(null, success);
@@ -260,3 +259,5 @@ let Assets = mongoose.model('Assets', AssetsSchema);
 let User = mongoose.model('User', UserSchema);
 
 module.exports = User;
+module.exports.Apis = Apis;
+module.exports.Assets = Assets;

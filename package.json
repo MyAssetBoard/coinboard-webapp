@@ -4,9 +4,9 @@
 	"description": "Crypto assets management board",
 	"main": "./INIT_DEV.sh -staging development local",
 	"scripts": {
-		"preinstall": "cd coin_board && npm install",
+		"preinstall": "cd coin_board && yarn install",
 		"start": "./INIT_DEV.sh -staging development local",
-		"test": "echo maybelater"
+		"test": "./INIT_DEV.sh -lt"
 	},
 	"repository": "https://github.com/MyAssetBoard/coinboard-webapp",
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",

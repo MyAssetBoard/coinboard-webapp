@@ -2,12 +2,13 @@ language: node_js
 sudo: false
 node_js:
   - "8.11.1"
+services:
+  - mongodb
 before_install:
-  - sudo apt-get install -y libappindicator1 fonts-liberation
+  - sudo apt-get install -y libappindicator1 fonts-liberation mongodb-org
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome*.deb
 install:
   - yarn install
-  - cd coin_board && yarn install && cd ..
   - cd AngularCoinBoard && yarn install && cd ..
 after_success:
-  - echo oktestdone
+  - bash <(curl -s https://codecov.io/bash)

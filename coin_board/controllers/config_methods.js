@@ -26,7 +26,7 @@ class AppConfig {
          * @TODO : Add new methods to better select listening interface
          */
         this.vaddr = process.env.HEROKU === 'ok' ?
-            'https://coin-board.herokuapp.com' : 'https://localhost/3001';
+            'https://coin-board.herokuapp.com' : 'https://localhost/';
         this.saddr = process.env.HEROKU === 'ok' ?
             'wss://coin-boardws.herokuapp.com' : 'wss://localhost/3001';
         this.runningaddrs = {
@@ -48,7 +48,8 @@ AppConfig.prototype.gettorhostnames = function () {
     let rt = {
         view: function () {
             let buff = new Buffer(22);
-            let fn = '/var/lib/tor/hidnview/hostname';
+            let fn = process.env.TEST === 'ok' ? 'testonion' :
+                '/var/lib/tor/hidnview/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
             let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
             ret += '/';
@@ -56,7 +57,8 @@ AppConfig.prototype.gettorhostnames = function () {
         },
         socks: function () {
             let buff = new Buffer(22);
-            let fn = '/var/lib/tor/hidnws/hostname';
+            let fn = process.env.TEST === 'ok' ? 'testonion' :
+                '/var/lib/tor/hidnws/hostname';
             buff = _this.fs.readFileSync(fn, 'ascii');
             let ret = 'http://' + buff.toString().replace(/\s+/g, ' ').trim();
             return ret += ':124/';

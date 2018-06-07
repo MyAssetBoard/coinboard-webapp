@@ -38,13 +38,8 @@ router.get('/', function (req, res, next) {
 
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function (error, user) {
-            if (error) {
+            if (error || !user) {
                 console.log('errr ..' + error);
-                return res.redirect('/');
-            } else if (user === null) {
-                let err = new Error('Not authorized! Go back!');
-                err.status = 400;
-                console.log('errr ..');
                 return res.redirect('/');
             } else if (user.scrapperid !== 'notset') {
                 Scrapper.findById(user.scrapperid)
@@ -83,22 +78,19 @@ router.post('/newscrapper', function (req, res, next) {
         !(chck && chck.userId)) {
         let err = new Error('All fields required.');
         err.status = 400;
-        console.log('err...');
+        console.log('err...' + err);
         return res.redirect('/datajunk');
     } else {
         User.findById(chck.userId).exec((error, user) => {
             if (user) {
                 Scrapper.create({name: req.body.name}, (error, scrapper) => {
-                    console.log(scrapper);
                     let apisid = {};
                     apisid['scrapperid'] = scrapper._id;
                     User.findOneAndUpdate({_id: chck.userId}, apisid,
                         (error, success) => {
                             if (error) {
-                                console.log(error);
                                 res.redirect('/datajunk');
                             }
-                            console.log(success);
                             return res.redirect('/datajunk');
                         });
                 });

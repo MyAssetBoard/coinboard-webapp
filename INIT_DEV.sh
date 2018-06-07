@@ -14,8 +14,9 @@ export PM2="./node_modules/pm2/bin/pm2"
 export PM2DEV="./node_modules/pm2/bin/pm2-dev"
 # Mocha test suite
 export MOCHA="./node_modules/mocha/bin/mocha"
-export TESTM="./test/methods/"
-export TESTR="./test/routes/"
+export TESTM="./test/controllers/"
+export TESTR="./test/routes"
+export TESTS="./test/schemas/"
 # Istanbul reporter
 export NYC="./node_modules/nyc/bin/nyc.js"
 # coin_board app
@@ -87,7 +88,6 @@ function app_initshop()
 	fofo && \
 	sudo chown -R "fofo:$USER" conf/onion/kingdom && \
 	sudo chmod -R 700 conf/onion/kingdom && \
-	#sudo chmod -R 600 conf/onion/kingdom/*/private_key && \
 	docker build -t beefonion:latest .
 }
 
@@ -170,12 +170,21 @@ function app_reload ()
 	app_kill; app_startDev "$1" "$2"
 }
 
+# Note the test order, register_route-test is first cause it create
+# the 'mockuser' entry in unittests db before other test
 function app_tests ()
 {
-	NODE_ENV='production'
-	killall -9 mongod;
+	NODE_ENV='development'
+	MONGO='mongodb://localhost:27017/unittests'
 	mongod -f conf/mongodb.conf &
-	"$NYC" --reporter=lcov "$MOCHA" "$TESTM" "$TESTR" --exit
+	mongo < test/before_db.js
+	"$NYC" --reporter=lcov "$MOCHA" \
+	"$TESTM" \
+	"$TESTR/register_route-test.js" "$TESTR/login_route-test.js" \
+	"$TESTR/index_route-test.js" "$TESTR/profile_route-test.js" \
+	"$TESTR/datajunk_route-test.js" \
+	"$TESTS" \
+	--exit
 	"$NYC" report
 }
 
