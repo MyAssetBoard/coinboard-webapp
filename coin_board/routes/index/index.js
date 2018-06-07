@@ -49,7 +49,7 @@ router.get('/', function (req, res, next) {
                 return res.render('page', param.index);
             } else {
                 param.logco('INDEX', chck);
-                dup = param.index;
+                let dup = param.index;
                 res.locals.data = user;
                 return res.render('page', dup);
             }

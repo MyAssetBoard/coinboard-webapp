@@ -91,7 +91,7 @@ router.get('/*', function (req, res, next) {
                     return next(err);
                 } else {
                     param.logco('ASSETS', chck);
-                    dup = param.assets;
+                    let dup = param.assets;
                     res.locals.data = user;
                     setpagecontent(req.originalUrl, dup, res.locals.data)
                         .then((d) => {

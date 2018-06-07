@@ -43,7 +43,7 @@ router.get('/', function (req, res, next) {
                     err.status = 400;
                     return next(err);
                 } else {
-                    dup = param.profile;
+                    let dup = param.profile;
                     res.locals.data = user;
                     return res.render('page', dup);
                 }

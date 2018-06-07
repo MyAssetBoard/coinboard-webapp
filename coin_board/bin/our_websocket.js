@@ -57,7 +57,7 @@ CbWebsocket.prototype.startmeup = function () {
             }).listen(_this.port);
     }
     let server = this.server;
-    this.Ws = require('ws'); ;
+    this.Ws = require('ws');
     this.wss = new this.Ws.Server({server});
     this.scrapper();
 };
@@ -84,17 +84,21 @@ CbWebsocket.prototype.runme = (msg, ws) => {
     let args = msg.split(' ')[1] !== undefined ? msg.split(' ')[1] : '';
     switch (cmd) {
     case 'SCRAPE':
+        console.log('received: %s', msg);
         scrape.func(args, {}, (res) => {
             ws.send(JSON.stringify(res));
         });
+        return;
     case 'READ':
+        console.log('received: %s', msg);
         showres.func(args, {}, (res) => {
             let resp = {files: res};
             ws.send(JSON.stringify(resp));
         });
+        return;
     default:
         console.log('received: %s', msg);
-        break;
+        return;
     }
 };
 
