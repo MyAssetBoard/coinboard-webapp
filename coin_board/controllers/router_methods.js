@@ -155,7 +155,6 @@ app.use('/api/*', (req, res, next) => {
                 return res.redirect('/login');
             } else {
                 param.logco('INDEX', chck);
-                dup = param.index;
                 res.locals.data = user;
                 return next();
             }
