@@ -7,7 +7,7 @@ before_install:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && sudo dpkg -i google-chrome*.deb
 install:
   - yarn install
-  - cd coin_board && yarn install && cd ..
   - cd AngularCoinBoard && yarn install && cd ..
+  - mkdir -p log && touch log/mongodb.log
 after_success:
   - echo oktestdone
