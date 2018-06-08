@@ -1,5 +1,5 @@
 /**
- * @file Unit test file for login route functions
+ * @file Unit test file for register route functions
  * @author base on Express app and edited by Trevis Gulby
  */
 
