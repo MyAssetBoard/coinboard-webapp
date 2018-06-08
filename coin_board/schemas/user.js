@@ -188,7 +188,8 @@ UserSchema.statics.authenticate = function (username, password, callback) {
                 if (result === true) {
                     return callback(null, user);
                 } else {
-                    return callback();
+                    let err = new Error('Bad password.');
+                    return callback(err);
                 }
             });
         });
@@ -201,6 +202,8 @@ UserSchema.statics.authenticate = function (username, password, callback) {
  * @param {String} apikey the new api service key
  * @param {String} apisecret the new api service secret
  * @param {function} callback to get the result data or error
+ * @return {Error} error if something wrong
+ * @return {String} sucess if its all ok
  * @memberof module:models~UserSchema
  */
 UserSchema.statics.addapi = function (id,
@@ -210,18 +213,24 @@ UserSchema.statics.addapi = function (id,
         key: apikey,
         secret: apisecret,
     };
-    Apis.create(newapi, (error, api) => {
-        let elemtype = {};
-        elemtype['Apis.' + apitype] = api;
-        User.findOneAndUpdate({_id: id}, {$push: elemtype},
-            (error, success) => {
-                if (error) {
-                    callback && callback(error);
-                } else {
-                    callback && callback(null, success);
-                }
-            });
-    });
+    if (['Bank', 'Crypto', 'Markets'].includes(apitype)) {
+        Apis.create(newapi, (error, api) => {
+            let elemtype = {};
+            elemtype['Apis.' + apitype] = api;
+            User.findOneAndUpdate({_id: id}, {$push: elemtype},
+                (error, success) => {
+                    if (error) {
+                        return callback && callback(error);
+                    } else {
+                        let rt = 'Api ' + api.name + ' successfully added.';
+                        return callback && callback(null, rt);
+                    }
+                });
+        });
+    } else {
+        let rt = new Error('No such api type.');
+        return callback && callback(rt, undefined);
+    }
 };
 
 /** Add a new Asset object to a User
@@ -231,6 +240,8 @@ UserSchema.statics.addapi = function (id,
  * @param {String} assetticker the ticker / symbol
  * @param {String} assetqtt the qtt to parsed in float
  * @param {function} callback to get the result data or error
+ * @return {Error} error if something wrong
+ * @return {String} sucess if its all ok
  * @memberof module:models~UserSchema
  */
 UserSchema.statics.addasset = (id, assettype, assetid,
@@ -240,24 +251,32 @@ UserSchema.statics.addasset = (id, assettype, assetid,
         ticker: assetticker,
         qtt: assetqtt,
     };
-    Assets.create(newasset, (error, asset) => {
-        let elemtype = {};
-        elemtype['Assets.' + assettype] = asset;
-        User.findOneAndUpdate({_id: id}, {$push: elemtype},
-            (error, success) => {
-                if (error) {
-                    callback && callback(error);
-                } else {
-                    callback && callback(null, success);
-                }
-            });
-    });
+    if (['Bank', 'Crypto', 'Markets'].includes(assettype)) {
+        Assets.create(newasset, (error, asset) => {
+            let elemtype = {};
+            elemtype['Assets.' + assettype] = asset;
+            User.findOneAndUpdate({_id: id}, {$push: elemtype},
+                (error, success) => {
+                    if (error) {
+                        return callback && callback(error, undefined);
+                    } else {
+                        let rt = 'Asset ' + asset.name + ' successfully added.';
+                        return callback && callback(null, rt);
+                    }
+                });
+        });
+    } else {
+        let rt = new Error('No such asset type.');
+        return callback && callback(rt, undefined);
+    }
 };
 
 let Apis = mongoose.model('Apis', ApiSchema);
 let Assets = mongoose.model('Assets', AssetsSchema);
 let User = mongoose.model('User', UserSchema);
-
 module.exports = User;
 module.exports.Apis = Apis;
 module.exports.Assets = Assets;
+if (process.env.TEST === 'ok') {
+    module.exports.InFuncs = {toLower, toFloat};
+}

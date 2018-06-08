@@ -175,6 +175,7 @@ function app_reload ()
 function app_tests ()
 {
 	NODE_ENV='development'
+	TEST='ok'
 	MONGO='mongodb://localhost:27017/unittests'
 	mongod -f conf/mongodb.conf &
 	mongo < test/before_db.js
