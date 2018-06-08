@@ -35,7 +35,6 @@ const Scrapper = require('../../schemas/scrapper');
  */
 router.get('/', function (req, res, next) {
     let chck = req.session;
-
     if (chck && chck.userId) {
         User.findById(chck.userId).exec(function (error, user) {
             if (error || !user) {
@@ -78,7 +77,7 @@ router.post('/newscrapper', function (req, res, next) {
         !(chck && chck.userId)) {
         let err = new Error('All fields required.');
         err.status = 400;
-        console.log('err...' + err);
+        console.log(err.message);
         return res.redirect('/datajunk');
     } else {
         User.findById(chck.userId).exec((error, user) => {
@@ -88,9 +87,6 @@ router.post('/newscrapper', function (req, res, next) {
                     apisid['scrapperid'] = scrapper._id;
                     User.findOneAndUpdate({_id: chck.userId}, apisid,
                         (error, success) => {
-                            if (error) {
-                                res.redirect('/datajunk');
-                            }
                             return res.redirect('/datajunk');
                         });
                 });
@@ -98,13 +94,13 @@ router.post('/newscrapper', function (req, res, next) {
         });
     }
 });
+
 /**
  * @param {string} path
  * @param {function} callback
  * @memberof Routes.page.datajunk
  */
 router.post('/scrapper/newsource', function (req, res, next) {
-    param.logco('post scrapper newsource', req.session.userId);
     if (!req.body.name || !req.body.name.length ||
         !req.body.sourcegenre || !req.body.sourcetype ||
         !req.body.sourcename || !req.body.sourcereqpath ||
@@ -114,6 +110,7 @@ router.post('/scrapper/newsource', function (req, res, next) {
         console.log(err);
         return res.redirect('/datajunk');
     } else {
+        param.logco('post scrapper newsource', req.session.userId);
         User.findById(req.session.userId).exec((error, user) => {
             if (user) {
                 let newsource = {
