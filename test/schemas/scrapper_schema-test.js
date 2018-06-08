@@ -6,8 +6,15 @@
 /* eslint no-invalid-this: 0 */
 const expect = require('chai').expect;
 const Scrapper = require('../../coin_board/schemas/scrapper');
+let mocksource = {
+    sourcename: 'mockname',
+    url: 'https://mock.mocking.com',
+    sourcereqhost: 'mock.mock',
+    sourcereqpath: '/&param=mock&otherparam=turfu',
+    sourceregex: '/*mockrgx/r',
+};
 
-describe('Scrapper schema', function () {
+describe('Scrapper schema validation', function () {
     it('should be invalid if name is empty', function (done) {
         let m = new Scrapper();
 
@@ -45,5 +52,15 @@ describe('Scrapper schema', function () {
         expect(m.Sources).to.have.property('Bank');
         expect(m.Sources.Other).to.be.an('object');
         done();
+    });
+});
+
+describe('Scrapper schemas addsource method', function () {
+    let u;
+    before((done) => {
+        Scrapper.findOne({name: 'mockscrap'}, (error, scrapper) => {
+            u = scrapper._id;
+            done();
+        });
     });
 });
