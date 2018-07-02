@@ -166,3 +166,6 @@ router.post('/addasset', function (req, res, next) {
 });
 
 module.exports = router;
+if (process.env.TEST === 'ok') {
+    module.exports.func = setpagecontent;
+}

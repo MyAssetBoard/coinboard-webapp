@@ -51,7 +51,7 @@ router.get('/', function (req, res, next) {
         });
     } else {
         param.lognoco('PROFILE', chck);
-        res.render('page', param.profile);
+        res.redirect('/login');
     }
 });
 
