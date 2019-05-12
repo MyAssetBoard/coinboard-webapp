@@ -23,7 +23,7 @@
 		"ejs-lint": "^0.3.0",
 		"eslint-config-google": "^0.10.0",
 		"jsdoc": "^3.5.5",
-		"jsdoc-to-markdown": "^4.0.1",
+		"jsdoc-to-markdown": "^5.0.0",
 		"mocha": "^5.2.0",
 		"mocha-junit-reporter": "^1.17.0",
 		"nyc": "^12.0.2",
