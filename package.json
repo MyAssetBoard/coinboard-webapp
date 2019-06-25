@@ -12,7 +12,7 @@
 	"author": "Trevis Gulby <trevisgulby@protonmail.ch>",
 	"license": "MIT",
 	"dependencies": {
-		"eslint": "^5.0.0",
+		"eslint": "^6.0.1",
 		"mongodb": "^3.0.10",
 		"pm2": "^3.0.0"
 	},
